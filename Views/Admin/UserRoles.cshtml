@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BugTracker.Models.UserRolesViewModel>
+
+@{
+    ViewData["Title"] = "UserRoles";
+}
+
+<h1>Role Assignment</h1>
+
+<h4>Assign users to specific roles</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UserRoles">
+            <label for="roles"></label>
+            <select name="roles">
+                @{
+                    foreach (var item in Model)
+                    {
+                        <option>@item.Role.Name</option>
+                    }
+                }
+            </select>
+
+            <label for="roles"></label>
+            <select name="roles">
+                @{
+                    foreach (var item in Model)
+                    {
+                        <option>@item.Username</option>
+                    }
+                }
+            </select>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
