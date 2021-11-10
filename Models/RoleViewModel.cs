@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +13,6 @@ namespace BugTracker.Models
         [Required]
         [DisplayName("Name of role")]
         [StringLength(30, MinimumLength = 3)]
-        public string Name { get; set; }
+        public string Name { get; set; }       
     }
 }

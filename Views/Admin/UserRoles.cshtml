@@ -1,38 +1,47 @@
-﻿@model IEnumerable<BugTracker.Models.UserRolesViewModel>
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
 
 @{
     ViewData["Title"] = "UserRoles";
 }
 
-<h1>Role Assignment</h1>
+<h1>Manage users assigned to each role</h1>
 
-<h4>Assign users to specific roles</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="UserRoles">
-            <label for="roles"></label>
-            <select name="roles">
-                @{
-                    foreach (var item in Model)
-                    {
-                        <option>@item.Role.Name</option>
-                    }
-                }
-            </select>
 
-            <label for="roles"></label>
-            <select name="roles">
-                @{
-                    foreach (var item in Model)
-                    {
-                        <option>@item.Username</option>
-                    }
-                }
-            </select>
-        </form>
+@if (!Model.Any())
+{
+    <div class="card">
+        <div class="card-header">
+            No roles currently exist
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a new role
+            </h5>
+            <a asp-action="CreateRole" class="btn btn-primary text-white" style="width: auto">
+                Create Role
+            </a>
+        </div>
     </div>
-</div>
+}
+else
+{
+    foreach (var role in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Role Id: @role.Id
+            </div>
+            <div class="card-body">                
+                <h5 class="card-title">@role.Name</h5>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="btn btn-secondary">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

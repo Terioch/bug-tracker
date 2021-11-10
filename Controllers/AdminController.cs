@@ -44,7 +44,7 @@ namespace BugTracker.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Redirect("/admin");
+                    return Redirect("/admin/UserRoles");
                 }
 
                 foreach (IdentityError error in result.Errors)
@@ -53,6 +53,13 @@ namespace BugTracker.Controllers
                 }
             }
             return View(role);
+        }
+
+        [HttpGet]
+        public IActionResult UserRoles()
+        {     
+            IQueryable<IdentityRole> roles = roleManager.Roles;       
+            return View(roles);
         }
     }
 }

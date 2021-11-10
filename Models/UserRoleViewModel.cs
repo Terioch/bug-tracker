@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Models
 {
-    public class UserRolesViewModel
+    public class UserRoleViewModel
     {
         public int Id { get; set; }
         public string Username { get; set; }
