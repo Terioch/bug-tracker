@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BugTracker.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class DashboardController : Controller
     {
         public IActionResult Index()
         {

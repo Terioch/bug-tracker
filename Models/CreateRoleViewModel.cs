@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Models
 {
-    public class RoleViewModel
+    public class CreateRoleViewModel
     {
         [Required]
         [DisplayName("Name of role")]

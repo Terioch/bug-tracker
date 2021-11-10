@@ -13,16 +13,13 @@ namespace BugTracker.Controllers
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public AdminController(RoleManager<IdentityRole> roleManager)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             this.roleManager = roleManager;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
+            this.userManager = userManager;
+        }      
 
         [HttpGet]
         public IActionResult CreateRole()
@@ -31,7 +28,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRole(RoleViewModel role)
+        public async Task<IActionResult> CreateRole(CreateRoleViewModel role)
         {
             if (ModelState.IsValid)
             {
@@ -44,7 +41,7 @@ namespace BugTracker.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Redirect("/admin/UserRoles");
+                    return Redirect("/admin/ListRoles");
                 }
 
                 foreach (IdentityError error in result.Errors)
@@ -56,10 +53,39 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult UserRoles()
+        public IActionResult ListRoles()
         {     
             IQueryable<IdentityRole> roles = roleManager.Roles;       
             return View(roles);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditRole(string id)
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id {id} cannot be found";
+                return View("NotFound");
+            }
+
+            EditRoleViewModel roleModel = new()
+            {
+                Id = role.Id,
+                Name = role.Name,                
+            };
+
+            foreach (IdentityUser user in userManager.Users)
+            {
+                bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
+
+                if (isInRole)
+                {
+                    roleModel.Users.Add(user.UserName);
+                }                   
+            }
+            return Json(roleModel);
         }
     }
 }
