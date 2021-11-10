@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Models
 {
-    public class EditRoleViewModel
+    public class RoleViewModel
     {
         public string Id { get; set; }
 

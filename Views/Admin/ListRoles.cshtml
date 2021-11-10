@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+﻿@model IEnumerable<BugTracker.Models.RoleViewModel>
 
 @{
     ViewData["Title"] = "UserRoles";
@@ -33,8 +33,21 @@ else
             <div class="card-header">
                 Role Id: @role.Id
             </div>
-            <div class="card-body">                
-                <h5 class="card-title">@role.Name</h5>
+            <div class="card-body">
+                <input class="card-title" disabled asp-for="@role.Name" />
+                @if (role.Users == null || !role.Users.Any())
+                {
+                    <h4>No users are associated with this role</h4>
+                }
+                else
+                {
+                    <ul class="list-group">
+                        @foreach (var userName in role.Users)
+                        {
+                        <li>@userName</li>
+                        }
+                    </ul>
+                }                  
             </div>
             <div class="card-footer">
                 <a class="btn btn-secondary" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>

@@ -53,10 +53,32 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult ListRoles()
+        public async Task<IActionResult> ListRoles()
         {     
-            IQueryable<IdentityRole> roles = roleManager.Roles;       
-            return View(roles);
+            IQueryable<IdentityRole> roles = roleManager.Roles;
+            List<RoleViewModel> rolesModel = new();
+
+            foreach (IdentityRole role in roles)
+            {
+                RoleViewModel roleModel = new();
+                foreach (IdentityUser user in userManager.Users)
+                {
+                    bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
+
+                    if (isInRole)
+                    {
+                        roleModel.Users.Add(user.UserName);
+                    }
+                }
+
+                rolesModel.Add(new RoleViewModel
+                {
+                    Id = role.Id,
+                    Name = role.Name,   
+                    Users = roleModel.Users
+                });                
+            }            
+            return View(rolesModel);
         }
 
         [HttpGet]
@@ -70,7 +92,7 @@ namespace BugTracker.Controllers
                 return View("NotFound");
             }
 
-            EditRoleViewModel roleModel = new()
+            RoleViewModel roleModel = new()
             {
                 Id = role.Id,
                 Name = role.Name,                
