@@ -101,11 +101,14 @@ namespace BugTracker.Controllers
                 return Json(model);
             }
 
+            List<IdentityError> errors = new();
+
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error.Description);
+                ModelState.AddModelError("", error.Description);                
+                errors.Add(error);                
             }
-            return Json(model);
+            return Json(errors);
         }
     }
 }

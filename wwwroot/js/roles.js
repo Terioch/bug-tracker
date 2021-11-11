@@ -48,7 +48,7 @@ class Roles {
             id: thisRole.getAttribute("data-id"),
             name: thisRole.querySelector(".role-name-input").value,
             users: this.getRoleUsers(thisRole)
-        }
+        };
     }
 
     handleEdit(e) {
@@ -69,8 +69,7 @@ class Roles {
 
     async handleUpdate(e) {
         const thisRole = this.findNearestParentCard(e.target); 
-        const model = this.getRoleModel(thisRole);
-        console.log(model);
+        const model = this.getRoleModel(thisRole);        
         const res = await fetch(`/role/update`, {
             method: "PUT",
             headers: {
@@ -79,7 +78,14 @@ class Roles {
             body: JSON.stringify(model)
         });
         const data = await res.json();
-        console.log(data);
+     
+        if (data[0]?.code) {
+            for (let error of data) {
+                const errorList = thisRole.querySelector(".error-list");
+                const errorListItem = `<li class="list-group-item border-0 text-danger">${error.description}</li>`;
+                errorList.insertAdjacentHTML("beforeend", errorListItem);
+            }
+        }                   
         this.handleUpdateCleanup(e.target, thisRole);
     }
 

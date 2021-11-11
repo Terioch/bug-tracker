@@ -35,9 +35,10 @@
                     Role id: @role.Id
                 </div>
                 <div class="card-body">
-                    <input class="card-title p-2 cursor-pointer rounded border border-0 bg-transparent role-name-input" disabled asp-for="@role.Name" />
-                    <span class="text-danger" asp-validation-for="@role.Name"></span>
-                    <ul class="list-group role-user-list">
+                    <input class="card-title p-2 cursor-pointer rounded border border-0 bg-transparent font-weight-bold role-name-input" disabled asp-for="@role.Name" />
+                    <ul class="list-group error-list">                        
+                    </ul>
+                    <ul class="list-group list-group-flush role-user-list">
 
                     @if (!role.Users.Any())
                     {
@@ -54,8 +55,8 @@
                     </ul>
                 </div>
                 <div class="card-footer">
-                    <btn class="btn btn-primary text-white edit-role">Edit</btn>
-                    <btn class="btn btn-danger delete-role">Delete</btn>
+                    <btn class="btn btn-primary text-white cursor-pointer edit-role">Edit</btn>
+                    <btn class="btn btn-danger cursor-pointer delete-role">Delete</btn>
                 </div>
             </div>
         }
