@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Authorization;
 namespace BugTracker.Controllers
 {
     [Authorize]
-    public class AdminController : Controller
+    public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<IdentityUser> userManager;
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;

@@ -15,7 +15,7 @@ class Roles {
 
     clickHandler(e) {
         if (e.target.classList.contains("edit-role")) this.handleEdit(e);
-        if (e.target.classList.contains("update-role")) this.handleUpdate(e);
+        else if (e.target.classList.contains("update-role")) this.handleUpdate(e);
     }
 
     findNearestParentCard(el) {
@@ -25,22 +25,30 @@ class Roles {
         return el;
     }
 
+    makeRoleFieldEditable(el) {
+        el.removeAttribute("disabled");
+        el.classList.remove("border-0");
+        el.classList.add("border-secondary");
+    }
+
+    makeRoleFieldReadonly(el) {
+        el.setAttribute("disabled");
+        el.classList.remove("border-secondary");
+        el.classList.add("border-0");
+    }
+
     handleEdit(e) {
-        console.log("editBtn", e.target);
         const editBtn = e.target;
-        const thisCard = this.findNearestParentCard(e.target);
-        console.log("thisCard", thisCard);
-        const roleNameField = thisCard.querySelector(".role-name-input");
-        console.log("disabled roleNameField", roleNameField);
-        roleNameField.removeAttribute("disabled");
-        console.log("editable roleNameField", roleNameField);
+        const thisCard = this.findNearestParentCard(e.target);  
+        this.makeRoleFieldEditable(thisCard.querySelector(".role-name-input"));
         editBtn.classList.remove("edit-role");
         editBtn.classList.add("update-role");
         editBtn.textContent = "Save";
     }
 
     async handleUpdate(e) {
-        console.log(e.target);
+        console.log("update", e.target);
+        const res = await fetch("/ad")
     }
 
     async handleDelete(e) {

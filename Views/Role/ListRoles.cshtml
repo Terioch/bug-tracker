@@ -35,7 +35,7 @@
                     Role id: @role.Id
                 </div>
                 <div class="card-body">
-                    <input class="card-title border-0 bg-transparent role-name-input" disabled asp-for="@role.Name" />
+                    <input class="card-title p-2 cursor-pointer rounded border border-0 bg-transparent role-name-input" disabled asp-for="@role.Name" />
 
                     @if (role.Users == null || !role.Users.Any())
                     {
