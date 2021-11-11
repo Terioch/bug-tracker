@@ -32,7 +32,7 @@ class Roles {
     }
 
     makeRoleFieldReadonly(el) {
-        el.setAttribute("disabled");
+        el.setAttribute("disabled", "");
         el.classList.remove("border-secondary");
         el.classList.add("border-0");
     }
@@ -60,6 +60,13 @@ class Roles {
         editBtn.textContent = "Save";
     }
 
+    handleUpdateCleanup(editBtn, thisRole) {
+        this.makeRoleFieldReadonly(thisRole.querySelector(".role-name-input"));
+        editBtn.classList.remove("update-role");
+        editBtn.classList.add("edit-role");
+        editBtn.textContent = "Edit";
+    }
+
     async handleUpdate(e) {
         const thisRole = this.findNearestParentCard(e.target); 
         const model = this.getRoleModel(thisRole);
@@ -73,6 +80,7 @@ class Roles {
         });
         const data = await res.json();
         console.log(data);
+        this.handleUpdateCleanup(e.target, thisRole);
     }
 
     async handleDelete(e) {

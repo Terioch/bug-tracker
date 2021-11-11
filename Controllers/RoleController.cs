@@ -98,7 +98,7 @@ namespace BugTracker.Controllers
 
             if (result.Succeeded)
             {
-                return Redirect("/role/ListRoles");
+                return Json(model);
             }
 
             foreach (var error in result.Errors)

@@ -36,17 +36,18 @@
                 </div>
                 <div class="card-body">
                     <input class="card-title p-2 cursor-pointer rounded border border-0 bg-transparent role-name-input" disabled asp-for="@role.Name" />
+                    <span class="text-danger" asp-validation-for="@role.Name"></span>
                     <ul class="list-group role-user-list">
 
                     @if (!role.Users.Any())
                     {
-                        <li>No users are associated with this role</li>
+                        <li class="list-group-item">No users are associated with this role</li>
                     }
                     else
                     {                        
                         @foreach (var userName in role.Users)
                         {
-                            <li>@userName</li>
+                            <li class="list-group-item">@userName</li>
                         }                        
                     }   
 
