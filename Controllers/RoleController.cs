@@ -41,7 +41,7 @@ namespace BugTracker.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Redirect("/admin/ListRoles");
+                    return Redirect("/role/ListRoles");
                 }
 
                 foreach (IdentityError error in result.Errors)
@@ -80,35 +80,32 @@ namespace BugTracker.Controllers
                 });                
             }            
             return View(roleListModel);
-        }
+        }       
 
-        [HttpGet]
-        public async Task<IActionResult> EditRole(string id)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] RoleViewModel model)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(id);
+            IdentityRole role = await roleManager.FindByIdAsync(model.Id);
 
             if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with Id {id} cannot be found";
+                ViewBag.ErrorMessage = $"Role with Id {model.Id} cannot be found";
                 return View("NotFound");
             }
 
-            RoleViewModel roleModel = new()
-            {
-                Id = role.Id,
-                Name = role.Name,                
-            };
+            role.Name = model.Name;
+            IdentityResult result = await roleManager.UpdateAsync(role);
 
-            foreach (IdentityUser user in userManager.Users)
+            if (result.Succeeded)
             {
-                bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
-
-                if (isInRole)
-                {
-                    roleModel.Users.Add(user.UserName);
-                }                   
+                return Redirect("/role/ListRoles");
             }
-            return Json(roleModel);
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return Json(model);
         }
     }
 }

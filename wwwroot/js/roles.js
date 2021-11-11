@@ -37,18 +37,42 @@ class Roles {
         el.classList.add("border-0");
     }
 
+    getRoleUsers(thisRole) {
+        const userCollection = thisRole.querySelector(".role-user-list").children;
+        const users = [...[...userCollection].map(u => u.textContent)];
+        return users;
+    }
+
+    getRoleModel(thisRole) {
+        return {
+            id: thisRole.getAttribute("data-id"),
+            name: thisRole.querySelector(".role-name-input").value,
+            users: this.getRoleUsers(thisRole)
+        }
+    }
+
     handleEdit(e) {
         const editBtn = e.target;
-        const thisCard = this.findNearestParentCard(e.target);  
-        this.makeRoleFieldEditable(thisCard.querySelector(".role-name-input"));
+        const thisRole = this.findNearestParentCard(e.target);  
+        this.makeRoleFieldEditable(thisRole.querySelector(".role-name-input"));
         editBtn.classList.remove("edit-role");
         editBtn.classList.add("update-role");
         editBtn.textContent = "Save";
     }
 
     async handleUpdate(e) {
-        console.log("update", e.target);
-        const res = await fetch("/ad")
+        const thisRole = this.findNearestParentCard(e.target); 
+        const model = this.getRoleModel(thisRole);
+        console.log(model);
+        const res = await fetch(`/role/update`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(model)
+        });
+        const data = await res.json();
+        console.log(data);
     }
 
     async handleDelete(e) {

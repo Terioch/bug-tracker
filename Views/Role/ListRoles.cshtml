@@ -30,26 +30,27 @@
     {
         foreach (var role in Model)
         {
-            <div id="@role.Id" class="card mb-3 role-card">
+            <div class="card mb-3 role-card" data-id="@role.Id">
                 <div class="card-header">
                     Role id: @role.Id
                 </div>
                 <div class="card-body">
                     <input class="card-title p-2 cursor-pointer rounded border border-0 bg-transparent role-name-input" disabled asp-for="@role.Name" />
+                    <ul class="list-group role-user-list">
 
-                    @if (role.Users == null || !role.Users.Any())
+                    @if (!role.Users.Any())
                     {
-                        <h5>No users are associated with this role</h5>
+                        <li>No users are associated with this role</li>
                     }
                     else
-                    {
-                        <ul class="list-group">
-                            @foreach (var userName in role.Users)
-                            {
+                    {                        
+                        @foreach (var userName in role.Users)
+                        {
                             <li>@userName</li>
-                            }
-                        </ul>
-                    }                  
+                        }                        
+                    }   
+
+                    </ul>
                 </div>
                 <div class="card-footer">
                     <btn class="btn btn-primary text-white edit-role">Edit</btn>
