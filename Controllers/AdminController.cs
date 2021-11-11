@@ -56,11 +56,12 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> ListRoles()
         {     
             IQueryable<IdentityRole> roles = roleManager.Roles;
-            List<RoleViewModel> rolesModel = new();
+            List<RoleViewModel> roleListModel = new();
 
             foreach (IdentityRole role in roles)
             {
                 RoleViewModel roleModel = new();
+
                 foreach (IdentityUser user in userManager.Users)
                 {
                     bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
@@ -71,14 +72,14 @@ namespace BugTracker.Controllers
                     }
                 }
 
-                rolesModel.Add(new RoleViewModel
+                roleListModel.Add(new RoleViewModel
                 {
                     Id = role.Id,
                     Name = role.Name,   
                     Users = roleModel.Users
                 });                
             }            
-            return View(rolesModel);
+            return View(roleListModel);
         }
 
         [HttpGet]

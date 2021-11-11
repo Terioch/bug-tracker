@@ -4,59 +4,62 @@
     ViewData["Title"] = "UserRoles";
 }
 
-<h3 class="mb-3">Manage users assigned to each role</h3>
-<a asp-action="CreateRole" class="btn-link">Create a new role</a>
+<main id="rolesMain">
+    <h3 class="mb-3">Manage users assigned to each role</h3>
+    <a asp-action="CreateRole" class="btn-link">Create a new role</a>
 
-<hr />
+    <hr />
 
-@if (!Model.Any())
-{
-    <div class="card">
-        <div class="card-header">
-            No roles currently exist
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                Use the button below to create a new role
-            </h5>
-            <a class="btn btn-primary text-white" style="width: auto" asp-action="CreateRole">
-                Create Role
-            </a>
-        </div>
-    </div>
-}
-else
-{
-    foreach (var role in Model)
+    @if (!Model.Any())
     {
-        <div class="card mb-3">
+        <div class="card">
             <div class="card-header">
-                Role Id: @role.Id
+                No roles currently exist
             </div>
             <div class="card-body">
-                <input class="card-title" disabled asp-for="@role.Name" />
-                @if (role.Users == null || !role.Users.Any())
-                {
-                    <h4>No users are associated with this role</h4>
-                }
-                else
-                {
-                    <ul class="list-group">
-                        @foreach (var userName in role.Users)
-                        {
-                        <li>@userName</li>
-                        }
-                    </ul>
-                }                  
-            </div>
-            <div class="card-footer">
-                <a class="btn btn-secondary" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>
-                <a href="#" class="btn btn-danger">Delete</a>
+                <h5 class="card-title">
+                    Use the button below to create a new role
+                </h5>
+                <a class="btn btn-primary text-white" style="width: auto" asp-action="CreateRole">
+                    Create Role
+                </a>
             </div>
         </div>
     }
-}
+    else
+    {
+        foreach (var role in Model)
+        {
+            <div id="@role.Id" class="card mb-3 role-card">
+                <div class="card-header">
+                    Role id: @role.Id
+                </div>
+                <div class="card-body">
+                    <input class="card-title border-0 bg-transparent role-name-input" disabled asp-for="@role.Name" />
 
+                    @if (role.Users == null || !role.Users.Any())
+                    {
+                        <h5>No users are associated with this role</h5>
+                    }
+                    else
+                    {
+                        <ul class="list-group">
+                            @foreach (var userName in role.Users)
+                            {
+                            <li>@userName</li>
+                            }
+                        </ul>
+                    }                  
+                </div>
+                <div class="card-footer">
+                    <btn class="btn btn-primary text-white edit-role">Edit</btn>
+                    <btn class="btn btn-danger delete-role">Delete</btn>
+                </div>
+            </div>
+        }
+    }
+</main>
+ 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
