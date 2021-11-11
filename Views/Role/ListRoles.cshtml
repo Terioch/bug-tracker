@@ -4,6 +4,12 @@
     ViewData["Title"] = "UserRoles";
 }
 
+<style>
+    btn {
+        cursor: pointer;
+    }
+</style>
+
 <main id="rolesMain">
     <h3 class="mb-3">Manage users assigned to each role</h3>
     <a asp-action="CreateRole" class="btn-link">Create a new role</a>
@@ -55,8 +61,9 @@
                     </ul>
                 </div>
                 <div class="card-footer">
-                    <btn class="btn btn-primary text-white cursor-pointer edit-role">Edit</btn>
-                    <btn class="btn btn-danger cursor-pointer delete-role">Delete</btn>
+                    <btn class="btn btn-primary text-white edit-role">Edit Role</btn>
+                    <btn class="btn btn-danger delete-role">Delete Role</btn>
+                    <btn class="btn btn-success add-user">Add User</btn>
                 </div>
             </div>
         }

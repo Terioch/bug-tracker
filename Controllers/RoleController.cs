@@ -99,8 +99,8 @@ namespace BugTracker.Controllers
             if (result.Succeeded)
             {
                 return Json(model);
-            }
-
+            } 
+           
             List<IdentityError> errors = new();
 
             foreach (var error in result.Errors)
@@ -108,7 +108,8 @@ namespace BugTracker.Controllers
                 ModelState.AddModelError("", error.Description);                
                 errors.Add(error);                
             }
-            return Json(errors);
+            
+            return Json(new { errors });
         }
     }
 }

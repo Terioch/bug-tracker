@@ -4,7 +4,12 @@ class Roles {
         if (document.getElementById("rolesMain")) {
             console.log("Initialized Roles");
             this.rolesMain = document.getElementById("rolesMain");
-            this.clickHandler = this.clickHandler.bind(this);          
+            this.clickHandler = this.clickHandler.bind(this);
+            this.model = {
+                id: -1,
+                name: "",
+                users: []
+            };
             this.events();
         }       
     }
@@ -53,7 +58,8 @@ class Roles {
 
     handleEdit(e) {
         const editBtn = e.target;
-        const thisRole = this.findNearestParentCard(e.target);  
+        const thisRole = this.findNearestParentCard(e.target);
+        this.model = this.getRoleModel(thisRole);
         this.makeRoleFieldEditable(thisRole.querySelector(".role-name-input"));
         editBtn.classList.remove("edit-role");
         editBtn.classList.add("update-role");
@@ -69,24 +75,32 @@ class Roles {
 
     async handleUpdate(e) {
         const thisRole = this.findNearestParentCard(e.target); 
-        const model = this.getRoleModel(thisRole);        
-        const res = await fetch(`/role/update`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(model)
-        });
-        const data = await res.json();
-     
-        if (data[0]?.code) {
-            for (let error of data) {
-                const errorList = thisRole.querySelector(".error-list");
-                const errorListItem = `<li class="list-group-item border-0 text-danger">${error.description}</li>`;
-                errorList.insertAdjacentHTML("beforeend", errorListItem);
+        const model = this.getRoleModel(thisRole);
+        const errorList = thisRole.querySelector(".error-list");
+        errorList.innerHTML = "";
+
+        try {
+            const res = await fetch(`/role/update`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(model)
+            });
+            const data = await res.json();            
+
+            if (data.errors) {
+                for (let error of data.errors) {                    
+                    const errorListItem = `<li class="list-group-item border-0 text-danger">${error.description}</li>`;
+                    errorList.insertAdjacentHTML("beforeend", errorListItem);
+                }
+                console.log(data);
+                thisRole.querySelector(".role-name-input").value = this.model.name;
             }
-        }                   
-        this.handleUpdateCleanup(e.target, thisRole);
+            this.handleUpdateCleanup(e.target, thisRole);
+        } catch (err) {
+            console.error(err);
+        }        
     }
 
     async handleDelete(e) {
