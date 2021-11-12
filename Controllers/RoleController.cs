@@ -149,10 +149,17 @@ namespace BugTracker.Controllers
             return Content(result.Errors.ToString());
         }
 
-        [HttpPost]
-        public Task<IActionResult> AddUser(RoleViewModel role)
+        [HttpGet]
+        public async Task<IActionResult> ListUsers()
         {
-            
+            IQueryable<IdentityUser> users = userManager.Users;
+            return Json(users);
+        }
+
+        [HttpPost]
+        public IActionResult AddUser(string user, string roleId)
+        {
+            return View();
         }
     }
 }

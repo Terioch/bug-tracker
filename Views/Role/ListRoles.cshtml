@@ -5,7 +5,7 @@
 }
 
 <style>
-    btn, .bi {
+    btn, .bi, .user-dropdown-item {
         cursor: pointer;
     }        
 </style>
@@ -69,14 +69,7 @@
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
                     User Selection
                   </button>
-                  <div class="dropdown-menu" aria-labelledby="userDropdown">
-                    @foreach (var role in Model)
-                    {
-                        foreach (var userName in role.Users)
-                        {
-                            <a class="dropdown-item">@userName</a>          
-                        }
-                    }                                               
+                  <div id="userDropdown" class="dropdown-menu" aria-labelledby="userDropdown">
                   </div>
                 </div>
 
