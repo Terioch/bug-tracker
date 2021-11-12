@@ -21,6 +21,8 @@ class Roles {
     clickHandler(e) {
         if (e.target.classList.contains("edit-role")) this.handleEdit(e);
         else if (e.target.classList.contains("update-role")) this.handleUpdate(e);
+        else if (e.target.classList.contains("delete-role")) this.handleDelete(e);
+        else if (e.target.classList.contains("add-user")) this.handleUserAddition(e);
     }
 
     findNearestParentCard(el) {
@@ -74,8 +76,7 @@ class Roles {
     }
 
     async handleUpdate(e) {
-        const thisRole = this.findNearestParentCard(e.target); 
-        const model = this.getRoleModel(thisRole);
+        const thisRole = this.findNearestParentCard(e.target);         
         const errorList = thisRole.querySelector(".error-list");
         errorList.innerHTML = "";
 
@@ -93,8 +94,7 @@ class Roles {
                 for (let error of data.errors) {                    
                     const errorListItem = `<li class="list-group-item border-0 text-danger">${error.description}</li>`;
                     errorList.insertAdjacentHTML("beforeend", errorListItem);
-                }
-                console.log(data);
+                }             
                 thisRole.querySelector(".role-name-input").value = this.model.name;
             }
             this.handleUpdateCleanup(e.target, thisRole);
@@ -104,7 +104,36 @@ class Roles {
     }
 
     async handleDelete(e) {
-        console.log(e.target);
+        const thisRole = this.findNearestParentCard(e.target);
+        const id = thisRole.getAttribute("data-id");
+        const errorList = thisRole.querySelector(".error-list");
+        errorList.innerHTML = "";
+
+        try {
+            const res = await fetch(`/role/delete${id}`);
+            const data = await res.json();
+            console.log(data);
+
+            if (data.errors) {
+                for (let error of data.errors) {
+                    const errorListItem = `<li class="list-group-item border-0 text-danger">${error.description}</li>`;
+                    errorList.insertAdjacentHTML("beforeend", errorListItem);
+                }
+                return;
+            }         
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async handleUserAddition(e) {
+        console.log(e.target);        
+
+        try {
+            // TODO
+        } catch (err) {
+            console.error(err);
+        }
     }
 }
 

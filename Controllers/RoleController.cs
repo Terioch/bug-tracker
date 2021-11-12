@@ -111,5 +111,34 @@ namespace BugTracker.Controllers
             
             return Json(new { errors });
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id {id} cannot be found";
+                return View("NotFound");
+            }
+
+            IdentityResult result = await roleManager.DeleteAsync(role);
+
+            if (result.Succeeded)
+            {
+                return Json(role);
+            }
+
+            List<IdentityError> errors = new();
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+                errors.Add(error);
+            }
+
+            return Json(new { errors });
+        }
     }
 }

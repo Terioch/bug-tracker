@@ -5,8 +5,12 @@
 }
 
 <style>
-    btn {
+    btn, .bi {
         cursor: pointer;
+    }    
+
+    .bi-plus-circle:hover {
+        background-color: #5B85FD;
     }
 </style>
 
@@ -33,7 +37,7 @@
         </div>
     }
     else
-    {
+    {        
         foreach (var role in Model)
         {
             <div class="card mb-3 role-card" data-id="@role.Id">
@@ -41,32 +45,48 @@
                     Role id: @role.Id
                 </div>
                 <div class="card-body">
-                    <input class="card-title p-2 cursor-pointer rounded border border-0 bg-transparent font-weight-bold role-name-input" disabled asp-for="@role.Name" />
-                    <ul class="list-group error-list">                        
-                    </ul>
-                    <ul class="list-group list-group-flush role-user-list">
+                    <input class="card-title p-2 rounded border border-0 bg-transparent font-weight-bold role-name-input" disabled asp-for="@role.Name" />
+                    <ul class="list-group error-list"></ul>
 
-                    @if (!role.Users.Any())
-                    {
-                        <li class="list-group-item">No users are associated with this role</li>
-                    }
-                    else
-                    {                        
-                        @foreach (var userName in role.Users)
+                    <div class="role-users-container d-flex flex-wrap justify-content-between align-items-center">
+                        <ul class="list-group list-group-flush role-user-list">
+
+                        @if (!role.Users.Any())
                         {
-                            <li class="list-group-item">@userName</li>
-                        }                        
-                    }   
+                            <li class="list-group-item">No users are associated with this role</li>
+                        }
+                        else
+                        {                        
+                            @foreach (var userName in role.Users)
+                            {
+                                <li class="list-group-item">@userName</li>
+                            }                        
+                        }   
 
-                    </ul>
+                        </ul>                        
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle add-user rounded-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>                      
+                    </div>                    
+
                 </div>
                 <div class="card-footer">
                     <btn class="btn btn-primary text-white edit-role">Edit Role</btn>
-                    <btn class="btn btn-danger delete-role">Delete Role</btn>
-                    <btn class="btn btn-success add-user">Add User</btn>
+                    <btn class="btn btn-danger delete-role">Delete Role</btn>        
                 </div>
+
+                <nav class="p-2" aria-label="collection of roles">                    
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>                    
+                </nav>
             </div>
-        }
+        }    
     }
 </main>
  
