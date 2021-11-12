@@ -150,7 +150,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListUsers()
+        public IActionResult ListUsers()
         {
             IQueryable<IdentityUser> users = userManager.Users;
             return Json(users);

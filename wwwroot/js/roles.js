@@ -2,28 +2,30 @@
 class Roles {
     constructor() {
         if (document.getElementById("rolesMain")) {
-            console.log("Initialized Roles");
-            this.rolesMain = document.getElementById("rolesMain");
-            this.clickHandler = this.clickHandler.bind(this);           
+            console.log("Initialized Roles");            
+            this.selectedUser = "";
             this.model = {
                 id: -1,
                 name: "",
                 users: []
             };
+            this.clickHandler = this.clickHandler.bind(this);
+            this.onUserDropdownModalOpen = this.onUserDropdownModalOpen.bind(this);
             this.populateUserDropdown();
             this.events();
         }       
     }
 
     events() {
-        this.rolesMain.addEventListener("click", this.clickHandler);
+        document.getElementById("rolesMain").addEventListener("click", this.clickHandler);
+        document.querySelector(".display-user-dropdown-modal").addEventListener("click", this.onUserDropdownModalOpen);
+        document.getElementById("userSelectDropdown").addEventListener("change", (e) => this.setSelectedUser(e));
     }
 
     clickHandler(e) {
         if (e.target.classList.contains("edit-role")) this.handleEdit(e);
         else if (e.target.classList.contains("update-role")) this.handleUpdate(e);
-        else if (e.target.classList.contains("delete-role")) this.handleDelete(e);
-        else if (e.target.classList.contains("display-user-dropdown-modal")) this.onUserDropdownModalOpen(e);
+        else if (e.target.classList.contains("delete-role")) this.handleDelete(e);      
         else if (e.target.classList.contains("add-user")) this.handleUserAddition(e);
     }
 
@@ -61,34 +63,14 @@ class Roles {
     }
 
     setSelectedUser(e) {
-        selectedUser = e.target.value;
-    }
-
-    async populateUserDropdown() {
-        const userDropdown = document.getElementById("userDropdown");
-        console.log(userDropdown);
-
-        try {
-            const res = await fetch('/role/listUsers');
-            const data = await res.json();
-            console.log(data);
-            for (let item of data) {
-                const dropdownItem = `<a class="dropdown-item user-dropdown-item">${item.userName}</a>`;
-                userDropdown.insertAdjacentHTML("beforeend", dropdownItem)
-            }
-        } catch (err) {
-            console.error(err);
-        }
+        this.selectedUser = e.target.value;
     }
 
     onUserDropdownModalOpen(e) {
         const thisRole = this.findNearestParentCard(e.target);
-        const userDropdown = document.getElementById("userDropdown");
         const addUserBtn = document.querySelector(".add-user");
-        const selectedUser = "";
-        userDropdown.addEventListener("change", () => this.setSelectedUser(selectedUser));
-        addUserBtn.addEventListener("click", () => this.handleUserAddition(thisRole, selectedUser));
-    }
+        addUserBtn.addEventListener("click", this.handleUserAddition);
+    }    
 
     handleEdit(e) {
         const editBtn = e.target;
@@ -107,8 +89,25 @@ class Roles {
         editBtn.textContent = "Edit";
     }
 
-    async handleUpdate(e) {
-        const thisRole = this.findNearestParentCard(e.target);         
+    async populateUserDropdown() {
+        const userDropdown = document.getElementById("userSelectDropdown");
+
+        try {
+            const res = await fetch('/role/listUsers');
+            const data = await res.json();
+            this.selectedUser = data[0].userName;
+            for (let item of data) {
+                const dropdownItem = `<option>${item.userName}</option>`;
+                userDropdown.insertAdjacentHTML("beforeend", dropdownItem);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async handleUpdate(e) {       
+        const thisRole = this.findNearestParentCard(e.target);
+        const model = this.getRoleModel(thisRole);
         const errorList = thisRole.querySelector(".error-list");
         errorList.innerHTML = "";
 
@@ -126,7 +125,7 @@ class Roles {
                 for (let error of data.errors) {                    
                     const errorListItem = `<li class="list-group-item border-0 text-danger">${error.description}</li>`;
                     errorList.insertAdjacentHTML("beforeend", errorListItem);
-                }             
+                }
                 thisRole.querySelector(".role-name-input").value = this.model.name;
             }
             this.handleUpdateCleanup(e.target, thisRole);
@@ -155,12 +154,12 @@ class Roles {
         }
     }
 
-    async handleUserAddition(thisRole, selectedUser) {       
-        const roleId = thisRole.getAttribute("data-id");
-        console.log(thisRole);
-        console.log(roleId);
+    async handleUserAddition() {
+        //console.log(thisRole);
+        // const roleId = thisRole.getAttribute("data-id");
+        console.log("ran");
 
-        try {
+        /*try {
             const res = await fetch(`/role/addUser/${roleId}`, {
                 method: "POST",
                 headers: {
@@ -172,7 +171,7 @@ class Roles {
             console.log(data);
         } catch (err) {
             console.error(err);
-        }
+        }*/
     }
 }
 
