@@ -110,7 +110,12 @@ class Roles {
         errorList.innerHTML = "";
 
         try {
-            const res = await fetch(`/role/delete${id}`);
+            const res = await fetch(`/role/delete/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }             
+            });
             const data = await res.json();
             console.log(data);
 
