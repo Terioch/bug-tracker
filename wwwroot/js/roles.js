@@ -9,7 +9,7 @@ class Roles {
                 id: -1,
                 name: "",
                 users: []
-            };
+            };            
             this.events();
         }       
     }
@@ -124,13 +124,8 @@ class Roles {
     }
 
     async handleUserAddition(e) {
-        console.log(e.target);        
-
-        try {
-            // TODO
-        } catch (err) {
-            console.error(err);
-        }
+        console.log(e.target);
+        this.model.users = [];
     }
 }
 

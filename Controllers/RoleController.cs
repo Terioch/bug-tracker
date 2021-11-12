@@ -148,5 +148,11 @@ namespace BugTracker.Controllers
 
             return Content(result.Errors.ToString());
         }
+
+        [HttpPost]
+        public Task<IActionResult> AddUser(RoleViewModel role)
+        {
+            
+        }
     }
 }

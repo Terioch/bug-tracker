@@ -41,6 +41,7 @@
             </div>           
         }    
 
+        <!-- Role Pagination -->
         <nav class="m-2" aria-label="collection of roles">                    
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -50,6 +51,42 @@
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>                    
         </nav>
+
+        <!-- User Dropdown Modal -->
+        <div class="modal fade" id="userDropdownModal" tabindex="-1" aria-labelledby="userDropdownModal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select a user from the dropdown below</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                  <!-- User Dropdown -->
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                    User Selection
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="userDropdown">
+                    @foreach (var role in Model)
+                    {
+                        foreach (var userName in role.Users)
+                        {
+                            <a class="dropdown-item">@userName</a>          
+                        }
+                    }                                               
+                  </div>
+                </div>
+
+              </div>
+              <div class="modal-footer">                
+                <button type="button" class="btn btn-primary add-user">Add User</button>
+              </div>
+            </div>
+          </div>
+        </div>
     }
 </main>
  
