@@ -69,7 +69,7 @@ class Roles {
     onUserDropdownModalOpen(e) {
         const thisRole = this.findNearestParentCard(e.target);
         const addUserBtn = document.querySelector(".add-user");
-        addUserBtn.addEventListener("click", this.handleUserAddition);
+        addUserBtn.addEventListener("click", (e) => this.handleUserAddition(e, thisRole));
     }    
 
     handleEdit(e) {
@@ -154,24 +154,23 @@ class Roles {
         }
     }
 
-    async handleUserAddition() {
-        //console.log(thisRole);
-        // const roleId = thisRole.getAttribute("data-id");
-        console.log("ran");
+    async handleUserAddition(e, thisRole) {
+        e.stopPropagation(); // Prevent more than one method execution
+        const roleId = thisRole.getAttribute("data-id"); 
 
-        /*try {
+        try {
             const res = await fetch(`/role/addUser/${roleId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: selectedUser
+                body: JSON.stringify({ userName: this.selectedUser })
             });
             const data = await res.json();
             console.log(data);
         } catch (err) {
             console.error(err);
-        }*/
+        }
     }
 }
 

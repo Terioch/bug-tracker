@@ -157,9 +157,11 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUser(string user, string roleId)
+        public IActionResult AddUser([FromBody] UserRoleViewModel model, string roleId)
         {
-            return View();
+            Console.WriteLine(roleId);
+            Console.WriteLine(model);         
+            return Json(model);
         }
     }
 }
