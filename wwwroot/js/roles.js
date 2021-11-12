@@ -116,16 +116,8 @@ class Roles {
                     "Content-Type": "application/json"
                 }             
             });
-            const data = await res.json();
-            console.log(data);
-
-            if (data.errors) {
-                for (let error of data.errors) {
-                    const errorListItem = `<li class="list-group-item border-0 text-danger">${error.description}</li>`;
-                    errorList.insertAdjacentHTML("beforeend", errorListItem);
-                }
-                return;
-            }         
+            const data = await res.text();
+            thisRole.parentElement.remove(data);
         } catch (err) {
             console.error(err);
         }

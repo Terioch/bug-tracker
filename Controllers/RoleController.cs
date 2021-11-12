@@ -78,7 +78,7 @@ namespace BugTracker.Controllers
                     Name = role.Name,   
                     Users = roleModel.Users
                 });                
-            }            
+            }                      
             return View(roleListModel);
         }       
 
@@ -127,18 +127,26 @@ namespace BugTracker.Controllers
 
             if (result.Succeeded)
             {
-                return Json(role);
+                RoleViewModel model = new()
+                {
+                    Id = id,
+                    Name = role.Name,
+                };
+
+                foreach (IdentityUser user in userManager.Users)
+                {
+                    bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
+
+                    if (isInRole)
+                    {
+                        model.Users.Add(user.UserName);
+                    }
+                }
+
+                return PartialView("_RoleCard", model);
             }
 
-            List<IdentityError> errors = new();
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-                errors.Add(error);
-            }
-
-            return Json(new { errors });
+            return Content(result.Errors.ToString());
         }
     }
 }
