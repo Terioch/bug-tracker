@@ -1,0 +1,91 @@
+﻿@model IEnumerable<BugTracker.Models.RoleViewModel>
+
+@{
+    ViewData["Title"] = "UserRoles";
+}
+
+<style>
+    btn, .bi, .user-dropdown-item, .page-link {
+        cursor: pointer;
+    }   
+</style>
+
+<main id="rolesMain">
+    <h3 class="mb-3">Manage users assigned to each role</h3>
+    <a asp-action="CreateRole" class="btn-link">Create a new role</a>
+
+    <hr />
+
+    @if (!Model.Any())
+    {
+        <div class="card">
+            <div class="card-header">
+                No roles currently exist
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Use the button below to create a new role
+                </h5>
+                <a class="btn btn-primary text-white" style="width: auto" asp-action="CreateRole">
+                    Create Role
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {        
+        @*foreach (var role in Model)
+        {
+
+            <div>
+                <partial name="_RoleCard" model="role" />
+            </div>           
+        }*@
+        
+        <div id="roleCardContainer"></div>
+
+        <!-- Role Pagination -->
+        <nav id="rolePagination" class="m-2" aria-label="collection of roles">                    
+            <ul class="pagination">
+                <li class="page-item page-item-previous"><a class="page-link" asp-action="PaginateRoles">Previous</a></li>
+                <li class="page-item page-item-one"><a class="page-link" asp-action="PaginateRoles">1</a></li>
+                <li class="page-item page-item-two"><a class="page-link" asp-action="PaginateRoles">2</a></li>     
+                <li class="page-item page-item-next"><a class="page-link" asp-action="PaginateRoles">Next</a></li>
+            </ul>                    
+        </nav>
+
+        <!-- User Dropdown Modal -->
+        <div class="modal fade" id="userDropdownModal" tabindex="-1" aria-labelledby="userDropdownModal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="userDropownModalTitle">Select a user from the dropdown below</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                <!-- User Select Dropdown -->
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="userSelectDropdown">Users</label>
+                  </div>
+                  <select class="custom-select" id="userSelectDropdown">                    
+                  </select>
+                </div>
+
+              </div>
+              <div class="modal-footer text-left">                
+                <button type="button" class="btn btn-primary add-user">Add Selected User</button>
+                <button type="button" class="btn btn-danger remove-user">Remove Selected User</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    }
+</main>
+ 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
