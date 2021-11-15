@@ -15,7 +15,7 @@
         <ul class="list-group error-list"></ul>
 
         <div class="role-users-container d-flex flex-wrap justify-content-between align-items-center">
-            <ul class="list-group list-group-flush role-user-list">
+            <ul class="list-group list-group-horizontal role-user-list">
 
             @if (!Model.Users.Any())
             {
@@ -25,7 +25,7 @@
             {                        
                 @foreach (var name in Model.Users)
                 {
-                    <li class="list-group-item">@name</li>
+                    <li class="list-group-item border-0">@name</li>
                 }                        
             }   
 
@@ -38,7 +38,19 @@
 
     </div>
     <div class="card-footer">
-        <btn class="btn btn-primary text-white edit-role">Edit Role</btn>
-        <btn class="btn btn-danger delete-role">Delete Role</btn>        
+        <div class="my-2">
+            <btn class="btn btn-primary text-white edit-role">Edit Role</btn>
+            <btn class="btn btn-danger delete-role">Delete Role</btn>       
+        </div>        
+
+         <!-- Role Pagination -->
+        <nav id="rolePagination" class="" aria-label="collection of roles">                    
+            <ul class="pagination mb-1">
+                <li class="page-item page-item-previous"><a class="page-link" asp-action="PaginateRoles">Previous</a></li>
+                <li class="page-item page-item-one"><a class="page-link" asp-action="PaginateRoles">1</a></li>
+                <li class="page-item page-item-two"><a class="page-link" asp-action="PaginateRoles">2</a></li>     
+                <li class="page-item page-item-next"><a class="page-link" asp-action="PaginateRoles">Next</a></li>
+            </ul>                    
+        </nav>
     </div>    
 </div>

@@ -83,6 +83,17 @@ namespace BugTracker.Controllers
             return View(roleListModel);
         }       
 
+        [HttpGet]
+        public IActionResult GetCurrentRoleReturnPartial(int pageIndex)
+        {
+            IQueryable<IdentityRole> roles = roleManager.Roles;
+            IdentityRole currentRole = new();
+
+            // TODO: Get current role based on the page index
+
+            return PartialView("_roleCard");
+        }
+
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] RoleViewModel model)
         {

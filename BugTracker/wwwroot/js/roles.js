@@ -89,21 +89,31 @@ class Roles {
     }
 
     async getCurrentRole(e) {
-        
+        const thisRole = this.findNearestParentCard(e.target);
+        let pageIndex = 0;
+        console.log(thisRole);
 
         switch (e.target.value) {
             case "Previous":
-                console.log(e.target.value);
+                pageIndex--;
                 break;
             case "1":
-                console.log(e.target.value);
+                pageIndex = 1;
                 break;
             case "2":
-                console.log(e.target.value);
+                pageIndex = 2;
                 break;
             case "Next":
-                console.log(e.target.value);
+                pageIndex++;
                 break;
+        }
+
+        try {
+            const res = await fetch(`/role/getCurrentRoleReturnPartial/${pageIndex}`);
+            const data = await res.text();
+            console.log(data);
+        } catch (err) {
+            console.error(err);
         }
     }
 
