@@ -70,9 +70,10 @@ class Roles {
     } 
 
     getNewRoleIndex(index, predicate) {
-        if (predicate === "previous") index--;
+        if (predicate === "Previous") index--;          
         else if (predicate === "1") index = 0;
         else if (predicate === "2") index = 1;
+        else if (predicate === "3") index = 3;
         else index++;
         return index;
     }
@@ -98,20 +99,20 @@ class Roles {
 
     async paginateRoles(e) {
         e.preventDefault();
-        console.log("hi");
         const thisRole = this.findNearestParentCard(e.target);
-        const roleIndex = thisRole.getAttribute("data-index");
+        const thisRoleParent = thisRole.parentElement;
+        let roleIndex = thisRole.getAttribute("data-index");     
+        roleIndex = this.getNewRoleIndex(roleIndex, e.target.textContent);
         console.log(roleIndex);
-        const newRoleIndex = getNewRoleIndex(e.target.value, roleIndex);
-        console.log(roleIndex, newRoleIndex);
 
-        /*try {
+        try {
             const res = await fetch(`/role/getCurrentRoleReturnPartial/${roleIndex}`);
-            const data = await res.text();
-            console.log(data);
+            const roleCardHTML = await res.text();
+            console.log(roleCardHTML);
+            thisRoleParent.innerHTML = roleCardHTML;
         } catch (err) {
             console.error(err);
-        }*/
+        }
     }
 
     handleEdit(e) {

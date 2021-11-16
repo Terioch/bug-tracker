@@ -87,21 +87,38 @@ namespace BugTracker.Controllers
         }       
 
         [HttpGet]
-        public IActionResult GetCurrentRoleReturnPartial(int roleIndex)
-        {
+        public async Task<IActionResult> GetCurrentRoleReturnPartial(int roleIndex)
+        {            
+            Console.WriteLine(roleIndex);
+            roleIndex = 1;
             IQueryable<IdentityRole> roles = roleManager.Roles;
-            IdentityRole newRole = new();
-            int pointerIndex = 0;
+            RoleViewModel newRole = new();
+            int pointerIndex = 0;           
 
             // Check that index is within a valid range
-            if (roleIndex < 0) roleIndex++;
-            else if (roleIndex >= roles.Count()) roleIndex--;
+            if (roleIndex < 0) roleIndex = roles.Count() - 1;
+            else if (roleIndex >= roles.Count()) roleIndex = 0;            
             
             foreach (var role in roles)
             {
                 if (pointerIndex == roleIndex)
-                {
-                    newRole = role;
+                {                    
+                    newRole = new() 
+                    { 
+                        Id = role.Id,
+                        Name = role.Name,
+                        Index = roleIndex,
+                    };
+
+                    foreach (var user in userManager.Users)
+                    {
+                        bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
+
+                        if (isInRole)
+                        {
+                            newRole.Users.Add($"{user.FirstName} {user.LastName}");
+                        }
+                    }
                 }
                 pointerIndex++;
             }
