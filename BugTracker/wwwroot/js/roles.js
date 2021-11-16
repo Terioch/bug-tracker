@@ -62,7 +62,12 @@ class Roles {
 
     getRoleUsers(thisRole) {
         const userCollection = thisRole.querySelector(".role-user-list").children;
-        const users = [...[...userCollection].map(u => u.textContent)];
+        let users = [];
+        [...[...userCollection].map(ul => (
+            [...ul.children].map(li => (
+                users.push(li.textContent)
+            ))
+        ))];
         return users;
     } 
 
@@ -92,25 +97,7 @@ class Roles {
         const removeUserBtn = document.querySelector(".remove-user");
         addUserBtn.addEventListener("click", (e) => this.handleUserAddition(e, thisRole));
         removeUserBtn.addEventListener("click", (e) => this.handleUserRemoval(e, thisRole));
-    }
-
-    async paginateRoles(e) {
-        if (!e.target.classList.contains("page-link")) return;
-
-        const thisRole = this.findNearestParentCard(e.target);
-        const thisRoleParent = thisRole.parentElement;
-        let roleIndex = thisRole.getAttribute("data-index");        
-        roleIndex = this.getNewRoleIndex(roleIndex, e.target.textContent);     
-
-        try {
-            const res = await fetch(`/role/getCurrentRoleReturnPartial/${roleIndex}`);
-            const roleCardHTML = await res.text();
-            thisRoleParent.innerHTML = roleCardHTML;
-            document.getElementById("rolePagination").addEventListener("click", this.paginateRoles); // Add listener to the new role card pagination element
-        } catch(err) {
-            console.error(err);
-        }
-    }
+    }   
 
     handleEdit(e) {
         const editBtn = e.target;
@@ -127,6 +114,24 @@ class Roles {
         editBtn.classList.remove("update-role");
         editBtn.classList.add("edit-role");
         editBtn.textContent = "Edit";
+    }
+
+    async paginateRoles(e) {
+        if (!e.target.classList.contains("page-link")) return;
+
+        const thisRole = this.findNearestParentCard(e.target);
+        const thisRoleParent = thisRole.parentElement;
+        let roleIndex = thisRole.getAttribute("data-index");
+        roleIndex = this.getNewRoleIndex(roleIndex, e.target.textContent);
+
+        try {
+            const res = await fetch(`/role/getCurrentRoleReturnPartial/${roleIndex}`);
+            const roleCardHTML = await res.text();
+            thisRoleParent.innerHTML = roleCardHTML;
+            document.getElementById("rolePagination").addEventListener("click", this.paginateRoles); // Add listener to the new role card pagination element
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     async populateUserDropdown() {

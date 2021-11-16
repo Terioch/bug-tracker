@@ -14,6 +14,10 @@
     }
 </style>
 
+@{
+    ViewBag.RowBreak = 0;
+}
+
 <div class="card mb-3 role-card" data-id="@Model.Id" data-index="@Model.Index">
     <div class="card-header">
         Role id: @Model.Id
@@ -27,21 +31,38 @@
         <div class="role-users-container d-flex flex-wrap align-items-center">           
             <div>
                 <h2 class="fs-5">Users in this role</h2>
-                <ul class="list-group list-group-horizontal-md mt-3 role-user-list">
-
-                @if (!Model.Users.Any())
-                {
-                    <li class="list-group-item border-0 bg-light">No users are associated with this role</li>
-                }
-                else
-                {                        
-                    @foreach (var name in Model.Users)
+                <div class="role-user-list">
+                    
+                    @if (!Model.Users.Any())
                     {
-                        <li class="list-group-item border-0 bg-light">@name</li>
-                    }                        
-                }   
+                        <li class="list-group-item border-0">No users are associated with this role</li>
+                    }
+                    else
+                    {                            
+                        @for (int i = 0; i < 6; i++) 
+                        {
+                            @if (ViewBag.RowBreak >= Model.Users.Count)
+                            {
+                                break;
+                            }
 
-                </ul>
+                            ViewBag.RowBreak += 3;
+
+                            <ul class="list-group list-group-horizontal w-80">                                
+                                @for (int j = ViewBag.RowBreak - 3; j < ViewBag.RowBreak; j++)
+                                {     
+                                    @if (j >= Model.Users.Count)
+                                    {
+                                        break;
+                                    }
+
+                                    <li class="list-group-item border-0">@Model.Users[j]</li>   
+                                }                               
+                            </ul>
+                        }                        
+                    }   
+                   
+                </div>                
             </div>                                    
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle rounded-circle user-dropdown-modal-icon" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#userDropdownModal">
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
