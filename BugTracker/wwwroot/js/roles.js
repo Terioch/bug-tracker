@@ -14,6 +14,7 @@ class Roles {
             };
             this.clickHandler = this.clickHandler.bind(this);
             this.onUserDropdownModalOpen = this.onUserDropdownModalOpen.bind(this);
+            this.paginateRoles = this.paginateRoles.bind(this);
             this.populateUserDropdown();
             this.events();
         }       
