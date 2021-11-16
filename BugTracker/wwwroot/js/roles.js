@@ -24,7 +24,7 @@ class Roles {
         document.getElementById("userSelectDropdown").addEventListener("change", (e) => this.setSelectedUser(e));
         document.getElementById("rolePagination").addEventListener("click", (e) => {
             if (e.target.classList.contains("page-link")) {
-                this.getCurrentRole(e);
+                this.paginateRoles(e);
             }
         });
     }
@@ -55,18 +55,26 @@ class Roles {
         el.classList.add("border-0");
     }
 
-    getRoleUsers(thisRole) {
-        const userCollection = thisRole.querySelector(".role-user-list").children;
-        const users = [...[...userCollection].map(u => u.textContent)];
-        return users;
-    }
-
     getRoleModel(thisRole) {
         return {
             id: thisRole.getAttribute("data-id"),
             name: thisRole.querySelector(".role-name-input").value,
             users: this.getRoleUsers(thisRole)
         };
+    }
+
+    getRoleUsers(thisRole) {
+        const userCollection = thisRole.querySelector(".role-user-list").children;
+        const users = [...[...userCollection].map(u => u.textContent)];
+        return users;
+    } 
+
+    getNewRoleIndex(index, predicate) {
+        if (predicate === "previous") index--;
+        else if (predicate === "1") index = 0;
+        else if (predicate === "2") index = 1;
+        else index++;
+        return index;
     }
 
     setSelectedUser(e) {       
@@ -78,7 +86,7 @@ class Roles {
                 };
             }
         });
-    }
+    }    
 
     onUserDropdownModalOpen(e) {
         const thisRole = this.findNearestParentCard(e.target);        
@@ -88,33 +96,22 @@ class Roles {
         removeUserBtn.addEventListener("click", (e) => this.handleUserRemoval(e, thisRole));
     }
 
-    async getCurrentRole(e) {
+    async paginateRoles(e) {
+        e.preventDefault();
+        console.log("hi");
         const thisRole = this.findNearestParentCard(e.target);
-        let pageIndex = 0;
-        console.log(thisRole);
+        const roleIndex = thisRole.getAttribute("data-index");
+        console.log(roleIndex);
+        const newRoleIndex = getNewRoleIndex(e.target.value, roleIndex);
+        console.log(roleIndex, newRoleIndex);
 
-        switch (e.target.value) {
-            case "Previous":
-                pageIndex--;
-                break;
-            case "1":
-                pageIndex = 1;
-                break;
-            case "2":
-                pageIndex = 2;
-                break;
-            case "Next":
-                pageIndex++;
-                break;
-        }
-
-        try {
-            const res = await fetch(`/role/getCurrentRoleReturnPartial/${pageIndex}`);
+        /*try {
+            const res = await fetch(`/role/getCurrentRoleReturnPartial/${roleIndex}`);
             const data = await res.text();
             console.log(data);
         } catch (err) {
             console.error(err);
-        }
+        }*/
     }
 
     handleEdit(e) {

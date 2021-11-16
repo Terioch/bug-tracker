@@ -58,6 +58,7 @@ namespace BugTracker.Controllers
         {     
             IQueryable<IdentityRole> roles = roleManager.Roles;
             List<RoleViewModel> roleListModel = new();
+            int roleIndex = 0;
 
             foreach (var role in roles)
             {
@@ -76,22 +77,35 @@ namespace BugTracker.Controllers
                 roleListModel.Add(new RoleViewModel
                 {
                     Id = role.Id,
-                    Name = role.Name,   
+                    Name = role.Name,      
+                    Index = roleIndex,
                     Users = roleModel.Users
-                });                
+                });
+                roleIndex++;
             }                      
             return View(roleListModel);
         }       
 
         [HttpGet]
-        public IActionResult GetCurrentRoleReturnPartial(int pageIndex)
+        public IActionResult GetCurrentRoleReturnPartial(int roleIndex)
         {
             IQueryable<IdentityRole> roles = roleManager.Roles;
-            IdentityRole currentRole = new();
+            IdentityRole newRole = new();
+            int pointerIndex = 0;
 
-            // TODO: Get current role based on the page index
-
-            return PartialView("_roleCard");
+            // Check that index is within a valid range
+            if (roleIndex < 0) roleIndex++;
+            else if (roleIndex >= roles.Count()) roleIndex--;
+            
+            foreach (var role in roles)
+            {
+                if (pointerIndex == roleIndex)
+                {
+                    newRole = role;
+                }
+                pointerIndex++;
+            }
+            return PartialView("_roleCard", newRole);
         }
 
         [HttpPut]
