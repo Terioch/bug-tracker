@@ -87,12 +87,11 @@ namespace BugTracker.Controllers
         }       
 
         [HttpGet]
-        public async Task<IActionResult> GetCurrentRoleReturnPartial(int roleIndex)
-        {            
-            Console.WriteLine(roleIndex);
-            roleIndex = 1;
+        public async Task<IActionResult> GetCurrentRoleReturnPartial(int id)
+        {               
             IQueryable<IdentityRole> roles = roleManager.Roles;
             RoleViewModel newRole = new();
+            int roleIndex = id;
             int pointerIndex = 0;           
 
             // Check that index is within a valid range

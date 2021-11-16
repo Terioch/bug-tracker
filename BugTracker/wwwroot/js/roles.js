@@ -22,11 +22,7 @@ class Roles {
     events() {
         document.getElementById("rolesMain").addEventListener("click", this.clickHandler);
         document.getElementById("userSelectDropdown").addEventListener("change", (e) => this.setSelectedUser(e));
-        document.getElementById("rolePagination").addEventListener("click", (e) => {
-            if (e.target.classList.contains("page-link")) {
-                this.paginateRoles(e);
-            }
-        });
+        document.getElementById("rolePagination").addEventListener("click", this.paginateRoles);
     }
 
     clickHandler(e) {
@@ -98,19 +94,19 @@ class Roles {
     }
 
     async paginateRoles(e) {
-        e.preventDefault();
+        if (!e.target.classList.contains("page-link")) return;
+
         const thisRole = this.findNearestParentCard(e.target);
         const thisRoleParent = thisRole.parentElement;
-        let roleIndex = thisRole.getAttribute("data-index");     
-        roleIndex = this.getNewRoleIndex(roleIndex, e.target.textContent);
-        console.log(roleIndex);
+        let roleIndex = thisRole.getAttribute("data-index");        
+        roleIndex = this.getNewRoleIndex(roleIndex, e.target.textContent);     
 
         try {
             const res = await fetch(`/role/getCurrentRoleReturnPartial/${roleIndex}`);
             const roleCardHTML = await res.text();
-            console.log(roleCardHTML);
             thisRoleParent.innerHTML = roleCardHTML;
-        } catch (err) {
+            document.getElementById("rolePagination").addEventListener("click", this.paginateRoles); // Add listener to the new role card pagination element
+        } catch(err) {
             console.error(err);
         }
     }
