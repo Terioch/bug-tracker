@@ -241,7 +241,7 @@ namespace BugTracker.Controllers
                 }
                 return PartialView("_RoleUserList", users);                                
             }
-            throw new Exception("User is already in this role");
+            throw new HttpRequestException("User is already in this role");
         }
 
         [HttpDelete]
@@ -275,11 +275,11 @@ namespace BugTracker.Controllers
                             FirstName = item.FirstName,
                             LastName = item.LastName,
                         });
-                    }                    
-                    return PartialView("_RoleUserList", users);
-                }               
+                    }                                        
+                }
+                return PartialView("_RoleUserList", users);
             }
-            throw new Exception("User is not in this role");
+            throw new HttpRequestException("User is not in this role");
         }
     }
 }
