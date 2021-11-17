@@ -1,0 +1,42 @@
+﻿@model List<BugTracker.Models.UserModel>;
+
+@{
+    ViewBag.RowBreak = 0;
+}
+
+
+<h2 class="fs-5">Users in this role</h2>
+<div class="role-user-list">
+                    
+    @if (!Model.Any())
+    {
+        <ul>
+            <li class="list-group-item border-0">No users are associated with this role</li>
+        </ul>                       
+    }
+    else
+    {                            
+        @for (int i = 0; i < 6; i++) 
+        {
+            @if (ViewBag.RowBreak >= Model.Count)
+            {
+                break;
+            }
+
+            ViewBag.RowBreak += 3;
+
+            <ul class="list-group list-group-horizontal w-80">                                
+                @for (int j = ViewBag.RowBreak - 3; j < ViewBag.RowBreak; j++)
+                {     
+                    @if (j >= Model.Count)
+                    {
+                        break;
+                    }
+
+                    <li class="list-group-item border-0" data-id="@Model[j].Id">@Model[j].FirstName @Model[j].LastName</li>   
+                }                               
+            </ul>
+        }                        
+    }   
+                   
+</div>

@@ -218,28 +218,30 @@ namespace BugTracker.Controllers
             }
 
             ApplicationUser user = await userManager.FindByIdAsync(model.UserId);
-            bool isInRole = await userManager.IsInRoleAsync(user, role.Name);           
+            bool isInRole = await userManager.IsInRoleAsync(user, role.Name);         
 
             if (!isInRole)
             {
-                IdentityResult result = await userManager.AddToRoleAsync(user, role.Name);
+                List<UserModel> users = new();
+                await userManager.AddToRoleAsync(user, role.Name);
 
-                if (result.Succeeded)
+                foreach (var item in userManager.Users)
                 {
-                    return Json(model.RoleId);
+                    bool isItemInRole = await userManager.IsInRoleAsync(item, role.Name);
+
+                    if (isItemInRole)
+                    {                            
+                        users.Add(new UserModel
+                        {
+                            Id = item.Id,
+                            FirstName = item.FirstName,
+                            LastName = item.LastName,
+                        });
+                    }
                 }
-
-                List<IdentityError> errors = new();
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                    errors.Add(error);
-                }
-
-                return Json(errors);
+                return PartialView("_RoleUserList", users);                                
             }
-            return Json(model);
+            throw new Exception("User is already in this role");
         }
 
         [HttpDelete]
@@ -253,30 +255,31 @@ namespace BugTracker.Controllers
                 return View("NotFound");
             }
 
-            ApplicationUser user = await userManager.FindByIdAsync(model.UserId);
-            bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
+            ApplicationUser user = await userManager.FindByIdAsync(model.UserId);  
+            bool isInRole = await userManager.IsInRoleAsync(user, role.Name);            
 
             if (isInRole)
             {
-                IdentityResult result = await userManager.RemoveFromRoleAsync(user, role.Name);
-
-                if (result.Succeeded)
+                List<UserModel> users = new();
+                await userManager.RemoveFromRoleAsync(user, role.Name);
+                               
+                foreach (var item in userManager.Users)
                 {
-                    return Json(model.RoleId);
-                }
+                    bool isItemInRole = await userManager.IsInRoleAsync(item, role.Name);
 
-                List<IdentityError> errors = new();
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                    errors.Add(error);
-                }
-
-                return Json(errors);
+                    if (isItemInRole)
+                    {
+                        users.Add(new UserModel
+                        {
+                            Id = item.Id,
+                            FirstName = item.FirstName,
+                            LastName = item.LastName,
+                        });
+                    }                    
+                    return PartialView("_RoleUserList", users);
+                }               
             }
-
-            return Json(model);
+            throw new Exception("User is not in this role");
         }
     }
 }

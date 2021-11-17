@@ -206,6 +206,7 @@ class Roles {
     async handleUserAddition(e, thisRole) {
         e.stopPropagation(); // Prevent more than one method execution
         const roleId = thisRole.getAttribute("data-id");
+        const thisRoleUserList = thisRole.querySelector(".role-user-list-container");
        
         try {
             const res = await fetch(`/role/addUser`, {
@@ -219,8 +220,9 @@ class Roles {
                     userName: this.selectedUser.userName
                 })
             });
-            const data = await res.json();
-            console.log(data);
+            const userListHTML = await res.text();
+            console.log(userListHTML);
+            thisRoleUserList.innerHTML = userListHTML;
         } catch (err) {
             console.error(err);
         }
@@ -229,6 +231,7 @@ class Roles {
     async handleUserRemoval(e, thisRole) {
         e.stopPropagation(); // Prevent more than one method execution
         const roleId = thisRole.getAttribute("data-id");
+        const thisRoleUserList = thisRole.querySelector(".role-user-list-container");
 
         try {
             const res = await fetch(`/role/removeUser`, {
@@ -242,8 +245,9 @@ class Roles {
                     userName: this.selectedUser.userName
                 })
             });
-            const data = await res.json();
-            console.log(data);
+            const userListHTML = await res.text();
+            console.log(userListHTML);
+            thisRoleUserList.innerHTML = userListHTML;
         } catch (err) {
             console.error(err);
         }

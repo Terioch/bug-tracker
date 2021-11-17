@@ -29,13 +29,15 @@
         <hr style="background-color: #d1d1d1" />        
 
         <div class="role-users-container d-flex flex-wrap align-items-center">           
-            <div>
+            <div class="role-user-list-container">
                 <h2 class="fs-5">Users in this role</h2>
                 <div class="role-user-list">
                     
                     @if (!Model.Users.Any())
                     {
-                        <li class="list-group-item border-0">No users are associated with this role</li>
+                        <ul>
+                            <li class="list-group-item border-0">No users are associated with this role</li>
+                        </ul>                       
                     }
                     else
                     {                            
