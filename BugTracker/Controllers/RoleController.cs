@@ -222,7 +222,7 @@ namespace BugTracker.Controllers
 
             if (!isInRole)
             {
-                List<UserModel> users = new();
+                List<UserViewModel> users = new();
                 await userManager.AddToRoleAsync(user, role.Name);
 
                 foreach (var item in userManager.Users)
@@ -231,7 +231,7 @@ namespace BugTracker.Controllers
 
                     if (isItemInRole)
                     {                            
-                        users.Add(new UserModel
+                        users.Add(new UserViewModel
                         {
                             Id = item.Id,
                             FirstName = item.FirstName,
@@ -260,7 +260,7 @@ namespace BugTracker.Controllers
 
             if (isInRole)
             {
-                List<UserModel> users = new();
+                List<UserViewModel> users = new();
                 await userManager.RemoveFromRoleAsync(user, role.Name);
                                
                 foreach (var item in userManager.Users)
@@ -269,7 +269,7 @@ namespace BugTracker.Controllers
 
                     if (isItemInRole)
                     {
-                        users.Add(new UserModel
+                        users.Add(new UserViewModel
                         {
                             Id = item.Id,
                             FirstName = item.FirstName,

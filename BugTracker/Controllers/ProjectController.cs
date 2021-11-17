@@ -8,16 +8,11 @@ using System.Threading.Tasks;
 namespace BugTracker.Controllers
 {
     [Authorize]
-    public class DashboardController : Controller
+    public class ProjectController : Controller
     {
         public IActionResult Index()
         {
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        }       
     }
 }

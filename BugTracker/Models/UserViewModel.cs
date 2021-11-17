@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Models
 {
-    public class UserModel
+    public class UserViewModel
     {
         public string? Id { get; set; }
 
