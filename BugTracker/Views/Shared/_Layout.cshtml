@@ -9,36 +9,59 @@
     <link rel="stylesheet" href="~/BugTracker.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <main class="d-flex">
-        <div class="container">
+     <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light border-bottom box-shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BugTracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-md-inline-flex justify-content-between align-items-center">                
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </nav>
+    <section class="d-flex">                          
+        <div class="container mt-3">
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
-        </div>
-        <header>                        
-            <nav class="h-100 navbar d-flex flex-column navbar-primary bg-primary p-3 box-shadow">  
-                @*<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>*@
-                <a class="navbar-brand fs-2" asp-area="" asp-controller="Home" asp-action="Index">BugTracker</a>                
-                <ul class="navbar-nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Dashboard" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Role" asp-action="ListRoles">Manage Roles</a>
-                    </li>
-                    <partial name="_LoginPartial" />
-                </ul>       
-            </nav>
-        </header>                
-    </main> 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - BugTracker - <a asp-area="" asp-controller="Dashboard" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>  
+        </div>    
+        
+        <nav class="d-flex flex-column bg-primary p-3 box-shadow" style="height: 85.8vh">           
+            @*<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>*@
+            <a class="navbar-brand fs-2" asp-area="" asp-controller="Home" asp-action="Index">
+                <div class="d-flex-column text-center">
+                    <p class="p-0 m-0">Welcome,</p>
+                    <p class="p-0 m-0 fw-bold">Rio</p>
+                </div>
+            </a>                
+            <div class="mt-3" style="height: 1px; background-color: grey" />
+            <ul class="navbar-nav flex-column mt-3">
+                <li class="nav-item">
+                    <a class="nav-link text-white" asp-area="" asp-controller="Dashboard" asp-action="Index">My Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" asp-area="" asp-controller="Role" asp-action="ListRoles">My Tickets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" asp-area="" asp-controller="Role" asp-action="ListRoles">Manage Role Assignment</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" asp-area="" asp-controller="Role" asp-action="ListRoles">Manage Project Users</a>
+                </li>
+            </ul>       
+        </nav>  
+                                  
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - BugTracker - <a asp-area="" asp-controller="Dashboard" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>                                                                                                                                
+    </section>      
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true" type="module"></script>
@@ -47,22 +70,22 @@
 </html>
 
  @* <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BugTracker</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="ListRoles">Manage Roles</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>*@   
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BugTracker</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="ListRoles">Manage Roles</a>
+                </li>
+            </ul>
+            <partial name="_LoginPartial" />
+        </div>
+    </div>
+</nav>*@   
