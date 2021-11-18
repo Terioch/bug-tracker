@@ -9,30 +9,86 @@
     <link rel="stylesheet" href="~/BugTracker.styles.css" asp-append-version="true" />
 </head>
 <body>
-     <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light border-bottom box-shadow">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BugTracker</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-md-inline-flex justify-content-between align-items-center">                
-                <partial name="_LoginPartial" />
+    <main class="container-fluid">       
+        <div class="row flex-nowrap">
+            <!-- Top Nav and Main Content Column -->
+            <div class="col">
+                <div class="row">
+                     <!-- Top Nav -->            
+                    <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light border-bottom box-shadow">
+                        <div class="container-fluid">
+                            <a class="navbar-brand" asp-area="" asp-controller="Project" asp-action="Index">BugTracker</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-md-inline-flex justify-content-between align-items-center">                
+                                <partial name="_LoginPartial" />
+                            </div>
+                        </div>
+                    </nav> 
+                </div>
+                <div class="row">
+                     <!-- Main Content -->
+                    <div class="col mt-3">
+                        <main role="main" class="pb-3">
+                            @RenderBody()
+                        </main>
+                    </div>
+                </div>
+
+               @* <div class="row">
+                 <!-- Footer -->
+                    <footer class="border-top footer text-muted" style="position: fixed; bottom: 0; left: 0">
+                        <div class="container">
+                            &copy; 2021 - BugTracker - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </div>
+                    </footer>    
+                </div>*@
             </div>
-        </div>
-    </nav>
-    <section class="d-flex">                          
-        <div class="container mt-3">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>    
-        
-        <nav class="d-flex flex-column bg-primary p-3 box-shadow" style="height: 85.8vh">           
-            @*<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>*@
+    
+            <!-- SideBar Nav Column -->
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-primary">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">                          
+                    <!-- Nav Header -->
+                    <div class="d-flex flex-column pb-3 mb-md-0 me-md-auto text-center fs-5">
+                        <p class="p-0 m-0">Welcome,</p>
+                        <p class="p-0 m-0 fw-bold">Rio</p>
+                    </div>              
+                            
+                    <!-- Nav Items -->
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
+                        <li class="nav-item">
+                            <a class="nav-link align-middle px-0 text-white" asp-controller="Project" asp-action="Index">
+                                <i class="fs-4 bi-house"></i> 
+                                <span class="ms-1 d-none d-sm-inline">My Projects</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link align-middle px-0" asp-controller="Project" asp-action="Index">
+                                <i class="fs-4 bi-table"></i> 
+                                <span class="ms-1 d-none d-sm-inline">My Tickets</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link align-middle px-0" asp-controller="Role" asp-action="ListRoles">
+                                <i class="fs-4 bi-bootstrap"></i> 
+                                <span class="ms-1 d-none d-sm-inline">Manage Role Assignment</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link align-middle px-0" asp-controller="Role" asp-action="ListRoles">
+                                <i class="fs-4 bi-speedometer"></i> 
+                                <span class="ms-1 d-none d-sm-inline">Manage Project Users</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>                      
+    </main>           
+
+        @*<nav class="d-flex flex-column bg-primary p-3 box-shadow" style="height: 95vh">                           
             <a class="navbar-brand fs-2" asp-area="" asp-controller="Home" asp-action="Index">
                 <div class="d-flex-column text-center">
                     <p class="p-0 m-0">Welcome,</p>
@@ -54,38 +110,11 @@
                     <a class="nav-link text-white" asp-area="" asp-controller="Role" asp-action="ListRoles">Manage Project Users</a>
                 </li>
             </ul>       
-        </nav>  
-                                  
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2021 - BugTracker - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>                                                                                                                                
-    </section>      
+        </nav>  *@                                                                                                                                         
+        
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true" type="module"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
- @* <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light border-bottom box-shadow mb-3">
-    <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BugTracker</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="ListRoles">Manage Roles</a>
-                </li>
-            </ul>
-            <partial name="_LoginPartial" />
-        </div>
-    </div>
-</nav>*@   

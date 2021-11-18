@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Models
 {
-    public class TicketModel
+    public class ProjectModel
     {
-        public string? Id { get; set; }
+        public string? ProjectId { get; set; }
 
-        public string? ProjectId { get; set; } 
+        public string? Name { get; set; }
 
-        public string? Description { get; set; }        
+        public List<TicketModel>? Tickets { get; set; }
     }
 }
