@@ -10,7 +10,13 @@ namespace BugTracker.Models
     {
         public string? ProjectId { get; set; }
 
+        [Required]
         public string? Name { get; set; }
+
+        [Required]
+        public string? Description { get; set; }
+
+        public List<UserViewModel>? Users { get; set; }
 
         public List<TicketModel>? Tickets { get; set; }
     }

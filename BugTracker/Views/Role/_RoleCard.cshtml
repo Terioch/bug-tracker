@@ -1,12 +1,8 @@
 ﻿@model BugTracker.Models.RoleViewModel;
 
 <style>
-    .bi-plus-circle {
-        margin-left: 5rem;
-    }
-
-    .bi-plus-circle:hover {
-        background-color: #5B85FD;
+    a {
+        cursor: pointer;
     }
 
     .role-card {
@@ -28,9 +24,12 @@
         <ul class="list-group error-list"></ul>
         <hr style="background-color: #d1d1d1" />        
 
-        <div class="role-users-container d-flex flex-wrap align-items-center">           
-            <div class="role-user-list-container">
-                <h2 class="fs-5">Users in this role</h2>
+        <div class="role-users-container"> 
+            <div class="d-flex flex-wrap align-items-end mb-3">
+                <p class="fs-5 me-3 mb-0 pb-0 fw-bold text-decoration-underline">Users in this role</p>
+                <a class="edit-user-list edit-user-list-onload mb-0 pb-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>                
+            </div>
+            <div class="role-user-list-container">                
                 <div class="role-user-list">
                     
                     @if (!Model.Users.Any())
@@ -66,10 +65,10 @@
                    
                 </div>                
             </div>                                    
-            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle rounded-circle user-dropdown-modal-icon user-dropdown-modal-icon-onload" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#userDropdownModal">
+            @*<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle rounded-circle user-dropdown-modal-icon user-dropdown-modal-icon-onload" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#userDropdownModal">
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-            </svg>                      
+            </svg>  *@                    
         </div>                    
 
     </div>

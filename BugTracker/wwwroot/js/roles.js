@@ -30,7 +30,7 @@ class Roles {
         if (e.target.classList.contains("edit-role")) this.handleEdit(e);
         else if (e.target.classList.contains("update-role")) this.handleUpdate(e);
         else if (e.target.classList.contains("delete-role")) this.handleDelete(e);
-        else if (e.target.classList.contains("user-dropdown-modal-icon-onload")) this.onUserDropdownModalOpen(e);
+        else if (e.target.classList.contains("edit-user-list-onload")) this.onUserDropdownModalOpen(e);
     }
 
     findNearestParentCard(el) {
@@ -97,8 +97,7 @@ class Roles {
         const removeUserBtn = document.querySelector(".remove-user");
         addUserBtn.addEventListener("click", (e) => this.handleUserAddition(e, thisRole));
         removeUserBtn.addEventListener("click", (e) => this.handleUserRemoval(e, thisRole));
-        e.target.classList.remove("user-dropdown-modal-icon-onload"); // Prevent more than one method execution
-        console.log("hi");
+        e.target.classList.remove("edit-user-list-onload"); // Prevent more than one method execution
     }   
 
     handleEdit(e) {
@@ -208,9 +207,10 @@ class Roles {
     async handleUserAddition(e, thisRole) {
         e.stopPropagation(); // Prevent more than one method execution
         const roleId = thisRole.getAttribute("data-id");
-        const thisRoleUserList = thisRole.querySelector(".role-user-list-container");       
+        const thisRoleUserList = thisRole.querySelector(".role-user-list-container");
+        console.log("add user");
        
-        try {
+        try {            
             const res = await fetch(`/role/addUser`, {
                 method: "POST",
                 headers: {
@@ -235,8 +235,9 @@ class Roles {
         e.stopPropagation(); // Prevent more than one method execution
         const roleId = thisRole.getAttribute("data-id");
         const thisRoleUserList = thisRole.querySelector(".role-user-list-container");
+        console.log("remove user");
 
-        try {
+        try {            
             const res = await fetch(`/role/removeUser`, {
                 method: "DELETE",
                 headers: {
@@ -251,7 +252,7 @@ class Roles {
             
             if (res.status === 500) throw await res.text();
             const userListHTML = await res.text();
-            thisRoleUserList.innerHTML = userListHTML;
+            thisRoleUserList.innerHTML = userListHTML;       
         } catch (err) {
             console.error(err);
         }
