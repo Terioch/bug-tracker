@@ -13,7 +13,7 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    public DbSet<ProjectModel> Projects { get; set; }
+    public DbSet<Project> Projects { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

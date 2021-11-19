@@ -14,14 +14,14 @@ namespace BugTracker.Models
             this.context = context;
         }
 
-        public IEnumerable<ProjectModel> GetAllProjects()
+        public IEnumerable<Project> GetAllProjects()
         {            
             return context.Projects;
         }
 
-        public ProjectModel GetProject(string id)
+        public Project GetProject(string id)
         {
-            ProjectModel? project = context.Projects.Find(id);
+            Project? project = context.Projects.Find(id);
             
             if (project == null)
             {
@@ -30,16 +30,16 @@ namespace BugTracker.Models
             return project;
         }
 
-        public ProjectModel Create(ProjectModel project)
+        public Project Create(Project project)
         {
             context.Projects.Add(project);
             context.SaveChanges();
             return project;
         }
 
-        public ProjectModel Delete(string id)
+        public Project Delete(string id)
         {
-            ProjectModel? project = context.Projects.Find(id);
+            Project? project = context.Projects.Find(id);
 
             if (project == null)
             {
@@ -51,9 +51,9 @@ namespace BugTracker.Models
             return project;
         }        
 
-        public ProjectModel Update(ProjectModel project)
+        public Project Update(Project project)
         {
-            EntityEntry<ProjectModel> attachedProject = context.Projects.Attach(project);
+            EntityEntry<Project> attachedProject = context.Projects.Attach(project);
             attachedProject.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             context.SaveChanges();
             return project;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BugTracker.Areas.Identity.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Models
 {
-    public class ProjectModel
+    public class Project
     {
         public string? Id { get; set; }
 
@@ -16,8 +17,8 @@ namespace BugTracker.Models
         [Required]
         public string? Description { get; set; }
 
-        public List<UserViewModel>? Users { get; set; }
+        public List<ApplicationUser>? Users { get; set; }
 
-        public List<TicketModel>? Tickets { get; set; }
+        public List<Ticket>? Tickets { get; set; }
     }
 }
