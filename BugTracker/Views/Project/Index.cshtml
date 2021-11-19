@@ -1,10 +1,49 @@
-﻿@model ProjectModel;
+﻿@model IEnumerable<ProjectModel>;
 
 @{
     ViewData["Title"] = "Projects Page";
 }
 
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+      <h1 class="fs-3">Your Projects</h1>
+      <button class="btn btn-primary">Create New Project</button>
+  </div>
+  <div class="card-body">
+    <input class="form-control" placeholder="Search Project..." />
+
+    <table class="table">
+      <thead>
+        <tr>          
+          <th scope="col">Project Name</th>
+          <th scope="col">Number of Tickets</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          @if (!Model.Any())
+            {
+                <tr class="fs-5">There are no projects currently assigned to you</tr>
+            }
+            @foreach (var project in Model)
+            {
+                <tr>
+                    <td>@project.Name</td>
+                    <td>@project?.Tickets?.Count</td>
+                    <td>@project?.Description</td>
+                    <td>
+                        <a href="">Details</a>
+                        <a href="">Manage Users</a>
+                    </td>
+                </tr>     
+            }              
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <ul>
+        
+    </ul>
 </div>

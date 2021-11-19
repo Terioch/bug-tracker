@@ -1,4 +1,5 @@
-﻿using BugTracker.Areas.Identity.Data;
+﻿using BugTracker.Models;
+using BugTracker.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,8 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
         : base(options)
     {
     }
+
+    public DbSet<ProjectModel> Projects { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
