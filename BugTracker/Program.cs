@@ -1,5 +1,6 @@
 using BugTracker.Areas.Identity.Data;
 using BugTracker.Data;
+using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,9 @@ builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseSqlServer(connectionString));builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+// Dependency Injection
+builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)    
     .AddRoles<IdentityRole>()
