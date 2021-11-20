@@ -37,9 +37,15 @@
                 <tbody>
                 <tr>
                     <td>@project.Name</td>
-                    <td>@project?.Tickets?.Count</td>
+                    @if (project.Tickets != null)
+                    {
+                        <td>@project.Tickets.Count</td>   
+                    } else
+                    {
+                        <td>0</td>           
+                    }                    
                     <td>@project?.Description</td>
-                    <td>
+                    <td class="d-flex flex-column">
                         <a href="">Details</a>
                         <a href="">Manage Users</a>
                     </td>
