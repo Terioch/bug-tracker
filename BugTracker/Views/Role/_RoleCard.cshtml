@@ -14,10 +14,10 @@
     ViewBag.RowBreak = 0;
 }
 
-<div class="card mb-3 role-card" data-id="@Model.Id" data-index="@Model.Index">
-    <div class="card-header">
+<div class="card mb-3 role-card" style="min-height: 366px" data-id="@Model.Id" data-index="@Model.Index">
+   @* <div class="card-header">
         Role id: @Model.Id
-    </div>
+    </div>*@
     <div class="card-body">      
         <input class="card-title fs-3 p-2 rounded border border-0 font-weight-bold role-name-input" disabled asp-for="@Model.Name" />
                 
@@ -64,11 +64,17 @@
                     }   
                    
                 </div>                
-            </div>                                    
-            @*<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-plus-circle rounded-circle user-dropdown-modal-icon user-dropdown-modal-icon-onload" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#userDropdownModal">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-            </svg>  *@                    
+            </div>                   
+            <!-- User Pagination -->
+            <footer id="userPagination" class="footer" aria-label="collection of roles">                    
+                <ul class="pagination mb-1">
+                    <li class="page-item page-item-previous"><a class="page-link">Previous</a></li>
+                    <li class="page-item page-item-one"><a class="page-link">1</a></li>
+                    <li class="page-item page-item-two"><a class="page-link">2</a></li>     
+                    <li class="page-item page-item-two"><a class="page-link">3</a></li>     
+                    <li class="page-item page-item-next"><a class="page-link">Next</a></li>
+                </ul>                    
+            </footer>
         </div>                    
 
     </div>
@@ -76,17 +82,6 @@
         <div class="my-2">
             <btn class="btn btn-primary text-white edit-role">Edit Role</btn>
             <btn class="btn btn-danger delete-role">Delete Role</btn>       
-        </div>        
-
-         <!-- Role Pagination -->
-        <nav id="rolePagination" aria-label="collection of roles">                    
-            <ul class="pagination mb-1">
-                <li class="page-item page-item-previous"><a class="page-link">Previous</a></li>
-                <li class="page-item page-item-one"><a class="page-link">1</a></li>
-                <li class="page-item page-item-two"><a class="page-link">2</a></li>     
-                <li class="page-item page-item-two"><a class="page-link">3</a></li>     
-                <li class="page-item page-item-next"><a class="page-link">Next</a></li>
-            </ul>                    
-        </nav>
+        </div>                
     </div>    
 </div>

@@ -33,10 +33,15 @@
         </div>
     }
     else
-    {        
-        <div>
-            <partial name="_RoleCard" model="Model.FirstOrDefault()" />
-        </div>                 
+    {   
+         <div class="row row-cols-1 row-cols-lg-2 g-4"> 
+            @foreach (var role in Model) 
+            {               
+                <div class="col">
+                    <partial name="_RoleCard" model="role" />
+                </div>  
+            }                               
+        </div>                             
 
         <!-- User Dropdown Modal -->
         <div class="modal fade" id="userDropdownModal" tabindex="-1" aria-labelledby="userDropdownModal" aria-hidden="true">

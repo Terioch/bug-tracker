@@ -23,7 +23,7 @@ class Roles {
     events() {
         document.getElementById("rolesMain").addEventListener("click", this.clickHandler);
         document.getElementById("userSelectDropdown").addEventListener("change", (e) => this.setSelectedUser(e));
-        document.getElementById("rolePagination").addEventListener("click", this.paginateRoles);
+        // document.getElementById("rolePagination").addEventListener("click", this.paginateRoles);
     }
 
     clickHandler(e) {
