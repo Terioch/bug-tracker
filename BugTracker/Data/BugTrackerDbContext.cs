@@ -15,6 +15,8 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Project> Projects { get; set; }
 
+    public DbSet<Ticket> Ticket { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
