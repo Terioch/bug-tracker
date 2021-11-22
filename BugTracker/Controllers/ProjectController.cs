@@ -22,6 +22,11 @@ namespace BugTracker.Controllers
         {
             IEnumerable<Project> projects = repository.GetAllProjects();
             return View(projects);
-        }       
+        } 
+        
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
