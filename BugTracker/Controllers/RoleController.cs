@@ -10,7 +10,7 @@ using BugTracker.Areas.Identity.Data;
 
 namespace BugTracker.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

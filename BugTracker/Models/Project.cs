@@ -17,9 +17,9 @@ namespace BugTracker.Models
         [Required]
         public string? Description { get; set; }
 
-        public List<ApplicationUser>? Users { get; set; }
+        public List<ApplicationUser>? Users { get; set; } = new List<ApplicationUser>();
 
-        public List<Ticket>? Tickets { get; set; }
+        public List<Ticket>? Tickets { get; set; } = new List<Ticket>();
 
     }
 }

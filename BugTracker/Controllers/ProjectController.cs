@@ -37,5 +37,12 @@ namespace BugTracker.Controllers
             Project createdProject = repository.Create(project);
             return View("Index", createdProject);
         }
+
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            Project project = repository.GetProject(id);
+            return View(project);
+        }
     }
 }

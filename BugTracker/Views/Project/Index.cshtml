@@ -24,7 +24,7 @@
     } 
     else
     {
-        <table class="table">
+        <table class="table table-hover">
             <thead>
                 <tr>          
                     <th scope="col">Project Name</th>
@@ -37,18 +37,12 @@
             {                               
                 <tbody>
                     <tr>
-                        <td>@project.Name</td>
-                        @if (project.Tickets != null)
-                        {
-                            <td>@project.Tickets.Count</td>   
-                        } else
-                        {
-                            <td>0</td>           
-                        }                    
+                        <td>@project.Name</td>                        
+                        <td>@project?.Tickets?.Count</td>   
                         <td>@project?.Description</td>
                         <td class="d-flex flex-column">
                             <a href="" class="link-success">Manage Users</a>
-                            <a href="" class="link-info">Details</a>                            
+                            <a asp-action="Details" asp-route-id="@project.Id" class="link-info">Details</a>                            
                         </td>
                     </tr>     
                 </tbody>            
