@@ -2,11 +2,13 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 import Roles from "./roles.js";
+import Projects from "./projects.js";
 
 class BugTracker {
     constructor() {
         console.log("Initialized JavaScript Startup");
         this.roles = new Roles();
+        this.projects = new Projects();
     }
 }
 
