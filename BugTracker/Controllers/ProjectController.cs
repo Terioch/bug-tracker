@@ -24,9 +24,18 @@ namespace BugTracker.Controllers
             return View(projects);
         } 
         
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Project project)
+        {
+            project.Id = Guid.NewGuid().ToString();
+            Project createdProject = repository.Create(project);
+            return View("Index", createdProject);
         }
     }
 }

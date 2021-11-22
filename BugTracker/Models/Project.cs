@@ -20,5 +20,6 @@ namespace BugTracker.Models
         public List<ApplicationUser>? Users { get; set; }
 
         public List<Ticket>? Tickets { get; set; }
+
     }
 }

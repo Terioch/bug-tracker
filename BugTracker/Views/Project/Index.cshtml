@@ -13,7 +13,7 @@
         <div class="input-group-sm">
             <input class="form-control mb-3" placeholder="Search Project..."  />
         </div>        
-        <button class="btn btn-primary mb-3" asp-action="Create">Create New Project</button>
+        <a class="btn btn-primary mb-3" asp-action="Create">Create New Project</a>
     </div>
 
     @if (!Model.Any()) 
@@ -24,35 +24,36 @@
     } 
     else
     {
-        @foreach (var project in Model)
-        {                   
-            <table class="table">
-                <thead>
+        <table class="table">
+            <thead>
                 <tr>          
                     <th scope="col">Project Name</th>
                     <th scope="col">Ticket Count</th>
                     <th scope="col">Description</th>
                 </tr>
-                </thead>
+            </thead>
+
+            @foreach (var project in Model)
+            {                               
                 <tbody>
-                <tr>
-                    <td>@project.Name</td>
-                    @if (project.Tickets != null)
-                    {
-                        <td>@project.Tickets.Count</td>   
-                    } else
-                    {
-                        <td>0</td>           
-                    }                    
-                    <td>@project?.Description</td>
-                    <td class="d-flex flex-column">
-                        <a href="">Details</a>
-                        <a href="">Manage Users</a>
-                    </td>
-                </tr>     
-                </tbody>
-            </table>
-        }           
+                    <tr>
+                        <td>@project.Name</td>
+                        @if (project.Tickets != null)
+                        {
+                            <td>@project.Tickets.Count</td>   
+                        } else
+                        {
+                            <td>0</td>           
+                        }                    
+                        <td>@project?.Description</td>
+                        <td class="d-flex flex-column">
+                            <a href="" class="link-success">Manage Users</a>
+                            <a href="" class="link-info">Details</a>                            
+                        </td>
+                    </tr>     
+                </tbody>            
+            }           
+        </table>
     }                         
   </div>
 </div>
