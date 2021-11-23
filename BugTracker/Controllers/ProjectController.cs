@@ -34,8 +34,8 @@ namespace BugTracker.Controllers
         public IActionResult Create(Project project)
         {
             project.Id = Guid.NewGuid().ToString();
-            Project createdProject = repository.Create(project);
-            return View("Index", createdProject);
+            repository.Create(project);
+            return RedirectToAction("Index", "Project");
         }
 
         [HttpGet]
