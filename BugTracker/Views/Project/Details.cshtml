@@ -11,7 +11,7 @@
       <a asp-action="Index">Back to List</a>
   </div>
   <div class="card-body">
-      <section class="row g-3 d-flex flex-wrap">
+      <section class="row g-3 d-flex flex-column flex-xl-row">
         <div class="col">
             <div class="row mx-1">
                 <div class="col card-body border-bottom">
@@ -23,8 +23,8 @@
             <div class="row mt-3">
                 <div class="">
                     <div class="card-header bg-light">
-                        <h1 class="fs-3 mt-2">Assigned Personnel</h1>
-                        <p>Users working on this project</p>
+                        <h1 class="fs-3 mt-1">Assigned Personnel</h1>
+                        <p class="text-secondary mb-0">Users working on this project</p>
                     </div>
                     <div class="card-body">
                         <table class="table table-responsive">
@@ -35,6 +35,16 @@
                                     <th scope="col">Role</th>                     
                                 </tr>
                             </thead>
+                            @foreach (var user in Model.Users)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>@user.FirstName @user.LastName</td>                        
+                                        <td>@user.Email</td>   
+                                        <td>Developer</td>                                       
+                                    </tr>     
+                                </tbody>      
+                            }
                         </table>
                     </div>
                 </div>
@@ -44,8 +54,8 @@
         <div class="col mt-3">
             <div class="">
                 <div class="card-header bg-light">
-                    <h1 class="fs-3 mt-2">Project Tickets</h1>
-                    <p>Condensed ticket information</p>
+                    <h1 class="fs-3 mt-1">Project Tickets</h1>
+                    <p class="text-secondary mb-0">Condensed ticket information</p>
                 </div>
                 <div class="card-body">
                     <table class="table table-responsive">
@@ -53,10 +63,27 @@
                             <tr>          
                                 <th scope="col">Title</th>
                                 <th scope="col">Submitter</th>
+                                <th scope="col">Developer</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Created</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
+                        @foreach (var ticket in Model.Tickets)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@ticket.Title</td>                        
+                                    <td>@ticket.Submitter</td>   
+                                    <td>@ticket.AssignedDeveloper</td>
+                                    <td>@ticket.Status ? open : closed</td>
+                                    <td>@ticket.SubmittedDate</td>
+                                    <td class="d-flex flex-column">                                        
+                                        <a asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
+                                    </td>
+                                </tr>     
+                            </tbody>      
+                        }
                     </table>
                 </div>
             </div>
