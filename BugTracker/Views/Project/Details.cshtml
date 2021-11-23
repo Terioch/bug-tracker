@@ -4,27 +4,61 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="card">
+  <div class="card-header bg-light">
+      <h1 class="fs-3 mt-2">@Model.Name</h1>
+      <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+      <a asp-action="Index">Back to List</a>
+  </div>
+  <section class="row flex-wrap">
+    <div class="col">
+        <div class="row">
+            <div class="card-body border-bottom">
+            <h2 class="card-subtitle text-secondary mb-2" style="font-size: 14px">Project Description</h2>
+            <p class="card-text">@Model.Description</p> 
+            </div>
+        </div>
 
-<div>
-    <h4>Project</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+        <div class="row mt-3">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h1 class="fs-3 mt-2">Assigned Personnel</h1>
+                    <p>Users working on this project</p>
+                </div>
+                <div class="card-body">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>          
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>                     
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="col mt-3">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h1 class="fs-3 mt-2">Project Tickets</h1>
+                    <p>Condensed ticket information</p>
+                </div>
+                <div class="card-body">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>          
+                                <th scope="col">Title</th>
+                                <th scope="col">Submitter</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Created</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+  </section>
 </div>

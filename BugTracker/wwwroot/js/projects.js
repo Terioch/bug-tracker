@@ -9,17 +9,16 @@ class Projects {
     }
 
     events() {
-        document.getElementById("projectSearchInput").addEventListener("keydown", this.filterProjects);
+        document.getElementById("projectSearchInput").addEventListener("keyup", this.filterProjects);
     }    
 
     async filterProjects(e) {       
         const projectListContainer = document.getElementById("projectListContainer");
-        const searchTerm = e.target.value;              
-
+        const searchTerm = e.target.value.toLowerCase() || null;
+        
         try {
             const res = await fetch(`/project/filterProjectsByNameReturnPartial/${searchTerm}`);
-            const projectListHTML = await res.text();
-            console.log(projectListHTML);
+            const projectListHTML = await res.text();        
             projectListContainer.innerHTML = projectListHTML;
         } catch (err) {
             console.error(err);            

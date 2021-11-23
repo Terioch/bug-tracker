@@ -45,17 +45,22 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
-        [HttpGet]
-        public IActionResult FilterProjectsByNameReturnPartial(string searchTerm)
-        {            
+        [HttpGet("/Project/FilterProjectsByNameReturnPartial/{searchTerm}")]
+        public IActionResult FilterProjectsByNameReturnPartial(string searchTerm = "")
+        {                       
             List<Project> projects = repository.GetAllProjects().ToList();
+
+            if (searchTerm == "null")
+            {
+                return PartialView("_ProjectList", projects);
+            }
 
             if (projects.Count == 0)
             {
                 throw new Exception("No projects to filter based on predicate");
             }
 
-            var filteredProjects = projects.Where(p => p.Name == searchTerm);
+            var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
             return PartialView("_ProjectList", filteredProjects);
         }
     }
