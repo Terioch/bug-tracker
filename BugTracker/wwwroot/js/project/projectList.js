@@ -1,5 +1,5 @@
 ﻿
-class Projects {
+class ProjectList {
     constructor() {
         if (document.getElementById("projectSearchInput")) {
             console.log("Initialized projects");
@@ -26,4 +26,4 @@ class Projects {
     }
 }
 
-export default Projects;
+export default ProjectList;

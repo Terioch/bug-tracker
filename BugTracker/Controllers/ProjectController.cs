@@ -62,6 +62,20 @@ namespace BugTracker.Controllers
 
             var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
             return PartialView("_ProjectList", filteredProjects);
+        }        
+
+        [HttpPut]
+        public IActionResult Update(Project project)
+        {
+            return View(project);
+        }
+
+        [Authorize(Roles = "Admin, ProjectManager")]
+        [HttpDelete]
+        public IActionResult Delete(string id)
+        {
+            Project deletedProject = repository.Delete(id);
+            return Json(deletedProject);
         }
     }
 }

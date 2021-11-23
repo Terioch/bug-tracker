@@ -1,5 +1,5 @@
 ﻿
-class Roles {
+class RoleList {
     constructor() {
         if (document.getElementById("rolesMain")) {
             console.log("Initialized Roles");            
@@ -259,4 +259,4 @@ class Roles {
     }
 }
 
-export default Roles;
+export default RoleList;

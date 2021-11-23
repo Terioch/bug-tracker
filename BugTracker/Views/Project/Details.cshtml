@@ -1,14 +1,15 @@
 ﻿@model BugTracker.Models.Project
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Project Details";
 }
 
-<div class="card">
+<div id="projectInfoContainer" class="card">
   <div class="card-header bg-light">
       <h1 class="fs-3 mt-2">@Model.Name</h1>
-      <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+      <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |      
       <a asp-action="Index">Back to List</a>
+      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProjectModal">Delete</button>
   </div>
   <div class="card-body">
       <section class="row g-3 d-flex flex-column flex-xl-row">
@@ -78,7 +79,7 @@
                                     <td>@ticket.AssignedDeveloper</td>
                                     <td>@ticket.Status ? open : closed</td>
                                     <td>@ticket.SubmittedDate</td>
-                                    <td class="d-flex flex-column">                                        
+                                    <td class="">                                        
                                         <a asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
                                     </td>
                                 </tr>     
@@ -89,5 +90,18 @@
             </div>
         </div>
       </section>
+  </div>
+</div>
+
+<!-- Delete Project Modal -->
+<div class="modal fade" id="deleteProjectModal" tabindex="-1" aria-labelledby="deleteProjectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Project Removal</h5>
+        <button type="button" id="deleteProjectBtn" class="btn-danger" data-bs-dismiss="modal" aria-label="Delete"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    </div>
   </div>
 </div>
