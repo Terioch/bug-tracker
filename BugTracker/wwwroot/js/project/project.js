@@ -3,14 +3,18 @@ class Project {
     constructor() {
         if (document.getElementById("projectInfoContainer")) {
             console.log("Project Initialized");
-            this.deleteProject = this.deleteProject.bind(this);
+            this.handleDelete = this.handleDelete.bind(this);
             this.events();
         }               
     }
 
     events() {
-        document.getElementById("deleteProjectBtn").addEventListener("click", this.deleteProject);
+        document.getElementById("deleteProjectBtn").addEventListener("click", this.handleDelete);
     }
 
-
+    handleDelete() {
+        console.log("delete project");
+    }
 }
+
+export default Project;

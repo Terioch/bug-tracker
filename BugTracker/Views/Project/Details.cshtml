@@ -8,8 +8,8 @@
   <div class="card-header bg-light">
       <h1 class="fs-3 mt-2">@Model.Name</h1>
       <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |      
-      <a asp-action="Index">Back to List</a>
-      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProjectModal">Delete</button>
+      <a asp-action="Index">Back to List</a> |
+      <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteProjectModal">Delete</a>
   </div>
   <div class="card-body">
       <section class="row g-3 d-flex flex-column flex-xl-row">
@@ -99,8 +99,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Confirm Project Removal</h5>
-        <button type="button" id="deleteProjectBtn" class="btn-danger" data-bs-dismiss="modal" aria-label="Delete"></button>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="deleteProjectBtn" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Delete">Delete</button>       
       </div>
     </div>
   </div>
