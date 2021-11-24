@@ -30,7 +30,7 @@ namespace BugTracker.Controllers
         {
             ticket.Id = Guid.NewGuid().ToString();
             Ticket createdTicket = repository.Create(ticket);
-            return View("Details", createdTicket);         
+            return View("Details", createdTicket);
         }
 
         [HttpGet]
