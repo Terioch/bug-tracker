@@ -39,7 +39,7 @@ namespace BugTracker.Controllers
         {
             project.Id = Guid.NewGuid().ToString();
             repository.Create(project);
-            return RedirectToAction("Index", "Project");
+            return RedirectToAction("ListProjects", "Project");
         }
 
         [HttpGet]

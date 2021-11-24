@@ -18,5 +18,39 @@ namespace BugTracker.Controllers
             IEnumerable<Ticket> tickets = repository.GetAllTickets();
             return View(tickets);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Ticket ticket)
+        {
+            Ticket createdTicket = repository.Create(ticket);
+            return View("Ticket", createdTicket);         
+        }
+
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            Ticket ticket = repository.GetTicket(id);
+            return View(ticket);
+        }
+
+        [HttpPut]
+        public IActionResult Update(Ticket ticket)
+        {
+            repository.Update(ticket);
+            return View(ticket);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(string id)
+        {
+            repository.Delete(id);
+            return RedirectToAction("ListTickets", "Ticket");
+        }
     }
 }
