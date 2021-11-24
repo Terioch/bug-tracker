@@ -7,10 +7,12 @@ namespace BugTracker.Controllers
     public class TicketController : Controller
     {
         private readonly ITicketRepository repository;
+        private readonly IProjectRepository projectRepository;
 
-        public TicketController(ITicketRepository repository)
+        public TicketController(ITicketRepository repository, IProjectRepository projectRepository)
         {
             this.repository = repository;
+            this.projectRepository = projectRepository;
         }
 
         public IActionResult ListTickets()
@@ -28,7 +30,8 @@ namespace BugTracker.Controllers
         [HttpPost]
         public IActionResult Create(Ticket ticket)
         {
-            ticket.Id = Guid.NewGuid().ToString();
+            ticket.Id = Guid.NewGuid().ToString();            
+            ticket.SubmittedDate = DateTime.Now;
             Ticket createdTicket = repository.Create(ticket);
             return View("Details", createdTicket);
         }

@@ -1,4 +1,5 @@
 ﻿@model BugTracker.Models.Ticket
+@inject BugTracker.Data.BugTrackerDbContext context
 
 @{
     ViewData["Title"] = "Create";
@@ -10,63 +11,65 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
     <div class="row g-md-3">
         <div class="col-md-4">
-            <div class="form-group mb-3">
-                <label asp-for="Title" class="control-label"></label>
+            <div class="form-floating mb-3">                
                 <input asp-for="Title" class="form-control" />
+                <label asp-for="Title" class="control-label text-secondary"></label>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>    
         </div>
         <div class="col-md-4">
-            <div class="form-group mb-3">
-                <label asp-for="Description" class="control-label"></label>
+            <div class="form-floating mb-3">               
                 <input asp-for="Description" class="form-control" />
+                 <label asp-for="Description" class="control-label text-secondary"></label>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
         </div>
     </div>
     <div class="row g-md-3">
         <div class="col-md-4">
-              <select class="form-select mb-3" aria-label="Ticket project">
-              <option selected>Associated Project</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <select class="form-select mb-3" name="projects" aria-label="Ticket project">
+                @foreach (var project in context.Projects)
+                {                   
+                    <option id="@project.Id">@project.Name</option>
+                    <label class="control-label" for="projects">Projects</label>
+                }
             </select>
         </div>
         <div class="col-md-4">
             <select class="form-select mb-3" aria-label="Assigned developer">
-              <option selected>Assigned Developer</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option selected>Demo Dev</option>
+              <option>Dev Ed</option>
+              <option>Dev Peter</option>
+              <option>Dev Richards</option>
             </select>
         </div>
     </div>
     <div class="row g-md-3">
         <div class="col-md-4">
              <select class="form-select mb-3" aria-label="Ticket type">
-                <option selected>Ticket Type</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option>Bugs/Errors</option>
+                <option>Feature Requests</option>
+                <option>Other Comments</option>
+                <option>Training/Document Requests</option>
             </select>   
         </div>
         <div class="col-md-4">
             <select class="form-select mb-3" aria-label="Ticket priority">
-                <option selected>Ticket Priority</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option>Low</option>
+                <option selected>Medium</option>
+                <option>High</option>
+                <option>None</option>
             </select>
         </div>
     </div>
     <div class="row g-md-3">
         <div class="col-md-4">
             <select class="form-select mb-3" aria-label="Ticket status">
-                <option selected>Ticket Status</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option selected>New</option>
+                <option>Open</option>
+                <option>In Progress</option>
+                <option>Closed</option>
+                <option>To Be Confirmed</option>
             </select>
         </div>
         <div class="col-md-4">
