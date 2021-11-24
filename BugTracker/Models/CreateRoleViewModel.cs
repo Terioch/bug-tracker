@@ -13,6 +13,6 @@ namespace BugTracker.Models
         [Required]
         [DisplayName("Name of role")]
         [StringLength(30, MinimumLength = 3)]
-        public string Name { get; set; }       
+        public string? Name { get; set; }       
     }
 }

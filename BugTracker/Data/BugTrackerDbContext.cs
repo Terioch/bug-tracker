@@ -13,9 +13,11 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    public DbSet<Project> Projects { get; set; }
+    public DbSet<Project>? Projects { get; set; }
 
-    public DbSet<Ticket> Tickets { get; set; }
+    public DbSet<Ticket>? Tickets { get; set; }
+
+    public DbSet<UserProjects>? UserProjects { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

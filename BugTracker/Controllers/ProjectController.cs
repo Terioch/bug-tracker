@@ -13,10 +13,12 @@ namespace BugTracker.Controllers
     public class ProjectController : Controller
     {
         private readonly IProjectRepository repository;
+        private readonly ITicketRepository ticketRepository;
 
-        public ProjectController(IProjectRepository repository)
+        public ProjectController(IProjectRepository repository, ITicketRepository ticketRepository)
         {
             this.repository = repository;
+            this.ticketRepository = ticketRepository;
         }
 
         public IActionResult Index()
@@ -44,6 +46,7 @@ namespace BugTracker.Controllers
         public IActionResult Details(string id)
         {
             Project project = repository.GetProject(id);
+            project.Tickets = ticketRepository.GetTicketsByProject(id);
             return View(project);
         }
 

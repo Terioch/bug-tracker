@@ -19,6 +19,20 @@ namespace BugTracker.Services
             return context.Tickets;
         }
 
+        public List<Ticket> GetTicketsByProject(string id)
+        {
+            List<Ticket> tickets = new();
+
+            foreach (var ticket in context.Tickets)
+            {
+                if (ticket.ProjectId == id)
+                {
+                    tickets.Add(ticket);
+                }
+            }
+            return tickets;
+        }
+
         public Ticket GetTicket(string id)
         {
             Ticket? ticket = context.Tickets.Find(id);
@@ -57,6 +71,6 @@ namespace BugTracker.Services
             attachedTicket.State = EntityState.Modified;
             context.SaveChanges();
             return ticket;
-        }
+        }       
     }
 }
