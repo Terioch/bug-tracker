@@ -6,7 +6,7 @@ class Project {
             this.projectContainer = document.getElementById("projectContainer");
             this.handleDelete = this.handleDelete.bind(this);
             this.events();
-        }               
+        }          
     }
 
     events() {
@@ -23,12 +23,16 @@ class Project {
                     "Content-Type": "Application/Json",
                 }
             });
+
+            if (res.status === 400 && res.url) {
+                window.location.href = res.url;
+            }
             await res.json();         
             window.location.href = "/Project";
         } catch (err) {
             console.error(err);
         }
-    }
+    }    
 }
 
 export default Project;

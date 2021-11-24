@@ -1,4 +1,5 @@
 ﻿using BugTracker.Models;
+using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,6 +25,7 @@ namespace BugTracker.Controllers
             return View(projects);
         } 
         
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -70,7 +72,7 @@ namespace BugTracker.Controllers
             return View(project);
         }
 
-        [Authorize(Roles = "Admin, ProjectManager")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public IActionResult Delete(string id)
         {

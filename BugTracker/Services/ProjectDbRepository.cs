@@ -1,9 +1,11 @@
 ﻿using BugTracker.Data;
+using BugTracker.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 
-namespace BugTracker.Models
+namespace BugTracker.Services
 {
     public class ProjectDbRepository : IProjectRepository
     {
@@ -54,7 +56,7 @@ namespace BugTracker.Models
         public Project Update(Project project)
         {
             EntityEntry<Project> attachedProject = context.Projects.Attach(project);
-            attachedProject.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            attachedProject.State = EntityState.Modified;
             context.SaveChanges();
             return project;
         }

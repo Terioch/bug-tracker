@@ -10,7 +10,7 @@ using BugTracker.Areas.Identity.Data;
 
 namespace BugTracker.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -20,42 +20,11 @@ namespace BugTracker.Controllers
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
-        }      
-
-        [HttpGet]
-        public IActionResult CreateRole()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateRole(CreateRoleViewModel role)
-        {
-            if (ModelState.IsValid)
-            {
-                IdentityRole identityRole = new()
-                {
-                    Name = role.Name
-                };
-
-                IdentityResult result = await roleManager.CreateAsync(identityRole);
-
-                if (result.Succeeded)
-                {
-                    return Redirect("/role/ListRoles");
-                }
-
-                foreach (IdentityError error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-            }
-            return View(role);
         }
 
         [HttpGet]
         public async Task<IActionResult> ListRoles()
-        {     
+        {
             IQueryable<IdentityRole> roles = roleManager.Roles;
             List<RoleViewModel> roleListModel = new();
             int roleIndex = 0;
@@ -77,14 +46,58 @@ namespace BugTracker.Controllers
                 roleListModel.Add(new RoleViewModel
                 {
                     Id = role.Id,
-                    Name = role.Name,      
+                    Name = role.Name,
                     Index = roleIndex,
                     Users = roleModel.Users
                 });
                 roleIndex++;
-            }                      
+            }
             return View(roleListModel);
-        }       
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> CreateRole()
+        {
+            RoleViewModel roleModel = new();
+            var role = roleManager.Roles.ToList()[3];
+            foreach (var user in userManager.Users)
+            {
+                bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
+
+                if (isInRole)
+                {
+                    roleModel.Users.Add($"{user.FirstName} {user.LastName}");
+                }
+            }
+            Console.WriteLine(roleModel.Users);
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(CreateRoleViewModel role)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityRole identityRole = new()
+                {
+                    Name = role.Name
+                };
+
+                IdentityResult result = await roleManager.CreateAsync(identityRole);
+
+                if (result.Succeeded)
+                {                    
+                    return Redirect("/role/ListRoles");
+                }
+
+                foreach (IdentityError error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(role);
+        }        
 
         [HttpGet]
         public async Task<IActionResult> GetCurrentRoleReturnPartial(int id)
@@ -124,6 +137,7 @@ namespace BugTracker.Controllers
             return PartialView("_roleCard", newRole);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] RoleViewModel model)
         {
@@ -154,6 +168,7 @@ namespace BugTracker.Controllers
             return Json(new { errors });
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
@@ -206,6 +221,7 @@ namespace BugTracker.Controllers
             return Json(users);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] UserRoleViewModel model)
         {
@@ -244,6 +260,7 @@ namespace BugTracker.Controllers
             throw new HttpRequestException("User is already in this role");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> RemoveUser([FromBody] UserRoleViewModel model)
         {

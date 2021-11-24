@@ -169,6 +169,11 @@ class RoleList {
                 },
                 body: JSON.stringify(model)
             });
+
+            if (res.url) {
+                window.location.href = res.url;
+                return;
+            }      
             const data = await res.json();            
 
             if (data.errors) {
@@ -197,6 +202,11 @@ class RoleList {
                     "Content-Type": "application/json"
                 }             
             });
+
+            if (res.url) {
+                window.location.href = res.url;
+                return;
+            }          
             const data = await res.text();
             thisRole.parentElement.remove(data);
         } catch (err) {
@@ -221,9 +231,13 @@ class RoleList {
                     userId: this.selectedUser.id,
                     userName: this.selectedUser.userName
                 })
-            });
-
-            if (res.status === 500) throw await res.text();        
+            });                   
+            if (res.url) {
+                window.location.href = res.url;
+                return;
+            }
+            if (res.status === 500) throw await res.text();    
+            
             const userListHTML = await res.text();   
             thisRoleUserList.innerHTML = userListHTML;
         } catch (err) {
@@ -249,8 +263,13 @@ class RoleList {
                     userName: this.selectedUser.userName
                 })
             });
-            
+
+            if (res.url) {
+                window.location.href = res.url;
+                return;
+            }
             if (res.status === 500) throw await res.text();
+
             const userListHTML = await res.text();
             thisRoleUserList.innerHTML = userListHTML;       
         } catch (err) {
