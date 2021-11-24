@@ -3,8 +3,8 @@ using BugTracker.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace BugTracker.Services
-{
+namespace BugTracker.Services    
+{    
     public class TicketDbRepository : ITicketRepository
     {
         private readonly BugTrackerDbContext context;

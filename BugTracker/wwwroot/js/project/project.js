@@ -28,7 +28,7 @@ class Project {
                 window.location.href = res.url;
             }
             await res.json();         
-            window.location.href = "/Project";
+            window.location.href = "/Project/ListProjects";
         } catch (err) {
             console.error(err);
         }

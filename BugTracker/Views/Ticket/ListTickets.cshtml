@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Ticket>;
+
+<ul>
+    @foreach (var ticket in Model)
+    {
+        <li>@ticket.Title</li>
+    }
+</ul>

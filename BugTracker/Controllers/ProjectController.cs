@@ -21,7 +21,7 @@ namespace BugTracker.Controllers
             this.ticketRepository = ticketRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult ListProjects()
         {
             IEnumerable<Project> projects = repository.GetAllProjects();
             return View(projects);
