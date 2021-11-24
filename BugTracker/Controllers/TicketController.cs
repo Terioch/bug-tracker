@@ -28,8 +28,9 @@ namespace BugTracker.Controllers
         [HttpPost]
         public IActionResult Create(Ticket ticket)
         {
+            ticket.Id = Guid.NewGuid().ToString();
             Ticket createdTicket = repository.Create(ticket);
-            return View("Ticket", createdTicket);         
+            return View("Details", createdTicket);         
         }
 
         [HttpGet]
