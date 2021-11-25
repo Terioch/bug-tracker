@@ -30,8 +30,8 @@
 <h4>Create a New Ticket</h4>
 <hr />
 <section class="card">
-    <div class="card-bodyg">  
-        <form asp-action="Create">
+    <form asp-action="Create">
+        <div class="card-body">          
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
             <div class="row g-md-3">
                 <div class="col-md-4">
@@ -52,7 +52,7 @@
             <div class="row g-md-3">        
                 <div class="col-md-4">   
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Projects</label>
-                    <select class="form-select mb-4" aria-label="Ticket project">
+                    <select asp-for-id="ProjectId" class="form-select mb-4" aria-label="Ticket project">
                         @foreach (var project in context.Projects)
                         {                   
                             <option id="@project.Id">@project.Name</option>                    
@@ -61,14 +61,14 @@
                 </div>
                 <div class="col-md-4">
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Developers</label>
-                    <select class="form-select mb-4" aria-label="Assigned developer">
+                    <select asp-for="AssignedDeveloper" class="form-select mb-4" aria-label="Assigned developer">
                         @foreach (var user in userManager.Users)
                         {
                             bool isInRole = await userManager.IsInRoleAsync(user, "Developer");
 
                             if (isInRole)
                             {
-                                <option id="@user.Id">@user.FirstName @user.LastName</option>
+                                <option>@user.FirstName @user.LastName</option>
                             }
                         }
                     </select>          
@@ -77,7 +77,7 @@
             <div class="row g-md-3">
                 <div class="col-md-4">
                      <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Type</label>
-                     <select class="form-select mb-4" aria-label="Ticket type">
+                     <select asp-for="Type" class="form-select mb-4" aria-label="Ticket type">
                         <option>Bugs/Errors</option>
                         <option>Feature Requests</option>
                         <option>Other Comments</option>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Priority</label>
-                    <select class="form-select mb-4" aria-label="Ticket priority">
+                    <select asp-for="Priority" class="form-select mb-4" aria-label="Ticket priority">
                         <option>Low</option>
                         <option selected>Medium</option>
                         <option>High</option>
@@ -97,7 +97,7 @@
             <div class="row g-md-3">
                 <div class="col-md-4">
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Status</label>
-                    <select class="form-select mb-4" aria-label="Ticket status">
+                    <select asp-for="Status" class="form-select mb-4" aria-label="Ticket status">
                         <option selected>New</option>
                         <option>Open</option>
                         <option>In Progress</option>
@@ -105,14 +105,14 @@
                         <option>To Be Confirmed</option>
                     </select>
                 </div>    
-            </div>     
-        </form>
-    </div>
+            </div>             
+        </div>
 
-    <div class="card-footer d-flex align-items-end">
-        <input type="submit" value="Submit Ticket" class="btn btn-primary me-3" />
-        <a asp-action="Index">Back to List</a>
-    </div>
+        <div class="card-footer d-flex align-items-end">
+            <input type="submit" value="Submit Ticket" class="btn btn-primary me-3" />
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
 </section>
 
 @section Scripts {
