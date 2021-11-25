@@ -5,48 +5,65 @@
     ViewData["Title"] = "Create";
 }
 
+<style>
+    .create-ticket-input {
+        border-radius: 0;       
+    }
+
+    .create-ticket-input:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .control-label {
+        font-size: 16px;
+    }
+</style>
+
 <h4>Create a New Ticket</h4>
 <hr />
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
     <div class="row g-md-3">
         <div class="col-md-4">
-            <div class="form-floating mb-3">                
-                <input asp-for="Title" class="form-control" />
+            <div class="form-floating mb-4">                                
+                <input asp-for="Title" class="create-ticket-input form-control border-0 border-bottom pb-0" />                
                 <label asp-for="Title" class="control-label text-secondary"></label>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>    
         </div>
         <div class="col-md-4">
-            <div class="form-floating mb-3">               
-                <input asp-for="Description" class="form-control" />
-                 <label asp-for="Description" class="control-label text-secondary"></label>
+            <div class="form-floating mb-4">               
+                <input asp-for="Description" class="create-ticket-input form-control border-0 border-bottom pb-0" />
+                <label asp-for="Description" class="control-label text-secondary"></label>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
         </div>
     </div>
-    <div class="row g-md-3">
-        <div class="col-md-4">
-            <select class="form-select mb-3" name="projects" aria-label="Ticket project">
+    <div class="row g-md-3">        
+        <div class="col-md-4">   
+            <label class="control-label mb-2 text-secondary">Projects</label>
+            <select class="form-select mb-4" aria-label="Ticket project">
                 @foreach (var project in context.Projects)
                 {                   
-                    <option id="@project.Id">@project.Name</option>
-                    <label class="control-label" for="projects">Projects</label>
-                }
-            </select>
+                    <option id="@project.Id">@project.Name</option>                    
+                }               
+            </select>                  
         </div>
         <div class="col-md-4">
-            <select class="form-select mb-3" aria-label="Assigned developer">
-              <option selected>Demo Dev</option>
-              <option>Dev Ed</option>
-              <option>Dev Peter</option>
-              <option>Dev Richards</option>
-            </select>
+            <label class="control-label mb-2 text-secondary">Developers</label>
+            <select class="form-select mb-4" aria-label="Assigned developer">
+                <option selected>Demo Dev</option>
+                <option>Dev Ed</option>
+                <option>Dev Peter</option>
+                <option>Dev Richards</option>              
+            </select>          
         </div>
     </div>
     <div class="row g-md-3">
         <div class="col-md-4">
-             <select class="form-select mb-3" aria-label="Ticket type">
+             <label class="control-label mb-2 text-secondary">Ticket Type</label>
+             <select class="form-select mb-4" aria-label="Ticket type">
                 <option>Bugs/Errors</option>
                 <option>Feature Requests</option>
                 <option>Other Comments</option>
@@ -54,7 +71,8 @@
             </select>   
         </div>
         <div class="col-md-4">
-            <select class="form-select mb-3" aria-label="Ticket priority">
+            <label class="control-label mb-2 text-secondary">Ticket Priority</label>
+            <select class="form-select mb-4" aria-label="Ticket priority">
                 <option>Low</option>
                 <option selected>Medium</option>
                 <option>High</option>
@@ -64,7 +82,8 @@
     </div>
     <div class="row g-md-3">
         <div class="col-md-4">
-            <select class="form-select mb-3" aria-label="Ticket status">
+            <label class="control-label mb-2 text-secondary">Ticket Status</label>
+            <select class="form-select mb-4" aria-label="Ticket status">
                 <option selected>New</option>
                 <option>Open</option>
                 <option>In Progress</option>
@@ -73,7 +92,7 @@
             </select>
         </div>
         <div class="col-md-4">
-              <div class="form-group mb-3">
+              <div class="form-group mb-4">
                 <input type="submit" value="Submit Ticket" class="btn btn-primary" />
             </div> 
         </div>
