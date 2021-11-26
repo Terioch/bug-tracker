@@ -55,7 +55,7 @@
                     <select asp-for="ProjectId" class="form-select mb-4" aria-label="Ticket project">
                         @foreach (var project in context.Projects)
                         {                   
-                            <option asp-value="@project.Id">@project.Name</option>                    
+                            <option name="@project.Id">@project.Name</option>                    
                         }               
                     </select>                  
                 </div>

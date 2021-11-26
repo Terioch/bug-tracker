@@ -30,8 +30,9 @@ namespace BugTracker.Controllers
         [HttpPost]
         public IActionResult Create(Ticket ticket)
         {
-            ticket.Id = Guid.NewGuid().ToString();            
-            ticket.SubmittedDate = DateTime.Now;           
+            ticket.Id = Guid.NewGuid().ToString();
+            ticket.ProjectId = projectRepository.GetProjectByName(ticket.ProjectId).Id;
+            ticket.SubmittedDate = DateTime.Now;  
             // Ticket createdTicket = repository.Create(ticket);
             return View("Details", ticket);
         }
