@@ -45,7 +45,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult Details(string id)
         {
-            Project project = repository.GetProject(id);
+            Project project = repository.GetProjectById(id);
             project.Tickets = ticketRepository.GetTicketsByProject(id);
             return View(project);
         }

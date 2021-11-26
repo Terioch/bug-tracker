@@ -52,10 +52,10 @@
             <div class="row g-md-3">        
                 <div class="col-md-4">   
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Projects</label>
-                    <select asp-for-id="ProjectId" class="form-select mb-4" aria-label="Ticket project">
+                    <select asp-for="ProjectId" class="form-select mb-4" aria-label="Ticket project">
                         @foreach (var project in context.Projects)
                         {                   
-                            <option id="@project.Id">@project.Name</option>                    
+                            <option asp-value="@project.Id">@project.Name</option>                    
                         }               
                     </select>                  
                 </div>

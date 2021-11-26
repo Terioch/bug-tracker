@@ -21,10 +21,21 @@ namespace BugTracker.Services
             return context.Projects;
         }
 
-        public Project GetProject(string id)
+        public Project GetProjectById(string id)
         {
             Project? project = context?.Projects?.Find(id);
             
+            if (project == null)
+            {
+                throw new Exception("Project Not Found");
+            }
+            return project;
+        }
+
+        public Project GetProjectByName(string name)
+        {
+            Project? project = context?.Projects?.FirstOrDefault(p => p.Name == name);
+
             if (project == null)
             {
                 throw new Exception("Project Not Found");
