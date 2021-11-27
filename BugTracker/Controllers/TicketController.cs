@@ -1,5 +1,7 @@
-﻿using BugTracker.Models;
+﻿using BugTracker.Areas.Identity.Data;
+using BugTracker.Models;
 using BugTracker.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Controllers
@@ -8,11 +10,13 @@ namespace BugTracker.Controllers
     {
         private readonly ITicketRepository repository;
         private readonly IProjectRepository projectRepository;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public TicketController(ITicketRepository repository, IProjectRepository projectRepository)
+        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, UserManager<ApplicationUser> userManager)
         {
             this.repository = repository;
             this.projectRepository = projectRepository;
+            this.userManager = userManager;
         }
 
         public IActionResult ListTickets()
@@ -28,8 +32,10 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(TicketViewModel viewTicket)
+        public async Task<IActionResult> Create(TicketViewModel viewTicket)
         {
+            ApplicationUser user = await userManager.GetUserAsync(HttpContext.User); 
+            
             Ticket ticket = new()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -37,7 +43,7 @@ namespace BugTracker.Controllers
                 Title = viewTicket.Title,
                 Description = viewTicket.Description,
                 SubmittedDate = DateTime.Now,
-                Submitter = "",
+                Submitter = $"{user.FirstName} {user.LastName}",
                 AssignedDeveloper = viewTicket.AssignedDeveloper,
                 Type = viewTicket.Type,
                 Status = viewTicket.Status,

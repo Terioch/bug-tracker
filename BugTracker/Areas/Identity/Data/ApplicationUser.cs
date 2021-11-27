@@ -15,5 +15,10 @@ public class ApplicationUser : IdentityUser
 
     [Column(TypeName = "varchar(100)")]
     public string? LastName { get; set; }
+
+    public static implicit operator string(ApplicationUser v)
+    {
+        throw new NotImplementedException();
+    }
 }
 
