@@ -28,12 +28,22 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Ticket ticket)
+        public IActionResult Create(TicketViewModel viewTicket)
         {
-            ticket.Id = Guid.NewGuid().ToString();
-            ticket.ProjectId = projectRepository.GetProjectByName(ticket.ProjectId).Id;
-            ticket.SubmittedDate = DateTime.Now;  
-            // Ticket createdTicket = repository.Create(ticket);
+            Ticket ticket = new()
+            {
+                Id = Guid.NewGuid().ToString(),
+                ProjectId = projectRepository.GetProjectByName(viewTicket.ProjectName).Id,
+                Title = viewTicket.Title,
+                Description = viewTicket.Description,
+                SubmittedDate = DateTime.Now,
+                Submitter = "",
+                AssignedDeveloper = viewTicket.AssignedDeveloper,
+                Type = viewTicket.Type,
+                Status = viewTicket.Status,
+                Priority = viewTicket.Priority,
+            };
+            // ticket = repository.Create(ticket);
             return View("Details", ticket);
         }
 
