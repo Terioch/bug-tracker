@@ -19,6 +19,11 @@ namespace BugTracker.Controllers
             this.userManager = userManager;
         }
 
+        private Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return userManager.GetUserAsync(HttpContext.User);
+        }
+
         public IActionResult ListTickets()
         {
             IEnumerable<Ticket> tickets = repository.GetAllTickets();
@@ -34,7 +39,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(TicketViewModel viewTicket)
         {
-            ApplicationUser user = await userManager.GetUserAsync(HttpContext.User); 
+            ApplicationUser user = await GetCurrentUserAsync();
             
             Ticket ticket = new()
             {
@@ -43,12 +48,13 @@ namespace BugTracker.Controllers
                 Title = viewTicket.Title,
                 Description = viewTicket.Description,
                 SubmittedDate = DateTime.Now,
-                Submitter = $"{user.FirstName} {user.LastName}",
+                Submitter = user.Email,
                 AssignedDeveloper = viewTicket.AssignedDeveloper,
                 Type = viewTicket.Type,
                 Status = viewTicket.Status,
                 Priority = viewTicket.Priority,
             };
+
             // ticket = repository.Create(ticket);
             return View("Details", ticket);
         }
