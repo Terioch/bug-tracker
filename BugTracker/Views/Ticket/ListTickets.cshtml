@@ -50,10 +50,10 @@
                 @Html.DisplayFor(modelItem => item.SubmittedDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Submitter)
+                @Html.DisplayFor(modelItem => item.Submitter.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AssignedDeveloper)
+                @Html.DisplayFor(modelItem => item.AssignedDeveloper.UserName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Type)

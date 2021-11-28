@@ -24,6 +24,11 @@ namespace BugTracker.Controllers
             return userManager.GetUserAsync(HttpContext.User);
         }
 
+        private Task<ApplicationUser> FindUserByNameAsync(string name)
+        {
+            return userManager.FindByNameAsync(name);
+        }
+
         public IActionResult ListTickets()
         {
             IEnumerable<Ticket> tickets = repository.GetAllTickets();
@@ -37,25 +42,24 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(TicketViewModel viewTicket)
-        {
-            ApplicationUser user = await GetCurrentUserAsync();
-            
+        public async Task<IActionResult> Create(TicketCreateViewModel model)
+        {                  
             Ticket ticket = new()
             {
                 Id = Guid.NewGuid().ToString(),
-                ProjectId = projectRepository.GetProjectByName(viewTicket.ProjectName).Id,
-                Title = viewTicket.Title,
-                Description = viewTicket.Description,
-                SubmittedDate = DateTime.Now,
-                Submitter = user.Email,
-                AssignedDeveloper = viewTicket.AssignedDeveloper,
-                Type = viewTicket.Type,
-                Status = viewTicket.Status,
-                Priority = viewTicket.Priority,
+                ProjectId = projectRepository.GetProjectByName(model.ProjectName).Id,
+                Submitter = await GetCurrentUserAsync(),
+                AssignedDeveloper = await FindUserByNameAsync(model.AssignedDeveloperName),
+                Title = model.Title,
+                Description = model.Description,
+                SubmittedDate = DateTime.Now,                
+                Type = model.Type,
+                Status = model.Status,
+                Priority = model.Priority,
             };
 
             // ticket = repository.Create(ticket);
+            
             return View("Details", ticket);
         }
 

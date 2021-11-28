@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BugTracker.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace BugTracker.Models
 {
-    public class TicketViewModel
+    public class TicketCreateViewModel
     {
+        public string? Id { get; set; }        
+
         [Required]
         [MaxLength(40)]
         public string? Title { get; set; }
@@ -15,13 +18,10 @@ namespace BugTracker.Models
         public string? Description { get; set; }
 
         [Required]
-        public DateTime? SubmittedDate { get; set; }
+        public DateTime? SubmittedDate { get; set; }      
 
         [Required]
-        public string? Submitter { get; set; }
-
-        [Required]
-        public string? AssignedDeveloper { get; set; }
+        public ApplicationUser? AssignedDeveloperName { get; set; }
 
         [Required]
         public string? Type { get; set; }
