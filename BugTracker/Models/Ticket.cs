@@ -25,10 +25,10 @@ namespace BugTracker.Models
         public DateTime? SubmittedDate { get; set; }
 
         [Required]
-        public ApplicationUser? Submitter { get; set; }
+        public string? Submitter { get; set; }
 
         [Required]
-        public ApplicationUser? AssignedDeveloper { get; set; }
+        public string? AssignedDeveloper { get; set; }
 
         [Required]
         public string? Type { get; set; }

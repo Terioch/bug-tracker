@@ -42,14 +42,14 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(TicketCreateViewModel model)
+        public async Task<IActionResult> Create(CreateTicketViewModel model)
         {                  
             Ticket ticket = new()
             {
                 Id = Guid.NewGuid().ToString(),
                 ProjectId = projectRepository.GetProjectByName(model.ProjectName).Id,
                 Submitter = await GetCurrentUserAsync(),
-                AssignedDeveloper = await FindUserByNameAsync(model.AssignedDeveloperName),
+                AssignedDeveloper = model.AssignedDeveloper,
                 Title = model.Title,
                 Description = model.Description,
                 SubmittedDate = DateTime.Now,                

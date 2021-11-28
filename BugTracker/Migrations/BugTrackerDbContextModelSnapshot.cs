@@ -113,7 +113,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("BugTracker.Models.Ticket", b =>
@@ -161,7 +161,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("BugTracker.Models.UserProjects", b =>
@@ -177,7 +177,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("UserProjects");
+                    b.ToTable("UserProjects", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

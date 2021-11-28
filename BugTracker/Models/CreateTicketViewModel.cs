@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BugTracker.Models
 {
-    public class TicketCreateViewModel
+    public class CreateTicketViewModel
     {
         public string? Id { get; set; }        
 
@@ -21,7 +21,7 @@ namespace BugTracker.Models
         public DateTime? SubmittedDate { get; set; }      
 
         [Required]
-        public ApplicationUser? AssignedDeveloperName { get; set; }
+        public string? AssignedDeveloper { get; set; }
 
         [Required]
         public string? Type { get; set; }
