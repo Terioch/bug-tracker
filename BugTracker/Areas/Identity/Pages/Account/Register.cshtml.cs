@@ -133,10 +133,9 @@ namespace BugTracker.Areas.Identity.Pages.Account
                 var user = CreateUser();
 
                 user.FirstName = Input.FirstName;
-                user.LastName = Input.LastName;
-                user.UserName = Input.UserName;
+                user.LastName = Input.LastName;                            
                 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

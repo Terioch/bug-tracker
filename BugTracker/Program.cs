@@ -17,7 +17,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)    
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+    })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<BugTrackerDbContext>();
 builder.Services.AddControllersWithViews();

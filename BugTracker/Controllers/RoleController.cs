@@ -39,7 +39,7 @@ namespace BugTracker.Controllers
 
                     if (isInRole)
                     {
-                        roleModel.Users.Add($"{user.FirstName} {user.LastName}");
+                        roleModel.Users.Add(user.UserName);
                     }
                 }
 
@@ -128,7 +128,7 @@ namespace BugTracker.Controllers
 
                         if (isInRole)
                         {
-                            newRole.Users.Add($"{user.FirstName} {user.LastName}");
+                            newRole.Users.Add(user.UserName);
                         }
                     }
                 }
