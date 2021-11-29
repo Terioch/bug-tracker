@@ -8,7 +8,7 @@
   <div class="card-header bg-light">
       <h1 class="fs-3 mt-2">@Model.Name</h1>
       <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |      
-      <a asp-action="Index">Back to List</a> |
+      <a asp-action="ListProjects">Back to List</a> |
       <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteProjectModal">Delete</a>
   </div>
   <div class="card-body">
@@ -77,10 +77,10 @@
                                     <td>@ticket.Title</td>                        
                                     <td>@ticket.Submitter</td>   
                                     <td>@ticket.AssignedDeveloper</td>
-                                    <td>@ticket.Status ? open : closed</td>
+                                    <td>@ticket.Status</td>
                                     <td>@ticket.SubmittedDate</td>
                                     <td class="">                                        
-                                        <a asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
+                                        <a asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
                                     </td>
                                 </tr>     
                             </tbody>      

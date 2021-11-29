@@ -4,9 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace BugTracker.Models
 {
     public class CreateTicketViewModel
-    {
-        public string? Id { get; set; }        
-
+    {               
         [Required]
         [MaxLength(40)]
         public string? Title { get; set; }
@@ -15,10 +13,7 @@ namespace BugTracker.Models
         public string? ProjectName { get; set; }
 
         [Required]
-        public string? Description { get; set; }
-
-        [Required]
-        public DateTime? SubmittedDate { get; set; }      
+        public string? Description { get; set; }            
 
         [Required]
         public string? AssignedDeveloper { get; set; }
