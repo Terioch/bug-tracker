@@ -6,7 +6,7 @@ namespace BugTracker.Services
     {
         public IEnumerable<Ticket> GetAllTickets();
         public List<Ticket> GetTicketsByProject(string id);
-        public Ticket GetTicket(string id);
+        public Ticket GetTicketById(string id);
         public Ticket Create(Ticket ticket);
         public Ticket Update(Ticket ticket);
         public Ticket Delete(string id);

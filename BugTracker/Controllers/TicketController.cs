@@ -3,6 +3,7 @@ using BugTracker.Models;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace BugTracker.Controllers
 {
@@ -67,15 +68,52 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult Details(string id)
         {
-            Ticket ticket = repository.GetTicket(id);
+            Ticket ticket = repository.GetTicketById(id);
             return View(ticket);
         }
 
-        [HttpPut]
-        public IActionResult Update(Ticket ticket)
+        [HttpGet]
+        public IActionResult Edit(string id)
         {
+            Ticket ticket = repository.GetTicketById(id); 
+
+            EditTicketViewModel model = new()
+            {        
+                Id = id,
+                Title = ticket.Title,
+                Description = ticket.Description,
+                ProjectName = projectRepository.GetProjectById(ticket.ProjectId).Name,
+                AssignedDeveloper = ticket.AssignedDeveloper,
+                Type = ticket.Type,
+                Status = ticket.Status,
+                Priority = ticket.Priority,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Update(EditTicketViewModel model)
+        {            
+            Ticket ticket = repository.GetTicketById(model.Id);
+
+            if (ticket == null)
+            {
+                ViewBag.ErrorMessage = $"Ticket with Id {model.Id} cannot be found";
+                return View("NotFound");
+            }
+
+            foreach (var property in ticket.GetType().GetProperties())
+            {          
+                PropertyInfo? modelProperty = model.GetType().GetProperty(property.Name);
+               
+                if (modelProperty != null)
+                {
+                    property.SetValue(ticket, modelProperty.GetValue(model));
+                }
+            }
+
             repository.Update(ticket);
-            return View(ticket);
+            return View("Details", ticket);
         }
 
         [HttpDelete]

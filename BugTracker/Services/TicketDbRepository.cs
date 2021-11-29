@@ -33,7 +33,7 @@ namespace BugTracker.Services
             return tickets;
         }
 
-        public Ticket GetTicket(string id)
+        public Ticket GetTicketById(string id)
         {
             Ticket? ticket = context.Tickets.Find(id);
 
