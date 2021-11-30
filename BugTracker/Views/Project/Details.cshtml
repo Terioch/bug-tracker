@@ -36,16 +36,16 @@
                                     <th scope="col">Role</th>                     
                                 </tr>
                             </thead>
-                            @foreach (var user in Model.Users)
-                            {
-                                <tbody>
+                            <tbody>
+                                @foreach (var user in Model.Users)
+                                {                                
                                     <tr>
                                         <td>@user.UserName</td>                        
                                         <td>@user.Email</td>   
                                         <td>Developer</td>                                       
-                                    </tr>     
-                                </tbody>      
-                            }
+                                    </tr>                                         
+                                }
+                            </tbody> 
                         </table>
                     </div>
                 </div>
@@ -70,9 +70,9 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
-                        @foreach (var ticket in Model.Tickets)
-                        {
-                            <tbody>
+                        <tbody>
+                            @foreach (var ticket in Model.Tickets)
+                            {                            
                                 <tr>
                                     <td>@ticket.Title</td>                        
                                     <td>@ticket.Submitter</td>   
@@ -82,9 +82,9 @@
                                     <td class="">                                        
                                         <a asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
                                     </td>
-                                </tr>     
-                            </tbody>      
-                        }
+                                </tr>                               
+                            }
+                        </tbody>     
                     </table>
                 </div>
             </div>

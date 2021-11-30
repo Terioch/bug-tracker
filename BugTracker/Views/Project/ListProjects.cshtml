@@ -34,10 +34,9 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
-
-                    @foreach (var project in Model)
-                    {                               
-                        <tbody>
+                    <tbody>
+                        @foreach (var project in Model)
+                        {                                                     
                             <tr>
                                 <td>@project.Name</td>                        
                                 <td>@project?.Tickets?.Count</td>   
@@ -46,9 +45,9 @@
                                     <a href="" class="link-success">Manage Users</a>
                                     <a asp-action="Details" asp-route-id="@project?.Id" class="link-info">Details</a>                            
                                 </td>
-                            </tr>     
-                        </tbody>            
-                    }           
+                            </tr>                                        
+                        }     
+                    </tbody> 
                 </table>        
             </div>
         }        
