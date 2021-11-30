@@ -63,8 +63,8 @@ namespace BugTracker.Controllers
                 Priority = model.Priority,
             };
 
-            ticket = repository.Create(ticket);            
-            return View("Details", ticket);
+            ticket = repository.Create(ticket);
+            return RedirectToAction("Details", new { id = ticket.Id });
         }
 
         [HttpGet]
