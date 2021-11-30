@@ -24,6 +24,6 @@ namespace BugTracker.Models
 
         public string? Priority { get; set; }
 
-        public List<TicketHistoryRecord> Records { get; set; } = new();
+        public List<TicketHistoryRecord> HistoryRecords { get; set; } = new();        
     }
 }

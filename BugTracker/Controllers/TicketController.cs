@@ -11,12 +11,14 @@ namespace BugTracker.Controllers
     {
         private readonly ITicketRepository repository;
         private readonly IProjectRepository projectRepository;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ITicketHistoryRecordRepository ticketHistoryRecordRepository;
+        private readonly UserManager<ApplicationUser> userManager;       
 
-        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, UserManager<ApplicationUser> userManager)
+        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, UserManager<ApplicationUser> userManager)
         {
             this.repository = repository;
             this.projectRepository = projectRepository;
+            this.ticketHistoryRecordRepository = ticketHistoryRecordRepository;
             this.userManager = userManager;
         }
 
@@ -69,8 +71,22 @@ namespace BugTracker.Controllers
         public IActionResult Details(string id)
         {
             Ticket ticket = repository.GetTicketById(id);
-            
-            return View(ticket);
+            List<TicketHistoryRecord> historyRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id);
+            TicketViewModel model = new()
+            {
+                Id = ticket.Id,
+                ProjectName = projectRepository.GetProjectById(ticket.ProjectId).Name,
+                Title = ticket.Title,
+                Description = ticket.Description,
+                SubmittedDate = ticket.SubmittedDate,
+                Submitter = ticket.Submitter,
+                AssignedDeveloper = ticket.AssignedDeveloper,
+                Type = ticket.Type,
+                Status = ticket.Status,
+                Priority = ticket.Priority,
+                HistoryRecords = historyRecords
+            };
+            return View(model);
         }
 
         [HttpGet]

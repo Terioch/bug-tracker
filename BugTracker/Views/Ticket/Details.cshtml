@@ -1,4 +1,4 @@
-﻿@model BugTracker.Models.Ticket
+﻿@model BugTracker.Models.TicketViewModel
 
 @{
     ViewData["Title"] = "Ticket";
@@ -59,12 +59,30 @@
                                 <th scope="col">Property</th>
                                 <th scope="col">Old Value</th>
                                 <th scope="col">New Value</th>                     
-                                <th scope="col">Changed By</th>                     
+                                <th scope="col">Modified By</th>                     
                                 <th scope="col">Date Changed</th>                     
                             </tr>
-                        </thead>
-                        
-                        <tbody></tbody>
+                        </thead>                                                
+                        <tbody>
+                            @if (!Model.HistoryRecords.Any())
+                            {                              
+                                @*<tr class="alert alert-primary" role="alert">
+                                    A simple primary alert—check it out!
+                                    </tr>*@
+                            } else
+                            {
+                                foreach (var record in Model.HistoryRecords) 
+                                {
+                                    <tr>
+                                        <td>@record.Property</td>
+                                        <td>@record.OldValue</td>
+                                        <td>@record.NewValue</td>
+                                        <td>@record.Modifier</td>
+                                        <td>@record.DateChanged</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>

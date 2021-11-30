@@ -17,7 +17,7 @@ namespace BugTracker.Services
             return context.TicketHistoryRecords;
         }
 
-        public IEnumerable<TicketHistoryRecord> GetRecordsByTicket(string id)
+        public List<TicketHistoryRecord> GetRecordsByTicket(string id)
         {
             List<TicketHistoryRecord> records = new();
 
