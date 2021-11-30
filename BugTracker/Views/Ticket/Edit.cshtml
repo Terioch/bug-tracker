@@ -1,4 +1,11 @@
-﻿@model BugTracker.Models.EditTicketViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using BugTracker.Areas.Identity.Data
+
+@inject BugTracker.Data.BugTrackerDbContext context
+@inject RoleManager<IdentityRole> roleManager
+@inject UserManager<ApplicationUser> userManager
+
+@model BugTracker.Models.EditTicketViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,55 +13,91 @@
 
 <h4>Edit Ticket</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Update" asp-route-id="@Model.Id">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>      
-            <div class="form-group">
-                <label asp-for="ProjectName" class="control-label"></label>
-                <select asp-for="ProjectName" class="form-control"></select>
-                <span asp-validation-for="ProjectName" class="text-danger"></span>
+<section class="card">
+    <form asp-action="Update" asp-route-id="@Model.Id">                 
+        <div class="card-body">          
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
+            <div class="row g-md-3">
+                <div class="col-md-4">
+                    <div class="form-control mb-4 border-0">                                
+                        <label asp-for="Title" class="control-label text-secondary"></label>
+                        <input asp-for="Title" class="create-ticket-input form-control border-0 border-bottom pb-0" />                                
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>    
+                </div>
+                <div class="col-md-4">
+                    <div class="form-control mb-4 border-0">               
+                        <label asp-for="Description" class="control-label text-secondary"></label>
+                        <input asp-for="Description" class="create-ticket-input form-control border-0 border-bottom pb-0" />                
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>                       
-            <div class="form-group">
-                <label asp-for="AssignedDeveloper" class="control-label"></label>
-                <input asp-for="AssignedDeveloper" class="form-control" />
-                <span asp-validation-for="AssignedDeveloper" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Priority" class="control-label"></label>
-                <input asp-for="Priority" class="form-control" />
-                <span asp-validation-for="Priority" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+            <div class="row g-md-3">        
+                <div class="col-md-4">   
+                    <label class="create-ticket-select-label control-label mb-2 text-secondary">Projects</label>
+                    <select asp-for="ProjectName" class="form-select mb-4" aria-label="Ticket project">
+                        @foreach (var project in context.Projects)
+                        {                   
+                            <option name="@project.Id">@project.Name</option>                    
+                        }               
+                    </select>                  
+                </div>
+                <div class="col-md-4">
+                    <label class="create-ticket-select-label control-label mb-2 text-secondary">Developers</label>
+                    <select asp-for="AssignedDeveloper" class="form-select mb-4" aria-label="Assigned developer">
+                        @foreach (var user in userManager.Users)
+                        {
+                            bool isInRole = await userManager.IsInRoleAsync(user, "Developer");
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                            if (isInRole)
+                            {
+                                <option>@user.UserName</option>
+                            }
+                        }
+                    </select>          
+                </div>
+            </div>
+            <div class="row g-md-3">
+                <div class="col-md-4">
+                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Type</label>
+                     <select asp-for="Type" class="form-select mb-4" aria-label="Ticket type">
+                        <option>Bugs/Errors</option>
+                        <option>Feature Requests</option>
+                        <option>Other Comments</option>
+                        <option>Training/Document Requests</option>
+                    </select>   
+                </div>
+                <div class="col-md-4">
+                    <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Priority</label>
+                    <select asp-for="Priority" class="form-select mb-4" aria-label="Ticket priority">
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                        <option>None</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-md-3">
+                <div class="col-md-4">
+                    <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Status</label>
+                    <select asp-for="Status" class="form-select mb-4" aria-label="Ticket status">
+                        <option selected>New</option>
+                        <option>Open</option>
+                        <option>In Progress</option>
+                        <option>Closed</option>
+                        <option>To Be Confirmed</option>
+                    </select>
+                </div>    
+            </div>             
+        </div>
+
+        <div class="card-footer d-flex align-items-end">
+            <input type="submit" value="Save" class="btn btn-primary me-3" />
+            <a asp-action="ListTickets">Back to List</a>
+        </div>
+    </form>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

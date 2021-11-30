@@ -109,9 +109,11 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(EditTicketViewModel model)
+        public async Task<IActionResult> Update(EditTicketViewModel model)
         {            
             Ticket ticket = repository.GetTicketById(model.Id);
+            PropertyInfo[] modelProperties = model.GetType().GetProperties();
+            ApplicationUser Modifier = await GetCurrentUserAsync();
 
             if (ticket == null)
             {
@@ -119,18 +121,57 @@ namespace BugTracker.Controllers
                 return View("NotFound");
             }
 
-            foreach (var property in ticket.GetType().GetProperties())
-            {          
-                PropertyInfo? modelProperty = model.GetType().GetProperty(property.Name);
-               
-                if (modelProperty != null)
+            // Add new record to ticket history if projectId differs
+            Project project = projectRepository.GetProjectByName(model.ProjectName);
+
+            if (ticket.ProjectId != project.Id)
+            {
+                TicketHistoryRecord record = new()
                 {
-                    property.SetValue(ticket, modelProperty.GetValue(model));
-                }
+                    Id = Guid.NewGuid().ToString(),
+                    TicketId = ticket.Id,
+                    Property = "ProjectId",
+                    OldValue = ticket.ProjectId,
+                    NewValue = project.Id,
+                    Modifier = Modifier.UserName,
+                    DateChanged = DateTime.Now
+                };
+
+                ticketHistoryRecordRepository.Create(record);
             }
 
+            ticket.ProjectId = project.Id;
+          
+            foreach (var property in modelProperties) 
+            {          
+                PropertyInfo? ticketProperty = ticket.GetType().GetProperty(property.Name);               
+
+                if (ticketProperty != null)
+                {
+                    var ticketPropertyValue = ticketProperty.GetValue(ticket).ToString();
+                    var propertyValue = property.GetValue(model).ToString();
+
+                    if (ticketPropertyValue != propertyValue)
+                    {
+                        TicketHistoryRecord record = new()
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            TicketId = ticket.Id,
+                            Property = property.Name,
+                            OldValue = ticketPropertyValue,
+                            NewValue = propertyValue,
+                            Modifier = Modifier.UserName,
+                            DateChanged = DateTime.Now
+                        };
+
+                        ticketHistoryRecordRepository.Create(record);
+                    }
+                    ticketProperty.SetValue(ticket, property.GetValue(model));
+                }                                
+            }
+            
             repository.Update(ticket);
-            return View("Details", ticket);
+            return RedirectToAction("Details", new { id = ticket.Id });
         }
 
         [HttpDelete]
