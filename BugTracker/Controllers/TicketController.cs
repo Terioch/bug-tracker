@@ -69,6 +69,7 @@ namespace BugTracker.Controllers
         public IActionResult Details(string id)
         {
             Ticket ticket = repository.GetTicketById(id);
+            
             return View(ticket);
         }
 

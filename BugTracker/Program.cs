@@ -16,6 +16,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 // Dependency Injection
 builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
+builder.Services.AddScoped<ITicketHistoryRecordRepository, TicketHistoryRecordDbRepository>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;
