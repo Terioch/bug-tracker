@@ -54,6 +54,14 @@ namespace BugTracker.Services
             throw new NotImplementedException();
         }
 
+        public IEnumerable<TicketHistoryRecord> DeleteRecordsByTicketId(string ticketId)
+        {
+            var filteredRecords = context.TicketHistoryRecords.Where(r => r.TicketId == ticketId);
+            context.TicketHistoryRecords.RemoveRange(filteredRecords);
+            context.SaveChanges();
+            return filteredRecords;
+        }
+
         public TicketHistoryRecord Update(TicketHistoryRecord record)
         {
             throw new NotImplementedException();

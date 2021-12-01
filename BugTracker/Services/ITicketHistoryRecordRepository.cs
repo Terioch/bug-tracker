@@ -10,5 +10,6 @@ namespace BugTracker.Services
         public TicketHistoryRecord Create(TicketHistoryRecord record);
         public TicketHistoryRecord Update(TicketHistoryRecord record);
         public TicketHistoryRecord Delete(string id);
+        public IEnumerable<TicketHistoryRecord> DeleteRecordsByTicketId(string ticketId);
     }
 }

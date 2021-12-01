@@ -148,8 +148,8 @@ namespace BugTracker.Controllers
 
                 if (ticketProperty != null)
                 {
-                    var ticketPropertyValue = ticketProperty.GetValue(ticket).ToString();
-                    var propertyValue = property.GetValue(model).ToString();
+                    string ticketPropertyValue = ticketProperty.GetValue(ticket).ToString();
+                    string propertyValue = property.GetValue(model).ToString();
 
                     if (ticketPropertyValue != propertyValue)
                     {
@@ -177,6 +177,7 @@ namespace BugTracker.Controllers
         [HttpDelete]
         public IActionResult Delete(string id)
         {
+            ticketHistoryRecordRepository.DeleteRecordsByTicketId(id);
             repository.Delete(id);
             return RedirectToAction("ListTickets", "Ticket");
         }
