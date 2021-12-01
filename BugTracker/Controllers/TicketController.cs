@@ -178,8 +178,8 @@ namespace BugTracker.Controllers
         public IActionResult Delete(string id)
         {
             ticketHistoryRecordRepository.DeleteRecordsByTicketId(id);
-            repository.Delete(id);
-            return RedirectToAction("ListTickets", "Ticket");
+            Ticket ticket = repository.Delete(id);
+            return Json(ticket);
         }
     }
 }

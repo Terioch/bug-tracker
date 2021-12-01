@@ -4,7 +4,7 @@
     ViewData["Title"] = "Ticket";
 }
 
-<div>    
+<div id="ticketContainer" data-id="@Model.Id">    
     <div class="row g-4 d-flex">        
         <div class="col-auto p-0">
             <div class="card-header">
@@ -12,7 +12,7 @@
                 <div>
                     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
                     <a asp-action="ListTickets" class="text-primary">Back to List</a> |
-                    <a class="text-danger">Delete</a>
+                    <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteTicketModal">Delete</a>
                 </div>
             </div>    
 
@@ -91,3 +91,18 @@
     </div>
 </div>
 
+<!-- Delete Ticket Modal -->
+<div class="modal fade" id="deleteTicketModal" tabindex="-1" aria-labelledby="deleteTicketModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Ticket Removal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="deleteTicketBtn" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Confirm">Confirm</button>       
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>       
+      </div>
+    </div>
+  </div>
+</div>

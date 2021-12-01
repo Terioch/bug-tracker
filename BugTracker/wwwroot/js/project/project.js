@@ -2,7 +2,7 @@
 class Project {
     constructor() {
         if (document.getElementById("projectContainer")) {
-            console.log("Project Initialized");
+            console.log("Initialized Project");
             this.projectContainer = document.getElementById("projectContainer");
             this.handleDelete = this.handleDelete.bind(this);
             this.events();
