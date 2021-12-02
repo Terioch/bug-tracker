@@ -1,4 +1,5 @@
 ﻿using BugTracker.Models;
+using X.PagedList;
 
 namespace BugTracker.Models
 {
@@ -24,6 +25,6 @@ namespace BugTracker.Models
 
         public string? Priority { get; set; }
 
-        public List<TicketHistoryRecord> HistoryRecords { get; set; } = new();        
+        public IEnumerable<TicketHistoryRecord>? HistoryRecords { get; set; } = new List<TicketHistoryRecord>();
     }
 }

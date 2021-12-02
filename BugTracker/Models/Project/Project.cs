@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace BugTracker.Models
 {
@@ -17,8 +18,8 @@ namespace BugTracker.Models
         [Required]
         public string? Description { get; set; }
 
-        public List<ApplicationUser>? Users { get; set; } = new List<ApplicationUser>();
+        public IEnumerable<ApplicationUser>? Users { get; set; } = new List<ApplicationUser>();
 
-        public List<Ticket>? Tickets { get; set; } = new List<Ticket>();
+        public IEnumerable<Ticket>? Tickets { get; set; } = new List<Ticket>();
     }
 }

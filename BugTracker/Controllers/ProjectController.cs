@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace BugTracker.Controllers
 {
@@ -21,10 +22,11 @@ namespace BugTracker.Controllers
             this.ticketRepository = ticketRepository;
         }
 
-        public IActionResult ListProjects()
+        public IActionResult ListProjects(int? page)
         {
             IEnumerable<Project> projects = repository.GetAllProjects();
-            return View(projects);
+            IPagedList<Project> pagedProjects = projects.ToPagedList(page ?? 1, 5);
+            return View(pagedProjects);
         } 
         
         [Authorize(Roles = "Admin")]
@@ -43,10 +45,11 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(string id)
+        public IActionResult Details(string id, int? page)
         {
             Project project = repository.GetProjectById(id);
-            project.Tickets = ticketRepository.GetTicketsByProject(id);
+            IEnumerable<Ticket> tickets = ticketRepository.GetTicketsByProject(id);
+            project.Tickets = tickets.ToPagedList(page ?? 1, 5);
             return View(project);
         }
 

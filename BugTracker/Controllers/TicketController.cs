@@ -38,7 +38,8 @@ namespace BugTracker.Controllers
         public IActionResult ListTickets(int? page)
         {
             IEnumerable<Ticket> tickets = repository.GetAllTickets();
-            return View(tickets.ToPagedList(page ?? 1, 5));
+            IPagedList<Ticket> pagedTickets = tickets.ToPagedList(page ?? 1, 3);
+            return View(pagedTickets);
         }
 
         [HttpGet]
@@ -72,7 +73,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(string id)
+        public IActionResult Details(string id, int? page)
         {
             Ticket ticket = repository.GetTicketById(id);
             List<TicketHistoryRecord> historyRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id);
@@ -88,7 +89,7 @@ namespace BugTracker.Controllers
                 Type = ticket.Type,
                 Status = ticket.Status,
                 Priority = ticket.Priority,
-                HistoryRecords = historyRecords
+                HistoryRecords = historyRecords.ToPagedList(page ?? 1, 5)
             };
             return View(model);
         }

@@ -1,4 +1,8 @@
-﻿@model IEnumerable<Project>;
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+@model IPagedList<Project>;
 
 @{
     ViewData["Title"] = "Projects Page";
@@ -16,7 +20,7 @@
         <a class="btn btn-primary mb-3" asp-action="Create">Create New Project</a>
     </div>
     <div id="projectListContainer">
-        @if (!Model.Any()) 
+        @if (!Model.Any() || Model == null) 
         {              
             <div class="alert alert-info fs-5 mt-3" role="alert">
               There are currently no projects associated with your account.
@@ -38,8 +42,8 @@
                         @foreach (var project in Model)
                         {                                                     
                             <tr>
-                                <td>@project.Name</td>                        
-                                <td>@project?.Tickets?.Count</td>   
+                                <td>@project.Name</td>
+                                <td>@project.Tickets.ToList().Count</td>                                                                                            
                                 <td>@project?.Description</td>
                                 <td class="d-flex flex-column">
                                     <a href="" class="link-success">Manage Users</a>
@@ -48,7 +52,21 @@
                             </tr>                                        
                         }     
                     </tbody> 
-                </table>        
+                </table> 
+                <div class="">
+                    <p class="text-secondary" style="font-size: 14px">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
+                        of @Model.PageCount
+                    </p>                   
+                    @Html.PagedListPager(
+                        Model, 
+                        page => Url.Action("ListProjects", new { page }),
+                        new PagedListRenderOptions() 
+                        {
+                            LiElementClasses = new string[] { "page-item" },
+                            PageClasses = new string[] { "page-link" }
+                        })
+                </div>   
             </div>
         }        
     </div>                     

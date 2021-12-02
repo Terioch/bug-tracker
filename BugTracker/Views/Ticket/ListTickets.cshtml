@@ -65,7 +65,7 @@
                     </p>                   
                     @Html.PagedListPager(
                         Model, 
-                        page => Url.Action("Index", new { page }),
+                        page => Url.Action("ListTickets", new { page }),
                         new PagedListRenderOptions() 
                         {
                             LiElementClasses = new string[] { "page-item" },

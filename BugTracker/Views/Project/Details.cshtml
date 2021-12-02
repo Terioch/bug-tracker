@@ -1,7 +1,14 @@
-﻿@model BugTracker.Models.Project
+﻿@using BugTracker.Areas.Identity.Data
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+@model BugTracker.Models.Project
 
 @{
     ViewData["Title"] = "Project Details";
+    ViewBag.Users = Model.Users.ToPagedList<ApplicationUser>();    
+    ViewBag.Tickets = Model.Tickets.ToPagedList<Ticket>();    
 }
 
 <div id="projectContainer" data-id="@Model?.Id" class="card">
@@ -27,8 +34,8 @@
                         <h1 class="fs-3 mt-1">Assigned Personnel</h1>
                         <p class="text-secondary mb-0">Users working on this project</p>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-responsive">
+                    <div class="card-body table-responsive">
+                        <table class="table">
                             <thead>
                                 <tr>          
                                     <th scope="col">Name</th>
@@ -47,6 +54,20 @@
                                 }
                             </tbody> 
                         </table>
+                        <div class="">
+                            <p class="text-secondary" style="font-size: 14px">
+                                Page @(ViewBag.Users.PageCount < ViewBag.Users.PageNumber ? 0 : ViewBag.Users.PageNumber) 
+                                of @ViewBag.Users.PageCount
+                            </p>                   
+                            @Html.PagedListPager(
+                                Model.Users.ToPagedList(), 
+                                page => Url.Action("Details", new { page }),
+                                new PagedListRenderOptions() 
+                                {
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" }
+                                })
+                        </div>  
                     </div>
                 </div>
             </div>
@@ -86,6 +107,20 @@
                             }
                         </tbody>     
                     </table>
+                    <div class="">
+                        <p class="text-secondary" style="font-size: 14px">
+                            Page @(ViewBag.Tickets.PageCount < ViewBag.Tickets.PageNumber ? 0 : ViewBag.Tickets.PageNumber) 
+                            of @ViewBag.Tickets.PageCount
+                        </p>                   
+                        @Html.PagedListPager(
+                            Model.Tickets.ToPagedList(), 
+                            page => Url.Action("Details", new { page }),
+                            new PagedListRenderOptions() 
+                            {
+                                LiElementClasses = new string[] { "page-item" },
+                                PageClasses = new string[] { "page-link" }
+                            })
+                    </div>  
                 </div>
             </div>
         </div>
