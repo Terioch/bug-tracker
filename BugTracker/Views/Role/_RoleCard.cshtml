@@ -10,10 +10,6 @@
     }
 </style>
 
-@{
-    ViewBag.RowBreak = 0;
-}
-
 <div class="card mb-3 role-card" style="min-height: 366px" data-id="@Model.Id" data-index="@Model.Index">
    @* <div class="card-header">
         Role id: @Model.Id
@@ -45,29 +41,7 @@
                             {
                                 <li class="list-group-item border-0" style="min-width: max-content">@user</li>   
                             }
-                        </ul>
-
-                        @*@for (int i = 0; i < 6; i++) 
-                        {
-                            @if (ViewBag.RowBreak >= Model.Users.Count)
-                            {
-                                break;
-                            }
-
-                            ViewBag.RowBreak += 3;
-
-                            <ul class="list-group list-group-horizontal w-80">                                
-                                @for (int j = ViewBag.RowBreak - 3; j < ViewBag.RowBreak; j++)
-                                {     
-                                    @if (j >= Model.Users.Count)
-                                    {
-                                        break;
-                                    }
-
-                                    <li class="list-group-item border-0">@Model.Users[j]</li>   
-                                }                               
-                            </ul>
-                        } *@                       
+                        </ul>                                           
                     }   
                    
                 </div>                
