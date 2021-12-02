@@ -1,5 +1,6 @@
-﻿@using PagedList;
-@using PagedList.Mvc;
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 
 @model IPagedList<BugTracker.Models.Ticket>
 
@@ -7,73 +8,72 @@
     ViewData["Title"] = "ListTickets";
 }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table table-responsive">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().SubmittedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Submitter)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().AssignedDeveloper)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Priority)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model) 
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubmittedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Submitter)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AssignedDeveloper)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Priority)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>                
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+<div class="card" style="min-height: 89vh">
+  <div class="card-header bg-light">
+      <h1 class="fs-3 mt-2">Your Tickets</h1>   
+  </div>
+  <div class="card-body">
+    <div class="d-sm-flex justify-content-between align-items-center">  
+        <div class="input-group-sm">
+            <input id="ticketSearchInput" class="form-control mb-3" placeholder="Search Ticket..."  />
+        </div>        
+        <a class="btn btn-primary mb-3" asp-action="Create">Create New Ticket</a>
+    </div>
+    
+    <div id="projectListContainer">
+        @if (!Model.Any()) 
+        {              
+            <div class="alert alert-info fs-5 mt-3" role="alert">
+              There are currently no tickets associated with your account.
+            </div>    
+        } 
+        else
+        {   
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>          
+                            <th scope="col">Title</th>
+                            <th scope="col">Reported By</th>
+                            <th scope="col">Developer</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Created</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ticket in Model)
+                        {                                                     
+                            <tr>
+                                <td>@ticket.Title</td>                        
+                                <td>@ticket.Submitter</td>   
+                                <td>@ticket.AssignedDeveloper</td>
+                                <td>@ticket.Status</td>
+                                <td>@ticket.SubmittedDate</td>
+                                <td class="d-flex flex-column">
+                                    <a href="" class="link-success">Manage Users</a>
+                                    <a asp-action="Details" asp-route-id="@ticket.Id" class="link-info">Details</a>                            
+                                </td>
+                            </tr>                                        
+                        }     
+                    </tbody> 
+                </table>    
+                <div class="">
+                    <p class="text-secondary" style="font-size: 14px">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
+                        of @Model.PageCount
+                    </p>                   
+                    @Html.PagedListPager(
+                        Model, 
+                        page => Url.Action("Index", new { page }),
+                        new PagedListRenderOptions() 
+                        {
+                            LiElementClasses = new string[] { "page-item" },
+                            PageClasses = new string[] { "page-link" }
+                        })
+                </div>                                                         
+            </div>
+        }        
+    </div>                     
+  </div>
+</div>

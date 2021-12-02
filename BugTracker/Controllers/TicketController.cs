@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
-using PagedList;
-using PagedList.Mvc;
+using X.PagedList;
 
 namespace BugTracker.Controllers
 {
