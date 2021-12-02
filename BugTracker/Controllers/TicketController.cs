@@ -1,12 +1,16 @@
 ﻿using BugTracker.Areas.Identity.Data;
 using BugTracker.Models;
 using BugTracker.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
+using PagedList;
+using PagedList.Mvc;
 
 namespace BugTracker.Controllers
 {
+    [Authorize]
     public class TicketController : Controller
     {
         private readonly ITicketRepository repository;
@@ -32,10 +36,10 @@ namespace BugTracker.Controllers
             return userManager.FindByNameAsync(name);
         }
 
-        public IActionResult ListTickets()
+        public IActionResult ListTickets(int? page)
         {
             IEnumerable<Ticket> tickets = repository.GetAllTickets();
-            return View(tickets);
+            return View(tickets.ToPagedList(page ?? 1, 5));
         }
 
         [HttpGet]
@@ -44,6 +48,7 @@ namespace BugTracker.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateTicketViewModel model)
         {
@@ -89,6 +94,7 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]
         public IActionResult Edit(string id)
         {
@@ -174,6 +180,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("Details", new { id = ticket.Id });
         }
 
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpDelete]
         public IActionResult Delete(string id)
         {

@@ -1,4 +1,7 @@
-﻿@model IEnumerable<BugTracker.Models.Ticket>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<BugTracker.Models.Ticket>
 
 @{
     ViewData["Title"] = "ListTickets";
@@ -11,34 +14,35 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.First().Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.First().Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SubmittedDate)
+                @Html.DisplayNameFor(model => model.First().SubmittedDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Submitter)
+                @Html.DisplayNameFor(model => model.First().Submitter)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AssignedDeveloper)
+                @Html.DisplayNameFor(model => model.First().AssignedDeveloper)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.First().Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.First().Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Priority)
+                @Html.DisplayNameFor(model => model.First().Priority)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) 
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -69,6 +73,7 @@
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a>                
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
