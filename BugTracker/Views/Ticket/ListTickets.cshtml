@@ -30,7 +30,7 @@
         else
         {   
             <div class="table-responsive">
-                <table class="table">
+                <table class="table mb-3">
                     <thead>
                         <tr>          
                             <th scope="col">Title</th>
@@ -58,7 +58,7 @@
                         }     
                     </tbody> 
                 </table>    
-                <div class="">
+                <div style="position: absolute; bottom: 0">
                     <p class="text-secondary" style="font-size: 14px">
                         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
                         of @Model.PageCount
