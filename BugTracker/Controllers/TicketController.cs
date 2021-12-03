@@ -38,7 +38,7 @@ namespace BugTracker.Controllers
         public IActionResult ListTickets(int? page)
         {
             IEnumerable<Ticket> tickets = repository.GetAllTickets();
-            IPagedList<Ticket> pagedTickets = tickets.ToPagedList(page ?? 1, 3);
+            IPagedList<Ticket> pagedTickets = tickets.ToPagedList(page ?? 1, 5);
             return View(pagedTickets);
         }
 

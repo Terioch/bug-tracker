@@ -57,7 +57,7 @@ namespace BugTracker.Controllers
                 Name = project.Name,
                 Description = project.Description,
                 Users = project.Users,
-                Tickets = tickets.ToPagedList(page ?? 1, 3),
+                Tickets = tickets.ToPagedList(page ?? 1, 5),
             };
             return View(model);
         }

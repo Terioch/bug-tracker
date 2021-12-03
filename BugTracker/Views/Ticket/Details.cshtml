@@ -57,26 +57,26 @@
                     <h1 class="fs-3 mt-1">Ticket History</h1>
                     <p class="text-secondary mb-0">Record of changes to this ticket</p>
                 </div>
-                <div class="card-body table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>          
-                                <th scope="col">Property</th>
-                                <th scope="col">Old Value</th>
-                                <th scope="col">New Value</th>                     
-                                <th scope="col">Modified By</th>                     
-                                <th scope="col">Date Changed</th>                     
-                            </tr>
-                        </thead>                                                
-                        <tbody>
-                            @if (!Model.HistoryRecords.Any())
-                            {                              
-                                @*<tr class="alert alert-primary" role="alert">
-                                    A simple primary alert—check it out!
-                                    </tr>*@
-                            } else
-                            {
-                                foreach (var record in Model.HistoryRecords) 
+                @if (!Model.HistoryRecords.Any())
+                {
+                    <div class="alert alert-info fs-5 mt-3" role="alert">
+                      There is no available history for this ticket.
+                    </div>
+                } else
+                {                    
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>          
+                                    <th scope="col">Property</th>
+                                    <th scope="col">Old Value</th>
+                                    <th scope="col">New Value</th>                     
+                                    <th scope="col">Modified By</th>                     
+                                    <th scope="col">Date Changed</th>                     
+                                </tr>
+                            </thead>                                                
+                            <tbody>                                     
+                                @foreach (var record in Model.HistoryRecords) 
                                 {
                                     <tr>
                                         <td>@record.Property</td>
@@ -84,26 +84,26 @@
                                         <td>@record.NewValue</td>
                                         <td>@record.Modifier</td>
                                         <td>@record.DateChanged</td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                    <div class="">
-                        <p class="text-secondary" style="font-size: 14px">
-                            Page @(Model.HistoryRecords.PageCount < Model.HistoryRecords.PageNumber ? 0 : Model.HistoryRecords.PageNumber) 
-                            of @Model.HistoryRecords.PageCount
-                        </p>                   
-                        @Html.PagedListPager(
-                            Model.HistoryRecords, 
-                            page => Url.Action("Details", new { Model.Id, page }),
-                            new PagedListRenderOptions() 
-                            {
-                                LiElementClasses = new string[] { "page-item" },
-                                PageClasses = new string[] { "page-link" }
-                            })
-                    </div>      
-                </div>
+                                    </tr>   
+                                }                                                  
+                            </tbody>
+                        </table>
+                        <div class="">
+                            <p class="text-secondary" style="font-size: 14px">
+                                Page @(Model.HistoryRecords.PageCount < Model.HistoryRecords.PageNumber ? 0 : Model.HistoryRecords.PageNumber) 
+                                of @Model.HistoryRecords.PageCount
+                            </p>                   
+                            @Html.PagedListPager(
+                                Model.HistoryRecords, 
+                                page => Url.Action("Details", new { Model.Id, page }),
+                                new PagedListRenderOptions() 
+                                {
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" }
+                                })
+                        </div>      
+                    </div>
+                }                
             </div>
         </div>
     </div>
