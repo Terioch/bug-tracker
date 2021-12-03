@@ -3,12 +3,11 @@
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
-@model BugTracker.Models.Project
+@model BugTracker.Models.ProjectViewModel
 
 @{
     ViewData["Title"] = "Project Details";
-    ViewBag.Users = Model.Users.ToPagedList<ApplicationUser>();    
-    ViewBag.Tickets = Model.Tickets.ToPagedList<Ticket>();    
+    ViewBag.Users = Model.Users.ToPagedList<ApplicationUser>();
 }
 
 <div id="projectContainer" data-id="@Model?.Id" class="card">
@@ -109,11 +108,11 @@
                     </table>
                     <div class="">
                         <p class="text-secondary" style="font-size: 14px">
-                            Page @(ViewBag.Tickets.PageCount < ViewBag.Tickets.PageNumber ? 0 : ViewBag.Tickets.PageNumber) 
-                            of @ViewBag.Tickets.PageCount
+                            Page @(Model.Tickets.PageCount < Model.Tickets.PageNumber ? 0 : Model.Tickets.PageNumber) 
+                            of @Model.Tickets.PageCount
                         </p>                   
                         @Html.PagedListPager(
-                            Model.Tickets.ToPagedList(), 
+                            Model.Tickets, 
                             page => Url.Action("Details", new { page }),
                             new PagedListRenderOptions() 
                             {

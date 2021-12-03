@@ -1,4 +1,5 @@
-﻿using BugTracker.Models;
+﻿using BugTracker.Areas.Identity.Data;
+using BugTracker.Models;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,8 +50,16 @@ namespace BugTracker.Controllers
         {
             Project project = repository.GetProjectById(id);
             IEnumerable<Ticket> tickets = ticketRepository.GetTicketsByProject(id);
-            project.Tickets = tickets.ToPagedList(page ?? 1, 5);
-            return View(project);
+            IEnumerable<ApplicationUser>? users = null;
+            ProjectViewModel model = new()
+            {
+                Id = project.Id,
+                Name = project.Name,
+                Description = project.Description,
+                Users = project.Users,
+                Tickets = tickets.ToPagedList(),
+            };
+            return View(model);
         }
 
         [HttpGet("/Project/FilterProjectsByNameReturnPartial/{searchTerm}")]
