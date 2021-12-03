@@ -6,7 +6,6 @@
 
 @{
     ViewData["Title"] = "Ticket";
-    ViewBag.HistoryRecords = Model.HistoryRecords.ToPagedList<TicketHistoryRecord>();
 }
 
 <div id="ticketContainer" data-id="@Model.Id">    
@@ -92,12 +91,12 @@
                     </table>
                     <div class="">
                         <p class="text-secondary" style="font-size: 14px">
-                            Page @(ViewBag.HistoryRecords.PageCount < ViewBag.HistoryRecords.PageNumber ? 0 : ViewBag.HistoryRecords.PageNumber) 
-                            of @ViewBag.HistoryRecords.PageCount
+                            Page @(Model.HistoryRecords.PageCount < Model.HistoryRecords.PageNumber ? 0 : Model.HistoryRecords.PageNumber) 
+                            of @Model.HistoryRecords.PageCount
                         </p>                   
                         @Html.PagedListPager(
-                            Model.HistoryRecords.ToPagedList(), 
-                            page => Url.Action("Details", new { page }),
+                            Model.HistoryRecords, 
+                            page => Url.Action("Details", new { Model.Id, page }),
                             new PagedListRenderOptions() 
                             {
                                 LiElementClasses = new string[] { "page-item" },

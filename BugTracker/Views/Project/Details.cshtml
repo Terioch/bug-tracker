@@ -113,7 +113,7 @@
                         </p>                   
                         @Html.PagedListPager(
                             Model.Tickets, 
-                            page => Url.Action("Details", new { page }),
+                            page => Url.Action("Details", new { Model.Id, page }),
                             new PagedListRenderOptions() 
                             {
                                 LiElementClasses = new string[] { "page-item" },

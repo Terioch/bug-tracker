@@ -25,6 +25,6 @@ namespace BugTracker.Models
 
         public string? Priority { get; set; }
 
-        public IEnumerable<TicketHistoryRecord>? HistoryRecords { get; set; } = new List<TicketHistoryRecord>();
+        public IPagedList<TicketHistoryRecord>? HistoryRecords { get; set; }
     }
 }
