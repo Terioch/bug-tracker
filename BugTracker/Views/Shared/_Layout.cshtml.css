@@ -46,3 +46,31 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.nav-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.wrapper {
+    margin-right: 265px;
+}
+
+@media screen and (max-width: 1200px) and (min-width: 993px) {
+    .wrapper {
+        margin-right: 280px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .wrapper {
+        margin-right: 200px;
+    }
+}

@@ -2,6 +2,10 @@
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+body[b-cl261elwq8], html[b-cl261elwq8] {
+    height: max-content;
+}
+
 a.navbar-brand[b-cl261elwq8] {
   white-space: normal;
   text-align: center;
@@ -46,4 +50,32 @@ button.accept-policy[b-cl261elwq8] {
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
+}
+
+.nav-sidebar[b-cl261elwq8] {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.wrapper[b-cl261elwq8] {
+    margin-right: 265px;
+}
+
+@media screen and (max-width: 1200px) and (min-width: 993px) {
+    .wrapper[b-cl261elwq8] {
+        margin-right: 280px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .wrapper[b-cl261elwq8] {
+        margin-right: 200px;
+    }
 }
