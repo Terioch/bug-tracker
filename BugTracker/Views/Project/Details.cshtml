@@ -53,7 +53,7 @@
                                 }
                             </tbody> 
                         </table>
-                        <div style="position: absolute; bottom: 0">
+                        <div>
                             <p class="text-secondary" style="font-size: 14px">
                                 Page @(ViewBag.Users.PageCount < ViewBag.Users.PageNumber ? 0 : ViewBag.Users.PageNumber) 
                                 of @ViewBag.Users.PageCount
@@ -63,6 +63,7 @@
                                 page => Url.Action("Details", new { page }),
                                 new PagedListRenderOptions() 
                                 {
+                                    UlElementClasses = new string[] { "pagination", "mb-0" },
                                     LiElementClasses = new string[] { "page-item" },
                                     PageClasses = new string[] { "page-link" }
                                 })
@@ -106,7 +107,7 @@
                             }
                         </tbody>     
                     </table>
-                    <div class="">
+                    <div>
                         <p class="text-secondary" style="font-size: 14px">
                             Page @(Model.Tickets.PageCount < Model.Tickets.PageNumber ? 0 : Model.Tickets.PageNumber) 
                             of @Model.Tickets.PageCount
@@ -116,6 +117,7 @@
                             page => Url.Action("Details", new { Model.Id, page }),
                             new PagedListRenderOptions() 
                             {
+                                UlElementClasses = new string[] { "pagination", "mb-0" },
                                 LiElementClasses = new string[] { "page-item" },
                                 PageClasses = new string[] { "page-link" }
                             })

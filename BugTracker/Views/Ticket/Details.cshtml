@@ -52,7 +52,7 @@
             </ul>
         </div>
         <div class="col">
-            <div class="card" style="min-height: 550px">
+            <div class="card">
                 <div class="card-header bg-light">
                     <h1 class="fs-3 mt-1">Ticket History</h1>
                     <p class="text-secondary mb-0">Record of changes to this ticket</p>
@@ -88,7 +88,7 @@
                                 }                                                  
                             </tbody>
                         </table>
-                        <div style="position: absolute; bottom: 0">
+                        <div>
                             <p class="text-secondary" style="font-size: 14px">
                                 Page @(Model.HistoryRecords.PageCount < Model.HistoryRecords.PageNumber ? 0 : Model.HistoryRecords.PageNumber) 
                                 of @Model.HistoryRecords.PageCount
@@ -98,6 +98,7 @@
                                 page => Url.Action("Details", new { Model.Id, page }),
                                 new PagedListRenderOptions() 
                                 {
+                                    UlElementClasses = new string[] { "pagination", "mb-0" },
                                     LiElementClasses = new string[] { "page-item" },
                                     PageClasses = new string[] { "page-link" }
                                 })

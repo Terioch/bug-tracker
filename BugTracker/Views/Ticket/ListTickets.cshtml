@@ -8,7 +8,7 @@
     ViewData["Title"] = "ListTickets";
 }
 
-<div class="card" style="min-height: 89vh">
+<div class="card">
   <div class="card-header bg-light">
       <h1 class="fs-3 mt-2">Your Tickets</h1>   
   </div>
@@ -58,7 +58,7 @@
                         }     
                     </tbody> 
                 </table>    
-                <div style="position: absolute; bottom: 0">
+                <div>
                     <p class="text-secondary" style="font-size: 14px">
                         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
                         of @Model.PageCount
@@ -68,6 +68,7 @@
                         page => Url.Action("ListTickets", new { page }),
                         new PagedListRenderOptions() 
                         {
+                            UlElementClasses = new string[] { "pagination", "mb-0" },
                             LiElementClasses = new string[] { "page-item" },
                             PageClasses = new string[] { "page-link" }
                         })
