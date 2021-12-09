@@ -1,4 +1,8 @@
-﻿@model IEnumerable<Project>;
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+@model IPagedList<Project>;
 
 <div>
     @if (!Model.Any()) 
@@ -35,6 +39,21 @@
                     </tbody>            
                 }           
             </table>        
+            <div>
+                <p class="text-secondary" style="font-size: 14px">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
+                    of @Model.PageCount
+                </p>                   
+                @Html.PagedListPager(
+                    Model, 
+                    page => Url.Action("ListProjects", new { page }),
+                    new PagedListRenderOptions() 
+                    {
+                        UlElementClasses = new string[] { "pagination", "mb-0" },
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" }
+                    })
+            </div>
         </div>
     }        
 </div>
