@@ -4,6 +4,7 @@
 import RoleList from "./role/roleList.js";
 import ProjectList from "./project/projectList.js";
 import Project from "./project/project.js";
+import TicketList from "./ticket/ticketList.js";
 import Ticket from "./ticket/ticket.js";
 
 class BugTracker {
@@ -12,6 +13,7 @@ class BugTracker {
         this.roleList = new RoleList();
         this.projectList = new ProjectList();
         this.project = new Project();
+        this.ticketList = new TicketList();
         this.ticket = new Ticket();
     }
 }

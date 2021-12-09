@@ -94,6 +94,24 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult FilterTicketsReturnPartial(string? searchTerm)
+        {
+            IEnumerable<Ticket> tickets = repository.GetAllTickets();
+
+            if (searchTerm == "null")
+            {
+                return PartialView("_TicketList", tickets.ToPagedList(1, 5));
+            }
+
+            if (tickets.ToList().Count == 0)
+            {
+                throw new Exception("No projects to filter based on predicate");
+            }
+
+            return PartialView("_TicketList", tickets);
+        }
+
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]
         public IActionResult Edit(string id)

@@ -65,7 +65,7 @@ namespace BugTracker.Controllers
         [HttpGet("/Project/FilterProjectsByNameReturnPartial/{searchTerm}")]
         public IActionResult FilterProjectsByNameReturnPartial(string? searchTerm)
         {                       
-            IEnumerable<Project> projects = repository.GetAllProjects().ToList();           
+            IEnumerable<Project> projects = repository.GetAllProjects();           
             
             if (searchTerm == "null")
             {

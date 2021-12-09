@@ -1,18 +1,18 @@
 ﻿
 class ProjectList {
     constructor() {
-        if (document.getElementById("projectSearchInput")) {
-            console.log("Initialized projects");
-            this.filterProjects = this.filterProjects.bind(this);
+        if (document.getElementById("projectListPageContainer")) {
+            console.log("Initialized Project List");
+            this.filterProjectList = this.filterProjectList.bind(this);
             this.events();
         }        
     }
 
     events() {
-        document.getElementById("projectSearchInput").addEventListener("keyup", this.filterProjects);
+        document.getElementById("projectListSearchInput").addEventListener("keyup", this.filterProjectList);
     }    
 
-    async filterProjects(e) {       
+    async filterProjectList(e) {       
         const projectListContainer = document.getElementById("projectListContainer");        
         const searchTerm = e.target.value.toLowerCase();        
         

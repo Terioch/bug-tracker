@@ -8,19 +8,19 @@
     ViewData["Title"] = "ListTickets";
 }
 
-<div class="card">
+<div id="ticketListPageContainer" class="card">
   <div class="card-header bg-light">
       <h1 class="fs-3 mt-2">Your Tickets</h1>   
   </div>
   <div class="card-body">
     <div class="d-sm-flex justify-content-between align-items-center">  
         <div class="input-group-sm">
-            <input id="ticketSearchInput" type="submit" class="form-control mb-3" placeholder="Search Ticket..."  />
+            <input id="ticketListSearchInput" type="submit" class="form-control mb-3" placeholder="Search Ticket..."  />
         </div>        
         <a class="btn btn-primary mb-3" asp-action="Create">Create New Ticket</a>
     </div>
     
-    <div id="projectListContainer">
+    <div id="ticketListContainer">
         @if (!Model.Any()) 
         {              
             <div class="alert alert-info fs-5 mt-3" role="alert">
