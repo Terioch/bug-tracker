@@ -61,13 +61,13 @@ namespace BugTracker.Controllers
             };
             return View(model);
         }
-
-        [HttpGet("/Project/FilterProjectsByNameReturnPartial/{searchTerm}")]
+      
+        [HttpGet]
         public IActionResult FilterProjectsByNameReturnPartial(string? searchTerm)
         {                       
             IEnumerable<Project> projects = repository.GetAllProjects();           
             
-            if (searchTerm == "null")
+            if (searchTerm == null)
             {
                 return PartialView("_ProjectList", projects.ToPagedList(1, 5));
             }

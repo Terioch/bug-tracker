@@ -9,7 +9,7 @@ class TicketList {
     }
 
     events() {
-        document.getElementById("ticketListSearchInput").addEventListener("onchange", this.filterTicketList);
+        document.getElementById("ticketListSearchInput").addEventListener("keyup", this.filterTicketList);
     }
 
     async filterTicketList(e) {
@@ -17,7 +17,7 @@ class TicketList {
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/ticket/filterTicketsReturnPartial/${searchTerm}`);
+            const res = await fetch(`/ticket/filterTicketsReturnPartial?searchTerm=${searchTerm}`);
             const ticketListHTML = await res.text();
             ticketListContainer.innerHTML = ticketListHTML;
         } catch (err) {

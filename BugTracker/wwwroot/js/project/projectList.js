@@ -14,10 +14,10 @@ class ProjectList {
 
     async filterProjectList(e) {       
         const projectListContainer = document.getElementById("projectListContainer");        
-        const searchTerm = e.target.value.toLowerCase();        
+        const searchTerm = e.target.value.toLowerCase();
         
         try {
-            const res = await fetch(`/project/filterProjectsByNameReturnPartial/${searchTerm}`);
+            const res = await fetch(`/project/filterProjectsByNameReturnPartial?searchTerm=${searchTerm}`);
             const projectListHTML = await res.text();        
             projectListContainer.innerHTML = projectListHTML;
         } catch (err) {
