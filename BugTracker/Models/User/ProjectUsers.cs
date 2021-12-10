@@ -4,18 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTracker.Models
 {
-    public class UserProjects
-    {    
+    public class ProjectUsers
+    {                  
         [Key]
-        public string? UserId { get; set; }
-
-        [ForeignKey("UserId")]
-        public ApplicationUser? User { get; set; }
-
-        [Required]
         public string? ProjectId { get; set; }
 
         [ForeignKey("ProjectId")]
         public Project? Project { get; set; }
+
+        [Required]
+        public string? UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser? User { get; set; }
     }
 }
