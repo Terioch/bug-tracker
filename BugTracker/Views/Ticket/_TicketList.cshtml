@@ -21,7 +21,7 @@
                         <th scope="col">Reported By</th>
                         <th scope="col">Developer</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Created</th>
+                        <th scope="col">Priority</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -33,7 +33,7 @@
                             <td>@ticket.Submitter</td>   
                             <td>@ticket.AssignedDeveloper</td>
                             <td>@ticket.Status</td>
-                            <td>@ticket.SubmittedDate</td>
+                            <td>@ticket.Priority</td>
                             <td class="d-flex flex-column">
                                 <a href="" class="link-success">Manage Users</a>
                                 <a asp-action="Details" asp-route-id="@ticket.Id" class="link-info">Details</a>                            

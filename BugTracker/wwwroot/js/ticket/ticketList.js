@@ -9,7 +9,7 @@ class TicketList {
     }
 
     events() {
-        document.getElementById("ticketListSearchInput").addEventListener("click", this.filterTicketList);
+        document.getElementById("ticketListSearchInput").addEventListener("onchange", this.filterTicketList);
     }
 
     async filterTicketList(e) {
