@@ -5,7 +5,7 @@ using X.PagedList;
 namespace BugTracker.Models
 {
     public class ProjectViewModel
-    {
+    {        
         public string? Id { get; set; }
 
         [Required]
