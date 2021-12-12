@@ -250,8 +250,7 @@ namespace BugTracker.Controllers
                         users.Add(new UserViewModel
                         {
                             Id = item.Id,
-                            FirstName = item.FirstName,
-                            LastName = item.LastName,
+                            UserName = item.UserName,
                         });
                     }
                 }
@@ -289,8 +288,7 @@ namespace BugTracker.Controllers
                         users.Add(new UserViewModel
                         {
                             Id = item.Id,
-                            FirstName = item.FirstName,
-                            LastName = item.LastName,
+                            UserName = item.UserName
                         });
                     }                                        
                 }
