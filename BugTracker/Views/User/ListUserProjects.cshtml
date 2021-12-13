@@ -9,43 +9,41 @@
             <input id="userProjectListSearchInput" class="form-control mb-3" placeholder="Search Users..."  />
         </div>  
 
-        <section id="userProjectListContainer">
-            <div class="accordion">
-                @if (!Model.Any())
+        <div id="userProjectListContainer" class="accordion accordion-flush">
+            @if (!Model.Any())
+            {
+                <div class="accordion-item">
+                    <h2>There are currently no users to display</h2>
+                </div>
+            } else
+            {
+                foreach (var item in Model)
                 {
                     <div class="accordion-item">
-                        <h2>There are currently no users to display</h2>
-                    </div>
-                } else
-                {
-                    foreach (var item in Model)
-                    {
-                         <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    @item.UserName
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
-                                <div class="accordion-body">
-                                    <ul class="list-group list-group-flush">
-                                        @if (!item.Projects.Any())
-                                        {
-                                            <li class="list-group-item">There are no projects assigned to this user</li>
-                                        } else
-                                        {
-                                            foreach (var project in item.Projects)
-                                            {                                            
-                                                <li class="list-group-item">@project</li>
-                                            }
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.Id" aria-expanded="true" aria-controls="collapse-@item.Id">
+                                @item.UserName
+                            </button>
+                        </h2>
+                        <div id="collapse-@item.Id" class="accordion-collapse collapse" data-bs-parent="#userProjectListContainer" aria-labelledby="heading-@item.Id">
+                            <div class="accordion-body">
+                                <ul class="list-group list-group-flush">
+                                    @if (!item.Projects.Any())
+                                    {
+                                        <li class="list-group-item">There are no projects assigned to this user</li>
+                                    } else
+                                    {
+                                        foreach (var project in item.Projects)
+                                        {                                            
+                                            <li class="list-group-item">@project</li>
                                         }
-                                    </ul>
-                                </div>
+                                    }
+                                </ul>
                             </div>
-                        </div>    
-                    }                      
-                }                
-            </div>
-        </section>
+                        </div>
+                    </div>    
+                }                      
+            }                
+        </div>
     </div>
 </div>
