@@ -1,4 +1,8 @@
-﻿@model IEnumerable<UserProjectViewModel>;
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+@model IPagedList<UserProjectViewModel>;
 
 <div id="userProjectListPageContainer" class="card">
     <div class="card-header bg-light">
@@ -6,44 +10,62 @@
     </div>
     <div class="card-body">
         <div class="input-group-sm mb-3">
-            <input id="userProjectListSearchInput" class="form-control mb-3" placeholder="Search Users..."  />
+            <input id="userProjectListSearchInput" class="form-control mb-3" style="max-width: 200px" placeholder="Search Users..." />
         </div>  
 
-        <div id="userProjectListContainer" class="accordion accordion-flush">
-            @if (!Model.Any())
-            {
-                <div class="accordion-item">
-                    <h2>There are currently no users to display</h2>
-                </div>
-            } else
-            {
-                foreach (var item in Model)
+        <section id="userProjectListContainer">
+            <div id="userProjectListAccordion" class="accordion accordion-flush mb-3">
+                @if (!Model.Any())
                 {
                     <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.Id" aria-expanded="true" aria-controls="collapse-@item.Id">
-                                @item.UserName
-                            </button>
-                        </h2>
-                        <div id="collapse-@item.Id" class="accordion-collapse collapse" data-bs-parent="#userProjectListContainer" aria-labelledby="heading-@item.Id">
-                            <div class="accordion-body">
-                                <ul class="list-group list-group-flush">
-                                    @if (!item.Projects.Any())
-                                    {
-                                        <li class="list-group-item">There are no projects assigned to this user</li>
-                                    } else
-                                    {
-                                        foreach (var project in item.Projects)
-                                        {                                            
-                                            <li class="list-group-item">@project</li>
+                        <h2>There are currently no users to display</h2>
+                    </div>
+                } else
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.Id" aria-expanded="true" aria-controls="collapse-@item.Id">
+                                    @item.UserName
+                                </button>
+                            </h2>
+                            <div id="collapse-@item.Id" class="accordion-collapse collapse" data-bs-parent="#userProjectListAccordion" aria-labelledby="heading-@item.Id">
+                                <div class="accordion-body">
+                                    <ul class="list-group list-group-flush">
+                                        @if (!item.Projects.Any())
+                                        {
+                                            <li class="list-group-item">There are no projects assigned to this user</li>
+                                        } else
+                                        {
+                                            foreach (var project in item.Projects)
+                                            {                                            
+                                                <li class="list-group-item">@project</li>
+                                            }
                                         }
-                                    }
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </div>    
-                }                      
-            }                
-        </div>
+                        </div>    
+                    }                      
+                }     
+            </div>
+
+            <div>
+                <p class="text-secondary" style="font-size: 14px">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
+                    of @Model.PageCount
+                </p>                   
+                @Html.PagedListPager(
+                    Model, 
+                    page => Url.Action("ListUserProjects", new { page }),
+                    new PagedListRenderOptions() 
+                    {
+                        UlElementClasses = new string[] { "pagination", "mb-0" },
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" }
+                    })
+            </div>               
+        </section>        
     </div>
 </div>

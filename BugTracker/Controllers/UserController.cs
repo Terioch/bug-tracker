@@ -4,6 +4,7 @@ using BugTracker.Models;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using X.PagedList;
 
 namespace BugTracker.Controllers
 {
@@ -21,7 +22,7 @@ namespace BugTracker.Controllers
             this.projectRepository = projectRepository;
         }
 
-        public IActionResult ListUserProjects()
+        public IActionResult ListUserProjects(int? page)
         {
             List<UserProjectViewModel> users = new();
 
@@ -44,7 +45,7 @@ namespace BugTracker.Controllers
                     Projects = projects
                 });
             }
-            return View(users);
+            return View(users.ToPagedList(page ?? 1, 10));
         }
     }
 }
