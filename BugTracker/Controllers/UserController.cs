@@ -17,7 +17,7 @@ namespace BugTracker.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult ListUsers()
+        public IActionResult ListUserProjects()
         {
             return View();
         }

@@ -247,7 +247,7 @@ namespace BugTracker.Controllers
 
                     if (isItemInRole)
                     {                            
-                        users.Add(new UserViewModel
+                        users.Add(new()
                         {
                             Id = item.Id,
                             UserName = item.UserName,

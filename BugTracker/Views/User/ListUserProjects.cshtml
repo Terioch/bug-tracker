@@ -1,0 +1,49 @@
+﻿@model IEnumerable<UserProjectViewModel>;
+
+<div id="userProjectListPageContainer" class="card">
+    <div class="card-header bg-light">
+        <h1 class="fs-3 mt-2">Manage project assignment for users</h1>  
+    </div>
+    <div class="card-body">
+        <div class="input-group-sm mb-3">
+            <input id="userProjectListSearchInput" class="form-control mb-3" placeholder="Search Users..."  />
+        </div>  
+
+        <section id="userProjectListContainer">
+            <div class="accordion">
+                @if (!Model.Any())
+                {
+                    
+                } else
+                {
+                    foreach (var item in Model)
+                    {
+                         <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    @item.UserName
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                                <div class="accordion-body">
+                                    <ul class="list-group">
+                                        @if (!item.Projects.Any())
+                                        {
+                                            
+                                        } else
+                                        {
+                                            foreach (var project in item.Projects)
+                                            {                                            
+                                                <li class="list-group-item">@project</li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>    
+                    }                      
+                }                
+            </div>
+        </section>
+    </div>
+</div>
