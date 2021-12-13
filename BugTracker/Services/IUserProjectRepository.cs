@@ -4,9 +4,10 @@ namespace BugTracker.Services
 {
     public interface IUserProjectRepository
     {
-        public IEnumerable<string> GetAllUserProjects(string userId);
-        public string CreateUserProject(string userId, string projectId);
-        public string UpdateUserProject(string userId, string projectId);
-        public string DeleteUserProject(string userId);
+        public List<string> GetAllUserProjects(string userId);
+        public List<string> GetAllProjectUsers(string projectId);
+        public UserProject CreateUserProject(UserProject userProject);
+        public UserProject UpdateUserProject(UserProject userProject);
+        public UserProject DeleteUserProject(string userId);
     }
 }
