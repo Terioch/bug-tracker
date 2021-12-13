@@ -276,3 +276,4 @@ C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\staticwebasset
 C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\scopedcss\bundle\BugTracker.styles.css
 C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\scopedcss\projectbundle\BugTracker.bundle.scp.css
+C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\BugTracker.csproj.AssemblyReference.cache

@@ -14,7 +14,7 @@ namespace BugTracker.Services
             this.context = context;
         }
 
-        public List<string> GetAllUserProjects(string userId)
+        public List<string> GetUserProjects(string userId)
         {
             IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.UserId == userId);
             List<string> projectIds = new();
@@ -26,7 +26,7 @@ namespace BugTracker.Services
             return projectIds;
         }
 
-        public List<string> GetAllProjectUsers(string projectId)
+        public List<string> GetProjectUsers(string projectId)
         {
             IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.ProjectId == projectId);
             List<string> userIds = new();

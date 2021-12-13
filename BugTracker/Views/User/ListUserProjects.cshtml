@@ -13,7 +13,9 @@
             <div class="accordion">
                 @if (!Model.Any())
                 {
-                    
+                    <div class="accordion-item">
+                        <h2>There are currently no users to display</h2>
+                    </div>
                 } else
                 {
                     foreach (var item in Model)
@@ -26,10 +28,10 @@
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
                                 <div class="accordion-body">
-                                    <ul class="list-group">
+                                    <ul class="list-group list-group-flush">
                                         @if (!item.Projects.Any())
                                         {
-                                            
+                                            <li class="list-group-item">There are no projects assigned to this user</li>
                                         } else
                                         {
                                             foreach (var project in item.Projects)

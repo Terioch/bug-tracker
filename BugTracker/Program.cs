@@ -17,6 +17,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
 builder.Services.AddScoped<ITicketHistoryRecordRepository, TicketHistoryRecordDbRepository>();
+builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;
