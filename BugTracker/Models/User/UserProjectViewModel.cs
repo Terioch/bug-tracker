@@ -14,6 +14,6 @@ namespace BugTracker.Models
 
         public string? Email { get; set; }
 
-        public List<string>? Projects { get; set; } = new();
+        public List<Project>? Projects { get; set; } = new();
     }
 }
