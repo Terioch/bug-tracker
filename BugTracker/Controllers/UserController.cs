@@ -22,7 +22,7 @@ namespace BugTracker.Controllers
             this.projectRepository = projectRepository;
         }
 
-        public IActionResult ListUserProjects(int? page)
+        public IActionResult ListUsers(int? page)
         {
             List<UserProjectViewModel> users = new();
 
@@ -45,7 +45,7 @@ namespace BugTracker.Controllers
                     Projects = projects
                 });
             }
-            return View(users.ToPagedList(page ?? 1, 10));
+            return View(users.ToPagedList(page ?? 1, 8));
         }
     }
 }

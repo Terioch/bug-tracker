@@ -25,13 +25,21 @@
                     foreach (var item in Model)
                     {
                         <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.Id" aria-expanded="true" aria-controls="collapse-@item.Id">
-                                    @item.UserName
-                                </button>
-                            </h2>
+                            <div class="accordion-header">
+                                <div class="accordion-button" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.Id" aria-expanded="true" aria-controls="collapse-@item.Id">
+                                    <div class="">
+                                        <h1 class="text-secondary" style="font-size: 12px">Name</h1>
+                                        <p>@item.UserName</p>
+                                    </div>  
+                                    <div class="">
+                                        <h1 class="text-secondary" style="font-size: 12px">Email</h1>
+                                        <p>@item.Email</p>
+                                    </div>  
+                                </div>
+                            </div>
                             <div id="collapse-@item.Id" class="accordion-collapse collapse" data-bs-parent="#userProjectListAccordion" aria-labelledby="heading-@item.Id">
                                 <div class="accordion-body">
+                                    <button class="btn btn-info mb-3">Add/Remove Projects</button>
                                     <ul class="list-group list-group-flush">
                                         @if (!item.Projects.Any())
                                         {
@@ -58,7 +66,7 @@
                 </p>                   
                 @Html.PagedListPager(
                     Model, 
-                    page => Url.Action("ListUserProjects", new { page }),
+                    page => Url.Action("ListUsers", new { page }),
                     new PagedListRenderOptions() 
                     {
                         UlElementClasses = new string[] { "pagination", "mb-0" },

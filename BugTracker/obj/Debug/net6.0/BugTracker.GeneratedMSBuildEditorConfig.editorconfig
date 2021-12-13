@@ -247,8 +247,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XF9UaWNrZXRMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/User/ListUserProjects.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMaXN0VXNlclByb2plY3RzLmNzaHRtbA==
+[C:/Users/User/source/repos/BugTracker/BugTracker/Views/User/ListUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMaXN0VXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/User/source/repos/BugTracker/BugTracker/Views/_ViewImports.cshtml]
