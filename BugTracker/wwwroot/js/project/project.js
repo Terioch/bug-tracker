@@ -44,13 +44,39 @@ class Project {
     }
 
     async handleUserAddition() {        
-        const userNameInput = document.getElementById("userNameInput");
-        console.log(userNameInput.value);
+        const userName = document.getElementById("userNameInput").value;
+        const id = this.projectContainer.getAttribute("data-id");
+
+        try {
+            const res = await fetch(`/projectUsers/add/${id}?userName=${userName}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "Application/Json",
+                }
+            });
+            const data = await res.json();
+            console.log(data);
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     async handleUserRemoval() {
-        const userNameInput = document.getElementById("userNameInput");
-        console.log(userNameInput.value);
+        const userName = document.getElementById("userNameInput").value;
+        const id = this.projectContainer.getAttribute("data-id");
+
+        try {
+            const res = await fetch(`/projectUsers/remove/${id}?userName=${userName}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "Application/Json",
+                }
+            });
+            const data = await res.json();
+            console.log(data);
+        } catch (err) {
+            console.error(err);
+        }
     }
 }
 

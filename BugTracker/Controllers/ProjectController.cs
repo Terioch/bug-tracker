@@ -93,6 +93,6 @@ namespace BugTracker.Controllers
         {
             Project deletedProject = repository.Delete(id);
             return Json(deletedProject);
-        }
+        }        
     }
 }

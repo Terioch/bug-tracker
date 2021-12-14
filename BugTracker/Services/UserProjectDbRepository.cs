@@ -38,7 +38,7 @@ namespace BugTracker.Services
             return userIds;
         }
 
-        public UserProject CreateUserProject(UserProject userProject)
+        public UserProject Create(UserProject userProject)
         {
             context.UserProjects.Add(new UserProject
             {
@@ -49,9 +49,9 @@ namespace BugTracker.Services
             return userProject;
         }
 
-        public UserProject DeleteUserProject(string userId)
+        public UserProject Delete(string userId, string projectId)
         {
-            UserProject userProject = context.UserProjects.Find(userId);
+            UserProject userProject = context.UserProjects.Where(u => u.UserId == userId && u.ProjectId == projectId).FirstOrDefault();
 
             if (userProject == null)
             {
@@ -63,7 +63,7 @@ namespace BugTracker.Services
             return userProject;
         }        
 
-        public UserProject UpdateUserProject(UserProject userProject)
+        public UserProject Update(UserProject userProject)
         {
             EntityEntry attachedUserProject = context.UserProjects.Attach(userProject);
             attachedUserProject.State = EntityState.Modified;
