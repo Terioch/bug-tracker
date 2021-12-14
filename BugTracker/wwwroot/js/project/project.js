@@ -5,12 +5,14 @@ class Project {
             console.log("Initialized Project");
             this.projectContainer = document.getElementById("projectContainer");
             this.handleDelete = this.handleDelete.bind(this);
+            this.onUsersManagementModalOpen = this.onUsersManagementModalOpen.bind(this);
             this.events();
         }          
     }
 
     events() {
         document.getElementById("deleteProjectBtn").addEventListener("click", this.handleDelete);
+        document.getElementById("manageUsersBtn").addEventListener("click", this.onUsersManagementModalOpen);
     }
 
     async handleDelete() {
@@ -33,6 +35,23 @@ class Project {
             console.error(err);
         }
     }    
+
+    onUsersManagementModalOpen() {       
+        const addUserBtn = document.querySelector(".add-user");
+        const removeUserBtn = document.querySelector(".remove-user");
+        addUserBtn.addEventListener("click", this.handleUserAddition);
+        removeUserBtn.addEventListener("click", this.handleUserRemoval);    
+    }
+
+    async handleUserAddition() {        
+        const userNameInput = document.getElementById("userNameInput");
+        console.log(userNameInput.value);
+    }
+
+    async handleUserRemoval() {
+        const userNameInput = document.getElementById("userNameInput");
+        console.log(userNameInput.value);
+    }
 }
 
 export default Project;
