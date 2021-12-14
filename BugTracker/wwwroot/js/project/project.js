@@ -39,8 +39,8 @@ class Project {
     onUsersManagementModalOpen() {       
         const addUserBtn = document.querySelector(".add-user");
         const removeUserBtn = document.querySelector(".remove-user");
-        addUserBtn.addEventListener("click", this.handleUserAddition);
-        removeUserBtn.addEventListener("click", this.handleUserRemoval);    
+        addUserBtn.addEventListener("click", this.handleUserAddition.bind(this));
+        removeUserBtn.addEventListener("click", this.handleUserRemoval.bind(this));    
     }
 
     async handleUserAddition() {        
@@ -48,25 +48,26 @@ class Project {
         const id = this.projectContainer.getAttribute("data-id");
 
         try {
-            const res = await fetch(`/projectUsers/add/${id}?userName=${userName}`, {
+            const res = await fetch(`/project/addUser/${id}?userName=${userName}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "Application/Json",
                 }
             });
+            if (res.status === 400) throw await res.json();    
             const data = await res.json();
-            console.log(data);
+            console.log({ data });
         } catch (err) {
             console.error(err);
         }
     }
 
     async handleUserRemoval() {
-        const userName = document.getElementById("userNameInput").value;
-        const id = this.projectContainer.getAttribute("data-id");
+        const userName = document.getElementById("userNameInput").value;     
+        const id = this.projectContainer.getAttribute("data-id");        
 
         try {
-            const res = await fetch(`/projectUsers/remove/${id}?userName=${userName}`, {
+            const res = await fetch(`/project/removeUser/${id}?userName=${userName}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "Application/Json",

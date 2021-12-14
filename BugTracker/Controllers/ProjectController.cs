@@ -2,6 +2,7 @@
 using BugTracker.Models;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,15 @@ namespace BugTracker.Controllers
     {
         private readonly IProjectRepository repository;
         private readonly ITicketRepository ticketRepository;
+        private readonly IUserProjectRepository userProjectRepository;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public ProjectController(IProjectRepository repository, ITicketRepository ticketRepository)
+        public ProjectController(IProjectRepository repository, ITicketRepository ticketRepository, IUserProjectRepository userProjectRepository, UserManager<ApplicationUser> userManager)
         {
             this.repository = repository;
             this.ticketRepository = ticketRepository;
+            this.userProjectRepository = userProjectRepository;
+            this.userManager = userManager;
         }
 
         public IActionResult ListProjects(int? page)
@@ -50,13 +55,22 @@ namespace BugTracker.Controllers
         {
             Project project = repository.GetProjectById(id);
             IEnumerable<Ticket> tickets = ticketRepository.GetTicketsByProject(id);
-            IEnumerable<ApplicationUser>? users = null;
+            List<string>? userIds = userProjectRepository.GetProjectUsers(id);         
+            List<ApplicationUser> users = new();
+            // project.Users = userManager.Users.Where((u, idx) => u.Id == userIds[idx]);
+
+            foreach (var userId in userIds)
+            {
+                ApplicationUser user = userManager.Users.First(u => u.Id == userId);
+                users.Add(user);
+            }
+
             ProjectViewModel model = new()
             {
                 Id = project.Id,
                 Name = project.Name,
                 Description = project.Description,
-                Users = project.Users,
+                Users = users.ToPagedList(page ?? 1, 5),
                 Tickets = tickets.ToPagedList(page ?? 1, 5),
             };
             return View(model);
@@ -93,6 +107,49 @@ namespace BugTracker.Controllers
         {
             Project deletedProject = repository.Delete(id);
             return Json(deletedProject);
-        }        
+        }
+
+        [HttpPost]
+        public IActionResult AddUser(string id, string? userName)
+        {
+            if (userName == null)
+            {
+                return BadRequest(new { message = "UserName cannot be empty" });
+            }
+
+            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.UserName == userName);
+
+            if (user == null)
+            {
+                return BadRequest(new { message = "UserName was not found" });
+            }
+
+            UserProject userProject = new()
+            {
+                ProjectId = id,
+                UserId = user.Id
+            };
+            userProjectRepository.Create(userProject);
+            return Json(userProject);
+        }
+
+        [HttpDelete]
+        public IActionResult RemoveUser(string id, string? userName)
+        {
+            if (userName == null)
+            {
+                return BadRequest(new { message = "UserName cannot be empty" });
+            }
+
+            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.UserName == userName);
+
+            if (user == null)
+            {
+                return BadRequest(new { message = "UserName could not be found" });
+            }
+
+            // UserProject userProject = userProjectRepository.Delete(user.Id, id);
+            return Json(new UserProject { UserId = user.Id, ProjectId = id });
+        }
     }
 }
