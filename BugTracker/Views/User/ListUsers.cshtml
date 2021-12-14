@@ -36,23 +36,23 @@
                                         <p>@item.Email</p>
                                     </div>  
                                      <div class="">
-                                        <h1 class="text-secondary" style="font-size: 12px">Roles(s)</h1>
+                                        <h1 class="text-secondary" style="font-size: 12px">Role(s)</h1>
                                         <p>Project Manager, Developer</p>
                                     </div>  
                                 </div>
                             </div>
                             <div id="collapse-@item.Id" class="accordion-collapse collapse" data-bs-parent="#userListAccordion" aria-labelledby="heading-@item.Id">
                                 <div class="accordion-body">   
-                                    <h1 class="fs-5">Assigned Projects</h1>
-                                    <ul class="list-group list-group-flush">
+                                    <h1 class="text-secondary fs-5">Assigned Projects</h1>
+                                    <ul class="list-group list-group-flush">                                       
                                         @if (!item.Projects.Any())
                                         {
                                             <li class="list-group-item">There are no projects assigned to this user</li>
                                         } else
                                         {
                                             foreach (var project in item.Projects)
-                                            {                                            
-                                                <li class="list-group-item">@project.Name</li>
+                                            {                                                                                    
+                                                <li class="list-group-item">@project.Name</li>                                                  
                                             }
                                         }
                                     </ul>

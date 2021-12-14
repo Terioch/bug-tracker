@@ -42,8 +42,8 @@ namespace BugTracker.Controllers
                     Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
-                    Projects = projects
-                });
+                    Projects = projects,
+            });
             }
             return View(users.ToPagedList(page ?? 1, 8));
         }
