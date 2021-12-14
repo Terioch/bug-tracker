@@ -29,14 +29,13 @@
                     @foreach (var ticket in Model)
                     {                                                     
                         <tr>
-                            <td>@ticket.Title</td>                        
-                            <td>@ticket.Submitter</td>   
-                            <td>@ticket.AssignedDeveloper</td>
-                            <td>@ticket.Status</td>
-                            <td>@ticket.Priority</td>
-                            <td class="d-flex flex-column">
-                                <a href="" class="link-success">Manage Users</a>
-                                <a asp-action="Details" asp-route-id="@ticket.Id" class="link-info">Details</a>                            
+                            <td class="">@ticket.Title</td>                        
+                            <td class="">@ticket.Submitter</td>   
+                            <td class="">@ticket.AssignedDeveloper</td>
+                            <td class="">@ticket.Status</td>
+                            <td class="">@ticket.Priority</td>
+                            <td class="d-flex flex-column">                               
+                                <a asp-action="Details" asp-route-id="@ticket.Id" class="link-success">Details</a>                            
                             </td>
                         </tr>                                        
                     }     

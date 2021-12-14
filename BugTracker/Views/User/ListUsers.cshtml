@@ -4,17 +4,17 @@
 
 @model IPagedList<UserProjectViewModel>;
 
-<div id="userProjectListPageContainer" class="card">
+<div id="userListPageContainer" class="card">
     <div class="card-header bg-light">
-        <h1 class="fs-3 mt-2">Manage project assignment for users</h1>  
+        <h1 class="fs-3 mt-2">View user information</h1>  
     </div>
     <div class="card-body">
         <div class="input-group-sm mb-3">
-            <input id="userProjectListSearchInput" class="form-control mb-3" style="max-width: 200px" placeholder="Search Users..." />
+            <input id="userListSearchInput" class="form-control mb-3" style="max-width: 200px" placeholder="Search Users..." />
         </div>  
 
-        <section id="userProjectListContainer">
-            <div id="userProjectListAccordion" class="accordion accordion-flush mb-3">
+        <section id="userListContainer">
+            <div id="userListAccordion" class="accordion accordion-flush mb-3">
                 @if (!Model.Any())
                 {
                     <div class="accordion-item">
@@ -35,11 +35,15 @@
                                         <h1 class="text-secondary" style="font-size: 12px">Email</h1>
                                         <p>@item.Email</p>
                                     </div>  
+                                     <div class="">
+                                        <h1 class="text-secondary" style="font-size: 12px">Roles(s)</h1>
+                                        <p>Project Manager, Developer</p>
+                                    </div>  
                                 </div>
                             </div>
-                            <div id="collapse-@item.Id" class="accordion-collapse collapse" data-bs-parent="#userProjectListAccordion" aria-labelledby="heading-@item.Id">
-                                <div class="accordion-body">
-                                    <button class="btn btn-info mb-3">Add/Remove Projects</button>
+                            <div id="collapse-@item.Id" class="accordion-collapse collapse" data-bs-parent="#userListAccordion" aria-labelledby="heading-@item.Id">
+                                <div class="accordion-body">   
+                                    <h1 class="fs-5">Assigned Projects</h1>
                                     <ul class="list-group list-group-flush">
                                         @if (!item.Projects.Any())
                                         {
@@ -48,7 +52,7 @@
                                         {
                                             foreach (var project in item.Projects)
                                             {                                            
-                                                <li class="list-group-item">@project</li>
+                                                <li class="list-group-item">@project.Name</li>
                                             }
                                         }
                                     </ul>
