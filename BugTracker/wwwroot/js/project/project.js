@@ -55,10 +55,13 @@ class Project {
                 }
             });
             if (res.status === 400) throw await res.json();    
+            if (res.status === 400 && res.url) window.location.href = res.url;
             const data = await res.json();
             console.log({ data });
         } catch (err) {
             console.error(err);
+            const validationErrorsContainer = document.getElementById("projectUsersManagementvalidationErrors");
+            validationErrorsContainer.innerHTML = err.message;
         }
     }
 

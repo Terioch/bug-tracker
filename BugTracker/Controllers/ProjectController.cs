@@ -31,7 +31,7 @@ namespace BugTracker.Controllers
         public IActionResult ListProjects(int? page)
         {
             IEnumerable<Project> projects = repository.GetAllProjects();
-            IPagedList<Project> pagedProjects = projects.ToPagedList(page ?? 1, 5);
+            IPagedList<Project> pagedProjects = projects.ToPagedList(page ?? 1, 8);
             return View(pagedProjects);
         } 
         
@@ -57,7 +57,6 @@ namespace BugTracker.Controllers
             IEnumerable<Ticket> tickets = ticketRepository.GetTicketsByProject(id);
             List<string>? userIds = userProjectRepository.GetProjectUsers(id);         
             List<ApplicationUser> users = new();
-            // project.Users = userManager.Users.Where((u, idx) => u.Id == userIds[idx]);
 
             foreach (var userId in userIds)
             {
@@ -125,9 +124,10 @@ namespace BugTracker.Controllers
             }
 
             UserProject userProject = new()
-            {
+            {   
+                Id = Guid.NewGuid().ToString(),
+                UserId = user.Id,
                 ProjectId = id,
-                UserId = user.Id
             };
             userProjectRepository.Create(userProject);
             return Json(userProject);
@@ -148,8 +148,8 @@ namespace BugTracker.Controllers
                 return BadRequest(new { message = "UserName could not be found" });
             }
 
-            // UserProject userProject = userProjectRepository.Delete(user.Id, id);
-            return Json(new UserProject { UserId = user.Id, ProjectId = id });
+            UserProject userProject = userProjectRepository.Delete(user.Id, id);
+            return Json(userProject);
         }
     }
 }

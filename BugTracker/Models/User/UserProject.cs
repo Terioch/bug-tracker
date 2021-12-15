@@ -6,16 +6,12 @@ namespace BugTracker.Models
 {
     public class UserProject
     {
-        [Key]
+        public string? Id { get; set; }
+      
+        [Required]
         public string? UserId { get; set; }
 
-        [ForeignKey("UserId")]
-        public ApplicationUser? User { get; set; }
-
         [Required]
-        public string? ProjectId { get; set; }
-
-        [ForeignKey("ProjectId")]
-        public Project? Project { get; set; }        
+        public string? ProjectId { get; set; }       
     }
 }
