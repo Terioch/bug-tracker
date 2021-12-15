@@ -14,7 +14,7 @@ namespace BugTracker.Models
         [Required]
         public string? Description { get; set; }
 
-        public IEnumerable<ApplicationUser>? Users { get; set; }
+        public IPagedList<ApplicationUser>? Users { get; set; }
 
         public IPagedList<Ticket>? Tickets { get; set; }
     }

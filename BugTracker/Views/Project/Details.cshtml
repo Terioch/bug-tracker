@@ -7,7 +7,6 @@
 
 @{
     ViewData["Title"] = "Project Details";
-    ViewBag.Users = Model.Users.ToPagedList<ApplicationUser>();
 }
 
 <div id="projectContainer" data-id="@Model?.Id" class="card">
@@ -63,8 +62,8 @@
                         </table>
                         <div>
                             <p class="text-secondary" style="font-size: 14px">
-                                Page @(ViewBag.Users.PageCount < ViewBag.Users.PageNumber ? 0 : ViewBag.Users.PageNumber) 
-                                of @ViewBag.Users.PageCount
+                                Page @(Model.Users.PageCount < Model.Users.PageNumber ? 0 : Model.Users.PageNumber) 
+                                of @Model.Users.PageCount
                             </p>                   
                             @Html.PagedListPager(
                                 Model.Users.ToPagedList(), 
@@ -92,8 +91,8 @@
                         <div class="input-group-sm">
                             <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..."  />
                         </div>
-                        <button class="btn btn-primary mb-3" asp-action="Details">
-                            Create
+                        <button class="btn btn-primary mb-3" asp-controller="Ticket" asp-action="Create">
+                            Create New
                         </button>
                     </div>  
                     <table class="table">

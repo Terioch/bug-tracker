@@ -32,8 +32,7 @@
                             <td>@project?.Tickets.ToList().Count</td>   
                             <td>@project?.Description</td>
                             <td class="d-flex flex-column">
-                                <a href="" class="link-success">Manage Users</a>
-                                <a asp-action="Details" asp-route-id="@project?.Id" class="link-info">Details</a>                            
+                                <a asp-action="Details" asp-route-id="@project?.Id" class="link-success">Details</a>                            
                             </td>
                         </tr>     
                     </tbody>            

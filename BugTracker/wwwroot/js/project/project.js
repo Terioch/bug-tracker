@@ -26,9 +26,10 @@ class Project {
                 }
             });
 
-            if (res.status === 400 && res.url) {
+            if (res.url) {
                 window.location.href = res.url;
-            }
+                return;
+            }              
             await res.json();         
             window.location.href = "/Project/ListProjects";
         } catch (err) {
@@ -55,8 +56,11 @@ class Project {
                 }
             });
 
-            if (res.status === 400) throw await res.json();    
-            if (res.status === 403 && res.url) window.location.href = res.url;
+            if (res.url) {
+                window.location.href = res.url;
+                return;
+            }              
+            if (res.status === 400) throw await res.json();            
 
             const data = await res.json();
             window.location.reload();
@@ -79,8 +83,11 @@ class Project {
                 }
             });
 
-            if (res.status === 400) throw await res.json();
-            if (res.status === 403 && res.url) window.location.href = res.url;
+            if (res.url) {
+                window.location.href = res.url;
+                return;
+            }              
+            if (res.status === 400) throw await res.json();              
 
             const data = await res.json();
             window.location.reload();
