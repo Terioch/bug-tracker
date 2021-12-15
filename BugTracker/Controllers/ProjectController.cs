@@ -108,6 +108,7 @@ namespace BugTracker.Controllers
             return Json(deletedProject);
         }
 
+        [Authorize(Roles = "Admin, Project Manager")]
         [HttpPost]
         public IActionResult AddUser(string id, string? userName)
         {
@@ -120,7 +121,7 @@ namespace BugTracker.Controllers
 
             if (user == null)
             {
-                return BadRequest(new { message = "UserName was not found" });
+                return BadRequest(new { message = "UserName could not be found" });
             }
 
             UserProject userProject = new()
@@ -130,15 +131,16 @@ namespace BugTracker.Controllers
                 ProjectId = id,
             };
             userProjectRepository.Create(userProject);
-            return Json(userProject);
+            return Json(userProject);            
         }
 
+        [Authorize(Roles = "Admin, Project Manager")]
         [HttpDelete]
         public IActionResult RemoveUser(string id, string? userName)
         {
             if (userName == null)
             {
-                return BadRequest(new { message = "UserName cannot be empty" });
+                return BadRequest(new { message = "UserName can not be empty" });
             }
 
             ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.UserName == userName);

@@ -54,10 +54,12 @@ class Project {
                     "Content-Type": "Application/Json",
                 }
             });
+
             if (res.status === 400) throw await res.json();    
-            if (res.status === 400 && res.url) window.location.href = res.url;
+            if (res.status === 403 && res.url) window.location.href = res.url;
+
             const data = await res.json();
-            console.log({ data });
+            window.location.reload();
         } catch (err) {
             console.error(err);
             const validationErrorsContainer = document.getElementById("projectUsersManagementvalidationErrors");
@@ -76,10 +78,16 @@ class Project {
                     "Content-Type": "Application/Json",
                 }
             });
+
+            if (res.status === 400) throw await res.json();
+            if (res.status === 403 && res.url) window.location.href = res.url;
+
             const data = await res.json();
-            console.log(data);
+            window.location.reload();
         } catch (err) {
             console.error(err);
+            const validationErrorsContainer = document.getElementById("projectUsersManagementvalidationErrors");
+            validationErrorsContainer.innerHTML = err.message;
         }
     }
 }

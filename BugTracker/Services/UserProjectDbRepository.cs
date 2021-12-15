@@ -40,11 +40,7 @@ namespace BugTracker.Services
 
         public UserProject Create(UserProject userProject)
         {
-            context.UserProjects.Add(new UserProject
-            {
-                UserId = userProject.UserId,
-                ProjectId = userProject.ProjectId
-            });
+            context.UserProjects.Add(userProject);
             context.SaveChanges();
             return userProject;
         }
