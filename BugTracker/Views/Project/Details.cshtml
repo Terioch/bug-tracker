@@ -1,12 +1,17 @@
-﻿@using BugTracker.Areas.Identity.Data
+﻿@using BugTracker.Helpers;
+@using BugTracker.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
+@inject UserManager<ApplicationUser> userManager
+@inject ProjectHelper projectHelper
+
 @model BugTracker.Models.ProjectViewModel
 
 @{
-    ViewData["Title"] = "Project Details";
+    ViewData["Title"] = "Project Details";    
 }
 
 <div id="projectContainer" data-id="@Model?.Id" class="card">
@@ -37,7 +42,11 @@
                             <div class="input-group-sm">
                                 <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..." />
                             </div>
-                            <button id="manageUsersBtn" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersManagementModal">
+                                @if (Model.Users.)
+                                {
+                                    
+                                }
+                                <button id="manageUsersBtn" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersManagementModal">
                                 Add/Remove
                             </button>
                         </div>                    

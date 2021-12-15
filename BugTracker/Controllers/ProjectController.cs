@@ -160,7 +160,7 @@ namespace BugTracker.Controllers
 
             List<string>? userIds = userProjectRepository.GetProjectUsers(id);
 
-            if (userIds.Any(u => u == user.Id))
+            if (userIds.Contains(user.Id))
             {
                 return BadRequest(new { message = "User is already assigned to the current project" });
             }
