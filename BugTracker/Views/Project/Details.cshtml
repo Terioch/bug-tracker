@@ -5,6 +5,7 @@
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
+@inject UserManager<ApplicationUser> userManager
 @inject RoleManager<IdentityRole> roleManager
 @inject ProjectHelper projectHelper
 @inject RoleHelper roleHelper
@@ -13,7 +14,6 @@
 
 @{
     ViewData["Title"] = "Project Details";  
-    var roles = await roleHelper.GetRoleNamesOfUser(User.Identity.Name);
 }
 
 <div id="projectContainer" data-id="@Model?.Id" class="card">
@@ -68,22 +68,11 @@
                             </thead>
                             <tbody>
                                 @foreach (var user in Model.Users)
-                                {                                
+                                {           
                                     <tr>
                                         <td>@user.UserName</td>                        
                                         <td>@user.Email</td>   
-                                        <td>
-                                            @foreach (var role in roles)
-                                            {
-                                                if (roles.IndexOf(role) < roles.Count - 1)
-                                                {
-                                                    <span>@role, </span>
-                                                } else
-                                                {
-                                                    <span>@role</span>     
-                                                }
-                                            }
-                                        </td>                                       
+                                        <td>@string.Join(", ", await userManager.GetRolesAsync(user))</td>                                       
                                     </tr>                                         
                                 }
                             </tbody> 
