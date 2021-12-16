@@ -221,7 +221,7 @@ namespace BugTracker.Controllers
             return Json(users);
         }
 
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] UserRoleViewModel model)
         {
@@ -259,7 +259,7 @@ namespace BugTracker.Controllers
             throw new HttpRequestException("User is already in this role");
         }
 
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> RemoveUser([FromBody] UserRoleViewModel model)
         {

@@ -26,7 +26,7 @@ class Project {
                 }
             });
 
-            if (res.url) {
+            if (res.url && res.status == 400) {
                 window.location.href = res.url;
                 return;
             }              
@@ -56,10 +56,10 @@ class Project {
                 }
             });
 
-            if (res.url) {
+            if (res.url && res.status == 400) {
                 window.location.href = res.url;
                 return;
-            }              
+            }             
             if (res.status === 400) throw await res.json();            
 
             const data = await res.json();

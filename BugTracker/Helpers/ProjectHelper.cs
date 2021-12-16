@@ -20,12 +20,6 @@ namespace BugTracker.Helpers
             var user = userManager.Users.FirstOrDefault(u => u.UserName == userName);
             List<string> userIds = userProjectRepository.GetProjectUsers(projectId);
             return userIds.Contains(user.Id);       
-        }
-
-        public async Task<bool> IsUserInRole(string userName, string role)
-        {
-            var user = userManager.Users.FirstOrDefault(u => u.UserName == userName);
-            return await userManager.IsInRoleAsync(user, role);          
-        }
+        }        
     }
 }

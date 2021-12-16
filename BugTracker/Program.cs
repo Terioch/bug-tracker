@@ -1,5 +1,6 @@
 using BugTracker.Areas.Identity.Data;
 using BugTracker.Data;
+using BugTracker.Helpers;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,11 @@ builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
 builder.Services.AddScoped<ITicketHistoryRecordRepository, TicketHistoryRecordDbRepository>();
 builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
+builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
+builder.Services.AddScoped<RoleHelper, RoleHelper>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
-        options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedAccount = true;
         options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
     })
     .AddRoles<IdentityRole>()

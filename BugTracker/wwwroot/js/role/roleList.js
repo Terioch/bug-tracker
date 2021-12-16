@@ -232,10 +232,10 @@ class RoleList {
                     userName: this.selectedUser.userName
                 })
             });                   
-            if (res.url) {
+            if (res.url && res.status == 400) {
                 window.location.href = res.url;
                 return;
-            }
+            } 
             if (res.status === 500) throw await res.text();    
             
             const userListHTML = await res.text();   

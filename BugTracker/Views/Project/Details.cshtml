@@ -5,13 +5,15 @@
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
-@inject UserManager<ApplicationUser> userManager
+@inject RoleManager<IdentityRole> roleManager
 @inject ProjectHelper projectHelper
+@inject RoleHelper roleHelper
 
 @model BugTracker.Models.ProjectViewModel
 
 @{
-    ViewData["Title"] = "Project Details";    
+    ViewData["Title"] = "Project Details";  
+    var roles = await roleHelper.GetRoleNamesOfUser(User.Identity.Name);
 }
 
 <div id="projectContainer" data-id="@Model?.Id" class="card">
@@ -42,20 +44,26 @@
                             <div class="input-group-sm">
                                 <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..." />
                             </div>
-                                @if (Model.Users.)
+                                @if (User.IsInRole("Admin")
+                                     || projectHelper.IsUserInProject(User.Identity.Name, Model.Id) 
+                                     && await roleHelper.IsUserInRole(User.Identity.Name, "Project Manager"))
                                 {
-                                    
-                                }
-                                <button id="manageUsersBtn" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersManagementModal">
-                                Add/Remove
-                            </button>
-                        </div>                    
+                                    <button id="manageUsersBtn" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersManagementModal">
+                                        Add/Remove
+                                    </button>
+                                } else
+                                {
+                                    <button class="btn btn-secondary mb-3" disabled>
+                                        Add/Remove
+                                    </button>
+                                }                           
+                            </div>                    
                         <table class="table">
                             <thead>
                                 <tr>          
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Role</th>                     
+                                    <th scope="col">Role(s)</th>                     
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,7 +72,18 @@
                                     <tr>
                                         <td>@user.UserName</td>                        
                                         <td>@user.Email</td>   
-                                        <td>Developer</td>                                       
+                                        <td>
+                                            @foreach (var role in roles)
+                                            {
+                                                if (roles.IndexOf(role) < roles.Count - 1)
+                                                {
+                                                    <span>@role, </span>
+                                                } else
+                                                {
+                                                    <span>@role</span>     
+                                                }
+                                            }
+                                        </td>                                       
                                     </tr>                                         
                                 }
                             </tbody> 
@@ -100,7 +119,7 @@
                         <div class="input-group-sm">
                             <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..."  />
                         </div>
-                        <button class="btn btn-primary mb-3" asp-controller="Ticket" asp-action="Create">
+                        <button class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
                             Create New
                         </button>
                     </div>  

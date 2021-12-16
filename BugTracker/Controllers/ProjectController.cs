@@ -108,7 +108,7 @@ namespace BugTracker.Controllers
             return Json(deletedProject);
         }
 
-        [Authorize(Roles = "Admin, Project Manager")]        
+        // [Authorize(Roles = "Admin, Project Manager")]        
         [HttpPost]
         public IActionResult AddUser(string id, string? userName)
         {
@@ -126,7 +126,7 @@ namespace BugTracker.Controllers
 
             List<string>? userIds = userProjectRepository.GetProjectUsers(id);
 
-            if (userIds.Any(u => u == user.Id))
+            if (userIds.Contains(user.Id))
             {
                 return BadRequest(new { message = "User is already assigned to the current project" });
             }
@@ -142,7 +142,7 @@ namespace BugTracker.Controllers
             return Json(userProject);            
         }
 
-        [Authorize(Roles = "Admin, Project Manager")]
+        // [Authorize(Roles = "Admin, Project Manager")]
         [HttpDelete]
         public IActionResult RemoveUser(string id, string? userName)
         {            
@@ -160,9 +160,9 @@ namespace BugTracker.Controllers
 
             List<string>? userIds = userProjectRepository.GetProjectUsers(id);
 
-            if (userIds.Contains(user.Id))
+            if (!userIds.Contains(user.Id))
             {
-                return BadRequest(new { message = "User is already assigned to the current project" });
+                return BadRequest(new { message = "User is not assigned to the current project" });
             }
 
             UserProject userProject = userProjectRepository.Delete(user.Id, id);
