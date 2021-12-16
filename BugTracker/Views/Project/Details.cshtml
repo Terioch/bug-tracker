@@ -44,7 +44,10 @@
                             <div class="input-group-sm">
                                 <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..." />
                             </div>
-                            @if (await roleHelper.IsUserInRole(User.Identity.Name, "Admin")
+                            <button id="manageUsersBtn" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersManagementModal">
+                                Add/Remove
+                            </button>
+                            @*@if (await roleHelper.IsUserInRole(User.Identity.Name, "Admin")
                                     || projectHelper.IsUserInProject(User.Identity.Name, Model.Id) 
                                     && await roleHelper.IsUserInRole(User.Identity.Name, "Project Manager"))
                             {
@@ -56,7 +59,7 @@
                                 <button class="btn btn-secondary mb-3" disabled>
                                     Add/Remove
                                 </button>
-                            }                           
+                            }*@                           
                         </div>                    
                         <table class="table">
                             <thead>

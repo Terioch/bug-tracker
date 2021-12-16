@@ -54,7 +54,7 @@
                 <div class="col-md-4">   
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Projects</label>
                     <select asp-for="ProjectName" class="form-select mb-4" aria-label="Ticket project">
-                        @if (Model.ProjectName != null) 
+                        @if (Model != null && Model.ProjectName != null) 
                         {
                             <option>@Model.ProjectName</option>
                         } else 

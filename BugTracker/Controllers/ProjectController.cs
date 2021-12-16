@@ -39,6 +39,8 @@ namespace BugTracker.Controllers
         public IActionResult ListProjects(int? page)
         {
             IEnumerable<Project> projects = repository.GetAllProjects();
+            // TODO: Filter projects according to authenticated users role via DTO
+
             IPagedList<Project> pagedProjects = projects.ToPagedList(page ?? 1, 8);
             return View(pagedProjects);
         } 
