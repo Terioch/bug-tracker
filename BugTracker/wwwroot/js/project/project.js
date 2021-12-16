@@ -83,7 +83,7 @@ class Project {
                 }
             });
 
-            if (res.url) {
+            if (res.url && res.status == 400) {
                 window.location.href = res.url;
                 return;
             }              

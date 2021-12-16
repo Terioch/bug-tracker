@@ -18,10 +18,10 @@ namespace BugTracker.Helpers
             return await userManager.IsInRoleAsync(user, role);
         }
 
-        public async Task<IList<string>> GetRoleNamesOfUser(string userName)
+        public async Task<List<string>> GetRoleNamesOfUser(string userName)
         {
             var user = await userManager.FindByNameAsync(userName);
-            return await userManager.GetRolesAsync(user);
+            return (List<string>)await userManager.GetRolesAsync(user);
         }
     }
 }

@@ -91,7 +91,7 @@ namespace BugTracker.Controllers
             }
 
             var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
-            return PartialView("_ProjectList", filteredProjects.ToPagedList(1, 5));
+            return PartialView("_ProjectList", filteredProjects.ToPagedList(1, 8));
         }        
 
         [HttpPut]
@@ -106,9 +106,8 @@ namespace BugTracker.Controllers
         {
             Project deletedProject = repository.Delete(id);
             return Json(deletedProject);
-        }
+        }     
 
-        // [Authorize(Roles = "Admin, Project Manager")]        
         [HttpPost]
         public IActionResult AddUser(string id, string? userName)
         {
@@ -142,7 +141,6 @@ namespace BugTracker.Controllers
             return Json(userProject);            
         }
 
-        // [Authorize(Roles = "Admin, Project Manager")]
         [HttpDelete]
         public IActionResult RemoveUser(string id, string? userName)
         {            

@@ -41,14 +41,13 @@ namespace BugTracker.Controllers
             IPagedList<Ticket> pagedTickets = tickets.ToPagedList(page ?? 1, 5);
             return View(pagedTickets);
         }
-
-        [HttpGet]
-        public IActionResult Create()
+    
+        [HttpGet]        
+        public IActionResult Create(string projectName)
         {
-            return View();
+            return View(new CreateTicketViewModel { ProjectName = projectName });
         }
-
-        [Authorize(Roles = "Admin, Project Manager, Submitter")]
+        
         [HttpPost]
         public async Task<IActionResult> Create(CreateTicketViewModel model)
         {

@@ -44,20 +44,20 @@
                             <div class="input-group-sm">
                                 <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..." />
                             </div>
-                                @if (User.IsInRole("Admin")
-                                     || projectHelper.IsUserInProject(User.Identity.Name, Model.Id) 
-                                     && await roleHelper.IsUserInRole(User.Identity.Name, "Project Manager"))
-                                {
-                                    <button id="manageUsersBtn" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersManagementModal">
-                                        Add/Remove
-                                    </button>
-                                } else
-                                {
-                                    <button class="btn btn-secondary mb-3" disabled>
-                                        Add/Remove
-                                    </button>
-                                }                           
-                            </div>                    
+                            @if (await roleHelper.IsUserInRole(User.Identity.Name, "Admin")
+                                    || projectHelper.IsUserInProject(User.Identity.Name, Model.Id) 
+                                    && await roleHelper.IsUserInRole(User.Identity.Name, "Project Manager"))
+                            {
+                                <button id="manageUsersBtn" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersManagementModal">
+                                    Add/Remove
+                                </button>
+                            } else
+                            {
+                                <button class="btn btn-secondary mb-3" disabled>
+                                    Add/Remove
+                                </button>
+                            }                           
+                        </div>                    
                         <table class="table">
                             <thead>
                                 <tr>          
@@ -68,11 +68,19 @@
                             </thead>
                             <tbody>
                                 @foreach (var user in Model.Users)
-                                {           
-                                    <tr>
+                                {
+                                     List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
+
+                                     <tr>
                                         <td>@user.UserName</td>                        
-                                        <td>@user.Email</td>   
-                                        <td>@string.Join(", ", await userManager.GetRolesAsync(user))</td>                                       
+                                        <td>@user.Email</td>  
+                                        @if (!roles.Any())
+                                        {
+                                            <td>@string.Join(", ", roles)</td>
+                                        } else
+                                        {
+                                            <td>No assigned roles</td>
+                                        }                                                                                 
                                     </tr>                                         
                                 }
                             </tbody> 
@@ -108,9 +116,9 @@
                         <div class="input-group-sm">
                             <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..."  />
                         </div>
-                        <button class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
+                        <a href="/Ticket/Create/?projectName=@Model.Name" class="btn btn-success mb-3">
                             Create New
-                        </button>
+                        </a>
                     </div>  
                     <table class="table">
                         <thead>
@@ -125,7 +133,7 @@
                         </thead>
                         <tbody>
                             @foreach (var ticket in Model.Tickets)
-                            {                            
+                            {                                                
                                 <tr>
                                     <td>@ticket.Title</td>                        
                                     <td>@ticket.Submitter</td>   
