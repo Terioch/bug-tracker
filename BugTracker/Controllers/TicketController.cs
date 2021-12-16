@@ -1,4 +1,5 @@
 ﻿using BugTracker.Areas.Identity.Data;
+using BugTracker.Helpers;
 using BugTracker.Models;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -15,14 +16,16 @@ namespace BugTracker.Controllers
         private readonly ITicketRepository repository;
         private readonly IProjectRepository projectRepository;
         private readonly ITicketHistoryRecordRepository ticketHistoryRecordRepository;
-        private readonly UserManager<ApplicationUser> userManager;       
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ProjectHelper projectHelper;
 
-        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, UserManager<ApplicationUser> userManager)
+        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
         {
             this.repository = repository;
             this.projectRepository = projectRepository;
             this.ticketHistoryRecordRepository = ticketHistoryRecordRepository;
             this.userManager = userManager;
+            this.projectHelper = projectHelper;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
@@ -42,22 +45,34 @@ namespace BugTracker.Controllers
             return View(pagedTickets);
         }
     
+        [Authorize(Roles = "Admin")]        
         [HttpGet]        
-        public IActionResult Create(string projectName)
-        {
-            return View(new CreateTicketViewModel { ProjectName = projectName });
+        public IActionResult Create()
+        {                     
+            return View();
         }
-        
-        [HttpPost]
+
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
+        [HttpGet]
+        public async Task<IActionResult> CreateForProject(string projectName, string id)
+        {          
+            if (!projectHelper.IsUserInProject(await GetCurrentUserAsync(), id))
+            {
+                return View("~/Account/Denied");
+            }
+            return View("Create", new CreateTicketViewModel { ProjectName = projectName });
+        }
+
+        [HttpPost]        
         public async Task<IActionResult> Create(CreateTicketViewModel model)
         {
-            ApplicationUser Submitter = await GetCurrentUserAsync();            
+            ApplicationUser submitter = await GetCurrentUserAsync();            
 
             Ticket ticket = new()
             {
                 Id = Guid.NewGuid().ToString(),
                 ProjectId = projectRepository.GetProjectByName(model.ProjectName).Id,
-                Submitter = Submitter.UserName,
+                Submitter = submitter.UserName,
                 AssignedDeveloper = model.AssignedDeveloper,
                 Title = model.Title,
                 Description = model.Description,
@@ -121,6 +136,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult Edit(string id)
         {
+            
             Ticket ticket = repository.GetTicketById(id); 
 
             EditTicketViewModel model = new()

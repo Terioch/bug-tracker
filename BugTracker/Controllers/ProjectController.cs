@@ -1,4 +1,5 @@
 ﻿using BugTracker.Areas.Identity.Data;
+using BugTracker.Helpers;
 using BugTracker.Models;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -19,13 +20,20 @@ namespace BugTracker.Controllers
         private readonly ITicketRepository ticketRepository;
         private readonly IUserProjectRepository userProjectRepository;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ProjectHelper projectHelper;
 
-        public ProjectController(IProjectRepository repository, ITicketRepository ticketRepository, IUserProjectRepository userProjectRepository, UserManager<ApplicationUser> userManager)
+        public ProjectController(IProjectRepository repository, ITicketRepository ticketRepository, IUserProjectRepository userProjectRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
         {
             this.repository = repository;
             this.ticketRepository = ticketRepository;
             this.userProjectRepository = userProjectRepository;
             this.userManager = userManager;
+            this.projectHelper = projectHelper;
+        }
+
+        private Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return userManager.GetUserAsync(HttpContext.User);
         }
 
         public IActionResult ListProjects(int? page)
@@ -106,11 +114,19 @@ namespace BugTracker.Controllers
         {
             Project deletedProject = repository.Delete(id);
             return Json(deletedProject);
-        }     
+        }        
 
+        [Authorize(Roles = "Admin, Project Manager")]
         [HttpPost]
-        public IActionResult AddUser(string id, string? userName)
+        public async Task<IActionResult> AddUser(string id, string? userName)
         {
+            ApplicationUser currentUser = await GetCurrentUserAsync();
+
+            if (!projectHelper.IsUserInProject(currentUser, id))
+            {
+                return View("~/Account/Denied");
+            }
+
             if (userName == null)
             {
                 return BadRequest(new { message = "UserName cannot be empty" });
