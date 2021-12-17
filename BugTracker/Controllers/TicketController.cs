@@ -61,7 +61,7 @@ namespace BugTracker.Controllers
 
             if  (!isAdmin && !projectHelper.IsUserInProject(user.UserName, id))
             {
-                return View("~/Account/Denied");
+                return View("~/Areas/Identity/Pages/Account/AccessDenied.cshtml");
             }
             return View("Create", new CreateTicketViewModel { ProjectName = projectName });
         }

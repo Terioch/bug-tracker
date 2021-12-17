@@ -36,13 +36,12 @@ namespace BugTracker.Controllers
             return userManager.GetUserAsync(HttpContext.User);
         }
 
-        public IActionResult ListProjects(int? page)
+        public async Task<IActionResult> ListProjects(int? page)
         {
             IEnumerable<Project> projects = repository.GetAllProjects();
-            // TODO: Filter projects according to authenticated users role via DTO
-
-            IPagedList<Project> pagedProjects = projects.ToPagedList(page ?? 1, 8);
-            return View(pagedProjects);
+            ApplicationUser user = await GetCurrentUserAsync();
+            IEnumerable<Project> filteredProjects = await projectHelper.FilterProjectsByRole(projects, user);
+            return View(filteredProjects.ToPagedList(page ?? 1, 8));
         } 
         
         [Authorize(Roles = "Admin")]
@@ -92,7 +91,7 @@ namespace BugTracker.Controllers
             
             if (searchTerm == null)
             {
-                return PartialView("_ProjectList", projects.ToPagedList(1, 5));
+                return PartialView("_ProjectList", projects.ToPagedList(1, 8));
             }
 
             if (projects.ToList().Count == 0)

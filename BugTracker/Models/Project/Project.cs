@@ -18,8 +18,8 @@ namespace BugTracker.Models
         [Required]
         public string? Description { get; set; }
 
-        public IEnumerable<ApplicationUser>? Users { get; set; } = new List<ApplicationUser>();
+        public IEnumerable<ApplicationUser>? Users { get; set; } = new HashSet<ApplicationUser>();
 
-        public IEnumerable<Ticket>? Tickets { get; set; } = new List<Ticket>();
+        public IEnumerable<Ticket>? Tickets { get; set; } = new HashSet<Ticket>();
     }
 }
