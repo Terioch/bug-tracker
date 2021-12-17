@@ -1,4 +1,4 @@
-using BugTracker.Areas.Identity.Data;
+using BugTracker.Models;
 using BugTracker.Data;
 using BugTracker.Helpers;
 using BugTracker.Services;
@@ -28,6 +28,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<BugTrackerDbContext>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

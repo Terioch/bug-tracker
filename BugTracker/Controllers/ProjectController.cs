@@ -36,11 +36,9 @@ namespace BugTracker.Controllers
         }
 
         public async Task<IActionResult> ListProjects(int? page)
-        {
-            IEnumerable<Project> projects = repository.GetAllProjects();
-            ApplicationUser user = await GetCurrentUserAsync();
-            IEnumerable<Project> filteredProjects = await projectHelper.FilterProjectsByRole(projects, user);
-            return View(filteredProjects.ToPagedList(page ?? 1, 8));
+        {   
+            IEnumerable<Project> projects = await projectHelper.GetProjectsForUser();
+            return View(projects.ToPagedList(page ?? 1, 8));
         } 
         
         [Authorize(Roles = "Admin")]
@@ -62,7 +60,7 @@ namespace BugTracker.Controllers
         public IActionResult Details(string id, int? page)
         {
             Project project = repository.GetProjectById(id);
-            IEnumerable<Ticket> tickets = ticketRepository.GetTicketsByProject(id);
+            IEnumerable<Ticket> tickets = ticketRepository.GetProjectTickets(id);
             List<ApplicationUser>? users = userProjectRepository.GetProjectUsers(id);                     
 
             ProjectViewModel model = new()
@@ -77,9 +75,9 @@ namespace BugTracker.Controllers
         }
       
         [HttpGet]
-        public IActionResult FilterProjectsByNameReturnPartial(string? searchTerm)
-        {                       
-            IEnumerable<Project> projects = repository.GetAllProjects();           
+        public async Task<IActionResult> FilterProjectsByNameReturnPartial(string? searchTerm)
+        {
+            IEnumerable<Project> projects = await projectHelper.GetProjectsForUser();
             
             if (searchTerm == null)
             {

@@ -8,13 +8,15 @@ namespace BugTracker.Helpers
     {
         private readonly IProjectRepository projectRepository;
         private readonly IUserProjectRepository userProjectRepository;
+        private readonly ITicketRepository ticketRepository;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleHelper roleHelper;
 
-        public TicketHelper(IProjectRepository projectRepository, IUserProjectRepository userProjectRepository, UserManager<ApplicationUser> userManager, RoleHelper roleHelper)
+        public TicketHelper(IProjectRepository projectRepository, IUserProjectRepository userProjectRepository, ITicketRepository ticketRepository, UserManager<ApplicationUser> userManager, RoleHelper roleHelper)
         {
             this.projectRepository = projectRepository;
             this.userProjectRepository = userProjectRepository;
+            this.ticketRepository = ticketRepository;
             this.userManager = userManager;
             this.roleHelper = roleHelper;
         }
@@ -23,6 +25,11 @@ namespace BugTracker.Helpers
         {
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
             List<Project> projects = userProjectRepository.GetUserProjects(user.Id);
+
+            foreach (var project in projects)
+            {
+                project.Tickets = ticketRepository.GetProjectTickets(project.Id);
+            }
 
             if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
             {

@@ -19,7 +19,7 @@ namespace BugTracker.Services
             return context.Tickets;
         }
 
-        public List<Ticket> GetTicketsByProject(string id)
+        public List<Ticket> GetProjectTickets(string id)
         {
             List<Ticket> tickets = new();
 
