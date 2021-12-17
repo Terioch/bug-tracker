@@ -1,5 +1,4 @@
-﻿using BugTracker.Areas.Identity.Data;
-using BugTracker.Helpers;
+﻿using BugTracker.Helpers;
 using BugTracker.Models;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -18,14 +17,16 @@ namespace BugTracker.Controllers
         private readonly ITicketHistoryRecordRepository ticketHistoryRecordRepository;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
+        private readonly TicketHelper ticketHelper;
 
-        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
+        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
         {
             this.repository = repository;
             this.projectRepository = projectRepository;
             this.ticketHistoryRecordRepository = ticketHistoryRecordRepository;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
+            this.ticketHelper = ticketHelper;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
@@ -38,11 +39,12 @@ namespace BugTracker.Controllers
             return userManager.FindByNameAsync(name);
         }
 
-        public IActionResult ListTickets(int? page)
+        public async Task<IActionResult> ListTickets(int? page)
         {
             IEnumerable<Ticket> tickets = repository.GetAllTickets();
-            IPagedList<Ticket> pagedTickets = tickets.ToPagedList(page ?? 1, 5);
-            return View(pagedTickets);
+            ApplicationUser user = await GetCurrentUserAsync();
+            IEnumerable<Ticket> filteredTickets = await ticketHelper.FilterTicketsByRole(tickets, user);
+            return View(filteredTickets.ToPagedList(page ?? 1, 5));
         }
     
         [Authorize(Roles = "Admin")]        

@@ -1,5 +1,4 @@
-﻿using BugTracker.Areas.Identity.Data;
-using BugTracker.Helpers;
+﻿using BugTracker.Helpers;
 using BugTracker.Models;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -64,14 +63,7 @@ namespace BugTracker.Controllers
         {
             Project project = repository.GetProjectById(id);
             IEnumerable<Ticket> tickets = ticketRepository.GetTicketsByProject(id);
-            List<string>? userIds = userProjectRepository.GetProjectUsers(id);         
-            List<ApplicationUser> users = new();
-
-            foreach (var userId in userIds)
-            {
-                ApplicationUser user = userManager.Users.First(u => u.Id == userId);
-                users.Add(user);
-            }
+            List<ApplicationUser>? users = userProjectRepository.GetProjectUsers(id);                     
 
             ProjectViewModel model = new()
             {
@@ -140,9 +132,9 @@ namespace BugTracker.Controllers
                 return BadRequest(new { message = "UserName could not be found" });
             }
 
-            List<string>? userIds = userProjectRepository.GetProjectUsers(id);
+            List<ApplicationUser> users = userProjectRepository.GetProjectUsers(id);
 
-            if (userIds.Contains(user.Id))
+            if (users.Contains(user))
             {
                 return BadRequest(new { message = "User is already assigned to the current project" });
             }
@@ -173,9 +165,9 @@ namespace BugTracker.Controllers
                 return BadRequest(new { message = "UserName could not be found" });
             }
 
-            List<string>? userIds = userProjectRepository.GetProjectUsers(id);
+            List<ApplicationUser> users = userProjectRepository.GetProjectUsers(id);
 
-            if (!userIds.Contains(user.Id))
+            if (!users.Contains(user))
             {
                 return BadRequest(new { message = "User is not assigned to the current project" });
             }

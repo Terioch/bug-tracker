@@ -1,5 +1,6 @@
 ﻿using BugTracker.Data;
 using BugTracker.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -8,34 +9,40 @@ namespace BugTracker.Services
     public class UserProjectDbRepository : IUserProjectRepository
     {
         private readonly BugTrackerDbContext context;
+        private readonly IProjectRepository projectRepository;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public UserProjectDbRepository(BugTrackerDbContext context)
+        public UserProjectDbRepository(BugTrackerDbContext context, IProjectRepository projectRepository, UserManager<ApplicationUser> userManager)
         {
             this.context = context;
+            this.projectRepository = projectRepository;
+            this.userManager = userManager;
         }
 
-        public List<string> GetUserProjects(string userId)
+        public List<Project> GetUserProjects(string userId)
         {
             IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.UserId == userId);
-            List<string> projectIds = new();
+            List<Project> projects = new();
 
             foreach (var userProject in userProjects)
             {
-                projectIds.Add(userProject.ProjectId);
+                Project project = projectRepository.GetProjectById(userProject.ProjectId);
+                projects.Add(project);
             }
-            return projectIds;
+            return projects;
         }
 
-        public List<string> GetProjectUsers(string projectId)
+        public List<ApplicationUser> GetProjectUsers(string projectId)
         {
             IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.ProjectId == projectId);
-            List<string> userIds = new();
+            List<ApplicationUser> users = new();
 
             foreach (var userProject in userProjects)
             {
-                userIds.Add(userProject.UserId);
+                ApplicationUser user = userManager.Users.First(u => u.Id == userProject.UserId);
+                users.Add(user);
             }
-            return userIds;
+            return users;
         }
 
         public UserProject Create(UserProject userProject)

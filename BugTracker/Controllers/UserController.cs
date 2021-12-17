@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BugTracker.Areas.Identity.Data;
 using BugTracker.Models;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -28,14 +27,7 @@ namespace BugTracker.Controllers
 
             foreach (var user in userManager.Users)
             {
-                List<string> projectIds = repository.GetUserProjects(user.Id);
-                List<Project> projects = new();
-                
-                foreach (var id in projectIds)
-                {
-                    Project project = projectRepository.GetProjectById(id);
-                    projects.Add(project);
-                }
+                List<Project> projects = repository.GetUserProjects(user.Id);               
 
                 users.Add(new()
                 {

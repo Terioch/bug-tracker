@@ -1,4 +1,4 @@
-﻿using BugTracker.Areas.Identity.Data;
+﻿using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Helpers
