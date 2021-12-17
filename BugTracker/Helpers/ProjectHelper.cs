@@ -21,23 +21,23 @@ namespace BugTracker.Helpers
             userName = httpContextAccessor.HttpContext.User.Identity.Name;
         }
 
-        public bool IsUserInProject(string userName, string projectId)
+        public bool IsUserInProject(string projectId)
         {
-            var user = userManager.Users.FirstOrDefault(u => u.UserName == userName);
-            List<ApplicationUser> users = userProjectRepository.GetProjectUsers(projectId);
+            ApplicationUser user = userManager.Users.First(u => u.UserName == userName);
+            List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(projectId);
             return users.Contains(user);       
         }        
 
-        public async Task<IEnumerable<Project>> GetProjectsForUser()
+        public async Task<IEnumerable<Project>> GetUserProjects()
         {
             List<string> roles = await roleHelper.GetRoleNamesOfUser(userName);
-            var user = userManager.Users.FirstOrDefault(u => u.UserName == userName);
+            ApplicationUser user = userManager.Users.First(u => u.UserName == userName);
 
             if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
             {
                 return projectRepository.GetAllProjects();
             }            
-            return userProjectRepository.GetUserProjects(user.Id);
+            return userProjectRepository.GetProjectsByUserId(user.Id);
         }
     }
 }

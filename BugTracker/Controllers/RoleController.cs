@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using BugTracker.Areas.Identity.Data;
 
 namespace BugTracker.Controllers
 {

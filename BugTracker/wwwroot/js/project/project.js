@@ -63,6 +63,7 @@ class Project {
             if (res.status === 400) throw await res.json();            
 
             const data = await res.json();
+            console.log(data);
             window.location.reload();
         } catch (err) {
             console.error(err);

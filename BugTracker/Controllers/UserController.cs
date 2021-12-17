@@ -27,7 +27,7 @@ namespace BugTracker.Controllers
 
             foreach (var user in userManager.Users)
             {
-                List<Project> projects = repository.GetUserProjects(user.Id);               
+                List<Project> projects = repository.GetProjectsByUserId(user.Id);               
 
                 users.Add(new()
                 {

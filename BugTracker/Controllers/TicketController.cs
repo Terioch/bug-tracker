@@ -41,10 +41,8 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> ListTickets(int? page)
         {
-            IEnumerable<Ticket> tickets = repository.GetAllTickets();
-            ApplicationUser user = await GetCurrentUserAsync();
-            IEnumerable<Ticket> filteredTickets = await ticketHelper.FilterTicketsByRole(tickets, user);
-            return View(filteredTickets.ToPagedList(page ?? 1, 5));
+            IEnumerable<Ticket> tickets = await ticketHelper.GetUserTickets();
+            return View(tickets.ToPagedList(page ?? 1, 5));
         }
     
         [Authorize(Roles = "Admin")]        
@@ -61,7 +59,7 @@ namespace BugTracker.Controllers
             ApplicationUser user = await GetCurrentUserAsync();
             var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
 
-            if  (!isAdmin && !projectHelper.IsUserInProject(user.UserName, id))
+            if  (!isAdmin && !projectHelper.IsUserInProject(id))
             {
                 return View("~/Areas/Identity/Pages/Account/AccessDenied.cshtml");
             }
@@ -100,7 +98,7 @@ namespace BugTracker.Controllers
             var isAdmin = await userManager.IsInRoleAsync(submitter, "Admin");
             string? projectId = projectRepository.GetProjectByName(model.ProjectName).Id;
 
-            if (!isAdmin && !projectHelper.IsUserInProject(submitter.UserName, projectId))
+            if (!isAdmin && !projectHelper.IsUserInProject(projectId))
             {
                 return View("~/Account/Denied");
             }
@@ -146,9 +144,9 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult FilterTicketsReturnPartial(string? searchTerm)
+        public async Task<IActionResult> FilterTicketsReturnPartial(string? searchTerm)
         {
-            IEnumerable<Ticket> tickets = repository.GetAllTickets();
+            IEnumerable<Ticket> tickets = await ticketHelper.GetUserTickets();
 
             if (searchTerm == null)
             {
@@ -178,7 +176,7 @@ namespace BugTracker.Controllers
             var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
             var isSubmitter = await userManager.IsInRoleAsync(user, "Submitter");
 
-            if (!isAdmin && !projectHelper.IsUserInProject(user.UserName, ticket.ProjectId) 
+            if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId) 
                 || isSubmitter && user.UserName != ticket.Submitter)
             {
                 return View("~/Account/Denied");
@@ -217,7 +215,7 @@ namespace BugTracker.Controllers
             var isAdmin = await userManager.IsInRoleAsync(modifier, "Admin");
             var isSubmitter = await userManager.IsInRoleAsync(modifier, "Submitter");            
 
-            if (!isAdmin && !projectHelper.IsUserInProject(modifier.UserName, ticket.ProjectId)
+            if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId)
                 || isSubmitter && modifier.UserName != ticket.Submitter)
             {
                 return View("~/Account/Denied");
@@ -292,7 +290,7 @@ namespace BugTracker.Controllers
             var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
             var isSubmitter = await userManager.IsInRoleAsync(user, "Submitter");
 
-            if (!isAdmin && !projectHelper.IsUserInProject(user.UserName, ticket.ProjectId)
+            if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId)
                 || isSubmitter && user.UserName != ticket.Submitter)
             {
                 return View("~/Account/Denied");

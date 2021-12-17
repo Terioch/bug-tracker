@@ -76,14 +76,15 @@
 
                                      <tr>
                                         <td>@user.UserName</td>                        
-                                        <td>@user.Email</td>  
-                                        @if (!roles.Any())
+                                        <td>@user.Email</td> 
+                                        <td>@string.Join(", ", roles)</td>
+                                        @*@if (!roles.Any())
                                         {
                                             <td>@string.Join(", ", roles)</td>
                                         } else
                                         {
                                             <td>No assigned roles</td>
-                                        }                                                                                 
+                                        }  *@                                                                               
                                     </tr>                                         
                                 }
                             </tbody> 

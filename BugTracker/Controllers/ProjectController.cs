@@ -37,7 +37,7 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> ListProjects(int? page)
         {   
-            IEnumerable<Project> projects = await projectHelper.GetProjectsForUser();
+            IEnumerable<Project> projects = await projectHelper.GetUserProjects();
             return View(projects.ToPagedList(page ?? 1, 8));
         } 
         
@@ -60,8 +60,8 @@ namespace BugTracker.Controllers
         public IActionResult Details(string id, int? page)
         {
             Project project = repository.GetProjectById(id);
-            IEnumerable<Ticket> tickets = ticketRepository.GetProjectTickets(id);
-            List<ApplicationUser>? users = userProjectRepository.GetProjectUsers(id);                     
+            IEnumerable<Ticket> tickets = ticketRepository.GetTicketsByProjectId(id);
+            List<ApplicationUser>? users = userProjectRepository.GetUsersByProjectId(id);                     
 
             ProjectViewModel model = new()
             {
@@ -77,7 +77,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterProjectsByNameReturnPartial(string? searchTerm)
         {
-            IEnumerable<Project> projects = await projectHelper.GetProjectsForUser();
+            IEnumerable<Project> projects = await projectHelper.GetUserProjects();
             
             if (searchTerm == null)
             {
@@ -109,15 +109,8 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager")]
         [HttpPost]
-        public async Task<IActionResult> AddUser(string id, string? userName)
-        {
-            ApplicationUser currentUser = await GetCurrentUserAsync();
-
-            if (!projectHelper.IsUserInProject(currentUser, id))
-            {
-                return View("~/Account/Denied");
-            }
-
+        public IActionResult AddUser(string id, string? userName)
+        {            
             if (userName == null)
             {
                 return BadRequest(new { message = "UserName cannot be empty" });
@@ -130,7 +123,7 @@ namespace BugTracker.Controllers
                 return BadRequest(new { message = "UserName could not be found" });
             }
 
-            List<ApplicationUser> users = userProjectRepository.GetProjectUsers(id);
+            List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(id);
 
             if (users.Contains(user))
             {
@@ -163,7 +156,7 @@ namespace BugTracker.Controllers
                 return BadRequest(new { message = "UserName could not be found" });
             }
 
-            List<ApplicationUser> users = userProjectRepository.GetProjectUsers(id);
+            List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(id);
 
             if (!users.Contains(user))
             {
