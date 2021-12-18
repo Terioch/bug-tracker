@@ -18,14 +18,16 @@ namespace BugTracker.Controllers
         private readonly IProjectRepository repository;
         private readonly ITicketRepository ticketRepository;
         private readonly IUserProjectRepository userProjectRepository;
+        private readonly ITicketHistoryRecordRepository ticketHistoryRecordRepository;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
 
-        public ProjectController(IProjectRepository repository, ITicketRepository ticketRepository, IUserProjectRepository userProjectRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
+        public ProjectController(IProjectRepository repository, ITicketRepository ticketRepository, IUserProjectRepository userProjectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
         {
             this.repository = repository;
             this.ticketRepository = ticketRepository;
             this.userProjectRepository = userProjectRepository;
+            this.ticketHistoryRecordRepository = ticketHistoryRecordRepository;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
         }
@@ -91,7 +93,13 @@ namespace BugTracker.Controllers
 
             var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
             return PartialView("_ProjectList", filteredProjects.ToPagedList(1, 8));
-        }        
+        }   
+        
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            return View();
+        }
 
         [HttpPut]
         public IActionResult Update(Project project)
@@ -102,7 +110,22 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin")]
         [HttpDelete]
         public IActionResult Delete(string id)
-        {
+        {            
+            List<Ticket> tickets = ticketRepository.GetTicketsByProjectId(id);
+
+            foreach (var ticket in tickets)
+            {
+                ticketRepository.Delete(ticket.Id);
+                ticketHistoryRecordRepository.DeleteRecordsByTicketId(ticket.Id);
+            }
+
+            List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(id); 
+
+            foreach (var user in users)
+            {
+                userProjectRepository.Delete(user.Id, id);
+            }
+
             Project deletedProject = repository.Delete(id);
             return Json(deletedProject);
         }        

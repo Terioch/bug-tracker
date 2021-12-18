@@ -176,11 +176,11 @@ namespace BugTracker.Controllers
             var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
             var isSubmitter = await userManager.IsInRoleAsync(user, "Submitter");
 
-            if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId) 
+            /*if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId) 
                 || isSubmitter && user.UserName != ticket.Submitter)
             {
                 return View("~/Account/Denied");
-            } 
+            } */
 
             EditTicketViewModel model = new()
             {        
@@ -215,24 +215,25 @@ namespace BugTracker.Controllers
             var isAdmin = await userManager.IsInRoleAsync(modifier, "Admin");
             var isSubmitter = await userManager.IsInRoleAsync(modifier, "Submitter");            
 
-            if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId)
+            /*if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId)
                 || isSubmitter && modifier.UserName != ticket.Submitter)
             {
                 return View("~/Account/Denied");
-            }            
+            }*/
 
             // Add new record to ticket history if projectId differs
-            Project project = projectRepository.GetProjectByName(model.ProjectName);
+            Project oldProject = projectRepository.GetProjectById(ticket.ProjectId);
+            Project newProject = projectRepository.GetProjectByName(model.ProjectName);           
 
-            if (ticket.ProjectId != project.Id)
+            if (oldProject.Id != newProject.Id)
             {
                 TicketHistoryRecord record = new()
                 {
                     Id = Guid.NewGuid().ToString(),
                     TicketId = ticket.Id,
-                    Property = "ProjectId",
-                    OldValue = ticket.ProjectId,
-                    NewValue = project.Id,
+                    Property = "ProjectName",
+                    OldValue = oldProject.Name,
+                    NewValue = newProject.Name,
                     Modifier = modifier.UserName,
                     DateChanged = DateTime.Now
                 };
@@ -240,7 +241,7 @@ namespace BugTracker.Controllers
                 ticketHistoryRecordRepository.Create(record);
             }
 
-            ticket.ProjectId = project.Id;
+            ticket.ProjectId = newProject.Id; 
           
             foreach (var property in modelProperties) 
             {          
