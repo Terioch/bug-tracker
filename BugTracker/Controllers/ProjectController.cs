@@ -104,8 +104,9 @@ namespace BugTracker.Controllers
         [HttpPut]
         public IActionResult Update(Project project)
         {
-            return View(project);
-        }
+            repository.Update(project);
+            return RedirectToAction("Details", "Project", project.Id);
+        }       
 
         [Authorize(Roles = "Admin")]
         [HttpDelete]
