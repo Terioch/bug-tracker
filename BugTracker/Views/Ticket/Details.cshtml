@@ -31,8 +31,13 @@
               </li>
               <li class="list-group-item list-group-item-light">
                   <p class="mb-1 fw-bold">Assigned Developer</p>
-                  <small>@Model.AssignedDeveloper</small>
-              </li>
+                    @if (Model.AssignedDeveloper != null) {
+                        <small>@Model.AssignedDeveloper</small>
+                    } else
+                    {
+                        <small>None</small>
+                    }
+                </li>
               <li class="list-group-item list-group-item-light">
                   <p class="mb-1 fw-bold">Reported By</p>
                   <small>@Model.Submitter</small>

@@ -9,7 +9,7 @@ namespace BugTracker.Models
         public string? Id { get; set; }        
 
         [Required]
-        public string? TicketId { get; set; }
+        public string? TicketId { get; set; }        
 
         [Required]
         public string? Property { get; set; }

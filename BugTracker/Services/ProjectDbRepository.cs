@@ -34,12 +34,13 @@ namespace BugTracker.Services
 
         public Project GetProjectByName(string name)
         {
-            Project? project = context?.Projects?.FirstOrDefault(p => p.Name == name);
+            Project? project = context?.Projects?.FirstOrDefault(p => p.Name == name);            
 
             if (project == null)
             {
-                throw new Exception("Project Not Found");
+                return new Project();
             }
+
             return project;
         }
 
@@ -56,7 +57,7 @@ namespace BugTracker.Services
 
             if (project == null)
             {
-                throw new Exception("Project Not Found");
+                throw new NullReferenceException("Project Not Found");
             }         
 
             context.Projects.Remove(project);

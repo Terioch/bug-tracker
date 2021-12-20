@@ -26,7 +26,6 @@ namespace BugTracker.Models
         [Required]
         public string? Submitter { get; set; }
 
-        [Required]
         public string? AssignedDeveloper { get; set; }
 
         [Required]
@@ -37,5 +36,9 @@ namespace BugTracker.Models
 
         [Required]
         public string? Priority { get; set; }
+
+        // public virtual Project? Project { get; set; }
+        // public virtual ApplicationUser? AssignedDeveloper { get; set; }
+        // public virtual ApplicationUser? Submitter { get; set; }        
     }
 }
