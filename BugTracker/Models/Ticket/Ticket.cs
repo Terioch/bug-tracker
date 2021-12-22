@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace BugTracker.Models
 {
@@ -14,6 +15,11 @@ namespace BugTracker.Models
         public string? ProjectId { get; set; }
 
         [Required]
+        public string? SubmitterId { get; set; }
+
+        public string? AssignedDeveloperId { get; set; }
+
+        [Required]
         [MaxLength(40)]
         public string? Title { get; set; }
 
@@ -21,12 +27,7 @@ namespace BugTracker.Models
         public string? Description { get; set; }
 
         [Required]
-        public DateTime? SubmittedDate { get; set; }
-
-        [Required]
-        public string? Submitter { get; set; }
-
-        public string? AssignedDeveloper { get; set; }
+        public DateTime? SubmittedDate { get; set; }       
 
         [Required]
         public string? Type { get; set; }
@@ -37,8 +38,12 @@ namespace BugTracker.Models
         [Required]
         public string? Priority { get; set; }
 
-        // public virtual Project? Project { get; set; }
-        // public virtual ApplicationUser? AssignedDeveloper { get; set; }
-        // public virtual ApplicationUser? Submitter { get; set; }        
+        public virtual Project? Project { get; set; }
+
+        public virtual ApplicationUser? AssignedDeveloper { get; set; }
+
+        public virtual ApplicationUser? Submitter { get; set; }
+
+        public virtual ICollection<TicketHistoryRecord>? TicketHistoryRecords { get; set; } = new HashSet<TicketHistoryRecord>();
     }
 }

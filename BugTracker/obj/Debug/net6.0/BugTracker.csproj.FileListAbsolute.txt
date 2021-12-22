@@ -270,5 +270,5 @@ C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\BugTracker.dll
 C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\ref\BugTracker.dll
 C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\BugTracker.pdb
 C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\BugTracker.genruntimeconfig.cache
-C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\BugTracker.csproj.AssemblyReference.cache
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\Microsoft.Build.Locator.dll
+C:\Users\User\source\repos\BugTracker\BugTracker\obj\Debug\net6.0\BugTracker.csproj.AssemblyReference.cache

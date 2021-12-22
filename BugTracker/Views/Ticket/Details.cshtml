@@ -18,7 +18,7 @@
                     <a asp-action="ListTickets" class="text-primary">Back to List</a> |
                     <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteTicketModal">Delete</a>
                 </div>
-            </div>    
+            </div>   
 
             <ul class="list-group list-group-flush">
               <li class="list-group-item list-group-item-light">
@@ -27,12 +27,12 @@
               </li>
               <li class="list-group-item list-group-item-light">
                   <p class="mb-1 fw-bold">Project Name</p>
-                  <small>@Model.ProjectName</small>
+                  <small>@Model.Project.Name</small>
               </li>
               <li class="list-group-item list-group-item-light">
                   <p class="mb-1 fw-bold">Assigned Developer</p>
                     @if (Model.AssignedDeveloper != null) {
-                        <small>@Model.AssignedDeveloper</small>
+                        <small>@Model.AssignedDeveloper.UserName</small>
                     } else
                     {
                         <small>None</small>
@@ -40,7 +40,7 @@
                 </li>
               <li class="list-group-item list-group-item-light">
                   <p class="mb-1 fw-bold">Reported By</p>
-                  <small>@Model.Submitter</small>
+                  <small>@Model.Submitter.UserName</small>
               </li>
               <li class="list-group-item list-group-item-light">
                   <p class="mb-1 fw-bold">Created At</p>
@@ -67,7 +67,7 @@
                     <p class="text-secondary mb-0">Record of changes to this ticket</p>
                 </div>
                 <div class="card-body">                 
-                    @if (!Model.HistoryRecords.Any())
+                    @if (!Model.TicketHistoryRecords.Any())
                     {
                         <div class="alert alert-info fs-5 mt-3" role="alert">
                           There is no available history for this ticket.
@@ -85,12 +85,22 @@
                                 </tr>
                             </thead>                                                
                             <tbody>                                     
-                                @foreach (var record in Model.HistoryRecords) 
+                                @foreach (var record in Model.TicketHistoryRecords) 
                                 {
                                     <tr>
                                         <td>@record.Property</td>
-                                        <td>@record.OldValue</td>
-                                        <td>@record.NewValue</td>
+                                        @if (record.OldValue != null) {
+                                            <td>@record.OldValue</td>
+                                        } else
+                                        {
+                                            <td>Null</td>
+                                        }     
+                                        @if (record.NewValue != null) {
+                                            <td>@record.NewValue</td>
+                                        } else
+                                        {
+                                            <td>Null</td>
+                                        }   
                                         <td>@record.Modifier</td>
                                         <td>@record.DateChanged</td>
                                     </tr>   
@@ -99,11 +109,11 @@
                         </table>
                         <div>
                             <p class="text-secondary" style="font-size: 14px">
-                                Page @(Model.HistoryRecords.PageCount < Model.HistoryRecords.PageNumber ? 0 : Model.HistoryRecords.PageNumber) 
-                                of @Model.HistoryRecords.PageCount
+                                Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
+                                of @Model.TicketHistoryRecords.PageCount
                             </p>                   
                             @Html.PagedListPager(
-                                Model.HistoryRecords, 
+                                Model.TicketHistoryRecords, 
                                 page => Url.Action("Details", new { Model.Id, page }),
                                 new PagedListRenderOptions() 
                                 {

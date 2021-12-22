@@ -54,36 +54,37 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]
-        public async Task<IActionResult> CreateForProject(string projectName, string id)
+        public async Task<IActionResult> CreateForProject(string projectId)
         {
             ApplicationUser user = await GetCurrentUserAsync();
             var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
 
-            if  (!isAdmin && !projectHelper.IsUserInProject(id))
+            if  (!isAdmin && !projectHelper.IsUserInProject(projectId))
             {
                 return View("~/Areas/Identity/Pages/Account/AccessDenied.cshtml");
             }
-            return View("Create", new CreateTicketViewModel { ProjectName = projectName });
+
+            return View(new Ticket { Project = projectRepository.GetProjectById(projectId) });
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]        
-        public async Task<IActionResult> Create(CreateTicketViewModel model)
+        public async Task<IActionResult> Create(Ticket model)
         {
-            ApplicationUser submitter = await GetCurrentUserAsync();            
-
+            ApplicationUser submitter = await GetCurrentUserAsync();
+            
             Ticket ticket = new()
             {
                 Id = Guid.NewGuid().ToString(),
-                ProjectId = projectRepository.GetProjectByName(model.ProjectName).Id,
-                Submitter = submitter.UserName,
-                AssignedDeveloper = model.AssignedDeveloper,
+                ProjectId = model.ProjectId,
+                SubmitterId = submitter.Id,
+                AssignedDeveloperId = model.AssignedDeveloperId,
                 Title = model.Title,
                 Description = model.Description,
                 SubmittedDate = DateTime.Now,                
                 Type = model.Type,
                 Status = model.Status,
-                Priority = model.Priority,
+                Priority = model.Priority,                
             };
 
             ticket = repository.Create(ticket);
@@ -92,29 +93,22 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpPost]
-        public async Task<IActionResult> CreateForProject(CreateTicketViewModel model)
+        public async Task<IActionResult> CreateForProject(Ticket model)
         {
-            ApplicationUser submitter = await GetCurrentUserAsync();
-            var isAdmin = await userManager.IsInRoleAsync(submitter, "Admin");
-            string? projectId = projectRepository.GetProjectByName(model.ProjectName).Id;
-
-            if (!isAdmin && !projectHelper.IsUserInProject(projectId))
-            {
-                return View("~/Account/Denied");
-            }
+            ApplicationUser submitter = await GetCurrentUserAsync();            
 
             Ticket ticket = new()
             {
                 Id = Guid.NewGuid().ToString(),
-                ProjectId = projectRepository.GetProjectByName(model.ProjectName).Id,
-                Submitter = submitter.UserName,
-                AssignedDeveloper = model.AssignedDeveloper,
+                ProjectId = model.ProjectId,
+                SubmitterId = submitter.Id,
+                AssignedDeveloperId = model.AssignedDeveloperId,
                 Title = model.Title,
                 Description = model.Description,
                 SubmittedDate = DateTime.Now,
                 Type = model.Type,
                 Status = model.Status,
-                Priority = model.Priority,
+                Priority = model.Priority,                
             };
 
             ticket = repository.Create(ticket);
@@ -125,20 +119,23 @@ namespace BugTracker.Controllers
         public IActionResult Details(string id, int? page)
         {
             Ticket ticket = repository.GetTicketById(id);
-            List<TicketHistoryRecord> historyRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id);
+
             TicketViewModel model = new()
             {
                 Id = ticket.Id,
-                ProjectName = projectRepository.GetProjectById(ticket.ProjectId).Name,
+                ProjectId = ticket.ProjectId,
+                SubmitterId = ticket.SubmitterId,
+                AssignedDeveloperId = ticket.AssignedDeveloperId,
                 Title = ticket.Title,
                 Description = ticket.Description,
-                SubmittedDate = ticket.SubmittedDate,
-                Submitter = ticket.Submitter,
-                AssignedDeveloper = ticket.AssignedDeveloper,
+                SubmittedDate = ticket.SubmittedDate,                
                 Type = ticket.Type,
                 Status = ticket.Status,
                 Priority = ticket.Priority,
-                HistoryRecords = historyRecords.ToPagedList(page ?? 1, 5)
+                Project = projectRepository.GetProjectById(ticket.ProjectId),
+                Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
+                AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),
+                TicketHistoryRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id).ToPagedList(page ?? 1, 5)
             };
             return View(model);
         }
@@ -169,30 +166,21 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {            
             Ticket ticket = repository.GetTicketById(id);
-            ApplicationUser user = await GetCurrentUserAsync();
-            var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
-            var isSubmitter = await userManager.IsInRoleAsync(user, "Submitter");
-
-            /*if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId) 
-                || isSubmitter && user.UserName != ticket.Submitter)
-            {
-                return View("~/Account/Denied");
-            } */
 
             EditTicketViewModel model = new()
-            {        
+            {
                 Id = id,
                 Title = ticket.Title,
                 Description = ticket.Description,
-                ProjectName = projectRepository.GetProjectById(ticket.ProjectId).Name,               
-                AssignedDeveloper = ticket.AssignedDeveloper,
+                ProjectId = ticket.ProjectId,
+                AssignedDeveloperId = ticket.AssignedDeveloperId,
                 Type = ticket.Type,
                 Status = ticket.Status,
                 Priority = ticket.Priority,
-            };            
+            };
             return View(model);
         }
 
@@ -200,8 +188,6 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(EditTicketViewModel model)
         {            
-            // Authorization: Verify user is the ticket submitter, project manager or admin
-
             Ticket ticket = repository.GetTicketById(model.Id);
 
             if (ticket == null)
@@ -211,37 +197,7 @@ namespace BugTracker.Controllers
             }
 
             PropertyInfo[] modelProperties = model.GetType().GetProperties();
-            ApplicationUser modifier = await GetCurrentUserAsync();
-            var isAdmin = await userManager.IsInRoleAsync(modifier, "Admin");
-            var isSubmitter = await userManager.IsInRoleAsync(modifier, "Submitter");            
-
-            /*if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId)
-                || isSubmitter && modifier.UserName != ticket.Submitter)
-            {
-                return View("~/Account/Denied");
-            }*/
-
-            // Add new record to ticket history if projectId differs
-            Project oldProject = projectRepository.GetProjectById(ticket.ProjectId);
-            Project newProject = projectRepository.GetProjectByName(model.ProjectName);           
-
-            if (oldProject.Id != newProject.Id)
-            {
-                TicketHistoryRecord record = new()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    TicketId = ticket.Id,
-                    Property = "ProjectName",
-                    OldValue = oldProject.Name,
-                    NewValue = newProject.Name,
-                    Modifier = modifier.UserName,
-                    DateChanged = DateTime.Now
-                };
-
-                ticketHistoryRecordRepository.Create(record);
-            }
-
-            ticket.ProjectId = newProject.Id; 
+            ApplicationUser modifier = await GetCurrentUserAsync();            
           
             foreach (var property in modelProperties) 
             {          
@@ -249,11 +205,11 @@ namespace BugTracker.Controllers
 
                 if (ticketProperty != null)
                 {
-                    string? ticketPropertyValue = ticketProperty.GetValue(ticket).ToString();
-                    string? propertyValue = property.GetValue(model).ToString();
+                    string? ticketPropertyValue = ticketProperty.GetValue(ticket)?.ToString();
+                    string? propertyValue = property.GetValue(model)?.ToString();
 
                     if (ticketPropertyValue != propertyValue)
-                    {
+                    {                        
                         TicketHistoryRecord record = new()
                         {
                             Id = Guid.NewGuid().ToString(),
@@ -264,20 +220,18 @@ namespace BugTracker.Controllers
                             Modifier = modifier.UserName,
                             DateChanged = DateTime.Now
                         };
-
                         ticketHistoryRecordRepository.Create(record);
-                    }
-                    ticketProperty.SetValue(ticket, property.GetValue(model));
+                        ticketProperty.SetValue(ticket, property.GetValue(model));
+                    }                 
                 }                                
-            }
-            
+            }            
             repository.Update(ticket);
             return RedirectToAction("Details", new { id = ticket.Id });
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpDelete]
-        public async Task<IActionResult> Delete(string id)
+        public IActionResult Delete(string id)
         {
             Ticket ticket = repository.GetTicketById(id);
 
@@ -285,17 +239,7 @@ namespace BugTracker.Controllers
             {
                 ViewBag.ErrorMessage = $"Ticket with Id {id} cannot be found";
                 return View("NotFound");
-            }
-
-            ApplicationUser user = await GetCurrentUserAsync();
-            var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
-            var isSubmitter = await userManager.IsInRoleAsync(user, "Submitter");
-
-            if (!isAdmin && !projectHelper.IsUserInProject(ticket.ProjectId)
-                || isSubmitter && user.UserName != ticket.Submitter)
-            {
-                return View("~/Account/Denied");
-            }
+            }            
 
             ticketHistoryRecordRepository.DeleteRecordsByTicketId(id);
             repository.Delete(id);

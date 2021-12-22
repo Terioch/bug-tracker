@@ -41,13 +41,13 @@ namespace BugTracker.Helpers
             }
             else if (roles.Contains("Project Manager") || roles.Contains("Demo Project Manager"))
             {
-                return projects.SelectMany(p => p.Tickets);
+                return projects.SelectMany(p => p.Tickets ?? new List<Ticket>());
             }
             else if (roles.Contains("Developer") || roles.Contains("Demo Developer"))
             {
-                return projects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloper == user.UserName));
+                return projects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id));
             }
-            return projects.SelectMany(p => p.Tickets.Where(t => t.Submitter == user.UserName));            
+            return projects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id));            
         }
     }
 }

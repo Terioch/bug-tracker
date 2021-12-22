@@ -4,6 +4,7 @@ using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(BugTrackerDbContext))]
-    partial class BugTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211221131214_MajorReforms")]
+    partial class MajorReforms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,9 +184,11 @@ namespace BugTracker.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NewValue")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OldValue")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Property")

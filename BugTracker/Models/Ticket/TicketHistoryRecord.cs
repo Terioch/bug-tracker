@@ -14,10 +14,8 @@ namespace BugTracker.Models
         [Required]
         public string? Property { get; set; }
 
-        [Required]
         public string? OldValue { get; set; }
 
-        [Required]
         public string? NewValue { get; set; }
 
         [Required]

@@ -51,7 +51,15 @@ namespace BugTracker.Services
 
         public TicketHistoryRecord Delete(string id)
         {
-            throw new NotImplementedException();
+            TicketHistoryRecord? record = context.TicketHistoryRecords.Find(id);
+
+            if (record == null)
+            {
+                throw new NullReferenceException("Ticket history record Not Found");
+            }
+            context.TicketHistoryRecords.Remove(record);
+            context.SaveChanges();
+            return record;
         }
 
         public IEnumerable<TicketHistoryRecord> DeleteRecordsByTicketId(string ticketId)

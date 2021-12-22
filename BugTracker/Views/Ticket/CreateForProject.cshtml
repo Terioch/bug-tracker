@@ -31,7 +31,7 @@
 <h4>Create a New Ticket</h4>
 <hr />
 <section class="card">
-    <form asp-action="Create">
+    <form asp-action="CreateForProject">
         <div class="card-body">          
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
             <div class="row g-md-3">
@@ -53,11 +53,8 @@
             <div class="row g-md-3">        
                 <div class="col-md-4">   
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Associated Project</label>                    
-                    <select asp-for="ProjectId" class="form-select mb-4" aria-label="Ticket project">                       
-                        @foreach (var project in context.Projects)
-                        {                                               
-                            <option value="@project.Id">@project.Name</option>                    
-                        }                                                                                        
+                    <select asp-for="ProjectId" class="form-select mb-4" aria-label="Ticket project">
+                        <option value="@Model.Project.Id">@Model.Project.Name</option>                        
                     </select>                  
                 </div>
                 <div class="col-md-4">
@@ -120,3 +117,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
