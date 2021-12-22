@@ -23,7 +23,7 @@ namespace BugTracker.Controllers
 
         public IActionResult ListUsers(int? page)
         {
-            List<UserProjectViewModel> users = new();
+            /*List<UserProjectViewModel> users = new();
 
             foreach (var user in userManager.Users)
             {
@@ -35,9 +35,10 @@ namespace BugTracker.Controllers
                     UserName = user.UserName,
                     Email = user.Email,
                     Projects = projects,
-            });
-            }
-            return View(users.ToPagedList(page ?? 1, 8));
+                });
+            }*/
+            IPagedList<ApplicationUser> users = userManager.Users.ToPagedList(page ?? 1, 8);
+            return View(users);
         }
 
         public IActionResult Details(string id)
