@@ -44,7 +44,18 @@ namespace BugTracker.Controllers
         public IActionResult Details(string id)
         {
             ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == id);
-            return View(user);
+            IEnumerable<Project> projects = repository.GetProjectsByUserId(id);
+
+            UserViewModel model = new() 
+            {                 
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,                
+                Projects = projects,
+                Tickets = projects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == id || t.AssignedDeveloperId == id))
+            };
+            return View(model);
         }
     }
 }

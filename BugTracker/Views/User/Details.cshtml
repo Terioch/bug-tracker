@@ -1,0 +1,18 @@
+﻿@model UserViewModel
+
+<p>@Model.FirstName</p>
+<p>@Model.LastName</p>
+<p>@Model.UserName</p>
+<p>@Model.Email</p>
+<ul>
+    @foreach (var project in Model.Projects)
+    {
+        <li>@project.Name</li>
+    }
+</ul>
+<ul>
+    @foreach (var ticket in Model.Tickets)
+    {
+        <li>@ticket.Title, @ticket.AssignedDeveloper.UserName</li>
+    }
+</ul>
