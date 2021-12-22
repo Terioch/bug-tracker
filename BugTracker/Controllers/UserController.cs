@@ -39,5 +39,11 @@ namespace BugTracker.Controllers
             }
             return View(users.ToPagedList(page ?? 1, 8));
         }
+
+        public IActionResult Details(string id)
+        {
+            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == id);
+            return View(user);
+        }
     }
 }

@@ -1,8 +1,11 @@
-﻿@using X.PagedList;
+﻿@using Microsoft.AspNetCore.Identity
+@using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
-@model IPagedList<UserProjectViewModel>;
+@inject UserManager<ApplicationUser> userManager
+
+@model IPagedList<ApplicationUser>
 
 <div id="userListPageContainer" class="card">
     <div class="card-header bg-light">
@@ -13,8 +16,7 @@
             <input id="userListSearchInput" class="form-control mb-3" style="max-width: 200px" placeholder="Search Users..." />
         </div>  
 
-        <section id="userListContainer">
-            <div id="userListAccordion" class="accordion accordion-flush mb-3">
+        <section id="userListContainer">  
                 @if (!Model.Any())
                 {
                     <div class="accordion-item">
@@ -24,44 +26,50 @@
                 {
                     foreach (var item in Model)
                     {
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <div class="accordion-button" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.Id" aria-expanded="true" aria-controls="collapse-@item.Id">
-                                    <div class="">
-                                        <h1 class="text-secondary" style="font-size: 12px">Name</h1>
-                                        <p>@item.UserName</p>
-                                    </div>  
-                                    <div class="">
-                                        <h1 class="text-secondary" style="font-size: 12px">Email</h1>
-                                        <p>@item.Email</p>
-                                    </div>  
-                                     <div class="">
-                                        <h1 class="text-secondary" style="font-size: 12px">Role(s)</h1>
-                                        <p>Project Manager, Developer</p>
-                                    </div>  
-                                </div>
-                            </div>
-                            <div id="collapse-@item.Id" class="accordion-collapse collapse" data-bs-parent="#userListAccordion" aria-labelledby="heading-@item.Id">
-                                <div class="accordion-body">   
-                                    <h1 class="text-secondary fs-5">Assigned Projects</h1>
-                                    <ul class="list-group list-group-flush">                                       
-                                        @if (!item.Projects.Any())
-                                        {
-                                            <li class="list-group-item">There are no projects assigned to this user</li>
-                                        } else
-                                        {
-                                            foreach (var project in item.Projects)
-                                            {                                                                                    
-                                                <li class="list-group-item">@project.Name</li>                                                  
-                                            }
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>    
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>          
+                                        <th scope="col">UserName</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Role(s)</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {                 
+                                        List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
+
+                                        <tr>
+                                            <td>@user.UserName</td>
+                                            <td>@user.Email</td>                                                                                            
+                                            <td>@string.Join(", ", roles)</td>
+                                            <td class="d-flex flex-column">                                   
+                                                <a asp-action="Details" asp-route-id="@user.Id" class="link-success">Details</a>                            
+                                            </td>
+                                        </tr>                                 
+                                    }     
+                                </tbody> 
+                            </table> 
+                            <div>
+                                <p class="text-secondary" style="font-size: 14px">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
+                                    of @Model.PageCount
+                                </p>                   
+                                @Html.PagedListPager(
+                                    Model, 
+                                    page => Url.Action("ListProjects", new { page }),
+                                    new PagedListRenderOptions() 
+                                    {
+                                        UlElementClasses = new string[] { "pagination", "mb-0" },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        PageClasses = new string[] { "page-link" }
+                                    })
+                            </div>   
+                        </div>
                     }                      
-                }     
-            </div>
+                }                
 
             <div>
                 <p class="text-secondary" style="font-size: 14px">
@@ -81,3 +89,39 @@
         </section>        
     </div>
 </div>
+
+@*<div class="accordion-item">
+    <div class="accordion-header">
+        <div class="accordion-button" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.Id" aria-expanded="true" aria-controls="collapse-@item.Id">
+            <div class="">
+                <h1 class="text-secondary" style="font-size: 12px">Name</h1>
+                <p>@item.UserName</p>
+            </div>  
+            <div class="">
+                <h1 class="text-secondary" style="font-size: 12px">Email</h1>
+                <p>@item.Email</p>
+            </div>  
+                <div class="">
+                <h1 class="text-secondary" style="font-size: 12px">Role(s)</h1>
+                <p>Project Manager, Developer</p>
+            </div>  
+        </div>
+    </div>
+    <div id="collapse-@item.Id" class="accordion-collapse collapse" data-bs-parent="#userListAccordion" aria-labelledby="heading-@item.Id">
+        <div class="accordion-body">   
+            <h1 class="text-secondary fs-5">Assigned Projects</h1>
+            <ul class="list-group list-group-flush">                                       
+                @if (!item.Projects.Any())
+                {
+                    <li class="list-group-item">There are no projects assigned to this user</li>
+                } else
+                {
+                    foreach (var project in item.Projects)
+                    {                                                                                    
+                        <li class="list-group-item">@project.Name</li>                                                  
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>*@    
