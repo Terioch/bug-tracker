@@ -1,4 +1,6 @@
-﻿namespace BugTracker.Models { 
+﻿using X.PagedList;
+
+namespace BugTracker.Models { 
     public class UserViewModel
     {
         public string? Id { get; set; }
@@ -11,8 +13,8 @@
 
         public string? Email { get; set; }
 
-        public IEnumerable<Project> Projects { get; set; } = new List<Project>();
+        public IPagedList<Project>? Projects { get; set; }
 
-        public IEnumerable<Ticket> Tickets { get; set; } = new List<Ticket>();
+        public IPagedList<Ticket>? Tickets { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> ListTickets(int? page)
         {
-            IEnumerable<Ticket> tickets = await ticketHelper.GetUserTickets();
+            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();
             return View(tickets.ToPagedList(page ?? 1, 5));
         }
     
@@ -143,7 +143,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterTicketsReturnPartial(string? searchTerm)
         {
-            IEnumerable<Ticket> tickets = await ticketHelper.GetUserTickets();
+            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();
 
             if (searchTerm == null)
             {

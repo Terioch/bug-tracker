@@ -24,7 +24,7 @@ namespace BugTracker.Helpers
             claimUser = httpContextAccessor.HttpContext.User;
         }
 
-        public async Task<IEnumerable<Ticket>> GetUserRoleTickets(ApplicationUser? user)
+        public async Task<IEnumerable<Ticket>> GetUserRoleTickets(ApplicationUser? user = null)
         {            
             user ??= await userManager.GetUserAsync(claimUser);
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);

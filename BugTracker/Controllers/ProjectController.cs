@@ -39,7 +39,7 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> ListProjects(int? page)
         {   
-            IEnumerable<Project> projects = await projectHelper.GetUserProjects();
+            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();
             return View(projects.ToPagedList(page ?? 1, 8));
         } 
         
@@ -79,7 +79,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterProjectsByNameReturnPartial(string? searchTerm)
         {
-            IEnumerable<Project> projects = await projectHelper.GetUserProjects();
+            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();
             
             if (searchTerm == null)
             {

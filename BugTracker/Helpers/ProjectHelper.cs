@@ -28,7 +28,7 @@ namespace BugTracker.Helpers
             return users.Contains(user);       
         }        
 
-        public async Task<IEnumerable<Project>> GetUserRoleProjects(ApplicationUser? user)
+        public async Task<IEnumerable<Project>> GetUserRoleProjects(ApplicationUser? user = null)
         {
             List<string> roles = await roleHelper.GetRoleNamesOfUser(userName);
             user ??= userManager.Users.First(u => u.UserName == userName);
