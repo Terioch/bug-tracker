@@ -46,8 +46,14 @@
                         {                                                     
                             <tr>
                                 <td>@ticket.Title</td>                        
-                                <td>@ticket.Submitter.UserName</td>   
-                                <td>@ticket.AssignedDeveloper.UserName</td>
+                                <td>@ticket.Submitter.UserName</td>                                 
+                                @if (ticket.AssignedDeveloper != null)
+                                {
+                                    <td>@ticket.AssignedDeveloper.UserName</td>
+                                } else
+                                {
+                                    <td>None</td>
+                                }
                                 <td>@ticket.Status</td>
                                 <td>@ticket.Priority</td>
                                 <td class="d-flex flex-column">                                

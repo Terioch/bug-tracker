@@ -1,18 +1,25 @@
 ﻿@model UserViewModel
 
-<p>@Model.FirstName</p>
-<p>@Model.LastName</p>
-<p>@Model.UserName</p>
-<p>@Model.Email</p>
-<ul>
-    @foreach (var project in Model.Projects)
-    {
-        <li>@project.Name</li>
-    }
-</ul>
-<ul>
-    @foreach (var ticket in Model.Tickets)
-    {
-        <li>@ticket.Title, @ticket.AssignedDeveloper.UserName</li>
-    }
-</ul>
+@{
+    ViewData["Title"] = "User";
+}
+
+<div id="userContainer" class="card">
+   <div class="card-header bg-light">
+      <h1 class="fs-3 mt-2">@Model.UserName</h1>     
+      <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</a>
+      <a asp-action="ListProjects">Back to List</a> |      
+  </div>
+  <div class="card-body">
+      <ul class="list-group list-group-horizontal">
+        <li class="list-group-item list-group-item-light">
+            <small class="fw-bold">Name</small>
+            <p class="mb-1">@Model.UserName</p>  
+        </li>
+        <li class="list-group-item list-group-item-light">
+            <small class="fw-bold">Email</small>
+            <p class="mb-1">@Model.Email</p>      
+        </li>
+      </ul>
+  </div>
+</div>

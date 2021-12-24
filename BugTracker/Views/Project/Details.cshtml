@@ -71,9 +71,9 @@
                             <tbody>
                                 @foreach (var user in Model.Users)
                                 {
-                                     List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
+                                    List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
 
-                                     <tr>
+                                    <tr>
                                         <td>@user.UserName</td>                        
                                         <td>@user.Email</td> 
                                         <td>@string.Join(", ", roles)</td>
@@ -140,14 +140,14 @@
                                 <tr>
                                     <td>@ticket.Title</td>                        
                                     <td>@ticket.Submitter.UserName</td>   
-                                        @if (ticket.AssignedDeveloper != null)
-                                        {
-                                            <td>@ticket.AssignedDeveloper.UserName</td>
-                                        } else
-                                        {
-                                            <td>None</td>
-                                        }
-                                        <td>@ticket.Status</td>
+                                    @if (ticket.AssignedDeveloper != null)
+                                    {
+                                        <td>@ticket.AssignedDeveloper.UserName</td>
+                                    } else
+                                    {
+                                        <td>None</td>
+                                    }
+                                    <td>@ticket.Status</td>
                                     <td>@ticket.SubmittedDate</td>
                                     <td class="">                                        
                                         <a asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
