@@ -63,7 +63,13 @@ namespace BugTracker.Controllers
         {
             Project project = repository.GetProjectById(id);
             IEnumerable<Ticket> tickets = ticketRepository.GetTicketsByProjectId(id);
-            List<ApplicationUser>? users = userProjectRepository.GetUsersByProjectId(id);                     
+            List<ApplicationUser>? users = userProjectRepository.GetUsersByProjectId(id);
+            
+            foreach (var ticket in tickets)
+            {
+                ticket.Submitter = userManager.Users.FirstOrDefault(u => u.Id == ticket.SubmitterId);
+                ticket.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId);
+            }
 
             ProjectViewModel model = new()
             {
@@ -71,7 +77,7 @@ namespace BugTracker.Controllers
                 Name = project.Name,
                 Description = project.Description,
                 Users = users.ToPagedList(page ?? 1, 5),
-                Tickets = tickets.ToPagedList(page ?? 1, 5),
+                Tickets = project.Tickets.ToPagedList(page ?? 1, 5),
             };
             return View(model);
         }

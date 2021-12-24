@@ -140,8 +140,14 @@
                                 <tr>
                                     <td>@ticket.Title</td>                        
                                     <td>@ticket.Submitter.UserName</td>   
-                                    <td>@ticket.AssignedDeveloper.UserName</td>
-                                    <td>@ticket.Status</td>
+                                        @if (ticket.AssignedDeveloper != null)
+                                        {
+                                            <td>@ticket.AssignedDeveloper.UserName</td>
+                                        } else
+                                        {
+                                            <td>None</td>
+                                        }
+                                        <td>@ticket.Status</td>
                                     <td>@ticket.SubmittedDate</td>
                                     <td class="">                                        
                                         <a asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
