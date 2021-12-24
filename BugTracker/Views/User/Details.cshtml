@@ -1,7 +1,16 @@
-﻿@model UserViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+@inject UserManager<ApplicationUser> userManager
+
+@model UserViewModel
 
 @{
     ViewData["Title"] = "User";
+    ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == Model.Id);
+    List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
 }
 
 <div id="userContainer" class="card">
@@ -20,6 +29,121 @@
             <small class="fw-bold">Email</small>
             <p class="mb-1">@Model.Email</p>      
         </li>
+        <li class="list-group-item list-group-item-light">
+            <small class="fw-bold">Role(s)</small>
+            <p class="mb-1">@string.Join(", ", roles)</p>      
+        </li>
       </ul>
+
+       <!-- Project list card -->
+       <div class="">
+            <div class="card-header bg-light">
+                <h1 class="fs-3 mt-1">Associated Projects</h1>
+                <p class="text-secondary mb-0">Projects user is involved with</p>
+            </div>
+            <div class="card-body table-responsive">
+                <div class="d-sm-flex justify-content-between align-items-center">
+                    <div class="input-group-sm">
+                        <input id="projectListSearchInput" class="form-control mb-3" placeholder="Search Projects..." />
+                    </div>                                                          
+                </div>                    
+                <table class="table">
+                    <thead>
+                        <tr>          
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Role(s)</th>                     
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var project in Model.Projects)
+                        {                            
+                            <tr>
+                                <td>@project.Name</td>                        
+                                <td>@project.Description</td> 
+                                <td>
+                                    <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="link-success">Details</a>    
+                                </td>                                                                                                           
+                            </tr>                                         
+                        }
+                    </tbody> 
+                </table>
+                <div>
+                    <p class="text-secondary" style="font-size: 14px">
+                        Page @(Model.Projects.PageCount < Model.Projects.PageNumber ? 0 : Model.Projects.PageNumber) 
+                        of @Model.Projects.PageCount
+                    </p>                   
+                    @Html.PagedListPager(
+                        Model.Projects.ToPagedList(), 
+                        page => Url.Action("Details", new { page }),
+                        new PagedListRenderOptions() 
+                        {
+                            UlElementClasses = new string[] { "pagination", "mb-0" },
+                            LiElementClasses = new string[] { "page-item" },
+                            PageClasses = new string[] { "page-link" }
+                        })
+                </div>  
+            </div>
+        </div>
+
+        <!-- Ticket list card -->
+        <div class="">
+            <div class="card-header bg-light">
+                <h1 class="fs-3 mt-1">Assigned Tickets</h1>
+                <p class="text-secondary mb-0">Condensed ticket information</p>
+            </div>
+            <div class="card-body table-responsive">
+                <div class="d-sm-flex justify-content-between align-items-center">
+                    <div class="input-group-sm">
+                        <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Tickets..." />
+                    </div>
+                    <button id="manageUsersBtn" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#userTicketsManagementModal">
+                        Create New Ticket
+                    </button>                                          
+                </div>                    
+                <table class="table">
+                    <thead>
+                        <tr>          
+                            <th scope="col">Title</th>
+                            <th scope="col">Reported By</th>
+                            <th scope="col">Developer</th>                     
+                            <th scope="col">Status</th>                     
+                            <th scope="col">Priority</th>  
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ticket in Model.Tickets)
+                        {            
+                            <tr>
+                                <td>@ticket.Title</td>                        
+                                <td>@ticket.Submitter.UserName</td> 
+                                <td>@ticket.AssignedDeveloper.UserName</td>
+                                <td>@ticket.Status</td>
+                                <td>@ticket.Priority</td>
+                                <td>
+                                    <a asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket.Id" class="link-info">Details</a>
+                                </td>
+                            </tr>                                         
+                        }
+                    </tbody> 
+                </table>
+                <div>
+                    <p class="text-secondary" style="font-size: 14px">
+                        Page @(Model.Tickets.PageCount < Model.Tickets.PageNumber ? 0 : Model.Tickets.PageNumber) 
+                        of @Model.Tickets.PageCount
+                    </p>                   
+                    @Html.PagedListPager(
+                        Model.Tickets.ToPagedList(), 
+                        page => Url.Action("Details", new { page }),
+                        new PagedListRenderOptions() 
+                        {
+                            UlElementClasses = new string[] { "pagination", "mb-0" },
+                            LiElementClasses = new string[] { "page-item" },
+                            PageClasses = new string[] { "page-link" }
+                        })
+                </div>  
+            </div>
+        </div>
   </div>
 </div>

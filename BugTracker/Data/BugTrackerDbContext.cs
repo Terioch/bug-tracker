@@ -7,7 +7,7 @@ namespace BugTracker.Data;
 
 public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
 {
-    public BugTrackerDbContext(DbContextOptions<BugTrackerDbContext> options)
+    public BugTrackerDbContext(DbContextOptions<BugTrackerDbContext> options) 
         : base(options)
     {
     }
