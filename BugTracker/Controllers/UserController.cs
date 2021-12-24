@@ -54,6 +54,7 @@ namespace BugTracker.Controllers
 
             UserViewModel model = new()
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 UserName = user.UserName,

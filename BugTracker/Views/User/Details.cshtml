@@ -9,43 +9,55 @@
 
 @{
     ViewData["Title"] = "User";
-    ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == Model.Id);
-    List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
+    ApplicationUser user = userManager.Users.First(u => u.Id == Model.Id);
+    List<string> roles = (List<string>)await userManager.GetRolesAsync(user) ?? new();
 }
 
 <div id="userContainer" class="card">
    <div class="card-header bg-light">
       <h1 class="fs-3 mt-2">@Model.UserName</h1>     
-      <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</a>
-      <a asp-action="ListProjects">Back to List</a> |      
+      <a asp-action="ListUsers">Back to List</a> |      
+      <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</a>     
   </div>
   <div class="card-body">
       <ul class="list-group list-group-horizontal">
-        <li class="list-group-item list-group-item-light">
-            <small class="fw-bold">Name</small>
-            <p class="mb-1">@Model.UserName</p>  
+        <li class="list-group-item list-group-item-light rounded-0 border-start-0 border-top-0 border-bottom-0">
+            <p class="fw-bold">First Name</p>
+            <small class="my-1">@Model.FirstName</small>  
         </li>
-        <li class="list-group-item list-group-item-light">
+        <li class="list-group-item list-group-item-light rounded-0 border-start-0 border-top-0 border-bottom-0">
+            <small class="fw-bold">Last Name</small>
+            <p class="my-1">@Model.LastName</p>  
+        </li>
+        <li class="list-group-item list-group-item-light rounded-0 border-start-0 border-top-0 border-bottom-0">
             <small class="fw-bold">Email</small>
-            <p class="mb-1">@Model.Email</p>      
+            <p class="my-1">@Model.Email</p>      
         </li>
-        <li class="list-group-item list-group-item-light">
+        <li class="list-group-item list-group-item-light rounded-0 border-start-0 border-top-0 border-end-0 border-bottom-0">
             <small class="fw-bold">Role(s)</small>
-            <p class="mb-1">@string.Join(", ", roles)</p>      
+            <p class="my-1">@string.Join(", ", roles)</p>      
         </li>
       </ul>
 
-       <!-- Project list card -->
-       <div class="">
+      <div class="">    
+        <!-- Project list card -->
+        <div class="card col mt-3">
             <div class="card-header bg-light">
                 <h1 class="fs-3 mt-1">Associated Projects</h1>
-                <p class="text-secondary mb-0">Projects user is involved with</p>
+                <p class="text-secondary mb-0">Projects for this user</p>
             </div>
             <div class="card-body table-responsive">
                 <div class="d-sm-flex justify-content-between align-items-center">
                     <div class="input-group-sm">
                         <input id="projectListSearchInput" class="form-control mb-3" placeholder="Search Projects..." />
-                    </div>                                                          
+                    </div>      
+                    @if (await userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        <a class="btn btn-primary mb-3" asp-action="Create">Create New Project</a>
+                    } else
+                    {
+                        <a class="btn btn-primary mb-3 disabled" asp-action="Create">Create New Project</a>   
+                    }                 
                 </div>                    
                 <table class="table">
                     <thead>
@@ -84,10 +96,10 @@
                         })
                 </div>  
             </div>
-        </div>
+        </div>        
 
         <!-- Ticket list card -->
-        <div class="">
+        <div class="card col mt-3">
             <div class="card-header bg-light">
                 <h1 class="fs-3 mt-1">Assigned Tickets</h1>
                 <p class="text-secondary mb-0">Condensed ticket information</p>
@@ -97,15 +109,13 @@
                     <div class="input-group-sm">
                         <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Tickets..." />
                     </div>
-                    <button id="manageUsersBtn" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#userTicketsManagementModal">
-                        Create New Ticket
-                    </button>                                          
+                    <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>                                     
                 </div>                    
                 <table class="table">
                     <thead>
                         <tr>          
                             <th scope="col">Title</th>
-                            <th scope="col">Reported By</th>
+                            <th scope="col">Submitted By</th>
                             <th scope="col">Developer</th>                     
                             <th scope="col">Status</th>                     
                             <th scope="col">Priority</th>  
@@ -145,5 +155,6 @@
                 </div>  
             </div>
         </div>
+      </div>       
   </div>
 </div>
