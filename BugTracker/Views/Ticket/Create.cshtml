@@ -54,38 +54,20 @@
                 <div class="col-md-4">   
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Associated Project</label>                    
                     <select asp-for="ProjectId" class="form-select mb-4" aria-label="Ticket project">                       
-                        @foreach (var project in context.Projects)
-                        {                                               
-                            <option value="@project.Id">@project.Name</option>                    
-                        }                                                                                        
+                        <!-- TODO: Iterate over projects assigned to the logged-in user -->                                                                                       
                     </select>                  
                 </div>
                 <div class="col-md-4">
-                    <label class="create-ticket-select-label control-label mb-2 text-secondary">Assigned Developer</label>
-                    <select asp-for="AssignedDeveloperId" class="form-select mb-4" aria-label="Assigned developer">
-                        @foreach (var user in userManager.Users)
-                        {
-                            bool isInRole = await userManager.IsInRoleAsync(user, "Developer");
-
-                            if (isInRole)
-                            {
-                                <option value="@user.Id">@user.UserName</option>
-                            }
-                        }
-                        <option value="@null">None</option>
-                    </select>          
-                </div>
-            </div>
-            <div class="row g-md-3">
-                <div class="col-md-4">
-                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Type</label>
-                     <select asp-for="Type" class="form-select mb-4" aria-label="Ticket type">
+                    <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Type</label>
+                    <select asp-for="Type" class="form-select mb-4" aria-label="Ticket type">
                         <option>Bugs/Errors</option>
                         <option>Feature Requests</option>
                         <option>Other Comments</option>
                         <option>Training/Document Requests</option>
                     </select>   
                 </div>
+            </div>
+            <div class="row g-md-3">
                 <div class="col-md-4">
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Priority</label>
                     <select asp-for="Priority" class="form-select mb-4" aria-label="Ticket priority">
@@ -93,10 +75,8 @@
                         <option selected>Medium</option>
                         <option>High</option>
                         <option>None</option>
-                    </select>
+                    </select>                     
                 </div>
-            </div>
-            <div class="row g-md-3">
                 <div class="col-md-4">
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Status</label>
                     <select asp-for="Status" class="form-select mb-4" aria-label="Ticket status">
@@ -105,9 +85,9 @@
                         <option>In Progress</option>
                         <option>Closed</option>
                         <option>Under Review</option>
-                    </select>
-                </div>    
-            </div>             
+                    </select>                    
+                </div>
+            </div>                      
         </div>
 
         <div class="card-footer d-flex align-items-end">
