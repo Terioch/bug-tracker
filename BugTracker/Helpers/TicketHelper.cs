@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace BugTracker.Helpers
-{
+{    
     public class TicketHelper
     {
         private readonly IProjectRepository projectRepository;
@@ -48,6 +48,26 @@ namespace BugTracker.Helpers
                 return projects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id));
             }
             return projects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id));            
+        }
+
+        public async Task<bool> CanUserCreateTickets(ApplicationUser user)
+        {
+            List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
+
+            if (roles.Contains("Developer") || roles.Contains("Demo Developer"))
+            {
+                return false;
+            } 
+            else if (roles.Contains("Project Manager") || roles.Contains("Demo Project Manager") || roles.Contains("Submitter") || roles.Contains("Demo Submitter"))
+            {
+                List<Project>? projects = userProjectRepository.GetProjectsByUserId(user.Id);
+
+                if (!projects.Any())
+                {
+                    return false;
+                }
+            }            
+            return true;
         }
     }
 }

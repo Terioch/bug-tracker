@@ -1,20 +1,23 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using BugTracker.Helpers;
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
 @inject UserManager<ApplicationUser> userManager
+@inject TicketHelper ticketHelper
 
 @model UserViewModel
 
 @{
     ViewData["Title"] = "User";
-    ApplicationUser user = userManager.Users.First(u => u.Id == Model.Id);
-    List<string> roles = (List<string>)await userManager.GetRolesAsync(user) ?? new();
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
+    ApplicationUser user = userManager.Users.First(u => u.Id == Model.Id);    
+    List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
 }
 
 <div id="userContainer" class="card">
-   <div class="card-header bg-light">
+  <div class="card-header bg-light">
       <h1 class="fs-3 mt-2">@Model.UserName</h1>     
       <a asp-action="ListUsers">Back to List</a> |      
       <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</a>     
@@ -51,12 +54,12 @@
                     <div class="input-group-sm">
                         <input id="projectListSearchInput" class="form-control mb-3" placeholder="Search Projects..." />
                     </div>      
-                    @if (await userManager.IsInRoleAsync(user, "Admin"))
+                    @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
                     {
-                        <a class="btn btn-primary mb-3" asp-action="Create">Create New Project</a>
+                        <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">Create New Project</a>
                     } else
                     {
-                        <a class="btn btn-primary mb-3 disabled" asp-action="Create">Create New Project</a>   
+                        <a class="btn btn-primary mb-3 disabled" asp-controller="Project" asp-action="Create">Create New Project</a>   
                     }                 
                 </div>                    
                 <table class="table">
@@ -109,8 +112,14 @@
                     <div class="input-group-sm">
                         <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Tickets..." />
                     </div>
-                    <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>                                     
-                </div>                    
+                        @if (await ticketHelper.CanUserCreateTickets(loggedInUser))
+                        {
+                            <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>
+                        } else
+                        {
+                            <a class="btn btn-success mb-3 disabled" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>    
+                        }                                                 
+                    </div>                    
                 <table class="table">
                     <thead>
                         <tr>          
