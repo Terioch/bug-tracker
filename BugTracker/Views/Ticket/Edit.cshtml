@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using BugTracker.Models
 
-@inject BugTracker.Data.BugTrackerDbContext context
 @inject RoleManager<IdentityRole> roleManager
 @inject UserManager<ApplicationUser> userManager
 
@@ -55,7 +54,7 @@
                 <div class="col-md-4">   
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Associated Project</label>
                     <select asp-for="ProjectId" class="form-select mb-4" aria-label="Ticket project">
-                        @foreach (var project in context.Projects)
+                        @foreach (var project in ViewBag.Projects)
                         {                   
                             <option value="@project.Id">@project.Name</option>                    
                         }               
@@ -63,7 +62,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Assigned Developer</label>
-                    <select asp-for="AssignedDeveloperId" class="form-select mb-4" aria-label="Assigned developer">                    
+                    <select asp-for="AssignedDeveloperId" class="form-select mb-4" aria-label="Assigned Developer">                    
                         @foreach (var user in userManager.Users)
                         {
                             bool isInRole = await userManager.IsInRoleAsync(user, "Developer");

@@ -212,7 +212,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-footer">
-        <button type="button" id="deleteProjectBtn" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Confirm">Confirm</button>       
+        <button asp-action="Delete" asp-route-id="@Model.Id" type="button" id="deleteProjectBtn" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Confirm">Confirm</button>       
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>       
       </div>
     </div>
