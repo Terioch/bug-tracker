@@ -119,7 +119,7 @@
                         <div class="input-group-sm">
                             <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..."  />
                         </div>
-                        <a href="/Ticket/CreateForProject?projectId=@Model.Id" class="btn btn-success mb-3">
+                        <a asp-controller="Ticket" asp-action="Create" class="btn btn-success mb-3">
                             Create New
                         </a>
                     </div>  

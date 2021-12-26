@@ -51,22 +51,7 @@ namespace BugTracker.Controllers
         {              
             ViewBag.Projects = await projectHelper.GetUserRoleProjects(); ;
             return View();
-        }
-
-        [Authorize(Roles = "Admin, Project Manager, Submitter")]
-        [HttpGet]
-        public async Task<IActionResult> CreateForProject(string projectId)
-        {
-            ApplicationUser user = await GetCurrentUserAsync();
-            var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
-
-            if  (!isAdmin && !projectHelper.IsUserInProject(projectId))
-            {
-                return View("~/Areas/Identity/Pages/Account/AccessDenied.cshtml");
-            }
-
-            return View(new Ticket { Project = projectRepository.GetProjectById(projectId) });
-        }
+        }        
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpPost]        
@@ -89,31 +74,7 @@ namespace BugTracker.Controllers
 
             ticket = repository.Create(ticket);
             return RedirectToAction("Details", new { id = ticket.Id });
-        }
-
-        [Authorize(Roles = "Admin, Project Manager, Submitter")]
-        [HttpPost]
-        public async Task<IActionResult> CreateForProject(Ticket model)
-        {
-            ApplicationUser submitter = await GetCurrentUserAsync();            
-
-            Ticket ticket = new()
-            {
-                Id = Guid.NewGuid().ToString(),
-                ProjectId = model.ProjectId,
-                SubmitterId = submitter.Id,
-                AssignedDeveloperId = model.AssignedDeveloperId,
-                Title = model.Title,
-                Description = model.Description,
-                SubmittedDate = DateTime.Now,
-                Type = model.Type,
-                Status = model.Status,
-                Priority = model.Priority,                
-            };
-
-            ticket = repository.Create(ticket);
-            return RedirectToAction("Details", new { id = ticket.Id });
-        }
+        }        
 
         [HttpGet]
         public IActionResult Details(string id, int? page)
