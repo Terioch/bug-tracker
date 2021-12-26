@@ -21,43 +21,43 @@
             </div>   
 
             <ul class="list-group list-group-flush">
-              <li class="list-group-item list-group-item-light">
-                  <p class="mb-1 fw-bold">Ticket Description</p>
-                  <small>@Model.Description</small>
-              </li>
-              <li class="list-group-item list-group-item-light">
-                  <p class="mb-1 fw-bold">Project Name</p>
-                  <small>@Model.Project.Name</small>
-              </li>
-              <li class="list-group-item list-group-item-light">
-                  <p class="mb-1 fw-bold">Assigned Developer</p>
-                    @if (Model.AssignedDeveloper != null) {
-                        <small>@Model.AssignedDeveloper.UserName</small>
-                    } else
-                    {
-                        <small>None</small>
-                    }
+                <li class="list-group-item list-group-item-light">
+                    <p class="mb-1 fw-bold">Ticket Description</p>
+                    <small>@Model.Description</small>
                 </li>
-              <li class="list-group-item list-group-item-light">
-                  <p class="mb-1 fw-bold">Submitted By</p>
-                  <small>@Model.Submitter.UserName</small>
-              </li>
-              <li class="list-group-item list-group-item-light">
-                  <p class="mb-1 fw-bold">Created At</p>
-                  <small>@Model.SubmittedDate</small>
-              </li>
-              <li class="list-group-item list-group-item-light">
-                  <p class="mb-1 fw-bold">Ticket Type</p>
-                  <small>@Model.Type</small>
-              </li>
-              <li class="list-group-item list-group-item-light">
-                  <p class="mb-1 fw-bold">Ticket Status</p>
-                  <small>@Model.Status</small>
-              </li>
-              <li class="list-group-item list-group-item-light">
-                  <p class="mb-1 fw-bold">Priority</p>
-                  <small>@Model.Priority</small>
-              </li>                            
+                <li class="list-group-item list-group-item-light">
+                    <p class="mb-1 fw-bold">Project Name</p>
+                    <small>@Model.Project.Name</small>
+                </li>
+                <li class="list-group-item list-group-item-light">
+                <p class="mb-1 fw-bold">Assigned Developer</p>
+                @if (Model.AssignedDeveloper != null) {
+                    <small>@Model.AssignedDeveloper.UserName</small>
+                } else
+                {
+                    <small>None</small>
+                }
+                </li>
+                <li class="list-group-item list-group-item-light">
+                    <p class="mb-1 fw-bold">Submitted By</p>
+                    <small>@Model.Submitter.UserName</small>
+                </li>
+                <li class="list-group-item list-group-item-light">
+                    <p class="mb-1 fw-bold">Created At</p>
+                    <small>@Model.SubmittedDate</small>
+                </li>
+                <li class="list-group-item list-group-item-light">
+                    <p class="mb-1 fw-bold">Ticket Type</p>
+                    <small>@Model.Type</small>
+                </li>
+                <li class="list-group-item list-group-item-light">
+                    <p class="mb-1 fw-bold">Ticket Status</p>
+                    <small>@Model.Status</small>
+                </li>
+                <li class="list-group-item list-group-item-light">
+                    <p class="mb-1 fw-bold">Priority</p>
+                    <small>@Model.Priority</small>
+                </li>                            
             </ul>
         </div>
         <div class="col">

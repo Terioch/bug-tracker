@@ -45,10 +45,13 @@ namespace BugTracker.Controllers
             return View(tickets.ToPagedList(page ?? 1, 5));
         }
     
-        [Authorize(Roles = "Admin")]        
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]        
         [HttpGet]        
-        public IActionResult Create()
-        {                     
+        public async Task<IActionResult> Create()
+        {
+            // TODO: Compute projects that are assigned to the logged-in user
+            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();            
+            ViewBag.Projects = projects;
             return View();
         }
 
@@ -67,7 +70,7 @@ namespace BugTracker.Controllers
             return View(new Ticket { Project = projectRepository.GetProjectById(projectId) });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpPost]        
         public async Task<IActionResult> Create(Ticket model)
         {
@@ -77,8 +80,7 @@ namespace BugTracker.Controllers
             {
                 Id = Guid.NewGuid().ToString(),
                 ProjectId = model.ProjectId,
-                SubmitterId = submitter.Id,
-                AssignedDeveloperId = model.AssignedDeveloperId,
+                SubmitterId = submitter.Id,                
                 Title = model.Title,
                 Description = model.Description,
                 SubmittedDate = DateTime.Now,                
