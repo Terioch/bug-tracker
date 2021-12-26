@@ -50,6 +50,7 @@ namespace BugTracker.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(Project project)
         {

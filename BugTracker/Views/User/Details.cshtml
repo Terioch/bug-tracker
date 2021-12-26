@@ -56,10 +56,10 @@
                     </div>      
                     @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
                     {
-                        <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">Create New Project</a>
+                        <a class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#userProjectsManagementModal">Add/Remove Project</a>
                     } else
                     {
-                        <a class="btn btn-primary mb-3 disabled" asp-controller="Project" asp-action="Create">Create New Project</a>   
+                        <a class="btn btn-primary mb-3 disabled" data-bs-toggle="modal" data-bs-target="#userProjectsManagementModal">Add/Remove Project</a>   
                     }                 
                 </div>                    
                 <table class="table">
@@ -67,7 +67,7 @@
                         <tr>          
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Role(s)</th>                     
+                            <th scope="col"></th>                     
                         </tr>
                     </thead>
                     <tbody>
@@ -172,4 +172,29 @@
         </div>
       </div>       
   </div>
+</div>
+
+<!-- User Projects Management Modal -->
+<div class="modal fade" id="userProjectsManagementModal" tabindex="-1" aria-labelledby="userProjectsManagementModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Manage a user for this project</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <!-- ProjectName Input -->
+                <div class="input-group">
+                    <input id="projectNameInput" type="text" class="form-control" placeholder="Enter Name of Project..." aria-label="ProjectName">
+                </div>
+                <div id="userProjectsManagementvalidationErrors" class="fs-6 text-danger mt-3"></div>
+            </div>
+            <div class="modal-footer text-left">                
+                <button type="button" class="btn btn-primary add-user">Add Project</button>
+                <button type="button" class="btn btn-danger remove-user">Remove Project</button>
+            </div>
+        </div>
+    </div>
 </div>

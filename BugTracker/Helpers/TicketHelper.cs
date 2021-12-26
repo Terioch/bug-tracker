@@ -54,10 +54,10 @@ namespace BugTracker.Helpers
         {
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
 
-            if (roles.Contains("Developer") || roles.Contains("Demo Developer"))
+            if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
             {
-                return false;
-            } 
+                return true;
+            }
             else if (roles.Contains("Project Manager") || roles.Contains("Demo Project Manager") || roles.Contains("Submitter") || roles.Contains("Demo Submitter"))
             {
                 List<Project>? projects = userProjectRepository.GetProjectsByUserId(user.Id);
@@ -66,8 +66,9 @@ namespace BugTracker.Helpers
                 {
                     return false;
                 }
-            }            
-            return true;
+                return true;
+            }
+            return false;               
         }
     }
 }
