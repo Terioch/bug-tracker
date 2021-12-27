@@ -64,13 +64,17 @@ namespace BugTracker.Controllers
         {
             Project project = repository.GetProjectById(id);
             project.Tickets = ticketRepository.GetTicketsByProjectId(id);
-            project.Users = userProjectRepository.GetUsersByProjectId(id);                       
+            project.Users = userProjectRepository.GetUsersByProjectId(id);
+
+            List<ApplicationUser> unassignedUsers = userManager.Users.ToList();
+            project.Users.ToList().ForEach(u => unassignedUsers.Remove(u));
 
             ProjectViewModel model = new()
             {
                 Id = project.Id,
                 Name = project.Name,
-                Description = project.Description,
+                Description = project.Description,                
+                UnassignedUsers = unassignedUsers,
                 Users = project.Users.ToPagedList(page ?? 1, 5),
                 Tickets = project.Tickets.ToPagedList(page ?? 1, 5),
             };
@@ -134,62 +138,54 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager")]
         [HttpPost]
-        public IActionResult AddUser(string id, string? userName)
+        public IActionResult AddUser(string id, string userId)
         {            
-            if (userName == null)
-            {
-                return BadRequest(new { message = "UserName cannot be empty" });
-            }
-
-            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.UserName == userName);
+            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == userId);
 
             if (user == null)
             {
-                return BadRequest(new { message = "UserName could not be found" });
+                ViewBag.ErrorMessage = $"User with Id {userId} cannot be found";
+                return View("NotFound");
             }
 
             List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(id);
 
             if (users.Contains(user))
             {
-                return BadRequest(new { message = "User is already assigned to the current project" });
+                return RedirectToAction("Details", id);
             }
 
             UserProject userProject = new()
             {   
                 Id = Guid.NewGuid().ToString(),
-                UserId = user.Id,
+                UserId = userId,
                 ProjectId = id,
             };
 
             userProjectRepository.Create(userProject);
-            return Json(userProject);            
+            return RedirectToAction("Details", id);     
         }
 
-        [HttpDelete]
-        public IActionResult RemoveUser(string id, string? userName)
-        {            
-            if (userName == null)
-            {
-                return BadRequest(new { message = "UserName can not be empty" });
-            }
-
-            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.UserName == userName);
+        [Authorize(Roles = "Admin, Project Manager")]
+        public IActionResult RemoveUser(string id, string userId)
+        {
+            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == userId);
 
             if (user == null)
             {
-                return BadRequest(new { message = "UserName could not be found" });
+                ViewBag.ErrorMessage = $"User with Id {userId} cannot be found";
+                return View("NotFound");
             }
 
             List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(id);
 
             if (!users.Contains(user))
             {
-                return BadRequest(new { message = "User is not assigned to the current project" });
+                return RedirectToAction("Details", id);
             }
 
-            UserProject userProject = userProjectRepository.Delete(user.Id, id);
-            return Json(userProject);
+            UserProject userProject = userProjectRepository.Delete(userId, id);
+            return RedirectToAction("Details", id);
         }
     }
 }

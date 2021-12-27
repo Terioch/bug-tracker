@@ -43,8 +43,8 @@
                             <div class="input-group-sm">
                                 <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..." />
                             </div>
-                            <button id="manageUsersBtn" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersManagementModal">
-                                Add/Remove
+                            <button id="manageUsersBtn" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersAssignmentModal">
+                                Assign New User
                             </button>
                             @*@if (await roleHelper.IsUserInRole(User.Identity.Name, "Admin")
                                     || projectHelper.IsUserInProject(User.Identity.Name, Model.Id) 
@@ -83,7 +83,11 @@
                                         } else
                                         {
                                             <td>No assigned roles</td>
-                                        }  *@                                                                               
+                                        }  *@     
+                                        <td class="d-flex flex-column">
+                                            <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id">Details</a>
+                                            <a asp-controller="User" asp-action="Details" asp-route-id="@Model.Id" asp-route-userId="@user.Id">Remove</a>
+                                        </td>
                                     </tr>                                         
                                 }
                             </tbody> 
@@ -178,27 +182,32 @@
   </div>
 </div>
 
-<!-- Project Users Management Modal -->
-<div class="modal fade" id="projectUsersManagementModal" tabindex="-1" aria-labelledby="projectUsersManagementModal" aria-hidden="true">
+<!-- Project Users Assignment Modal -->
+<div class="modal fade" id="projectUsersAssignmentModal" tabindex="-1" aria-labelledby="projectUsersAssignmentModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title">Manage a user for this project</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-                <!-- UserName Input -->
-                <div class="input-group">
-                    <input id="userNameInput" type="text" class="form-control" placeholder="Enter UserName..." aria-label="UserName">
+            <form method="post" action="/Project/AddUser/@Model.Id">
+                <div class="modal-header">
+                <h5 class="modal-title">Assign a new user to this project</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 </div>
-                <div id="projectUsersManagementvalidationErrors" class="fs-6 text-danger mt-3"></div>
-            </div>
-            <div class="modal-footer text-left">                
-                <button type="button" class="btn btn-primary add-user">Add User</button>
-                <button type="button" class="btn btn-danger remove-user">Remove User</button>
-            </div>
+                <div class="modal-body">
+                    <!-- Project List Select -->
+                    <label class="create-ticket-select-label control-label mb-2 text-secondary">User To Assign</label>                    
+                    <select asp-for="ToBeAssignedUserId" class="form-select mb-4" aria-label="Ticket project">                                                
+                        @foreach (var user in Model.UnassignedUsers)
+                        {
+                            <option value="@user.Id">@user.UserName</option>
+                        }                        
+                    </select>                   
+                    <div id="projectUsersAssignmentvalidationErrors" class="fs-6 text-danger mt-3"></div>
+                </div>
+                <div class="modal-footer text-left">                
+                    <button type="submit" class="btn btn-primary add-user">Add User</button>              
+                </div>
+            </form>            
         </div>
     </div>
 </div>

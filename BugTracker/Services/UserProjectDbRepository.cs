@@ -54,7 +54,7 @@ namespace BugTracker.Services
 
         public UserProject Delete(string userId, string projectId)
         {
-            UserProject userProject = context.UserProjects.Where(u => u.UserId == userId && u.ProjectId == projectId).FirstOrDefault();
+            UserProject? userProject = context.UserProjects.Where(u => u.UserId == userId && u.ProjectId == projectId).FirstOrDefault();
 
             if (userProject == null)
             {

@@ -71,6 +71,7 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddProject(string userId, UserViewModel model)
         {
@@ -84,6 +85,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("Details", new { id = userId });
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult RemoveProject(string userId, string projectId)
         {
             userProjectRepository.Delete(userId, projectId);

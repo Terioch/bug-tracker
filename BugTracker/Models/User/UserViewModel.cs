@@ -12,10 +12,10 @@ namespace BugTracker.Models {
         public string? UserName { get; set; }
 
         public string? Email { get; set; }
+       
+        public string? ToBeAssignedProjectId { get; set; }
 
         public IEnumerable<Project> UnassignedProjects { get; set; } = new List<Project>();
-
-        public string? ToBeAssignedProjectId { get; set; }
 
         public IPagedList<Project>? Projects { get; set; }
 

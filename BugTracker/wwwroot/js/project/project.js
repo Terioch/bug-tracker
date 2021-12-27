@@ -37,7 +37,7 @@ class Project {
         }
     }    
 
-    onUsersManagementModalOpen() {       
+    /*onUsersManagementModalOpen() {       
         const addUserBtn = document.querySelector(".add-user");
         const removeUserBtn = document.querySelector(".remove-user");
         addUserBtn.addEventListener("click", this.handleUserAddition.bind(this));
@@ -97,7 +97,7 @@ class Project {
             const validationErrorsContainer = document.getElementById("projectUsersManagementvalidationErrors");
             validationErrorsContainer.innerHTML = err.message;
         }
-    }
+    }*/
 }
 
 export default Project;
