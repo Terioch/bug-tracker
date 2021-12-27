@@ -26,6 +26,7 @@ namespace BugTracker.Controllers
             this.ticketHelper = ticketHelper;
         }
 
+        [HttpGet]
         public IActionResult ListUsers(int? page)
         {
             /*List<UserProjectViewModel> users = new();
@@ -46,6 +47,7 @@ namespace BugTracker.Controllers
             return View(users);
         }
 
+        [HttpGet]
         public IActionResult Details(string id, int? page)
         {
             ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == id);      
@@ -69,22 +71,23 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
-        public IActionResult AddProject(string id, string userId)
+        [HttpPost]
+        public IActionResult AddProject(string userId, UserViewModel model)
         {
             UserProject userProject = new()
             {
                 Id = Guid.NewGuid().ToString(),
                 UserId = userId,
-                ProjectId = id,
+                ProjectId = model.ToBeAssignedProjectId,
             };
             userProjectRepository.Create(userProject);
-            return RedirectToAction("Details", userId);
+            return RedirectToAction("Details", new { id = userId });
         }
 
-        public IActionResult RemoveProject(string id, string userId)
+        public IActionResult RemoveProject(string userId, string projectId)
         {
-            userProjectRepository.Delete(id, userId);
-            return RedirectToAction("Details", userId);
+            userProjectRepository.Delete(userId, projectId);
+            return RedirectToAction("Details", new { id = userId });
         }
     }
 }

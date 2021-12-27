@@ -76,9 +76,9 @@
                             <tr>
                                 <td>@project.Name</td>                        
                                 <td>@project.Description</td> 
-                                <td>
+                                <td class="d-flex flex-column" style="gap: 0.25rem">
                                     <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="link-success">Details</a>    
-                                    <a asp-controller="User" asp-action="RemoveProject" asp-route-id="@project.Id" class="link-danger">Remove Project</a>    
+                                    <a href="/User/RemoveProject?userId=@Model.Id&projectId=@project.Id" class="link-danger">Remove Project</a>    
                                 </td>                                                                                                           
                             </tr>                                         
                         }
@@ -179,26 +179,28 @@
 <div class="modal fade" id="userProjectsAssignmentModal" tabindex="-1" aria-labelledby="userProjectsAssignmentModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">     
-            <div class="modal-header">
-                <h5 class="modal-title">Manage a user for this project</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Project List Select -->
-                <label class="create-ticket-select-label control-label mb-2 text-secondary">Project To Assign</label>                    
-                <select asp-for="ToBeAssignedProjectId" class="form-select mb-4" aria-label="Ticket project">                                                
-                    @foreach (var project in Model.UnassignedProjects)
-                    {
-                        <option value="@project.Id">@project.Name</option>
-                    }                        
-                </select>   
-                <div id="userProjectsAssignmentvalidationErrors" class="fs-6 text-danger mt-3"></div>
-            </div>
-            <div class="modal-footer text-left">                
-                <a href="/User/AddProject/@Model.ToBeAssignedProjectId?userId=@Model.Id" type="button" class="btn btn-primary add-user">Add Project</a>                
-            </div>                
+            <form method="post" action="/User/AddProject?userId=@Model.Id">
+                <div class="modal-header">
+                    <h5 class="modal-title">Assign a new project to this user</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Project List Select -->
+                    <label class="create-ticket-select-label control-label mb-2 text-secondary">Project To Assign</label>                    
+                    <select asp-for="ToBeAssignedProjectId" class="form-select mb-4" aria-label="Ticket project">                                                
+                        @foreach (var project in Model.UnassignedProjects)
+                        {
+                            <option value="@project.Id">@project.Name</option>
+                        }                        
+                    </select>    
+                    <div id="userProjectsAssignmentvalidationErrors" class="fs-6 text-danger mt-3"></div>
+                </div>
+                <div class="modal-footer text-left">                
+                    <button type="submit" class="btn btn-success add-user">Add Project</button>                
+                </div> 
+            </form>                           
         </div>
     </div>
 </div>

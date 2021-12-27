@@ -58,7 +58,7 @@ namespace BugTracker.Services
 
             if (userProject == null)
             {
-                throw new Exception("UserProject not found");
+                return new UserProject();
             }
 
             context.UserProjects.Remove(userProject);
