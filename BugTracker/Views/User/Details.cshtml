@@ -13,7 +13,7 @@
     ViewData["Title"] = "User";
     ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
     ApplicationUser user = userManager.Users.First(u => u.Id == Model.Id);    
-    List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
+    List<string> roles = (List<string>)await userManager.GetRolesAsync(user);    
 }
 
 <div id="userContainer" class="card">
@@ -56,10 +56,10 @@
                     </div>      
                     @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
                     {
-                        <a class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#userProjectsManagementModal">Add/Remove Project</a>
+                        <a asp-action="AssignProject" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#userProjectsAssignmentModal">Assign New Project</a>
                     } else
                     {
-                        <a class="btn btn-primary mb-3 disabled" data-bs-toggle="modal" data-bs-target="#userProjectsManagementModal">Add/Remove Project</a>   
+                        <a asp-action="AssignProject" class="btn btn-primary mb-3 disabled">Assign New Project</a>   
                     }                 
                 </div>                    
                 <table class="table">
@@ -78,6 +78,7 @@
                                 <td>@project.Description</td> 
                                 <td>
                                     <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="link-success">Details</a>    
+                                    <a asp-controller="User" asp-action="RemoveProject" asp-route-id="@project.Id" class="link-danger">Remove Project</a>    
                                 </td>                                                                                                           
                             </tr>                                         
                         }
@@ -112,7 +113,7 @@
                     <div class="input-group-sm">
                         <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Tickets..." />
                     </div>
-                        @if (await ticketHelper.CanUserCreateTickets(loggedInUser))
+                        @if (await ticketHelper.IsAuthorizedToCreate(loggedInUser))
                         {
                             <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>
                         } else
@@ -174,27 +175,30 @@
   </div>
 </div>
 
-<!-- User Projects Management Modal -->
-<div class="modal fade" id="userProjectsManagementModal" tabindex="-1" aria-labelledby="userProjectsManagementModal" aria-hidden="true">
+<!-- User Projects Assignment Modal -->
+<div class="modal fade" id="userProjectsAssignmentModal" tabindex="-1" aria-labelledby="userProjectsAssignmentModal" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content">     
             <div class="modal-header">
-            <h5 class="modal-title">Manage a user for this project</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+                <h5 class="modal-title">Manage a user for this project</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <!-- ProjectName Input -->
-                <div class="input-group">
-                    <input id="projectNameInput" type="text" class="form-control" placeholder="Enter Name of Project..." aria-label="ProjectName">
-                </div>
-                <div id="userProjectsManagementvalidationErrors" class="fs-6 text-danger mt-3"></div>
+                <!-- Project List Select -->
+                <label class="create-ticket-select-label control-label mb-2 text-secondary">Project To Assign</label>                    
+                <select asp-for="ToBeAssignedProjectId" class="form-select mb-4" aria-label="Ticket project">                                                
+                    @foreach (var project in Model.UnassignedProjects)
+                    {
+                        <option value="@project.Id">@project.Name</option>
+                    }                        
+                </select>   
+                <div id="userProjectsAssignmentvalidationErrors" class="fs-6 text-danger mt-3"></div>
             </div>
             <div class="modal-footer text-left">                
-                <button type="button" class="btn btn-primary add-user">Add Project</button>
-                <button type="button" class="btn btn-danger remove-user">Remove Project</button>
-            </div>
+                <a href="/User/AddProject/@Model.ToBeAssignedProjectId?userId=@Model.Id" type="button" class="btn btn-primary add-user">Add Project</a>                
+            </div>                
         </div>
     </div>
 </div>

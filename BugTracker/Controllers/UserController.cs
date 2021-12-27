@@ -48,9 +48,12 @@ namespace BugTracker.Controllers
 
         public IActionResult Details(string id, int? page)
         {
-            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == id);
+            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == id);      
             IEnumerable<Project> projects = userProjectRepository.GetProjectsByUserId(id);
             IEnumerable<Ticket> tickets = ticketRepository.GetAllTickets().Where(t => t.SubmitterId == id || t.AssignedDeveloperId == id);
+
+            List<Project> unassignedProjects = projectRepository.GetAllProjects().ToList();
+            projects.ToList().ForEach(p => unassignedProjects.Remove(p));
 
             UserViewModel model = new()
             {
@@ -59,10 +62,29 @@ namespace BugTracker.Controllers
                 LastName = user.LastName,
                 UserName = user.UserName,
                 Email = user.Email,
+                UnassignedProjects = unassignedProjects,
                 Projects = projects.ToPagedList(page ?? 1, 5),
                 Tickets = tickets.ToPagedList(page ?? 1, 5),
             };
             return View(model);
+        }
+
+        public IActionResult AddProject(string id, string userId)
+        {
+            UserProject userProject = new()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserId = userId,
+                ProjectId = id,
+            };
+            userProjectRepository.Create(userProject);
+            return RedirectToAction("Details", userId);
+        }
+
+        public IActionResult RemoveProject(string id, string userId)
+        {
+            userProjectRepository.Delete(id, userId);
+            return RedirectToAction("Details", userId);
         }
     }
 }
