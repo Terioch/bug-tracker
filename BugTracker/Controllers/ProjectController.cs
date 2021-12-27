@@ -138,13 +138,13 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager")]
         [HttpPost]
-        public IActionResult AddUser(string id, string userId)
+        public IActionResult AddUser(string id, ProjectViewModel model)
         {            
-            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == userId);
+            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == model.ToBeAssignedUserId);
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id {userId} cannot be found";
+                ViewBag.ErrorMessage = $"User with Id {model.ToBeAssignedUserId} cannot be found";
                 return View("NotFound");
             }
 
@@ -152,18 +152,18 @@ namespace BugTracker.Controllers
 
             if (users.Contains(user))
             {
-                return RedirectToAction("Details", id);
+                return RedirectToAction("Details", new { id });
             }
 
             UserProject userProject = new()
             {   
                 Id = Guid.NewGuid().ToString(),
-                UserId = userId,
+                UserId = user.Id,
                 ProjectId = id,
             };
 
             userProjectRepository.Create(userProject);
-            return RedirectToAction("Details", id);     
+            return RedirectToAction("Details", new { id });     
         }
 
         [Authorize(Roles = "Admin, Project Manager")]
@@ -181,11 +181,11 @@ namespace BugTracker.Controllers
 
             if (!users.Contains(user))
             {
-                return RedirectToAction("Details", id);
+                return RedirectToAction("Details", new { id });
             }
 
             UserProject userProject = userProjectRepository.Delete(userId, id);
-            return RedirectToAction("Details", id);
+            return RedirectToAction("Details", new { id });
         }
     }
 }
