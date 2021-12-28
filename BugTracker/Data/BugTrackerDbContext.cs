@@ -20,6 +20,8 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
 
+    public DbSet<TicketComment>? TicketComments { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

@@ -22,6 +22,8 @@ namespace BugTracker.Models
         public string? Modifier { get; set; }
 
         [Required]
-        public DateTime? DateChanged { get; set; }        
+        public DateTime? ModifiedAt { get; set; }
+
+        public virtual Ticket? Ticket { get; set; }
     }
 }

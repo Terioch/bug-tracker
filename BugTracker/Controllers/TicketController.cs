@@ -66,7 +66,7 @@ namespace BugTracker.Controllers
                 SubmitterId = submitter.Id,                
                 Title = model.Title,
                 Description = model.Description,
-                SubmittedDate = DateTime.Now,                
+                CreatedAt = DateTime.Now,                
                 Type = model.Type,
                 Status = model.Status,
                 Priority = model.Priority,                
@@ -89,7 +89,7 @@ namespace BugTracker.Controllers
                 AssignedDeveloperId = ticket.AssignedDeveloperId,
                 Title = ticket.Title,
                 Description = ticket.Description,
-                SubmittedDate = ticket.SubmittedDate,                
+                SubmittedDate = ticket.CreatedAt,                
                 Type = ticket.Type,
                 Status = ticket.Status,
                 Priority = ticket.Priority,
@@ -181,7 +181,7 @@ namespace BugTracker.Controllers
                             OldValue = ticketPropertyValue,
                             NewValue = propertyValue,
                             Modifier = modifier.UserName,
-                            DateChanged = DateTime.Now
+                            ModifiedAt = DateTime.Now
                         };
                         ticketHistoryRecordRepository.Create(record);
                         ticketProperty.SetValue(ticket, property.GetValue(model));

@@ -4,6 +4,7 @@ using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(BugTrackerDbContext))]
-    partial class BugTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211228200926_AddedTicketComments")]
+    partial class AddedTicketComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,7 +115,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Ticket", b =>
@@ -165,7 +167,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("SubmitterId");
 
-                    b.ToTable("Tickets", (string)null);
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("BugTracker.Models.TicketComment", b =>
@@ -195,7 +197,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("TicketComments", (string)null);
+                    b.ToTable("TicketComments");
                 });
 
             modelBuilder.Entity("BugTracker.Models.TicketHistoryRecord", b =>
@@ -229,7 +231,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("TicketHistoryRecords", (string)null);
+                    b.ToTable("TicketHistoryRecords");
                 });
 
             modelBuilder.Entity("BugTracker.Models.UserProject", b =>
@@ -247,7 +249,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserProjects", (string)null);
+                    b.ToTable("UserProjects");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

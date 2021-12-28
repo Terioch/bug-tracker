@@ -27,7 +27,7 @@ namespace BugTracker.Models
         public string? Description { get; set; }
 
         [Required]
-        public DateTime? SubmittedDate { get; set; }       
+        public DateTime? CreatedAt { get; set; }       
 
         [Required]
         public string? Type { get; set; }
@@ -45,5 +45,7 @@ namespace BugTracker.Models
         public virtual ApplicationUser? Submitter { get; set; }
 
         public virtual ICollection<TicketHistoryRecord>? TicketHistoryRecords { get; set; } = new HashSet<TicketHistoryRecord>();
+
+        public virtual ICollection<TicketComment> TicketComments { get; set; } = new HashSet<TicketComment>();       
     }
 }
