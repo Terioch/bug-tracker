@@ -47,6 +47,7 @@ namespace BugTracker.Controllers
             return View(users);
         }
 
+        [Authorize(Roles = "Admin")]       
         [HttpGet]
         public IActionResult Details(string id, int? page)
         {
@@ -73,23 +74,23 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult AddProject(string userId, UserViewModel model)
+        public IActionResult AddProject(string id, UserViewModel model)
         {
             UserProject userProject = new()
             {
                 Id = Guid.NewGuid().ToString(),
-                UserId = userId,
+                UserId = id,
                 ProjectId = model.ToBeAssignedProjectId,
             };
             userProjectRepository.Create(userProject);
-            return RedirectToAction("Details", new { id = userId });
+            return RedirectToAction("Details", new { id });
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult RemoveProject(string userId, string projectId)
+        public IActionResult RemoveProject(string id, string projectId)
         {
-            userProjectRepository.Delete(userId, projectId);
-            return RedirectToAction("Details", new { id = userId });
+            userProjectRepository.Delete(id, projectId);
+            return RedirectToAction("Details", new { id });
         }
     }
 }

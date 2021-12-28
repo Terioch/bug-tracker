@@ -56,10 +56,10 @@
                     </div>      
                     @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
                     {
-                        <a asp-action="AssignProject" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#userProjectsAssignmentModal">Assign New Project</a>
+                        <a class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#userProjectsAssignmentModal">Assign New Project</a>
                     } else
                     {
-                        <a asp-action="AssignProject" class="btn btn-info mb-3 disabled">Assign New Project</a>   
+                        <a class="btn btn-info mb-3 disabled">Assign New Project</a>   
                     }                 
                 </div>                    
                 <table class="table">
@@ -78,7 +78,7 @@
                                 <td>@project.Description</td> 
                                 <td class="d-flex flex-column" style="gap: 0.25rem">
                                     <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="link-success">Details</a>    
-                                    <a href="/User/RemoveProject?userId=@Model.Id&projectId=@project.Id" class="link-danger">Remove Project</a>    
+                                    <a href="/User/RemoveProject/@Model.Id?projectId=@project.Id" class="link-danger">Remove</a>    
                                 </td>                                                                                                           
                             </tr>                                         
                         }
@@ -179,7 +179,7 @@
 <div class="modal fade" id="userProjectsAssignmentModal" tabindex="-1" aria-labelledby="userProjectsAssignmentModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">     
-            <form method="post" action="/User/AddProject?userId=@Model.Id">
+            <form method="post" action="/User/AddProject/@Model.Id">
                 <div class="modal-header">
                     <h5 class="modal-title">Assign a new project to this user</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">

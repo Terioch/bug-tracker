@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using X.PagedList;
 
 namespace BugTracker.Controllers
-{
+{    
     [Authorize]
     public class ProjectController : Controller
     {
@@ -30,8 +30,8 @@ namespace BugTracker.Controllers
             this.ticketHistoryRecordRepository = ticketHistoryRecordRepository;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
-        }
-
+        }     
+        
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
             return userManager.GetUserAsync(HttpContext.User);
