@@ -29,8 +29,10 @@ namespace BugTracker.Models
 
         public virtual ApplicationUser? AssignedDeveloper { get; set; }
 
-        public virtual ApplicationUser? Submitter { get; set; }
+        public virtual ApplicationUser? Submitter { get; set; }       
 
-        public IPagedList<TicketHistoryRecord>? TicketHistoryRecords { get; set; }        
+        public IPagedList<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
+
+        public IPagedList<TicketComment>? TicketComments { get; set; }
     }
 }

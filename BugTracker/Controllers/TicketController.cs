@@ -89,14 +89,15 @@ namespace BugTracker.Controllers
                 AssignedDeveloperId = ticket.AssignedDeveloperId,
                 Title = ticket.Title,
                 Description = ticket.Description,
-                SubmittedDate = ticket.CreatedAt,                
+                SubmittedDate = ticket.CreatedAt,
                 Type = ticket.Type,
                 Status = ticket.Status,
                 Priority = ticket.Priority,
                 Project = projectRepository.GetProjectById(ticket.ProjectId),
                 Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
                 AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),
-                TicketHistoryRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id).ToPagedList(page ?? 1, 5)
+                TicketHistoryRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id).ToPagedList(page ?? 1, 5),
+                TicketComments = new List<TicketComment>().ToPagedList(),
             };
             return View(model);
         }

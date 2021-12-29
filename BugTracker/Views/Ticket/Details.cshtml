@@ -9,7 +9,7 @@
 }
 
 <div id="ticketContainer" data-id="@Model.Id">    
-    <div class="row g-4 d-flex">        
+    <div class="row g-4 d-flex mb-3">        
         <div class="col col-xl-auto p-0">
             <div class="card-header">
                 <h4>@Model.Title</h4> 
@@ -126,7 +126,7 @@
                 </div>
             </div>
 
-            <!-- Ticket Attachment -->
+            <!-- Create Ticket Attachment -->
             <div class="card-body bg-light">
                 <h1 class="fs-5 mb-3">Add a New Attachment</h1>
                 <div class="input-group-sm mb-3">          
@@ -137,6 +137,98 @@
                 </div>             
                 <button class="btn btn-success">Submit</button>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Ticket Attachment Table -->
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-header bg-light">
+                    <h1 class="fs-3 mt-1">Ticket Attachments</h1>
+                    <p class="text-secondary mb-0">File attachments for this ticket</p>
+                </div>
+                <div class="card-body">                 
+                    @if (5 != null)
+                    {
+                        <div class="alert alert-info fs-5 mt-3" role="alert">
+                          There are no available attachments to display.
+                        </div>
+                    } else
+                    {                                        
+                        <table class="table">
+                            <thead>
+                                <tr>          
+                                    <th scope="col">Property</th>
+                                    <th scope="col">Old Value</th>
+                                    <th scope="col">New Value</th>                     
+                                    <th scope="col">Modified By</th>                     
+                                    <th scope="col">Date Changed</th>                     
+                                </tr>
+                            </thead>                                                
+                            <tbody>                                     
+                                @foreach (var record in Model.TicketHistoryRecords) 
+                                {
+                                    <tr>
+                                        <td>@record.Property</td>
+                                        @if (record.OldValue != null) {
+                                            <td>@record.OldValue</td>
+                                        } else
+                                        {
+                                            <td>Null</td>
+                                        }     
+                                        @if (record.NewValue != null) {
+                                            <td>@record.NewValue</td>
+                                        } else
+                                        {
+                                            <td>Null</td>
+                                        }   
+                                        <td>@record.Modifier</td>
+                                        <td>@record.ModifiedAt</td>
+                                    </tr>   
+                                }                                                  
+                            </tbody>
+                        </table>
+                        <div>
+                            <p class="text-secondary" style="font-size: 14px">
+                                Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
+                                of @Model.TicketHistoryRecords.PageCount
+                            </p>                   
+                            @Html.PagedListPager(
+                                Model.TicketHistoryRecords, 
+                                page => Url.Action("Details", new { Model.Id, page }),
+                                new PagedListRenderOptions() 
+                                {
+                                    UlElementClasses = new string[] { "pagination", "mb-0" },
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" }
+                                })
+                        </div>                         
+                    }  
+                </div>
+            </div>
+        </div>
+
+        <!-- Ticket Comment Section -->
+        <div class="col">
+            <h1 class="fs-3 mb-3">Ticket Comments</h1>
+            @if (!Model.TicketComments.Any())
+            {
+                <div class="alert alert-secondary fs-5 mt-3" role="alert">
+                    No one has commented on this ticket.
+                </div>
+            } else
+            {
+                <ul class="list-group">
+                    @foreach (var comment in Model.TicketComments)
+                    {
+                        <li class="list-group-item">
+                            <small class="mb-3">@comment.Author.UserName</small>
+                            <p>@comment.Value</p>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
     </div>
 </div>
