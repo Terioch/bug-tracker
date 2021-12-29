@@ -192,6 +192,12 @@ namespace BugTracker.Controllers
             return RedirectToAction("Details", new { id = ticket.Id });
         }
 
+        [HttpPost]
+        public IActionResult AddComment()
+        {
+            return View();
+        }
+
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpDelete]
         public IActionResult Delete(string id)

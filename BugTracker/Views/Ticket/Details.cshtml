@@ -10,7 +10,7 @@
 
 <div id="ticketContainer" data-id="@Model.Id">    
     <div class="row g-4 d-flex">        
-        <div class="col-auto p-0">
+        <div class="col col-xl-auto p-0">
             <div class="card-header">
                 <h4>@Model.Title</h4> 
                 <div>
@@ -61,7 +61,7 @@
             </ul>
         </div>
         <div class="col">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header bg-light">
                     <h1 class="fs-3 mt-1">Ticket History</h1>
                     <p class="text-secondary mb-0">Record of changes to this ticket</p>
@@ -124,6 +124,18 @@
                         </div>                         
                     }  
                 </div>
+            </div>
+
+            <!-- Ticket Attachment -->
+            <div class="card-body bg-light">
+                <h1 class="fs-5 mb-3">Add a New Attachment</h1>
+                <div class="input-group-sm mb-3">          
+                  <input type="text" class="form-control" placeholder="Description..." aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-primary"><i class="fs-5 bi-paperclip pe-2"></i>Attach File</button>
+                </div>             
+                <button class="btn btn-success">Submit</button>
             </div>
         </div>
     </div>

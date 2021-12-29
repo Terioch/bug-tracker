@@ -113,7 +113,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Ticket", b =>
@@ -137,7 +137,6 @@ namespace BugTracker.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProjectId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Status")
@@ -145,7 +144,6 @@ namespace BugTracker.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SubmitterId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
@@ -165,7 +163,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("SubmitterId");
 
-                    b.ToTable("Tickets", (string)null);
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("BugTracker.Models.TicketComment", b =>
@@ -174,7 +172,6 @@ namespace BugTracker.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AuthorId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -182,7 +179,6 @@ namespace BugTracker.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TicketId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
@@ -195,7 +191,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("TicketComments", (string)null);
+                    b.ToTable("TicketComments");
                 });
 
             modelBuilder.Entity("BugTracker.Models.TicketHistoryRecord", b =>
@@ -222,14 +218,13 @@ namespace BugTracker.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TicketId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("TicketHistoryRecords", (string)null);
+                    b.ToTable("TicketHistoryRecords");
                 });
 
             modelBuilder.Entity("BugTracker.Models.UserProject", b =>
@@ -247,7 +242,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserProjects", (string)null);
+                    b.ToTable("UserProjects");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -402,15 +397,11 @@ namespace BugTracker.Migrations
 
                     b.HasOne("BugTracker.Models.Project", "Project")
                         .WithMany("Tickets")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("BugTracker.Models.ApplicationUser", "Submitter")
                         .WithMany()
-                        .HasForeignKey("SubmitterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubmitterId");
 
                     b.Navigation("AssignedDeveloper");
 
@@ -423,26 +414,24 @@ namespace BugTracker.Migrations
                 {
                     b.HasOne("BugTracker.Models.ApplicationUser", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorId");
 
-                    b.HasOne("BugTracker.Models.Ticket", null)
+                    b.HasOne("BugTracker.Models.Ticket", "Ticket")
                         .WithMany("TicketComments")
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TicketId");
 
                     b.Navigation("Author");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("BugTracker.Models.TicketHistoryRecord", b =>
                 {
-                    b.HasOne("BugTracker.Models.Ticket", null)
+                    b.HasOne("BugTracker.Models.Ticket", "Ticket")
                         .WithMany("TicketHistoryRecords")
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TicketId");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

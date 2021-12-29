@@ -7,15 +7,14 @@ namespace BugTracker.Models
     public class TicketHistoryRecord
     {
         public string? Id { get; set; }        
-
-        [Required]
+       
         public string? TicketId { get; set; }        
 
         [Required]
         public string? Property { get; set; }
-
+        
         public string? OldValue { get; set; }
-
+  
         public string? NewValue { get; set; }
 
         [Required]
