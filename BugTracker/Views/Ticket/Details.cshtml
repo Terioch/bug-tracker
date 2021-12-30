@@ -129,8 +129,7 @@
         </div>
     </div>
 
-    <div class="row g-4 d-flex">        
-        <!-- Ticket Attachment Table -->
+    <div class="row g-4 d-flex">                
         <div class="col">
             <!-- Create Ticket Attachment -->
             <div class="card-body bg-light mb-3">
@@ -144,6 +143,7 @@
                 <button class="btn btn-success">Submit</button>
             </div>
 
+            <!-- Ticket Attachment Table Card -->
             <div class="card mb-3">
                 <div class="card-header bg-light">
                     <h1 class="fs-3 mt-1">Ticket Attachments</h1>
@@ -156,40 +156,19 @@
                           There are no available attachments to display.
                         </div>
                     } else
-                    {                                        
-                        <table class="table">
-                            <thead>
-                                <tr>          
-                                    <th scope="col">Property</th>
-                                    <th scope="col">Old Value</th>
-                                    <th scope="col">New Value</th>                     
-                                    <th scope="col">Modified By</th>                     
-                                    <th scope="col">Date Changed</th>                     
-                                </tr>
-                            </thead>                                                
-                            <tbody>                                     
-                                @foreach (var record in Model.TicketHistoryRecords) 
+                    {              
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                @foreach (var attachment in Model.TicketComments)
                                 {
-                                    <tr>
-                                        <td>@record.Property</td>
-                                        @if (record.OldValue != null) {
-                                            <td>@record.OldValue</td>
-                                        } else
-                                        {
-                                            <td>Null</td>
-                                        }     
-                                        @if (record.NewValue != null) {
-                                            <td>@record.NewValue</td>
-                                        } else
-                                        {
-                                            <td>Null</td>
-                                        }   
-                                        <td>@record.Modifier</td>
-                                        <td>@record.ModifiedAt</td>
-                                    </tr>   
-                                }                                                  
-                            </tbody>
-                        </table>
+                                    <picture>
+                                        <source srcset="..." type="image/svg+xml">
+                                        <img src="attachment src" class="img-fluid" alt="attachment src" />
+                                    </picture>
+                                }
+                            </div>
+                        </div>                        
+
                         <div>
                             <p class="text-secondary" style="font-size: 14px">
                                 Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
@@ -224,7 +203,7 @@
                     @foreach (var comment in Model.TicketComments)
                     {
                         <li class="list-group-item">
-                            <small class="mb-3">@comment.Author.UserName</small>
+                            <small class="mb-3">@comment.Author.UserName commented on @comment.CreatedAt</small>
                             <p>@comment.Value</p>
                         </li>
                     }

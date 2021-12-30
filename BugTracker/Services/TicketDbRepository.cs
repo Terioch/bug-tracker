@@ -16,7 +16,8 @@ namespace BugTracker.Services
 
         public IEnumerable<Ticket> GetAllTickets()
         {
-            return context.Tickets;
+            IEnumerable<Ticket>? tickets = context.Tickets;            
+            return tickets ?? new List<Ticket>();
         }
 
         public List<Ticket> GetTicketsByProjectId(string id)
@@ -34,14 +35,8 @@ namespace BugTracker.Services
         }
 
         public Ticket GetTicketById(string id)
-        {
-            Ticket? ticket = context.Tickets.Find(id);
-
-            if (ticket == null)
-            {
-                throw new Exception("Ticket Not Found");
-            }
-            return ticket;
+        {            
+            return context.Tickets.Find(id) ?? new Ticket();
         }
 
         public Ticket Create(Ticket ticket)
@@ -57,7 +52,7 @@ namespace BugTracker.Services
 
             if (ticket == null)
             {
-                throw new Exception("Ticket Not Found");
+                return new Ticket();
             }
 
             context.Tickets.Remove(ticket);

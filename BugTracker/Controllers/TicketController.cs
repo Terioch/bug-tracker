@@ -195,7 +195,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         public IActionResult AddComment()
-        {
+        {            
             return View();
         }
 
