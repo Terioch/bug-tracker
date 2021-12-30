@@ -33,6 +33,31 @@ class Ticket {
             console.error(err);
         }
     }
+
+    async handleCommentCreation() {
+        const id = this.ticketContainer.getAttribute("data-id");
+        const comment = {
+            value: this.ticketContainer.GetElementById("commentDescriptionInput").value,
+        };
+
+        try {
+            const res = await fetch(`/ticket/addComment/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "Application/Json",
+                },
+                body: { comment }
+            });
+
+            /*if (res.status === 400 && res.url) {
+                window.location.href = res.url;
+            }*/
+            const data = await res.json();
+            console.log(data);
+        } catch (err) {
+            console.error(err);
+        }
+    }
 }
 
 export default Ticket;

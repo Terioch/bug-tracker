@@ -15,15 +15,17 @@ namespace BugTracker.Controllers
         private readonly ITicketRepository repository;
         private readonly IProjectRepository projectRepository;
         private readonly ITicketHistoryRecordRepository ticketHistoryRecordRepository;
+        private readonly ITicketCommentRepository ticketCommentRepository;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
         private readonly TicketHelper ticketHelper;
 
-        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
+        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, ITicketCommentRepository ticketCommentRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
         {
             this.repository = repository;
             this.projectRepository = projectRepository;
             this.ticketHistoryRecordRepository = ticketHistoryRecordRepository;
+            this.ticketCommentRepository = ticketCommentRepository;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
             this.ticketHelper = ticketHelper;
@@ -194,9 +196,19 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddComment()
-        {            
-            return View();
+        public async Task<IActionResult> AddComment(TicketComment model)
+        {
+            ApplicationUser user = await GetCurrentUserAsync();
+            TicketComment comment = new()
+            {
+                Id = Guid.NewGuid().ToString(),
+                TicketId = model.TicketId,
+                AuthorId = user.Id,
+                Value = model.Value,
+                CreatedAt = new DateTimeOffset()
+            };
+            ticketCommentRepository.Create(comment);
+            return Json(comment);
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
