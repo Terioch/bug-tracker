@@ -51,7 +51,7 @@ class Ticket {
                 })
             });
             
-            const commentListHTML = await res.json();
+            const commentListHTML = await res.text();
             console.log(commentListHTML);
             commentsContainer.innerHTML = commentListHTML;
         } catch (err) {

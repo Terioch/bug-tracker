@@ -99,7 +99,7 @@ namespace BugTracker.Controllers
                 Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
                 AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),
                 TicketHistoryRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id).ToPagedList(page ?? 1, 5),
-                TicketComments = ticketCommentRepository.GetAllComments().ToPagedList(page ?? 1, 16)
+                TicketComments = ticketCommentRepository.GetAllComments().ToPagedList(page ?? 1, 5)
             };
             return View(model);
         }
@@ -208,8 +208,9 @@ namespace BugTracker.Controllers
                 CreatedAt = new DateTimeOffset()
             };
             ticketCommentRepository.Create(comment);
+            IEnumerable<TicketComment> comments = ticketCommentRepository.GetCommentsByTicketId(id);
             ViewBag.Id = id;
-            return PartialView("_TicketCommentList", ticketCommentRepository.GetCommentsByTicketId(id));
+            return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
