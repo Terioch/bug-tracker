@@ -1,0 +1,27 @@
+﻿@using X.PagedList
+
+@model IPagedList<TicketComment>
+
+<h1 class="fs-3 mb-3">Ticket Comments</h1>
+<div class="btn-group mb-3">
+    <input id="commentDescriptionInput" type="text" class="form-control" placeholder="Comment..." aria-label="Comment" aria-describedby="ticket-comment">
+</div>
+<a asp-action="CreateComment" id="createCommentBtn" class="btn btn-secondary mb-3">Add comment</a>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-secondary fs-5 mt-3" role="alert">
+        No one has commented on this ticket.
+    </div>
+} else
+{
+    <ul class="list-group">
+        @foreach (var comment in Model)
+        {
+            <li class="list-group-item">
+                <small class="mb-3">@comment.Author.UserName commented on @comment.CreatedAt</small>
+                <p>@comment.Value</p>
+            </li>
+        }
+    </ul>
+}

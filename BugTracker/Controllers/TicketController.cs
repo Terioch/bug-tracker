@@ -99,7 +99,7 @@ namespace BugTracker.Controllers
                 Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
                 AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),
                 TicketHistoryRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id).ToPagedList(page ?? 1, 5),
-                TicketComments = new List<TicketComment>().ToPagedList(),
+                TicketComments = ticketCommentRepository.GetAllComments().ToPagedList(page ?? 1, 16)
             };
             return View(model);
         }
@@ -194,21 +194,21 @@ namespace BugTracker.Controllers
             repository.Update(ticket);
             return RedirectToAction("Details", new { id = ticket.Id });
         }
-
+        
         [HttpPost]
-        public async Task<IActionResult> AddComment(TicketComment model)
+        public async Task<IActionResult> CreateComment(TicketComment model, string id)
         {
             ApplicationUser user = await GetCurrentUserAsync();
             TicketComment comment = new()
             {
                 Id = Guid.NewGuid().ToString(),
-                TicketId = model.TicketId,
+                TicketId = id,
                 AuthorId = user.Id,
                 Value = model.Value,
                 CreatedAt = new DateTimeOffset()
             };
             ticketCommentRepository.Create(comment);
-            return Json(comment);
+            return PartialView("_TicketCommentList", ticketCommentRepository.GetCommentsByTicketId(id));
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]

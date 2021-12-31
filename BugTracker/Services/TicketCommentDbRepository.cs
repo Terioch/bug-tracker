@@ -20,6 +20,12 @@ namespace BugTracker.Services
             return comments ?? new List<TicketComment>();
         }
 
+        public IEnumerable<TicketComment> GetCommentsByTicketId(string id)
+        {
+            IEnumerable<TicketComment>? comments = context.TicketComments.Where(c => c.TicketId == id);
+            return comments ?? new List<TicketComment>();
+        }
+
         public TicketComment GetComment(string id)
         {          
             return context.TicketComments.Find(id) ?? new TicketComment();

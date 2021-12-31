@@ -195,7 +195,7 @@
             <div class="btn-group mb-3">
                 <input id="commentDescriptionInput" type="text" class="form-control" placeholder="Comment..." aria-label="Comment" aria-describedby="ticket-comment">
             </div>
-            <a id="createCommentBtn" class="btn btn-secondary mb-3">Add comment</a>
+            <a asp-action="CreateComment" id="createCommentBtn" class="btn btn-secondary mb-3">Add comment</a>
 
             @if (!Model.TicketComments.Any())
             {

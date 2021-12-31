@@ -5,12 +5,14 @@ class Ticket {
             console.log("Initialized Ticket");
             this.ticketContainer = document.getElementById("ticketContainer");
             this.handleDelete = this.handleDelete.bind(this);
+            this.handleCommentCreation = this.handleCommentCreation.bind(this);
             this.events();
         }
     }
 
     events() {
         document.getElementById("deleteTicketBtn").addEventListener("click", this.handleDelete);
+        document.getElementById("createCommentBtn").addEventListener("click", this.handleCommentCreation);
     }
 
     async handleDelete() {
@@ -41,7 +43,7 @@ class Ticket {
         };
 
         try {
-            const res = await fetch(`/ticket/addComment/${id}`, {
+            const res = await fetch(`/ticket/createComment/${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "Application/Json",
