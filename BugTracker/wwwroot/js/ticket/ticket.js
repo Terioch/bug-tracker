@@ -38,9 +38,7 @@ class Ticket {
 
     async handleCommentCreation() {
         const id = this.ticketContainer.getAttribute("data-id");
-        const comment = {
-            value: this.ticketContainer.GetElementById("commentDescriptionInput").value,
-        };
+        const commentsContainer = document.getElementById("commentListContainer");        
 
         try {
             const res = await fetch(`/ticket/createComment/${id}`, {
@@ -48,14 +46,14 @@ class Ticket {
                 headers: {
                     "Content-Type": "Application/Json",
                 },
-                body: { comment }
+                body: JSON.stringify({
+                    value: document.getElementById("commentDescriptionInput").value,
+                })
             });
-
-            /*if (res.status === 400 && res.url) {
-                window.location.href = res.url;
-            }*/
-            const data = await res.json();
-            console.log(data);
+            
+            const commentListHTML = await res.json();
+            console.log(commentListHTML);
+            commentsContainer.innerHTML = commentListHTML;
         } catch (err) {
             console.error(err);
         }

@@ -196,7 +196,7 @@ namespace BugTracker.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> CreateComment(TicketComment model, string id)
+        public async Task<IActionResult> CreateComment([FromBody] TicketComment model, string id)
         {
             ApplicationUser user = await GetCurrentUserAsync();
             TicketComment comment = new()
@@ -208,6 +208,7 @@ namespace BugTracker.Controllers
                 CreatedAt = new DateTimeOffset()
             };
             ticketCommentRepository.Create(comment);
+            ViewBag.Id = id;
             return PartialView("_TicketCommentList", ticketCommentRepository.GetCommentsByTicketId(id));
         }
 

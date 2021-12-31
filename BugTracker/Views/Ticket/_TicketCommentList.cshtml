@@ -1,27 +1,41 @@
 ﻿@using X.PagedList
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 
 @model IPagedList<TicketComment>
 
-<h1 class="fs-3 mb-3">Ticket Comments</h1>
-<div class="btn-group mb-3">
-    <input id="commentDescriptionInput" type="text" class="form-control" placeholder="Comment..." aria-label="Comment" aria-describedby="ticket-comment">
-</div>
-<a asp-action="CreateComment" id="createCommentBtn" class="btn btn-secondary mb-3">Add comment</a>
+<div id="commentListContainer">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info fs-5 mt-3" role="alert">
+            No one has commented on this ticket.
+        </div>
+    } else
+    {
+        <ul class="list-group">
+            @foreach (var comment in Model)
+            {
+                <li class="list-group-item">
+                    <small class="mb-3">@comment.Author.UserName commented on @comment.CreatedAt</small>
+                    <p>@comment.Value</p>
+                </li>
+            }
+        </ul>
 
-@if (!Model.Any())
-{
-    <div class="alert alert-secondary fs-5 mt-3" role="alert">
-        No one has commented on this ticket.
-    </div>
-} else
-{
-    <ul class="list-group">
-        @foreach (var comment in Model)
-        {
-            <li class="list-group-item">
-                <small class="mb-3">@comment.Author.UserName commented on @comment.CreatedAt</small>
-                <p>@comment.Value</p>
-            </li>
-        }
-    </ul>
-}
+        <div>
+            <p class="text-secondary" style="font-size: 14px">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
+                of @Model.PageCount
+            </p>                   
+            @Html.PagedListPager(
+                Model, 
+                page => Url.Action("Details", new { ViewBag.Id, page }),
+                new PagedListRenderOptions() 
+                {
+                    UlElementClasses = new string[] { "pagination", "mb-0" },
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new string[] { "page-link" }
+                })
+        </div>
+    }
+</div>    

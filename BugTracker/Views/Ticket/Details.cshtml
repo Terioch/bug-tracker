@@ -195,25 +195,43 @@
             <div class="btn-group mb-3">
                 <input id="commentDescriptionInput" type="text" class="form-control" placeholder="Comment..." aria-label="Comment" aria-describedby="ticket-comment">
             </div>
-            <a asp-action="CreateComment" id="createCommentBtn" class="btn btn-secondary mb-3">Add comment</a>
+            <button id="createCommentBtn" class="btn btn-secondary mb-3">Add comment</button>
 
-            @if (!Model.TicketComments.Any())
-            {
-                <div class="alert alert-secondary fs-5 mt-3" role="alert">
-                    No one has commented on this ticket.
-                </div>
-            } else
-            {
-                <ul class="list-group">
-                    @foreach (var comment in Model.TicketComments)
-                    {
-                        <li class="list-group-item">
-                            <small class="mb-3">@comment.Author.UserName commented on @comment.CreatedAt</small>
-                            <p>@comment.Value</p>
-                        </li>
-                    }
-                </ul>
-            }                        
+            <div id="commentListContainer">
+                @if (!Model.TicketComments.Any())
+                {
+                    <div class="alert alert-info fs-5 mt-3" role="alert">
+                        No one has commented on this ticket.
+                    </div>
+                } else
+                {
+                    <ul class="list-group">
+                        @foreach (var comment in Model.TicketComments)
+                        {
+                            <li class="list-group-item">
+                                <small class="mb-3">@comment.Author.UserName commented on @comment.CreatedAt</small>
+                                <p>@comment.Value</p>
+                            </li>
+                        }
+                    </ul>
+
+                    <div>
+                        <p class="text-secondary" style="font-size: 14px">
+                            Page @(Model.TicketComments.PageCount < Model.TicketComments.PageNumber ? 0 : Model.TicketComments.PageNumber) 
+                            of @Model.TicketComments.PageCount
+                        </p>                   
+                        @Html.PagedListPager(
+                            Model.TicketComments, 
+                            page => Url.Action("Details", new { Model.Id, page }),
+                            new PagedListRenderOptions() 
+                            {
+                                UlElementClasses = new string[] { "pagination", "mb-0" },
+                                LiElementClasses = new string[] { "page-item" },
+                                PageClasses = new string[] { "page-link" }
+                            })
+                    </div>
+                }
+            </div>                                    
         </div>
     </div>
 </div>
