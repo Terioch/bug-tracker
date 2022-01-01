@@ -45,7 +45,7 @@ namespace BugTracker.Helpers
             }
             else if (roles.Contains("Developer") || roles.Contains("Demo Developer"))
             {
-                return projects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id));
+                return projects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id));                
             }
             return projects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id));            
         }

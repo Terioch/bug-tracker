@@ -10,6 +10,7 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
     public BugTrackerDbContext(DbContextOptions<BugTrackerDbContext> options) 
         : base(options)
     {
+
     }
 
     public DbSet<Project>? Projects { get; set; }

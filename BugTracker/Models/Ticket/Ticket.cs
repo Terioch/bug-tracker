@@ -8,7 +8,12 @@ using X.PagedList;
 namespace BugTracker.Models
 {
     public class Ticket
-    {        
+    {
+        public Ticket()
+        {
+
+        }
+
         public string? Id { get; set; }
 
         public string? ProjectId { get; set; }

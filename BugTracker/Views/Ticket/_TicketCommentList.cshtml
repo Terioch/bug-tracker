@@ -1,8 +1,15 @@
-﻿@using X.PagedList
-@using X.PagedList.Mvc.Core;
-@using X.PagedList.Web.Common;
+﻿@using Microsoft.AspNetCore.Identity
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@inject UserManager<ApplicationUser> userManager
 
 @model IPagedList<TicketComment>
+
+@{
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
+}
 
 <div id="commentListContainer">
     @if (!Model.Any())
@@ -16,7 +23,13 @@
             @foreach (var comment in Model)
             {
                 <li class="list-group-item">
-                    <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt</small>
+                    @if (comment.Author == loggedInUser || await userManager.IsInRoleAsync(comment.Author, "Admin"))
+                    {
+                        <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a href="" class="link-danger ms-1">Delete</a></small>   
+                    } else
+                    {
+                        <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt</small>
+                    }                                
                     <p class="mt-2 mb-0">@comment.Value</p>
                 </li>
             }

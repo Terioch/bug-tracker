@@ -34,7 +34,7 @@
                     <thead>
                         <tr>          
                             <th scope="col">Title</th>
-                            <th scope="col">Reported By</th>
+                            <th scope="col">Submitted By</th>
                             <th scope="col">Developer</th>
                             <th scope="col">Status</th>
                             <th scope="col">Priority</th>
@@ -46,7 +46,7 @@
                         {                                                     
                             <tr>
                                 <td>@ticket.Title</td>                        
-                                <td>@ticket.Submitter.UserName</td>                                 
+                                <td>@ticket.Submitter?.UserName</td>                                 
                                 @if (ticket.AssignedDeveloper != null)
                                 {
                                     <td>@ticket.AssignedDeveloper.UserName</td>
