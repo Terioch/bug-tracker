@@ -1,11 +1,15 @@
-﻿@using X.PagedList;
+﻿@using Microsoft.AspNetCore.Identity
+@using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
+
+@inject UserManager<ApplicationUser> userManager;
 
 @model BugTracker.Models.TicketViewModel
 
 @{
     ViewData["Title"] = "Ticket";
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
 <div id="ticketContainer" data-id="@Model.Id">    
@@ -137,7 +141,7 @@
                 <div class="mb-3">
                     <button class="btn btn-primary"><i class="fs-5 bi-paperclip pe-2"></i>Attach File</button>
                 </div>             
-                <div class="input-group-sm mb-3">          
+                <div class="input-group-sm mb-3" style="max-width: 300px">          
                     <input type="text" class="form-control" placeholder="Description..." aria-label="Description" aria-describedby="ticket-description">
                 </div>
                 <button class="btn btn-success">Submit</button>
@@ -192,10 +196,12 @@
         <!-- Ticket Comment Section -->
         <div class="col">
             <h1 class="fs-3 mb-3">Ticket Comments</h1>
-            <div class="btn-group mb-3">
+            <div class="input-group mb-3" style="max-width: 300px">
                 <input id="commentDescriptionInput" type="text" class="form-control" placeholder="Comment..." aria-label="Comment" aria-describedby="ticket-comment">
             </div>
-            <button id="createCommentBtn" class="btn btn-secondary mb-3">Add comment</button>
+            <div class="pb-3 border-bottom">
+                <button id="createCommentBtn" class="btn btn-secondary mb-3">Add comment</button>
+            </div>            
 
             <div id="commentListContainer">
                 @if (!Model.TicketComments.Any())
@@ -209,8 +215,14 @@
                         @foreach (var comment in Model.TicketComments)
                         {
                             <li class="list-group-item">
-                                <small class="mb-3">@comment.Author.UserName commented on @comment.CreatedAt</small>
-                                <p>@comment.Value</p>
+                                @if (comment.Author == loggedInUser || await userManager.IsInRoleAsync(comment.Author, "Admin"))
+                                {
+                                    <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a href="" class="link-danger ms-1">Delete</a></small>   
+                                } else
+                                {
+                                    <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt</small>
+                                }                                
+                                <p class="mt-2 mb-0">@comment.Value</p>
                             </li>
                         }
                     </ul>

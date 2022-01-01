@@ -99,7 +99,7 @@ namespace BugTracker.Controllers
                 Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
                 AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),
                 TicketHistoryRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id).ToPagedList(page ?? 1, 5),
-                TicketComments = ticketCommentRepository.GetAllComments().ToPagedList(page ?? 1, 5)
+                TicketComments = ticketCommentRepository.GetCommentsByTicketId(id).ToPagedList(page ?? 1, 5)
             };
             return View(model);
         }
@@ -205,7 +205,7 @@ namespace BugTracker.Controllers
                 TicketId = id,
                 AuthorId = user.Id,
                 Value = model.Value,
-                CreatedAt = new DateTimeOffset()
+                CreatedAt = DateTimeOffset.Now
             };
             ticketCommentRepository.Create(comment);
             IEnumerable<TicketComment> comments = ticketCommentRepository.GetCommentsByTicketId(id);

@@ -16,8 +16,8 @@
             @foreach (var comment in Model)
             {
                 <li class="list-group-item">
-                    <small class="mb-3">@comment.Author.UserName commented on @comment.CreatedAt</small>
-                    <p>@comment.Value</p>
+                    <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt</small>
+                    <p class="mt-2 mb-0">@comment.Value</p>
                 </li>
             }
         </ul>
