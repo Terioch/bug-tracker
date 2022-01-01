@@ -214,7 +214,7 @@
                             <li class="list-group-item">
                                 @if (comment.Author == loggedInUser || await userManager.IsInRoleAsync(comment.Author, "Admin"))
                                 {
-                                    <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a href="" class="link-danger ms-1">Delete</a></small>   
+                                    <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a asp-action="DeleteComment" asp-route-id="@comment.Id" class="link-danger ms-1">Delete</a></small>   
                                 } else
                                 {
                                     <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt</small>
@@ -250,11 +250,27 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Confirm Ticket Removal</h5>
+        <h5 class="modal-title">Confirm Ticket Removal</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-footer">
         <button asp-action="Delete" type="button" id="deleteTicketBtn" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Confirm">Confirm</button>       
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>       
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Ticket Comment Modal -->
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Comment Removal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button asp-action="DeleteComment" asp-route-id="" type="button" id="deleteCommentBtn" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Confirm">Confirm</button>       
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>       
       </div>
     </div>

@@ -25,7 +25,7 @@
                 <li class="list-group-item">
                     @if (comment.Author == loggedInUser || await userManager.IsInRoleAsync(comment.Author, "Admin"))
                     {
-                        <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a href="" class="link-danger ms-1">Delete</a></small>   
+                        <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a asp-action="DeleteComment" asp-route-id="@comment.Id" class="link-danger ms-1">Delete</a></small>   
                     } else
                     {
                         <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt</small>

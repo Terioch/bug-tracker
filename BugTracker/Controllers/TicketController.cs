@@ -218,6 +218,12 @@ namespace BugTracker.Controllers
             return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
         }
 
+        public IActionResult DeleteComment(string id)
+        {
+            TicketComment comment = ticketCommentRepository.Delete(id);
+            return RedirectToAction("Details", new { id = comment.TicketId });
+        }
+
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpDelete]
         public IActionResult Delete(string id)
