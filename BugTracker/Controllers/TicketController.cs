@@ -210,10 +210,13 @@ namespace BugTracker.Controllers
                 TicketId = id,
                 AuthorId = user.Id,
                 Value = model.Value,
-                CreatedAt = DateTimeOffset.Now
+                CreatedAt = DateTimeOffset.Now,
+                Ticket = repository.GetTicketById(id),
+                Author = userManager.Users.First(u => u.Id == user.Id)
             };
             ticketCommentRepository.Create(comment);
             IEnumerable<TicketComment> comments = ticketCommentRepository.GetCommentsByTicketId(id);
+            // from c in comments select c
             ViewBag.Id = id;
             return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
         }

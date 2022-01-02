@@ -52,9 +52,9 @@ class Ticket {
                 })
             });
             
-            const commentListHTML = await res.text();            
-            commentDescriptionInput.value = "";
+            const commentListHTML = await res.text();                        
             commentsContainer.innerHTML = commentListHTML;
+            commentDescriptionInput.value = "";
         } catch (err) {
             console.error(err);
         }
