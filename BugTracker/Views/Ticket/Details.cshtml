@@ -208,13 +208,13 @@
                     </div>
                 } else
                 {
-                    <ul class="list-group list-group-flush mb-3">
+                    <ul id="commentListGroup" class="list-group list-group-flush mb-3">
                         @foreach (var comment in Model.TicketComments)
                         {
-                            <li class="list-group-item">
+                            <li class="comment-list-item list-group-item" data-commentId="@comment.Id">
                                 @if (comment.Author == loggedInUser || await userManager.IsInRoleAsync(comment.Author, "Admin"))
                                 {
-                                    <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a asp-action="DeleteComment" asp-route-id="@comment.Id" class="link-danger ms-1">Delete</a></small>   
+                                    <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a href="" class="delete-comment-trigger link-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteCommentModal">Delete</a></small>   
                                 } else
                                 {
                                     <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt</small>
@@ -270,7 +270,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-footer">
-        <button asp-action="DeleteComment" asp-route-id="" type="button" id="deleteCommentBtn" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Confirm">Confirm</button>       
+        <button type="button" id="deleteCommentBtn" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Confirm">Confirm</button>       
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>       
       </div>
     </div>

@@ -11,7 +11,7 @@
     ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
-<div id="commentListContainer">
+<div>
     @if (!Model.Any())
     {
         <div class="alert alert-info fs-5 mt-3" role="alert">
@@ -19,13 +19,13 @@
         </div>
     } else
     {
-        <ul class="list-group list-group-flush mb-3">
+        <ul id="commentListGroup" class="list-group list-group-flush mb-3">
             @foreach (var comment in Model)
             {
-                <li class="list-group-item">
+                <li class="comment-list-item list-group-item" data-commentId="@comment.Id">
                     @if (comment.Author == loggedInUser || await userManager.IsInRoleAsync(comment.Author, "Admin"))
                     {
-                        <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a asp-action="DeleteComment" asp-route-id="@comment.Id" class="link-danger ms-1">Delete</a></small>   
+                        <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a href="" class="delete-comment-trigger link-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteCommentModal">Delete</a></small>   
                     } else
                     {
                         <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt</small>
@@ -52,3 +52,20 @@
         </div>
     }
 </div>    
+
+
+<!-- Delete Ticket Comment Modal -->
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Comment Removal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="deleteCommentBtn" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Confirm">Confirm</button>       
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>       
+      </div>
+    </div>
+  </div>
+</div>

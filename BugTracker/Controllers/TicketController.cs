@@ -77,6 +77,8 @@ namespace BugTracker.Controllers
                 Type = model.Type,
                 Status = model.Status,
                 Priority = model.Priority,                
+                Submitter = submitter,
+                AssignedDeveloper = null,
             };
 
             ticket = repository.Create(ticket);
@@ -101,8 +103,8 @@ namespace BugTracker.Controllers
                 Status = ticket.Status,
                 Priority = ticket.Priority,
                 Project = projectRepository.GetProjectById(ticket.ProjectId),
-                Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
-                AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),
+                /*Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
+                AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),*/
                 TicketHistoryRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id).ToPagedList(page ?? 1, 5),
                 TicketComments = ticketCommentRepository.GetCommentsByTicketId(id).ToPagedList(page ?? 1, 5)
             };
@@ -216,15 +218,16 @@ namespace BugTracker.Controllers
             };
             ticketCommentRepository.Create(comment);
             IEnumerable<TicketComment> comments = ticketCommentRepository.GetCommentsByTicketId(id);
-            // from c in comments select c
             ViewBag.Id = id;
             return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
         }
 
+        [HttpDelete]
         public IActionResult DeleteComment(string id)
         {
             TicketComment comment = ticketCommentRepository.Delete(id);
-            return RedirectToAction("Details", new { id = comment.TicketId });
+            IEnumerable<TicketComment> comments = ticketCommentRepository.GetCommentsByTicketId(comment.TicketId);
+            return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
