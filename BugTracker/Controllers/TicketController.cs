@@ -103,8 +103,8 @@ namespace BugTracker.Controllers
                 Status = ticket.Status,
                 Priority = ticket.Priority,
                 Project = projectRepository.GetProjectById(ticket.ProjectId),
-                /*Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
-                AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),*/
+                Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
+                AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),
                 TicketHistoryRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id).ToPagedList(page ?? 1, 5),
                 TicketComments = ticketCommentRepository.GetCommentsByTicketId(id).ToPagedList(page ?? 1, 5)
             };

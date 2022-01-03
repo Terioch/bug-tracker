@@ -5,8 +5,9 @@ class Ticket {
             console.log("Initialized Ticket");
             this.ticketContainer = document.getElementById("ticketContainer");
             this.handleDelete = this.handleDelete.bind(this);
-            this.handleCommentCreation = this.handleCommentCreation.bind(this);
             this.commentListClickHandler = this.commentListClickHandler.bind(this);
+            this.handleCommentCreation = this.handleCommentCreation.bind(this);           
+            this.handleCommentDeletion = this.handleCommentDeletion.bind(this);
             this.events();
         }
     }
@@ -15,6 +16,7 @@ class Ticket {
         document.getElementById("deleteTicketBtn").addEventListener("click", this.handleDelete);
         document.getElementById("createCommentBtn").addEventListener("click", this.handleCommentCreation);
         document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler);
+        document.getElementById("deleteCommentBtn").addEventListener("click", this.handleCommentDeletion);
     }
 
     findNearestParentElement(el, className) {
@@ -46,20 +48,12 @@ class Ticket {
     }
 
     commentListClickHandler(e) {
+        console.log("ran");
         const commentId = this.findNearestParentElement(e.target, "comment-list-item").getAttribute("data-commentId");
         console.log(commentId);
 
         if (e.target.classList.contains("delete-comment-trigger")) {
-            const deleteCommentBtn = document.getElementById("deleteCommentBtn");         
-
-            if (!deleteCommentBtn.getAttribute("data-listening")) {
-                deleteCommentBtn.addEventListener("click", () => this.handleCommentDeletion(commentId));
-                deleteCommentBtn.setAttribute("data-listening", true);
-                console.log("listening");
-            } else {
-                deleteCommentBtn.removeEventListener("click", () => this.handleCommentDeletion(commentId));
-                deleteCommentBtn.removeAttribute("data-listening");
-            }
+            document.getElementById("deleteCommentBtn").setAttribute("data-id", commentId) // Attach the current comment id           
         }
     }
 
@@ -81,14 +75,16 @@ class Ticket {
             
             const commentListHTML = await res.text();                        
             commentsContainer.innerHTML = commentListHTML;
+            document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler); // Attach event listener to replacement list
             commentDescriptionInput.value = "";
         } catch (err) {
             console.error(err);
         }
     }
 
-    async handleCommentDeletion(commentId) {
+    async handleCommentDeletion() {
         const commentsContainer = document.getElementById("commentListContainer");         
+        const commentId = document.getElementById("deleteCommentBtn").getAttribute("data-id");
         console.log(commentId);
 
         try {
@@ -100,12 +96,8 @@ class Ticket {
             });
 
             const commentListHTML = await res.text();            
-            commentsContainer.innerHTML = commentListHTML;
-
-            // Remove listener and listening attribute for this comment
-            const deleteCommentBtn = document.getElementById("deleteCommentBtn");   
-            deleteCommentBtn.removeEventListener("click", () => this.handleCommentDeletion(commentId));
-            deleteCommentBtn.removeAttribute("data-listening");
+            commentsContainer.innerHTML = commentListHTML;           
+            document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler); // Attach event listener to replacement list                 
         } catch (err) {
             console.error(err);
         }
