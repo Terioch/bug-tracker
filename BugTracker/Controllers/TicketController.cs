@@ -224,7 +224,7 @@ namespace BugTracker.Controllers
 
         [HttpDelete]
         public IActionResult DeleteComment(string id)
-        {
+        {            
             TicketComment comment = ticketCommentRepository.Delete(id);
             IEnumerable<TicketComment> comments = ticketCommentRepository.GetCommentsByTicketId(comment.TicketId);
             return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));

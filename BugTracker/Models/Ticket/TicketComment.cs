@@ -10,6 +10,7 @@ namespace BugTracker.Models
 
         public string? AuthorId { get; set; }
 
+        [StringLength(200, MinimumLength = 1)]
         [Required]
         public string? Value { get; set; }
 

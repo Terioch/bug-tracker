@@ -1,7 +1,15 @@
-﻿@model IEnumerable<BugTracker.Models.RoleViewModel>;
+﻿@using Microsoft.AspNetCore.Identity
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@model IEnumerable<BugTracker.Models.RoleViewModel>
+
+@inject UserManager<ApplicationUser> userManager
 
 @{
     ViewData["Title"] = "UserRoles";
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
 <style>
@@ -10,11 +18,17 @@
     }   
 </style>
 
-<main id="rolesMain">
-    <h3 class="mb-3">Manage users assigned to each role</h3>
-    <a asp-action="CreateRole" class="btn-link">Create a new role</a>
-
-    <hr />
+<div id="rolesMain" class="card">
+    <div class="card-header bg-light mb-3">
+        <h3 class="mb-3">Manage users assigned to each role</h3>
+        @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+        {
+            <a asp-action="CreateRole" class="btn-link">Create a new role</a>
+        } else
+        {
+            <a asp-action="CreateRole" class="btn-link disabled">Create a new role</a>
+        }
+    </div>  
 
     @if (!Model.Any())
     {
@@ -26,9 +40,17 @@
                 <h5 class="card-title">
                     Use the button below to create a new role
                 </h5>
-                <a class="btn btn-primary text-white" style="width: auto" asp-action="CreateRole">
-                    Create Role
-                </a>
+                @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                {
+                    <a class="btn btn-success text-white" style="width: auto" asp-action="CreateRole">
+                        Create Role
+                    </a>
+                } else
+                {
+                    <a class="btn btn-success text-white disabled" style="width: auto" asp-action="CreateRole">
+                        Create Role
+                    </a>
+                }         
             </div>
         </div>
     }
@@ -73,7 +95,7 @@
           </div>
         </div>
     }
-</main>
+</div>
  
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

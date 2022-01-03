@@ -1,7 +1,7 @@
 ﻿
 class RoleList {
     constructor() {
-        if (document.getElementById("rolesMain")) {
+        if (!document.getElementById("rolesMain")) {
             console.log("Initialized Roles");            
             this.selectedUser = {
                 id: "",

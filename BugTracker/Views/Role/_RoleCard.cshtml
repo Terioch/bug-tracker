@@ -1,4 +1,4 @@
-﻿@model BugTracker.Models.RoleViewModel;
+﻿@model BugTracker.Models.RoleViewModel
 
 <style>
     a {
@@ -46,8 +46,9 @@
                    
                 </div>                
             </div>                   
+
             <!-- User Pagination -->
-            <nav id="userPagination" class="align-self-end" aria-label="collection of roles">                    
+            @*<nav id="userPagination" class="align-self-end" aria-label="collection of roles">                    
                 <ul class="pagination mb-1">
                     <li class="page-item page-item-previous"><a class="page-link">Previous</a></li>
                     <li class="page-item page-item-one"><a class="page-link">1</a></li>
@@ -55,13 +56,13 @@
                     <li class="page-item page-item-two"><a class="page-link">3</a></li>     
                     <li class="page-item page-item-next"><a class="page-link">Next</a></li>
                 </ul>                    
-            </nav>
+            </nav>*@
         </div>                    
 
     </div>
     <div class="card-footer">
         <div class="my-2">
-            <btn class="btn btn-primary text-white edit-role">Edit Role</btn>
+            <btn class="btn btn-info text-white edit-role">Edit Role</btn>
             <btn class="btn btn-danger delete-role">Delete Role</btn>       
         </div>                
     </div>    
