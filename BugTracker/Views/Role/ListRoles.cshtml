@@ -69,28 +69,34 @@
         <div class="modal fade" id="userDropdownModal" tabindex="-1" aria-labelledby="userDropdownModal" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="userDropownModalTitle">Select a user from the dropdown below</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-
-                <!-- User Select Dropdown -->
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <label class="input-group-text" for="userSelectDropdown">Users</label>
+              <form method="post">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="userDropownModalTitle">Select a user from the dropdown below</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
-                  <select class="custom-select" id="userSelectDropdown">                    
-                  </select>
-                </div>
+                  <div class="modal-body">
 
-              </div>
-              <div class="modal-footer text-left">                
-                <button type="button" class="btn btn-primary add-user" data-bs-dismiss="modal">Add Selected User</button>
-                <button type="button" class="btn btn-danger remove-user" data-bs-dismiss="modal">Remove Selected User</button>
-              </div>
+                    <!-- User Select Dropdown -->
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                        <label class="input-group-text" for="userSelectDropdown">Users</label>
+                        </div>
+                        <select class="custom-select" id="userSelectDropdown">
+                            @foreach (var user in userManager.Users)
+                            {
+                                <option value="@user.Id">@user.UserName</option>           
+                            }
+                        </select>
+                    </div>
+
+                  </div>
+                  <div class="modal-footer text-left">                
+                    <button type="button" class="btn btn-primary add-user" data-bs-dismiss="modal">Add Selected User</button>
+                    <button type="button" class="btn btn-danger remove-user" data-bs-dismiss="modal">Remove Selected User</button>
+                  </div>
+              </form>              
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BugTracker.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -21,6 +21,7 @@ namespace BugTracker.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ListRoles()
         {
@@ -54,7 +55,6 @@ namespace BugTracker.Controllers
             return View(roleListModel);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> CreateRole()
         {
@@ -136,7 +136,6 @@ namespace BugTracker.Controllers
             return PartialView("_roleCard", newRole);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] RoleViewModel model)
         {
@@ -167,7 +166,6 @@ namespace BugTracker.Controllers
             return Json(new { errors });
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
@@ -220,7 +218,6 @@ namespace BugTracker.Controllers
             return Json(users);
         }
 
-        // [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] UserRoleViewModel model)
         {
@@ -258,7 +255,6 @@ namespace BugTracker.Controllers
             throw new HttpRequestException("User is already in this role");
         }
 
-        // [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> RemoveUser([FromBody] UserRoleViewModel model)
         {
