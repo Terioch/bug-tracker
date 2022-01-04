@@ -56,7 +56,7 @@
     }
     else
     {   
-         <div class="row row-cols-1 row-cols-lg-2 g-4"> 
+         <div class="row row-cols-1 row-cols-lg-2 g-4 px-3"> 
             @foreach (var role in Model.Roles) 
             {               
                 <div class="col">
@@ -69,32 +69,33 @@
         <div class="modal fade" id="userDropdownModal" tabindex="-1" aria-labelledby="userDropdownModal" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form method="post" asp-items="">
+              <form method="post">
                   <div class="modal-header">
                     <h5 class="modal-title" id="userDropownModalTitle">Select a user from the dropdown below</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body">
+                  <div class="modal-body">                    
                     <input type="hidden" asp-for="RoleId" >
                     <!-- User Select Dropdown -->
-                    <label class="input-group-text" for="userSelectDropdown">Users</label>
-                    <select asp-for="UserId" class="custom-select" id="userSelectDropdown">
+                    <label class="control-label mb-2 text-secondary" for="userSelectDropdown">Users</label>
+                    <select asp-for="UserId" class="form-select" id="userSelectDropdown">
                         @foreach (var user in userManager.Users)
                         {
                             <option value="@user.Id">@user.UserName</option>           
                         }
                     </select>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mt-3"></div> 
                   </div>
                   <div class="modal-footer text-left">                
-                    <button type="button" class="btn btn-primary add-user" data-bs-dismiss="modal">Add Selected User</button>
-                    <button type="button" class="btn btn-danger remove-user" data-bs-dismiss="modal">Remove Selected User</button>
+                    <button formaction="@Url.Action("AddUser")" type="submit" class="btn btn-success add-user" data-bs-dismiss="modal">Add Selected User</button>
+                    <button formaction="@Url.Action("RemoveUser")" type="submit" class="btn btn-danger remove-user" data-bs-dismiss="modal">Remove Selected User</button>
                   </div>
               </form>              
             </div>
           </div>
-        </div>
+        </div>       
     }
 </div>
  

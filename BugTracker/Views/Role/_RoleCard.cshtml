@@ -10,7 +10,7 @@
     }
 </style>
 
-<div class="card mb-3 role-card" style="min-height: 366px" data-id="@Model.Id" data-index="@Model.Index">
+<div class="card mb-3 role-card border-0 border-bottom" style="min-height: 366px; background-color: #f1f1f1" data-id="@Model.Id" data-index="@Model.Index">
    @* <div class="card-header">
         Role id: @Model.Id
     </div>*@
@@ -31,7 +31,7 @@
                     @if (!Model.Users.Any())
                     {
                         <ul>
-                            <li class="list-group-item border-0">No users are associated with this role</li>
+                            <li class="list-group-item border-0" style="background-color: #eee">No users are associated with this role</li>
                         </ul>
                     }
                     else
@@ -39,7 +39,7 @@
                         <ul class="list-group list-group-horizontal w-80 d-flex flex-wrap">     
                             @foreach (var user in Model.Users)
                             {
-                                <li class="list-group-item border-0" style="min-width: max-content">@user</li>   
+                                <li class="list-group-item border-0" style="min-width: max-content; background-color: #eee">@user</li>   
                             }
                         </ul>                                           
                     }   

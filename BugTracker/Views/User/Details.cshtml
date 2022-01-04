@@ -194,8 +194,8 @@
                         {
                             <option value="@project.Id">@project.Name</option>
                         }                        
-                    </select>    
-                    <div id="userProjectsAssignmentvalidationErrors" class="fs-6 text-danger mt-3"></div>
+                    </select>           
+                    <div asp-validation-summary="ModelOnly" class="text-danger mt-3"></div>
                 </div>
                 <div class="modal-footer text-left">                
                     <button type="submit" class="btn btn-success add-user">Add Project</button>                

@@ -139,9 +139,10 @@ namespace BugTracker.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] RoleViewModel model)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(model.Id);            
+            IdentityRole role = await roleManager.FindByIdAsync(model.Id);
+            IdentityRole roleToBeUpdated = new();
+            roleToBeUpdated.Name = model.Name;
 
-            role.Name = model.Name;
             IdentityResult result = await roleManager.UpdateAsync(role);
 
             if (result.Succeeded)
