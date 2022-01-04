@@ -1,4 +1,6 @@
-﻿namespace BugTracker.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BugTracker.Models
 {
     public class UserRoleViewModel
     {
@@ -6,8 +8,6 @@
 
         public string? RoleId { get; set; }
 
-        public string? UserName { get; set; }
-
-        List<RoleViewModel>? Roles { get; set; } = new();
+        public List<RoleViewModel>? Roles { get; set; } = new List<RoleViewModel>();
     }
 }

@@ -8,7 +8,7 @@ using BugTracker.Helpers;
 
 namespace BugTracker.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -26,6 +26,7 @@ namespace BugTracker.Controllers
             this.ticketHelper = ticketHelper;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult ListUsers(int? page)
         {
@@ -46,8 +47,7 @@ namespace BugTracker.Controllers
             IPagedList<ApplicationUser> users = userManager.Users.ToPagedList(page ?? 1, 8);
             return View(users);
         }
-
-        [Authorize(Roles = "Admin")]       
+               
         [HttpGet]
         public IActionResult Details(string id, int? page)
         {
@@ -71,8 +71,7 @@ namespace BugTracker.Controllers
             };
             return View(model);
         }
-
-        [Authorize(Roles = "Admin")]
+        
         [HttpPost]
         public IActionResult AddProject(string id, UserViewModel model)
         {
@@ -85,8 +84,7 @@ namespace BugTracker.Controllers
             userProjectRepository.Create(userProject);
             return RedirectToAction("Details", new { id });
         }
-
-        [Authorize(Roles = "Admin")]
+        
         public IActionResult RemoveProject(string id, string projectId)
         {
             userProjectRepository.Delete(id, projectId);

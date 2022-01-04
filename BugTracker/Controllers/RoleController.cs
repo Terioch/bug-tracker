@@ -26,12 +26,12 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> ListRoles()
         {
             IQueryable<IdentityRole> roles = roleManager.Roles;
-            List<RoleViewModel> roleListModel = new();
+            UserRoleViewModel model = new();
             int roleIndex = 0;
 
             foreach (var role in roles)
             {
-                RoleViewModel roleModel = new();
+                List<string> users = new();
 
                 foreach (var user in userManager.Users)
                 {
@@ -39,20 +39,20 @@ namespace BugTracker.Controllers
 
                     if (isInRole)
                     {
-                        roleModel.Users.Add(user.UserName);
+                        users.Add(user.UserName);
                     }
                 }
 
-                roleListModel.Add(new RoleViewModel
+                model.Roles.Add(new RoleViewModel
                 {
                     Id = role.Id,
                     Name = role.Name,
                     Index = roleIndex,
-                    Users = roleModel.Users
+                    Users = users
                 });
                 roleIndex++;
             }
-            return View(roleListModel);
+            return View(model);
         }
 
         [HttpGet]
@@ -80,14 +80,14 @@ namespace BugTracker.Controllers
             {
                 IdentityRole identityRole = new()
                 {
-                    Name = role.Name
+                    Name = role.Name                    
                 };
 
                 IdentityResult result = await roleManager.CreateAsync(identityRole);
 
                 if (result.Succeeded)
-                {                    
-                    return Redirect("/role/ListRoles");
+                {
+                    return RedirectToAction("ListRoles");
                 }
 
                 foreach (IdentityError error in result.Errors)
@@ -139,43 +139,28 @@ namespace BugTracker.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] RoleViewModel model)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(model.Id);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id {model.Id} cannot be found";
-                return View("NotFound");
-            }
+            IdentityRole role = await roleManager.FindByIdAsync(model.Id);            
 
             role.Name = model.Name;
             IdentityResult result = await roleManager.UpdateAsync(role);
 
             if (result.Succeeded)
             {
-                return Json(model);
-            } 
-           
-            List<IdentityError> errors = new();
+                return RedirectToAction("ListRoles");
+            }           
 
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error.Description);                
-                errors.Add(error);                
+                ModelState.AddModelError("", error.Description);                        
             }
-            
-            return Json(new { errors });
+
+            return View(new RoleViewModel { Name = role.Name });
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(id);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id {id} cannot be found";
-                return View("NotFound");
-            }
+            IdentityRole role = await roleManager.FindByIdAsync(id);          
 
             IdentityResult result = await roleManager.DeleteAsync(role);
 
@@ -193,22 +178,19 @@ namespace BugTracker.Controllers
 
                     if (isInRole)
                     {
-                        model.Users.Add($"{user.FirstName} {user.LastName}");
+                        model.Users.Add(user.UserName);
                     }
                 }
 
-                return PartialView("_RoleCard", model);
+                return RedirectToAction("ListRoles");
             }
-
-            List<IdentityError> errors = new();
 
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error.Description);
-                errors.Add(error);
             }
 
-            return Content(errors.ToString());
+            return View(new RoleViewModel { Name = role.Name });
         }
 
         [HttpGet]
@@ -221,75 +203,51 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] UserRoleViewModel model)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id {model.RoleId} cannot be found";
-                return View("NotFound");
-            }
+            IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);            
 
             ApplicationUser user = await userManager.FindByIdAsync(model.UserId);
             bool isInRole = await userManager.IsInRoleAsync(user, role.Name);         
 
             if (!isInRole)
             {
-                List<UserViewModel> users = new();
-                await userManager.AddToRoleAsync(user, role.Name);
+                IdentityResult result = await userManager.AddToRoleAsync(user, role.Name);
 
-                foreach (var item in userManager.Users)
+                if (result.Succeeded)
                 {
-                    bool isItemInRole = await userManager.IsInRoleAsync(item, role.Name);
-
-                    if (isItemInRole)
-                    {                            
-                        users.Add(new()
-                        {
-                            Id = item.Id,
-                            UserName = item.UserName,
-                        });
-                    }
+                    return RedirectToAction("ListRoles");
                 }
-                return PartialView("_RoleUserList", users);                                
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }                
             }
-            throw new HttpRequestException("User is already in this role");
+            return RedirectToAction("ListRoles");
         }
 
         [HttpDelete]
         public async Task<IActionResult> RemoveUser([FromBody] UserRoleViewModel model)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id {model.RoleId} cannot be found";
-                return View("NotFound");
-            }
+            IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);           
 
             ApplicationUser user = await userManager.FindByIdAsync(model.UserId);  
             bool isInRole = await userManager.IsInRoleAsync(user, role.Name);            
 
             if (isInRole)
             {
-                List<UserViewModel> users = new();
-                await userManager.RemoveFromRoleAsync(user, role.Name);
-                               
-                foreach (var item in userManager.Users)
-                {
-                    bool isItemInRole = await userManager.IsInRoleAsync(item, role.Name);
+                IdentityResult result = await userManager.RemoveFromRoleAsync(user, role.Name);               
 
-                    if (isItemInRole)
-                    {
-                        users.Add(new UserViewModel
-                        {
-                            Id = item.Id,
-                            UserName = item.UserName
-                        });
-                    }                                        
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles");
                 }
-                return PartialView("_RoleUserList", users);
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
-            throw new HttpRequestException("User is not in this role");
+            return RedirectToAction("ListRoles");
         }
     }
 }
