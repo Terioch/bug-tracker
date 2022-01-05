@@ -78,7 +78,7 @@
             @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
             {
                 <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info text-white edit-role">Edit Role</a>
-                <button class="btn btn-danger delete-role" data-bs-target="#deleteRoleModal" data-bs-toggle="modal">Delete Role</button>          
+                <button class="btn btn-danger delete-role" data-bs-target="#deleteRoleModal-@Model.Id" data-bs-toggle="modal">Delete Role</button>          
             } else
             {
                 <button class="btn btn-info text-white edit-role disabled">Edit Role</button>
@@ -89,7 +89,7 @@
 </div>
 
 <!-- Delete Role Modal -->
-<div class="modal fade" id="deleteRoleModal" tabindex="-1" aria-labelledby="deleteRoleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteRoleModal-@Model.Id" tabindex="-1" aria-labelledby="deleteRoleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
