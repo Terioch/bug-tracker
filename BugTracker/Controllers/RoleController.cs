@@ -226,7 +226,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("ListRoles");
         }
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> RemoveUser(UserRoleViewModel model)
         {
             IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);           
