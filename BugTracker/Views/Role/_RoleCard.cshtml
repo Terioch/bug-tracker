@@ -1,4 +1,12 @@
-﻿@model BugTracker.Models.RoleViewModel
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> userManager
+
+@model BugTracker.Models.RoleViewModel
+
+@{
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
+}
 
 <style>
     a {
@@ -10,20 +18,25 @@
     }
 </style>
 
-<div class="card mb-3 role-card border-0 border-bottom" style="min-height: 366px; background-color: #f1f1f1" data-id="@Model.Id" data-index="@Model.Index">
+<div class="card mb-3 role-card border-0 border-bottom" style="min-height: 366px; background-color: #FAFAFA" data-id="@Model.Id" data-index="@Model.Index">
    @* <div class="card-header">
         Role id: @Model.Id
     </div>*@
     <div class="card-body">      
         <input class="card-title fs-3 p-2 rounded border border-0 font-weight-bold role-name-input" disabled asp-for="@Model.Name" />
-                
-        <ul class="list-group error-list"></ul>
+        
         <hr style="background-color: #d1d1d1" />        
 
         <div class="role-users-container"> 
             <div class="d-flex flex-wrap align-items-end mb-3">
                 <p class="fs-5 me-3 mb-0 pb-0 fw-bold text-decoration-underline">Users in this role</p>
-                <a class="edit-user-list edit-user-list-onload mb-0 pb-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>                
+                @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                {                    
+                    <a class="edit-user-list edit-user-list-onload mb-0 pb-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>   
+                } else
+                {
+                    <a class="edit-user-list edit-user-list-onload mb-0 pb-0 text-decoration-none disabled" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>   
+                }                             
             </div>
             <div class="role-user-list-container">                
                 <div class="role-user-list">
@@ -31,7 +44,7 @@
                     @if (!Model.Users.Any())
                     {
                         <ul>
-                            <li class="list-group-item border-0" style="background-color: #eee">No users are associated with this role</li>
+                            <li class="list-group-item border-0" style="background-color: #FAFAFA">No users are associated with this role</li>
                         </ul>
                     }
                     else
@@ -39,7 +52,7 @@
                         <ul class="list-group list-group-horizontal w-80 d-flex flex-wrap">     
                             @foreach (var user in Model.Users)
                             {
-                                <li class="list-group-item border-0" style="min-width: max-content; background-color: #eee">@user</li>   
+                                <li class="list-group-item border-0" style="min-width: max-content; background-color: #FAFAFA">@user</li>   
                             }
                         </ul>                                           
                     }   
@@ -62,8 +75,31 @@
     </div>
     <div class="card-footer">
         <div class="my-2">
-            <btn asp-action="Update" class="btn btn-info text-white edit-role">Edit Role</btn>
-            <btn asp-action="Delete" class="btn btn-danger delete-role">Delete Role</btn>       
+            @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info text-white edit-role">Edit Role</a>
+                <button class="btn btn-danger delete-role" data-bs-target="#deleteRoleModal" data-bs-toggle="modal">Delete Role</button>          
+            } else
+            {
+                <button class="btn btn-info text-white edit-role disabled">Edit Role</button>
+                <button class="btn btn-danger delete-role disabled">Delete Role</button>       
+            }         
         </div>                
     </div>    
+</div>
+
+<!-- Delete Role Modal -->
+<div class="modal fade" id="deleteRoleModal" tabindex="-1" aria-labelledby="deleteRoleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Role Removal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" aria-label="Confirm">Confirm</a>       
+        <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>       
+      </div>
+    </div>
+  </div>
 </div>

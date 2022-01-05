@@ -3,9 +3,9 @@
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
 
-@model BugTracker.Models.UserRoleViewModel
-
 @inject UserManager<ApplicationUser> userManager
+
+@model BugTracker.Models.UserRoleViewModel
 
 @{
     ViewData["Title"] = "UserRoles";
@@ -42,12 +42,12 @@
                 </h5>
                 @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
                 {
-                    <a class="btn btn-success text-white" style="width: auto" asp-action="CreateRole">
+                    <a asp-action="CreateRole" class="btn btn-success text-white" style="width: auto">
                         Create Role
                     </a>
                 } else
                 {
-                    <a class="btn btn-success text-white disabled" style="width: auto" asp-action="CreateRole">
+                    <a class="btn btn-success text-white disabled" style="width: auto">
                         Create Role
                     </a>
                 }         
@@ -82,8 +82,7 @@
                     <label class="control-label mb-2 text-secondary" for="userSelectDropdown">Users</label>
                     <select asp-for="UserId" class="form-select" id="userSelectDropdown">
                         @foreach (var user in userManager.Users) 
-                        {
-                            Console.WriteLine(user);
+                        {     
                             <option value="@user.Id">@user.UserName</option>           
                         }
                     </select>

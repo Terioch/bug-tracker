@@ -136,29 +136,40 @@ namespace BugTracker.Controllers
             return PartialView("_roleCard", newRole);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] RoleViewModel model)
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(model.Id);
-            IdentityRole roleToBeUpdated = new();
-            roleToBeUpdated.Name = model.Name;
-
-            IdentityResult result = await roleManager.UpdateAsync(role);
-
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ListRoles");
-            }           
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);                        
-            }
-
-            return View(new RoleViewModel { Name = role.Name });
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            return View(role);
         }
 
-        [HttpDelete]
+        [HttpPost]
+        public async Task<IActionResult> Edit(IdentityRole model)
+        {            
+            IdentityRole role = await roleManager.FindByIdAsync(model.Id);
+
+            if (ModelState.IsValid)
+            {
+                role.Name = model.Name;
+
+                IdentityResult result = await roleManager.UpdateAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return RedirectToAction("ListRoles");
+            }            
+            return View(role);
+        }
+
+        //[HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);          
@@ -191,7 +202,7 @@ namespace BugTracker.Controllers
                 ModelState.AddModelError("", error.Description);
             }
 
-            return View(new RoleViewModel { Name = role.Name });
+            return RedirectToAction("ListRoles");
         }
 
         [HttpGet]
