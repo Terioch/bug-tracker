@@ -69,7 +69,7 @@
         <div class="modal fade" id="userDropdownModal" tabindex="-1" aria-labelledby="userDropdownModal" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form method="post">
+              <form>
                   <div class="modal-header">
                     <h5 class="modal-title" id="userDropownModalTitle">Select a user from the dropdown below</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -77,20 +77,20 @@
                     </button>
                   </div>
                   <div class="modal-body">                    
-                    <input type="hidden" asp-for="RoleId" >
+                    <input id="userDropdownModalRoleIdInput" asp-for="RoleId" type="hidden" />
                     <!-- User Select Dropdown -->
                     <label class="control-label mb-2 text-secondary" for="userSelectDropdown">Users</label>
                     <select asp-for="UserId" class="form-select" id="userSelectDropdown">
-                        @foreach (var user in userManager.Users)
+                        @foreach (var user in userManager.Users) 
                         {
                             <option value="@user.Id">@user.UserName</option>           
                         }
                     </select>
                     <div asp-validation-summary="ModelOnly" class="text-danger mt-3"></div> 
                   </div>
-                  <div class="modal-footer text-left">                
-                    <button formaction="@Url.Action("AddUser")" type="submit" class="btn btn-success add-user" data-bs-dismiss="modal">Add Selected User</button>
-                    <button formaction="@Url.Action("RemoveUser")" type="submit" class="btn btn-danger remove-user" data-bs-dismiss="modal">Remove Selected User</button>
+                  <div class="modal-footer text-left">                                   
+                    <button formaction="@Url.Action("AddUser")" formmethod="post" type="submit" class="btn btn-success add-user" data-bs-dismiss="modal">Add Selected User</button>
+                    <button formaction="@Url.Action("RemoveUser")" formethod="delete" type="submit" class="btn btn-danger remove-user" data-bs-dismiss="modal">Remove Selected User</button>
                   </div>
               </form>              
             </div>

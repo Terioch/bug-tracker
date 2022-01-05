@@ -1,7 +1,7 @@
 ﻿
 class RoleList {
     constructor() {
-        if (!document.getElementById("rolesMain")) {
+        if (document.getElementById("rolesMain")) {
             console.log("Initialized Roles");            
             this.selectedUser = {
                 id: "",
@@ -27,10 +27,10 @@ class RoleList {
     }
 
     clickHandler(e) {
-        if (e.target.classList.contains("edit-role")) this.handleEdit(e);
-        else if (e.target.classList.contains("update-role")) this.handleUpdate(e);
-        else if (e.target.classList.contains("delete-role")) this.handleDelete(e);
-        else if (e.target.classList.contains("edit-user-list-onload")) this.onUserDropdownModalOpen(e);
+        // if (e.target.classList.contains("edit-role")) this.handleEdit(e);
+        // else if (e.target.classList.contains("update-role")) this.handleUpdate(e);
+        // else if (e.target.classList.contains("delete-role")) this.handleDelete(e);
+        if (e.target.classList.contains("edit-user-list-onload")) this.onUserDropdownModalOpen(e);
     }
 
     findNearestParentCard(el) {
@@ -92,12 +92,15 @@ class RoleList {
     }    
 
     onUserDropdownModalOpen(e) {
-        const thisRole = this.findNearestParentCard(e.target);        
-        const addUserBtn = document.querySelector(".add-user");
+        const thisRole = this.findNearestParentCard(e.target);            
+        const roleIdInput = document.getElementById("userDropdownModalRoleIdInput");
+        roleIdInput.value = thisRole.getAttribute("data-id");
+        console.log(roleIdInput.value);
+        // e.target.classList.remove("edit-user-list-onload"); // Prevent more than one method execution
+        /*const addUserBtn = document.querySelector(".add-user");
         const removeUserBtn = document.querySelector(".remove-user");
         addUserBtn.addEventListener("click", (e) => this.handleUserAddition(e, thisRole));
-        removeUserBtn.addEventListener("click", (e) => this.handleUserRemoval(e, thisRole));
-        e.target.classList.remove("edit-user-list-onload"); // Prevent more than one method execution
+        removeUserBtn.addEventListener("click", (e) => this.handleUserRemoval(e, thisRole));*/
     }   
 
     handleEdit(e) {

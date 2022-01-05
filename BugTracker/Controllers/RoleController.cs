@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BugTracker.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -202,7 +202,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser([FromBody] UserRoleViewModel model)
+        public async Task<IActionResult> AddUser(UserRoleViewModel model)
         {
             IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);            
 
@@ -227,7 +227,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> RemoveUser([FromBody] UserRoleViewModel model)
+        public async Task<IActionResult> RemoveUser(UserRoleViewModel model)
         {
             IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);           
 
