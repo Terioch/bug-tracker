@@ -22,7 +22,9 @@ namespace BugTracker.Services
 
         public IEnumerable<TicketComment> GetCommentsByTicketId(string id)
         {
-            IEnumerable<TicketComment>? comments = context.TicketComments.Where(c => c.TicketId == id);
+            IEnumerable<TicketComment>? comments = context.TicketComments
+                .Where(c => c.TicketId == id)
+                .Include(c => c.Author);
             return comments ?? new List<TicketComment>();
         }
 

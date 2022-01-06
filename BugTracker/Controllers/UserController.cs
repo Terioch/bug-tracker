@@ -8,7 +8,7 @@ using BugTracker.Helpers;
 
 namespace BugTracker.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;

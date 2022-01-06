@@ -43,12 +43,7 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> ListTickets(int? page)
         {
-            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();
-            foreach (var ticket in tickets)
-            {
-                ticket.Submitter = userManager.Users.FirstOrDefault(u => u.Id == ticket.SubmitterId);
-                ticket.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId);
-            }
+            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();            
             return View(tickets.ToPagedList(page ?? 1, 5));
         }
     
@@ -76,9 +71,7 @@ namespace BugTracker.Controllers
                 CreatedAt = DateTime.Now,                
                 Type = model.Type,
                 Status = model.Status,
-                Priority = model.Priority,                
-                Submitter = submitter,
-                AssignedDeveloper = null,
+                Priority = model.Priority,                                
             };
 
             ticket = repository.Create(ticket);
@@ -102,11 +95,11 @@ namespace BugTracker.Controllers
                 Type = ticket.Type,
                 Status = ticket.Status,
                 Priority = ticket.Priority,
-                Project = projectRepository.GetProjectById(ticket.ProjectId),
-                Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId),
-                AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId),
-                TicketHistoryRecords = ticketHistoryRecordRepository.GetRecordsByTicket(id).ToPagedList(page ?? 1, 5),
-                TicketComments = ticketCommentRepository.GetCommentsByTicketId(id).ToPagedList(page ?? 1, 5)
+                Project = ticket.Project,
+                Submitter = ticket.Submitter,
+                AssignedDeveloper = ticket.AssignedDeveloper,
+                TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(page ?? 1, 5),
+                TicketComments = ticket.TicketComments.ToPagedList(page ?? 1, 5),                
             };
             return View(model);
         }
@@ -159,7 +152,7 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpPost]
-        public async Task<IActionResult> Update(EditTicketViewModel model)
+        public async Task<IActionResult> Edit(EditTicketViewModel model)
         {            
             Ticket ticket = repository.GetTicketById(model.Id);
 
@@ -213,8 +206,8 @@ namespace BugTracker.Controllers
                 AuthorId = user.Id,
                 Value = model.Value,
                 CreatedAt = DateTimeOffset.Now,
-                Ticket = repository.GetTicketById(id),
-                Author = userManager.Users.First(u => u.Id == user.Id)
+                /*Ticket = repository.GetTicketById(id),
+                Author = userManager.Users.First(u => u.Id == user.Id)*/
             };
             ticketCommentRepository.Create(comment);
             IEnumerable<TicketComment> comments = ticketCommentRepository.GetCommentsByTicketId(id);

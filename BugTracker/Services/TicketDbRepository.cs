@@ -16,27 +16,32 @@ namespace BugTracker.Services
 
         public IEnumerable<Ticket> GetAllTickets()
         {
-            IEnumerable<Ticket>? tickets = context.Tickets;            
+            IEnumerable<Ticket>? tickets = context.Tickets
+                .Include(t => t.Project)
+                .Include(t => t.Submitter)
+                .Include(t => t.AssignedDeveloper);            
             return tickets ?? new List<Ticket>();
         }
 
         public List<Ticket> GetTicketsByProjectId(string id)
-        {
-            List<Ticket> tickets = new();
-
-            foreach (var ticket in context.Tickets)
-            {
-                if (ticket.ProjectId == id)
-                {
-                    tickets.Add(ticket);
-                }
-            }
-            return tickets;
+        {           
+            return context.Tickets
+                .Where(t => t.ProjectId == id)
+                .Include(t => t.Project)
+                .Include(t => t.Submitter)
+                .Include(t => t.AssignedDeveloper).ToList();
         }
 
         public Ticket GetTicketById(string id)
-        {            
-            return context.Tickets.Find(id) ?? new Ticket();
+        {
+            return context.Tickets                  
+                .Include(t => t.Project)
+                .Include(t => t.Submitter)
+                .Include(t => t.AssignedDeveloper)
+                .Include(t => t.TicketHistoryRecords)
+                .Include(t => t.TicketAttachments)
+                .Include(t => t.TicketComments)
+                .FirstOrDefault(t => t.Id == id) ?? new Ticket();
         }
 
         public Ticket Create(Ticket ticket)

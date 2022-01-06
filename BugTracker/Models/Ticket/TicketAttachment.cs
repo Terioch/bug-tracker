@@ -2,23 +2,30 @@
 
 namespace BugTracker.Models
 {
-    public class TicketComment
+    public class TicketAttachment
     {
         public string? Id { get; set; }
 
         public string? TicketId { get; set; }
 
-        public string? AuthorId { get; set; }
+        public string? SubmitterId { get; set; }
 
-        [StringLength(200)]
         [Required]
-        public string? Value { get; set; }
+        [StringLength(40)]
+        public string? Name { get; set; }
+
+        [Required]
+        [StringLength(200)]
+        public string? Description { get; set; }
+
+        [Required]
+        public string? SourceUrl { get; set; }
 
         [Required]
         public DateTimeOffset? CreatedAt { get; set; }
 
         public virtual Ticket? Ticket { get; set; }
 
-        public virtual ApplicationUser? Author { get; set; }
+        public virtual ApplicationUser? Submitter { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace BugTracker.Models
 {
     public class Ticket
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         public string? ProjectId { get; set; }
 
@@ -18,10 +18,11 @@ namespace BugTracker.Models
         public string? AssignedDeveloperId { get; set; }
 
         [Required]
-        [MaxLength(40)]
+        [StringLength(40)]
         public string? Title { get; set; }
 
-        [Required]        
+        [Required]  
+        [StringLength(200)]
         public string? Description { get; set; }
 
         [Required]
@@ -43,6 +44,8 @@ namespace BugTracker.Models
         public virtual ApplicationUser? Submitter { get; set; }
 
         public virtual ICollection<TicketHistoryRecord>? TicketHistoryRecords { get; set; } = new HashSet<TicketHistoryRecord>();
+
+        public virtual ICollection<TicketAttachment>? TicketAttachments { get; set; } = new HashSet<TicketAttachment>();
 
         public virtual ICollection<TicketComment> TicketComments { get; set; } = new HashSet<TicketComment>();       
     }

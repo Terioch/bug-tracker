@@ -37,7 +37,7 @@ namespace BugTracker.Helpers
             {
                 return projectRepository.GetAllProjects();
             }            
-            return userProjectRepository.GetProjectsByUserId(user.Id);
+            return userProjectRepository.GetProjectsByUserId(user.Id);     
         }
 
         public Project GetFullProject(string id)

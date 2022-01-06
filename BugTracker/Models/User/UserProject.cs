@@ -11,6 +11,10 @@ namespace BugTracker.Models
         public string? UserId { get; set; }
 
         [Required]
-        public string? ProjectId { get; set; }       
+        public string? ProjectId { get; set; }
+
+        public virtual Project? Project { get; set; }
+
+        public virtual ApplicationUser? User { get; set; }
     }
 }

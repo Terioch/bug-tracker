@@ -30,10 +30,10 @@ namespace BugTracker.Helpers
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
             List<Project> projects = userProjectRepository.GetProjectsByUserId(user.Id);
 
-            foreach (var project in projects)
+            /* foreach (var project in projects)
             {
                 project.Tickets = ticketRepository.GetTicketsByProjectId(project.Id);
-            }
+            }*/
 
             if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
             {

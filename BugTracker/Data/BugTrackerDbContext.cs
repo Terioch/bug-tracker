@@ -10,7 +10,7 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
     public BugTrackerDbContext(DbContextOptions<BugTrackerDbContext> options) 
         : base(options)
     {
-
+        
     }
 
     public DbSet<Project>? Projects { get; set; }
@@ -20,6 +20,8 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<UserProject>? UserProjects { get; set; }
 
     public DbSet<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
+
+    public DbSet<TicketAttachment>? TicketAttachments { get; set; }
 
     public DbSet<TicketComment>? TicketComments { get; set; }
 

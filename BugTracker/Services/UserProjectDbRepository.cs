@@ -21,14 +21,15 @@ namespace BugTracker.Services
 
         public List<Project> GetProjectsByUserId(string userId)
         {
-            IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.UserId == userId);
-            List<Project> projects = new();
+            IEnumerable<UserProject> userProjects = context.UserProjects                 
+                .Where(u => u.UserId == userId);                            
+            List<Project> projects = new();               
 
             foreach (var userProject in userProjects)
-            {
+            {                
                 Project project = projectRepository.GetProjectById(userProject.ProjectId);
                 projects.Add(project);
-            }
+            }           
             return projects;
         }
 

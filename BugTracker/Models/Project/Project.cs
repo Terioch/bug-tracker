@@ -11,14 +11,15 @@ namespace BugTracker.Models
     {
         public string? Id { get; set; }
 
-        [Required]
+        [Required]        
         public string? Name { get; set; }
 
         [Required]
+        [StringLength(200)]
         public string? Description { get; set; }
 
-        public virtual IEnumerable<ApplicationUser>? Users { get; set; } = new HashSet<ApplicationUser>();
+        public virtual ICollection<ApplicationUser>? Users { get; set; } = new HashSet<ApplicationUser>();
 
-        public virtual IEnumerable<Ticket>? Tickets { get; set; } = new HashSet<Ticket>();
+        public virtual ICollection<Ticket>? Tickets { get; set; } = new HashSet<Ticket>();
     }
 }

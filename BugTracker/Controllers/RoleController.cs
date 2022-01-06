@@ -169,7 +169,6 @@ namespace BugTracker.Controllers
             return View(role);
         }
 
-        //[HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);          

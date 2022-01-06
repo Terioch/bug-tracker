@@ -48,7 +48,6 @@ class Ticket {
     }
 
     commentListClickHandler(e) {
-        console.log("ran");
         const commentId = this.findNearestParentElement(e.target, "comment-list-item").getAttribute("data-commentId");
         console.log(commentId);
 
@@ -85,7 +84,6 @@ class Ticket {
     async handleCommentDeletion() {
         const commentsContainer = document.getElementById("commentListContainer");         
         const commentId = document.getElementById("deleteCommentBtn").getAttribute("data-id");
-        console.log(commentId);
 
         try {
             const res = await fetch(`/ticket/deleteComment/${commentId}`, {
@@ -95,7 +93,7 @@ class Ticket {
                 },
             });
 
-            const commentListHTML = await res.text();            
+            const commentListHTML = await res.text();
             commentsContainer.innerHTML = commentListHTML;           
             document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler); // Attach event listener to replacement list                 
         } catch (err) {

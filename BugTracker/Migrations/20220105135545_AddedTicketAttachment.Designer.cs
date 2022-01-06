@@ -4,6 +4,7 @@ using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(BugTrackerDbContext))]
-    partial class BugTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220105135545_AddedTicketAttachment")]
+    partial class AddedTicketAttachment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,11 +184,6 @@ namespace BugTracker.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
                     b.Property<string>("SourceUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -196,6 +193,11 @@ namespace BugTracker.Migrations
 
                     b.Property<string>("TicketId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("Id");
 
@@ -458,7 +460,7 @@ namespace BugTracker.Migrations
                         .HasForeignKey("SubmitterId");
 
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
-                        .WithMany("TicketAttachments")
+                        .WithMany()
                         .HasForeignKey("TicketId");
 
                     b.Navigation("Submitter");
@@ -550,8 +552,6 @@ namespace BugTracker.Migrations
 
             modelBuilder.Entity("BugTracker.Models.Ticket", b =>
                 {
-                    b.Navigation("TicketAttachments");
-
                     b.Navigation("TicketComments");
 
                     b.Navigation("TicketHistoryRecords");
