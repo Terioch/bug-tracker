@@ -15,19 +15,19 @@ namespace BugTracker.Controllers
     [Authorize]
     public class ProjectController : Controller
     {
-        private readonly IProjectRepository repository;
-        private readonly ITicketRepository ticketRepository;
-        private readonly IUserProjectRepository userProjectRepository;
-        private readonly ITicketHistoryRecordRepository ticketHistoryRecordRepository;
+        private readonly IProjectRepository repo;
+        private readonly ITicketRepository ticketRepo;
+        private readonly IUserProjectRepository userProjectRepo;
+        private readonly ITicketHistoryRecordRepository ticketHistoryRecordRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
 
-        public ProjectController(IProjectRepository repository, ITicketRepository ticketRepository, IUserProjectRepository userProjectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
+        public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
         {
-            this.repository = repository;
-            this.ticketRepository = ticketRepository;
-            this.userProjectRepository = userProjectRepository;
-            this.ticketHistoryRecordRepository = ticketHistoryRecordRepository;
+            this.repo = repo;
+            this.ticketRepo = ticketRepo;
+            this.userProjectRepo = userProjectRepo;
+            this.ticketHistoryRecordRepo = ticketHistoryRepo;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
         }     
@@ -55,16 +55,16 @@ namespace BugTracker.Controllers
         public IActionResult Create(Project project)
         {
             project.Id = Guid.NewGuid().ToString();            
-            repository.Create(project);
+            repo.Create(project);
             return RedirectToAction("ListProjects", "Project");
         }
 
         [HttpGet]
         public IActionResult Details(string id, int? page)
         {
-            Project project = repository.GetProjectById(id);
+            Project project = repo.GetProjectById(id);
             // project.Tickets = ticketRepository.GetTicketsByProjectId(id);
-            project.Users = userProjectRepository.GetUsersByProjectId(id);
+            project.Users = userProjectRepo.GetUsersByProjectId(id);
 
             List<ApplicationUser> unassignedUsers = userManager.Users.ToList();
             project.Users.ToList().ForEach(u => unassignedUsers.Remove(u));
@@ -109,7 +109,7 @@ namespace BugTracker.Controllers
         [HttpPut]
         public IActionResult Edit(Project project)
         {
-            repository.Update(project);
+            repo.Update(project);
             return RedirectToAction("Details", "Project", project.Id);
         }       
 
@@ -117,22 +117,22 @@ namespace BugTracker.Controllers
         [HttpDelete]
         public IActionResult Delete(string id)
         {            
-            List<Ticket> tickets = ticketRepository.GetTicketsByProjectId(id);
+            List<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
 
             foreach (var ticket in tickets)
             {
-                ticketRepository.Delete(ticket.Id);
-                ticketHistoryRecordRepository.DeleteRecordsByTicketId(ticket.Id);
+                ticketRepo.Delete(ticket.Id);
+                ticketHistoryRecordRepo.DeleteRecordsByTicketId(ticket.Id);
             }
 
-            List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(id); 
+            List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id); 
 
             foreach (var user in users)
             {
-                userProjectRepository.Delete(user.Id, id);
+                userProjectRepo.Delete(user.Id, id);
             }
 
-            Project deletedProject = repository.Delete(id);
+            Project deletedProject = repo.Delete(id);
             return Json(deletedProject);
         }        
 
@@ -148,7 +148,7 @@ namespace BugTracker.Controllers
                 return View("NotFound");
             }
 
-            List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(id);
+            List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 
             if (users.Contains(user))
             {
@@ -162,7 +162,7 @@ namespace BugTracker.Controllers
                 ProjectId = id,
             };
 
-            userProjectRepository.Create(userProject);
+            userProjectRepo.Create(userProject);
             return RedirectToAction("Details", new { id });     
         }
 
@@ -177,14 +177,14 @@ namespace BugTracker.Controllers
                 return View("NotFound");
             }
 
-            List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(id);
+            List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 
             if (!users.Contains(user))
             {
                 return RedirectToAction("Details", new { id });
             }
 
-            UserProject userProject = userProjectRepository.Delete(userId, id);
+            UserProject userProject = userProjectRepo.Delete(userId, id);
             return RedirectToAction("Details", new { id });
         }
     }

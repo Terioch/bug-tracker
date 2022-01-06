@@ -62,7 +62,7 @@ class Ticket {
         const commentDescriptionInput = document.getElementById("commentDescriptionInput");
 
         try {
-            const res = await fetch(`/ticket/createComment/${id}`, {
+            const res = await fetch(`/ticket/create/${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "Application/Json",
@@ -86,7 +86,7 @@ class Ticket {
         const commentId = document.getElementById("deleteCommentBtn").getAttribute("data-id");
 
         try {
-            const res = await fetch(`/ticket/deleteComment/${commentId}`, {
+            const res = await fetch(`/ticket/delete/${commentId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "Application/Json",

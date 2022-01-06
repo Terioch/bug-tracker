@@ -12,17 +12,17 @@ namespace BugTracker.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IUserProjectRepository userProjectRepository;
-        private readonly IProjectRepository projectRepository;
-        private readonly ITicketRepository ticketRepository;
+        private readonly IUserProjectRepository userProjectRepo;
+        private readonly IProjectRepository projectRepo;
+        private readonly ITicketRepository ticketRepo;
         private readonly TicketHelper ticketHelper;
 
         public UserController(UserManager<ApplicationUser> userManager, IUserProjectRepository userProjectRepository, IProjectRepository projectRepository, ITicketRepository ticketRepository, TicketHelper ticketHelper) 
         {
             this.userManager = userManager;
-            this.userProjectRepository = userProjectRepository;
-            this.projectRepository = projectRepository;
-            this.ticketRepository = ticketRepository;
+            this.userProjectRepo = userProjectRepository;
+            this.projectRepo = projectRepository;
+            this.ticketRepo = ticketRepository;
             this.ticketHelper = ticketHelper;
         }
 
@@ -52,10 +52,10 @@ namespace BugTracker.Controllers
         public IActionResult Details(string id, int? page)
         {
             ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == id);      
-            IEnumerable<Project> projects = userProjectRepository.GetProjectsByUserId(id);
-            IEnumerable<Ticket> tickets = ticketRepository.GetAllTickets().Where(t => t.SubmitterId == id || t.AssignedDeveloperId == id);
+            IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
+            IEnumerable<Ticket> tickets = ticketRepo.GetAllTickets().Where(t => t.SubmitterId == id || t.AssignedDeveloperId == id);
 
-            List<Project> unassignedProjects = projectRepository.GetAllProjects().ToList();
+            List<Project> unassignedProjects = projectRepo.GetAllProjects().ToList();
             projects.ToList().ForEach(p => unassignedProjects.Remove(p));
 
             UserViewModel model = new()
@@ -81,13 +81,13 @@ namespace BugTracker.Controllers
                 UserId = id,
                 ProjectId = model.ToBeAssignedProjectId,
             };
-            userProjectRepository.Create(userProject);
+            userProjectRepo.Create(userProject);
             return RedirectToAction("Details", new { id });
         }
         
         public IActionResult RemoveProject(string id, string projectId)
         {
-            userProjectRepository.Delete(id, projectId);
+            userProjectRepo.Delete(id, projectId);
             return RedirectToAction("Details", new { id });
         }
     }

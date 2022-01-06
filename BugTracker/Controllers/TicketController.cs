@@ -12,20 +12,20 @@ namespace BugTracker.Controllers
     [Authorize]
     public class TicketController : Controller
     {
-        private readonly ITicketRepository repository;
-        private readonly IProjectRepository projectRepository;
-        private readonly ITicketHistoryRecordRepository ticketHistoryRecordRepository;
-        private readonly ITicketCommentRepository ticketCommentRepository;
+        private readonly ITicketRepository repo;
+        private readonly IProjectRepository projectRepo;
+        private readonly ITicketHistoryRecordRepository ticketHistoryRepo;
+        private readonly ITicketCommentRepository ticketCommentRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
         private readonly TicketHelper ticketHelper;
 
-        public TicketController(ITicketRepository repository, IProjectRepository projectRepository, ITicketHistoryRecordRepository ticketHistoryRecordRepository, ITicketCommentRepository ticketCommentRepository, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
+        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, ITicketCommentRepository ticketCommentRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
         {
-            this.repository = repository;
-            this.projectRepository = projectRepository;
-            this.ticketHistoryRecordRepository = ticketHistoryRecordRepository;
-            this.ticketCommentRepository = ticketCommentRepository;
+            this.repo = repo;
+            this.projectRepo = projectRepo;
+            this.ticketHistoryRepo = ticketHistoryRepo;
+            this.ticketCommentRepo = ticketCommentRepo;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
             this.ticketHelper = ticketHelper;
@@ -74,14 +74,14 @@ namespace BugTracker.Controllers
                 Priority = model.Priority,                                
             };
 
-            ticket = repository.Create(ticket);
+            ticket = repo.Create(ticket);
             return RedirectToAction("Details", new { id = ticket.Id });
         }        
 
         [HttpGet]
         public IActionResult Details(string id, int? page)
         {
-            Ticket ticket = repository.GetTicketById(id);
+            Ticket ticket = repo.GetTicketById(id);
 
             TicketViewModel model = new()
             {
@@ -132,7 +132,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {            
-            Ticket ticket = repository.GetTicketById(id);
+            Ticket ticket = repo.GetTicketById(id);
 
             EditTicketViewModel model = new()
             {
@@ -154,7 +154,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditTicketViewModel model)
         {            
-            Ticket ticket = repository.GetTicketById(model.Id);
+            Ticket ticket = repo.GetTicketById(model.Id);
 
             if (ticket == null)
             {
@@ -186,48 +186,20 @@ namespace BugTracker.Controllers
                             Modifier = modifier.UserName,
                             ModifiedAt = DateTime.Now
                         };
-                        ticketHistoryRecordRepository.Create(record);
+                        ticketHistoryRepo.Create(record);
                         ticketProperty.SetValue(ticket, property.GetValue(model));
                     }                 
                 }                                
             }            
-            repository.Update(ticket);
+            repo.Update(ticket);
             return RedirectToAction("Details", new { id = ticket.Id });
-        }
-        
-        [HttpPost]
-        public async Task<IActionResult> CreateComment([FromBody] TicketComment model, string id)
-        {
-            ApplicationUser user = await GetCurrentUserAsync();
-            TicketComment comment = new()
-            {
-                Id = Guid.NewGuid().ToString(),
-                TicketId = id,
-                AuthorId = user.Id,
-                Value = model.Value,
-                CreatedAt = DateTimeOffset.Now,
-                /*Ticket = repository.GetTicketById(id),
-                Author = userManager.Users.First(u => u.Id == user.Id)*/
-            };
-            ticketCommentRepository.Create(comment);
-            IEnumerable<TicketComment> comments = ticketCommentRepository.GetCommentsByTicketId(id);
-            ViewBag.Id = id;
-            return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteComment(string id)
-        {            
-            TicketComment comment = ticketCommentRepository.Delete(id);
-            IEnumerable<TicketComment> comments = ticketCommentRepository.GetCommentsByTicketId(comment.TicketId);
-            return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
-        }
+        }                
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpDelete]
         public IActionResult Delete(string id)
         {
-            Ticket ticket = repository.GetTicketById(id);
+            Ticket ticket = repo.GetTicketById(id);
 
             if (ticket == null)
             {
@@ -235,8 +207,8 @@ namespace BugTracker.Controllers
                 return View("NotFound");
             }            
 
-            ticketHistoryRecordRepository.DeleteRecordsByTicketId(id);
-            repository.Delete(id);
+            ticketHistoryRepo.DeleteRecordsByTicketId(id);
+            repo.Delete(id);
             return Json(ticket);
         }
     }

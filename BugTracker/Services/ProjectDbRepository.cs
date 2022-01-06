@@ -18,34 +18,36 @@ namespace BugTracker.Services
 
         public IEnumerable<Project> GetAllProjects()
         {
-            // return context.Projects.Include(p => p.Tickets).Include(p => p.Users);
-            IEnumerable<Project>? projects = context.Projects;
-            return projects ?? new List<Project>();
+            // return context.Projects.Include(p => p.Tickets).Include(p => p.Users);            
+            return context.Projects.ToList() ?? new List<Project>();
         }
 
         public Project GetProjectById(string id)
         {
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
             return context.Projects
                 .Where(p => p.Id == id)
                 .Include(p => p.Tickets)
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
                     .ThenInclude(t => t.Submitter)
                 .Include(p => p.Tickets)
                     .ThenInclude(t => t.AssignedDeveloper)
                 .Include(p => p.Users)
                 .FirstOrDefault() ?? new Project();
-            // return context.Projects.Find(id) ?? new Project();
         }
 
         public Project GetProjectByName(string name)
         {
-            Project? project = context?.Projects?.FirstOrDefault(p => p.Name == name);            
-
-            if (project == null)
-            {
-                return new Project();
-            }
-
-            return project;
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            return context.Projects
+                .Where(p => p.Name == name)
+                .Include(p => p.Tickets)
+                    .ThenInclude(t => t.Submitter)
+                .Include(p => p.Tickets)
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                    .ThenInclude(t => t.AssignedDeveloper)
+                .Include(p => p.Users)
+                .FirstOrDefault() ?? new Project();
         }
 
         public Project Create(Project project)

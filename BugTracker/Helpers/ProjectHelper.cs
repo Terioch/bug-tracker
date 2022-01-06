@@ -6,16 +6,16 @@ namespace BugTracker.Helpers
 {
     public class ProjectHelper
     {
-        private readonly IProjectRepository projectRepository;
-        private readonly IUserProjectRepository userProjectRepository;
+        private readonly IProjectRepository projectRepo;
+        private readonly IUserProjectRepository userProjectRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleHelper roleHelper;
         private readonly string? userName;
 
-        public ProjectHelper(IProjectRepository projectRepository, IUserProjectRepository userProjectRepository, UserManager<ApplicationUser> userManager, RoleHelper roleHelper, IHttpContextAccessor httpContextAccessor)
+        public ProjectHelper(IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, UserManager<ApplicationUser> userManager, RoleHelper roleHelper, IHttpContextAccessor httpContextAccessor)
         {
-            this.projectRepository = projectRepository;
-            this.userProjectRepository = userProjectRepository;
+            this.projectRepo = projectRepo;
+            this.userProjectRepo = userProjectRepo;
             this.userManager = userManager;
             this.roleHelper = roleHelper;
             userName = httpContextAccessor.HttpContext.User.Identity.Name;
@@ -24,7 +24,7 @@ namespace BugTracker.Helpers
         public bool IsUserInProject(string projectId)
         {
             ApplicationUser user = userManager.Users.First(u => u.UserName == userName);
-            List<ApplicationUser> users = userProjectRepository.GetUsersByProjectId(projectId);
+            List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(projectId);
             return users.Contains(user);       
         }        
 
@@ -35,9 +35,9 @@ namespace BugTracker.Helpers
 
             if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
             {
-                return projectRepository.GetAllProjects();
+                return projectRepo.GetAllProjects();
             }            
-            return userProjectRepository.GetProjectsByUserId(user.Id);     
+            return userProjectRepo.GetProjectsByUserId(user.Id);     
         }
 
         public Project GetFullProject(string id)
