@@ -59,23 +59,27 @@ namespace BugTracker.Controllers
         [HttpPost]        
         public async Task<IActionResult> Create(Ticket model)
         {
-            ApplicationUser submitter = await GetCurrentUserAsync();
-            
-            Ticket ticket = new()
+            if (ModelState.IsValid)
             {
-                Id = Guid.NewGuid().ToString(),
-                ProjectId = model.ProjectId,
-                SubmitterId = submitter.Id,                
-                Title = model.Title,
-                Description = model.Description,
-                CreatedAt = DateTime.Now,                
-                Type = model.Type,
-                Status = model.Status,
-                Priority = model.Priority,                                
-            };
+                ApplicationUser submitter = await GetCurrentUserAsync();
 
-            ticket = repo.Create(ticket);
-            return RedirectToAction("Details", new { id = ticket.Id });
+                Ticket ticket = new()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    ProjectId = model.ProjectId,
+                    SubmitterId = submitter.Id,
+                    Title = model.Title,
+                    Description = model.Description,
+                    CreatedAt = DateTime.Now,
+                    Type = model.Type,
+                    Status = model.Status,
+                    Priority = model.Priority,
+                };
+
+                ticket = repo.Create(ticket);
+                return RedirectToAction("Details", new { id = ticket.Id });
+            }
+            return View();
         }        
 
         [HttpGet]
@@ -99,6 +103,7 @@ namespace BugTracker.Controllers
                 Submitter = ticket.Submitter,
                 AssignedDeveloper = ticket.AssignedDeveloper,
                 TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(page ?? 1, 6),
+                TicketAttachments = ticket.TicketAttachments.ToPagedList(page ?? 1, 6),
                 TicketComments = ticket.TicketComments.ToPagedList(page ?? 1, 5),                
             };
             return View(model);

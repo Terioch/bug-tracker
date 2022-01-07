@@ -137,22 +137,29 @@
         <div class="col">
             <!-- Create Ticket Attachment -->
             <h1 class="fs-3 mb-3">Ticket Attachments</h1>
-            <div class="card-body bg-light mb-3">                               
-                <div class="mb-3">
-                    <!--<input type="file" value="Attach File" class="btn btn-primary"><i class="fs-5 bi-paperclip pe-2"></i>-->
-                    <div class="input-group-sm">
-                      <input type="file" class="form-control" id="attachFileInput" style="max-width: 300px">                      
-                    </div>
-                </div>             
-                <div class="input-group-sm mb-3" style="max-width: 300px">          
-                    <input type="text" class="form-control" placeholder="Description..." aria-label="Description" aria-describedby="ticket-description">
-                </div>
-                <button class="btn btn-success">Upload Attachment</button>
-            </div>
+          
+            <div class="card-body bg-light mb-3">  
+                <form method="post" asp-controller="TicketAttachment" asp-action="Create" asp-route-ticketId="@Model.Id">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>                
+                    <div class="mb-3">
+                        @*@Html.TextBox("AttachmentName", null, new { @class = "form-control cell-fill-input", placeholder = "Name", style="max-width: 300px" })*@
+                        <div class="input-group-sm">
+                            <input name="AttachmentName" class="form-control" placeholder="Name" />
+                        </div>
+                    </div>                       
+                    <div class="mb-3">
+                        <!--<input type="file" value="Attach File" class="btn btn-primary"><i class="fs-5 bi-paperclip pe-2"></i>-->
+                        <div class="input-group-sm">
+                            <input type="file" name="AttachmentName" id="attachFileInput" class="form-control" style="max-width: 300px">                      
+                        </div>
+                    </div>   
+                    <button type="submit" class="btn btn-success">Upload Attachment</button>
+                </form>  
+            </div>                      
 
             <!-- Ticket Attachment Image Grid -->                                                                  
             <div class="">                 
-                @if (5 != null)
+                @if (!Model.TicketAttachments.Any())
                 {
                     <div class="alert alert-info fs-5 mt-3" role="alert">
                         There are no available attachments to display.
@@ -161,11 +168,11 @@
                 {              
                     <div class="row g-3">
                         <div class="col-md-6">
-                            @foreach (var attachment in Model.TicketComments)
+                            @foreach (var attachment in Model.TicketAttachments)
                             {
                                 <picture>
                                     <source srcset="..." type="image/svg+xml">
-                                    <img src="attachment src" class="img-fluid" alt="attachment src" />                                        
+                                    <img src="@attachment.FilePath" class="img-fluid" alt="@attachment.FilePath" />                                        
                                 </picture>
                             }
                         </div>

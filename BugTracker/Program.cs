@@ -19,6 +19,7 @@ builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
 builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
 builder.Services.AddScoped<ITicketHistoryRecordRepository, TicketHistoryRecordDbRepository>();
+builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentDbRepository>();
 builder.Services.AddScoped<ITicketCommentRepository, TicketCommentDbRepository>();
 builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
 builder.Services.AddScoped<TicketHelper, TicketHelper>();

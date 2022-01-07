@@ -15,12 +15,11 @@ namespace BugTracker.Services
         }
 
         public IEnumerable<Ticket> GetAllTickets()
-        {
-            IEnumerable<Ticket>? tickets = context.Tickets
+        {            
+             return context.Tickets
                 .Include(t => t.Project)
                 .Include(t => t.Submitter)
                 .Include(t => t.AssignedDeveloper);            
-            return tickets ?? new List<Ticket>();
         }
 
         public List<Ticket> GetTicketsByProjectId(string id)

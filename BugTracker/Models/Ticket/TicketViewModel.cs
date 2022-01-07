@@ -33,6 +33,8 @@ namespace BugTracker.Models
 
         public IPagedList<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
 
+        public IPagedList<TicketAttachment>? TicketAttachments { get; set; }
+
         public IPagedList<TicketComment>? TicketComments { get; set; }
     }
 }

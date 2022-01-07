@@ -19,7 +19,7 @@ namespace BugTracker.Models
         public string? Description { get; set; }
 
         [Required]
-        public string? SourceUrl { get; set; }
+        public string? FilePath { get; set; }
 
         [Required]
         public DateTimeOffset? CreatedAt { get; set; }
