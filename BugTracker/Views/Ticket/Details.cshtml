@@ -136,63 +136,64 @@
     <div class="row g-4 d-flex flex-column flex-md-row">                
         <div class="col">
             <!-- Create Ticket Attachment -->
-            <div class="card-body bg-light mb-3">
-                <h1 class="fs-5 mb-3">Add a New Attachment</h1>                
+            <h1 class="fs-3 mb-3">Ticket Attachments</h1>
+            <div class="card-body bg-light mb-3">                               
                 <div class="mb-3">
-                    <button class="btn btn-primary"><i class="fs-5 bi-paperclip pe-2"></i>Attach File</button>
+                    <!--<input type="file" value="Attach File" class="btn btn-primary"><i class="fs-5 bi-paperclip pe-2"></i>-->
+                    <div class="input-group-sm">
+                      <input type="file" class="form-control" id="attachFileInput" style="max-width: 300px">                      
+                    </div>
                 </div>             
                 <div class="input-group-sm mb-3" style="max-width: 300px">          
                     <input type="text" class="form-control" placeholder="Description..." aria-label="Description" aria-describedby="ticket-description">
                 </div>
-                <button class="btn btn-success">Submit</button>
+                <button class="btn btn-success">Upload Attachment</button>
             </div>
 
-            <!-- Ticket Attachment Table Card -->
-            <div class="">            
-                <h1 class="fs-3 mt-1">Ticket Attachments</h1>                               
-                <div class="">                 
-                    @if (5 != null)
-                    {
-                        <div class="alert alert-info fs-5 mt-3" role="alert">
-                          There are no available attachments to display.
+            <!-- Ticket Attachment Image Grid -->                                                                  
+            <div class="">                 
+                @if (5 != null)
+                {
+                    <div class="alert alert-info fs-5 mt-3" role="alert">
+                        There are no available attachments to display.
+                    </div>
+                } else
+                {              
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            @foreach (var attachment in Model.TicketComments)
+                            {
+                                <picture>
+                                    <source srcset="..." type="image/svg+xml">
+                                    <img src="attachment src" class="img-fluid" alt="attachment src" />                                        
+                                </picture>
+                            }
                         </div>
-                    } else
-                    {              
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                @foreach (var attachment in Model.TicketComments)
-                                {
-                                    <picture>
-                                        <source srcset="..." type="image/svg+xml">
-                                        <img src="attachment src" class="img-fluid" alt="attachment src" />                                        
-                                    </picture>
-                                }
-                            </div>
-                        </div>                        
+                    </div>                        
 
-                        <div>
-                            <p class="text-secondary" style="font-size: 14px">
-                                Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
-                                of @Model.TicketHistoryRecords.PageCount
-                            </p>                   
-                            @Html.PagedListPager(
-                                Model.TicketHistoryRecords, 
-                                page => Url.Action("Details", new { Model.Id, page }),
-                                new PagedListRenderOptions() 
-                                {
-                                    UlElementClasses = new string[] { "pagination", "mb-0" },
-                                    LiElementClasses = new string[] { "page-item" },
-                                    PageClasses = new string[] { "page-link" }
-                                })
-                        </div>                         
-                    }  
-                </div>
-            </div>            
+                    <div>
+                        <p class="text-secondary" style="font-size: 14px">
+                            Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
+                            of @Model.TicketHistoryRecords.PageCount
+                        </p>                   
+                        @Html.PagedListPager(
+                            Model.TicketHistoryRecords, 
+                            page => Url.Action("Details", new { Model.Id, page }),
+                            new PagedListRenderOptions() 
+                            {
+                                UlElementClasses = new string[] { "pagination", "mb-0" },
+                                LiElementClasses = new string[] { "page-item" },
+                                PageClasses = new string[] { "page-link" }
+                            })
+                    </div>                         
+                }  
+            </div>                    
         </div>
 
         <!-- Ticket Comment Section -->
         <div class="col">
             <h1 class="fs-3 mb-3">Ticket Comments</h1>
+            <div id="commentCreationValidationErrors" class="text-danger mb-3"></div>
             <div class="input-group mb-3" style="max-width: 300px">
                 <input id="commentDescriptionInput" type="text" class="form-control" placeholder="Comment..." aria-label="Comment" aria-describedby="ticket-comment">
             </div>
@@ -203,7 +204,7 @@
             <div id="commentListContainer">
                 @if (!Model.TicketComments.Any())
                 {
-                    <div class="alert alert-info fs-5 mt-3" role="alert">
+                    <div id="commentListGroup" class="alert alert-info fs-5 mt-3" role="alert">
                         No one has commented on this ticket.
                     </div>
                 } else

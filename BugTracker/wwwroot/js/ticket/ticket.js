@@ -62,7 +62,7 @@ class Ticket {
         const commentDescriptionInput = document.getElementById("commentDescriptionInput");
 
         try {
-            const res = await fetch(`/ticket/create/${id}`, {
+            const res = await fetch(`/ticketComment/create/${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "Application/Json",
@@ -72,12 +72,14 @@ class Ticket {
                 })
             });
             
-            const commentListHTML = await res.text();                        
+            const commentListHTML = await res.text();            
+            if (res.status == 400) throw commentListHTML; // Throw initial error
             commentsContainer.innerHTML = commentListHTML;
             document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler); // Attach event listener to replacement list
             commentDescriptionInput.value = "";
         } catch (err) {
             console.error(err);
+            document.getElementById("commentCreationValidationErrors").innerHTML = err;
         }
     }
 
@@ -86,7 +88,7 @@ class Ticket {
         const commentId = document.getElementById("deleteCommentBtn").getAttribute("data-id");
 
         try {
-            const res = await fetch(`/ticket/delete/${commentId}`, {
+            const res = await fetch(`/ticketComment/delete/${commentId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "Application/Json",
