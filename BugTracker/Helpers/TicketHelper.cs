@@ -53,22 +53,22 @@ namespace BugTracker.Helpers
         public async Task<bool> IsAuthorizedToCreate(ApplicationUser user)
         {
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
+            bool isAuthorized = false;
 
             if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
             {
-                return true;
+                isAuthorized = true;
             }
             else if (roles.Contains("Project Manager") || roles.Contains("Demo Project Manager") || roles.Contains("Submitter") || roles.Contains("Demo Submitter"))
             {
                 List<Project>? projects = userProjectRepository.GetProjectsByUserId(user.Id);
 
-                if (!projects.Any())
+                if (projects.Any())
                 {
-                    return false;
-                }
-                return true;
+                    isAuthorized = true;
+                }                
             }
-            return false;               
+            return isAuthorized;              
         }
     }
 }
