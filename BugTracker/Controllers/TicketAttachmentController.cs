@@ -13,7 +13,8 @@ namespace BugTracker.Controllers
             this.repo = repo;
         }
 
-        public IActionResult Create(string ticketId, string attachmentName, IFormFile attachmentFile)
+        [HttpPost]
+        public IActionResult Create(string ticketId, string attachmentName, IFormFile fileAttachment)
         {
             TicketAttachment attachment = new()
             {
@@ -23,7 +24,7 @@ namespace BugTracker.Controllers
                 FilePath = "attachmentFile.FilePath",
             };
             // repo.Create(attachment);
-            return RedirectToAction("ListTickets", "Ticket");
+            return RedirectToAction("Details", "Ticket", new { id = ticketId });
         }
     }
 }

@@ -139,18 +139,18 @@
             <h1 class="fs-3 mb-3">Ticket Attachments</h1>
           
             <div class="card-body bg-light mb-3">  
-                <form method="post" asp-controller="TicketAttachment" asp-action="Create" asp-route-ticketId="@Model.Id">
+                <form method="post" asp-controller="TicketAttachment" asp-action="Create" asp-route-ticketId="@Model.Id" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>                
                     <div class="mb-3">
                         @*@Html.TextBox("AttachmentName", null, new { @class = "form-control cell-fill-input", placeholder = "Name", style="max-width: 300px" })*@
                         <div class="input-group-sm">
-                            <input name="AttachmentName" class="form-control" placeholder="Name" />
+                            <input name="AttachmentName" class="form-control" placeholder="Name" style="max-width: 300px" />
                         </div>
                     </div>                       
                     <div class="mb-3">
                         <!--<input type="file" value="Attach File" class="btn btn-primary"><i class="fs-5 bi-paperclip pe-2"></i>-->
                         <div class="input-group-sm">
-                            <input type="file" name="AttachmentName" id="attachFileInput" class="form-control" style="max-width: 300px">                      
+                            <input type="file" name="fileAttachment" class="form-control" style="max-width: 300px">                      
                         </div>
                     </div>   
                     <button type="submit" class="btn btn-success">Upload Attachment</button>
