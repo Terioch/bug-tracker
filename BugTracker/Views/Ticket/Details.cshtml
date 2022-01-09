@@ -27,7 +27,7 @@
             <ul class="list-group list-group-flush">                
                 <li class="list-group-item list-group-item-light">
                     <p class="mb-1 fw-bold">Project Name</p>
-                    <small>@Model.Project.Name</small>
+                    <small>@Model.Project?.Name</small>
                 </li>
                 <li class="list-group-item list-group-item-light">
                 <p class="mb-1 fw-bold">Assigned Developer</p>
@@ -40,7 +40,7 @@
                 </li>
                 <li class="list-group-item list-group-item-light">
                     <p class="mb-1 fw-bold">Submitted By</p>
-                    <small>@Model.Submitter.UserName</small>
+                    <small>@Model.Submitter?.UserName</small>
                 </li>
                 <li class="list-group-item list-group-item-light">
                     <p class="mb-1 fw-bold">Created At</p>
@@ -172,7 +172,7 @@
                             {
                                 <picture>
                                     <source srcset="..." type="image/svg+xml">
-                                    <img src="@attachment.FilePath" class="img-fluid" alt="@attachment.FilePath" />                                        
+                                    <img src="~/Images/@attachment.FilePath" asp-append-version="true" class="img-fluid" alt="@attachment.FilePath" />                                        
                                 </picture>
                             }
                         </div>

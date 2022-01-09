@@ -29,20 +29,21 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser submitter = await GetCurrentUserAsync();
+                ApplicationUser submitter = await GetCurrentUserAsync();                       
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                fileAttachment.CopyTo(new FileStream(filePath, FileMode.Create));
+
                 TicketAttachment attachment = new()
                 {
                     Id = Guid.NewGuid().ToString(),
                     TicketId = ticketId,
                     SubmitterId = submitter.Id,
                     Name = attachmentName,
-                    FilePath = "attachmentFile.FilePath",
-                };           
-
-                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                fileAttachment.CopyTo(new FileStream(filePath, FileMode.Create));
+                    FilePath = uniqueFileName,
+                    CreatedAt = DateTimeOffset.Now,
+                };
                 repo.Create(attachment);   
             }
             return RedirectToAction("Details", "Ticket", new { id = ticketId });
