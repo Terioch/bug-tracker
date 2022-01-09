@@ -119,7 +119,7 @@
                             </p>                   
                             @Html.PagedListPager(
                                 Model.TicketHistoryRecords, 
-                                page => Url.Action("Details", new { Model.Id, page }),
+                                page => Url.Action("Details", new { Model.Id, historyPage = page }),
                                 new PagedListRenderOptions() 
                                 {
                                     UlElementClasses = new string[] { "pagination", "mb-0" },
@@ -194,7 +194,7 @@
                         </p>                   
                         @Html.PagedListPager(
                             Model.TicketAttachments, 
-                            page => Url.Action("Details", new { Model.Id, page }),
+                            page => Url.Action("Details", new { Model.Id, attachmentsPage = page }),
                             new PagedListRenderOptions() 
                             {
                                 UlElementClasses = new string[] { "pagination", "mb-0" },
@@ -248,7 +248,7 @@
                         </p>                   
                         @Html.PagedListPager(
                             Model.TicketComments, 
-                            page => Url.Action("Details", new { Model.Id, page }),
+                            page => Url.Action("Details", new { Model.Id, commentsPage = page }),
                             new PagedListRenderOptions() 
                             {
                                 UlElementClasses = new string[] { "pagination", "mb-0" },
