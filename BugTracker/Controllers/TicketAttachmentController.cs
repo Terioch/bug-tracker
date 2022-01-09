@@ -48,5 +48,16 @@ namespace BugTracker.Controllers
             }
             return RedirectToAction("Details", "Ticket", new { id = ticketId });
         }
+
+        public IActionResult Edit(string id)
+        {
+            return View();
+        }
+
+        public IActionResult Delete(string id) 
+        {
+            // repo.Delete(id);
+            return RedirectToAction("Details", "Ticket", new { id });
+        }
     }
 }
