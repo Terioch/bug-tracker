@@ -6,16 +6,12 @@ namespace BugTracker.Models
     {               
         [Required]
         [MaxLength(40)]
-        public string? Title { get; set; }        
+        public string? Title { get; set; }
+
+        public string? ProjectId { get; set; } 
 
         [Required]
-        public string? Description { get; set; }
-
-        [Required]
-        public string? ProjectName { get; set; }
-
-        [Required]
-        public string? AssignedDeveloper { get; set; }
+        public string? Description { get; set; }        
 
         [Required]
         public string? Type { get; set; }

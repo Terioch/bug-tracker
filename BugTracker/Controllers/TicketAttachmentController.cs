@@ -72,22 +72,21 @@ namespace BugTracker.Controllers
                 attachment.Name = model.Name;
                 attachment.FilePath = model.FilePath;
                 repo.Update(attachment);
-                return RedirectToAction("Details", "Ticket", new { id = model.Id });
+                return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
             }
             return View(model);
         }
 
-        [HttpPost]
         public IActionResult Delete(string id) 
-        {
+        {                   
             if (id == null)
             {
-                ViewBag.ErrorMessage = $"Ticket Attachment with id { id } could not found.";
+                ViewBag.ErrorMessage = $"Ticket Attachment with id { id ?? "null" } could not found.";
                 return View("NotFound");
             }
 
-            repo.Delete(id);
-            return RedirectToAction("Details", "Ticket", new { id });
+            TicketAttachment attachment = repo.Delete(id);
+            return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
         }
     }
 }

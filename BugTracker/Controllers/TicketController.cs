@@ -16,16 +16,18 @@ namespace BugTracker.Controllers
         private readonly IProjectRepository projectRepo;
         private readonly ITicketHistoryRecordRepository ticketHistoryRepo;
         private readonly ITicketCommentRepository ticketCommentRepo;
+        private readonly ITicketAttachmentRepository ticketAttachmentRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
         private readonly TicketHelper ticketHelper;
 
-        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, ITicketCommentRepository ticketCommentRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
+        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, ITicketCommentRepository ticketCommentRepo, ITicketAttachmentRepository ticketAttachmentRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
         {
             this.repo = repo;
             this.projectRepo = projectRepo;
             this.ticketHistoryRepo = ticketHistoryRepo;
             this.ticketCommentRepo = ticketCommentRepo;
+            this.ticketAttachmentRepo = ticketAttachmentRepo;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
             this.ticketHelper = ticketHelper;
@@ -51,13 +53,13 @@ namespace BugTracker.Controllers
         [HttpGet]        
         public async Task<IActionResult> Create()
         {              
-            ViewBag.Projects = await projectHelper.GetUserRoleProjects(); ;
+            // ViewBag.Projects = await projectHelper.GetUserRoleProjects();
             return View();
         }        
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpPost]        
-        public async Task<IActionResult> Create(Ticket model)
+        public async Task<IActionResult> Create(CreateTicketViewModel model)
         {
             if (ModelState.IsValid)
             {

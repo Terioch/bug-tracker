@@ -141,7 +141,7 @@
             <div class="card-body bg-light mb-3">  
                 <form class="mb-0" method="post" asp-controller="TicketAttachment" asp-action="Create" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>                
-                    <input name="TicketId" type="hidden" />
+                    <input name="TicketId" value="@Model.Id" type="hidden" />
                     <div class="mb-3">
                         @*@Html.TextBox("AttachmentName", null, new { @class = "form-control cell-fill-input", placeholder = "Name", style="max-width: 300px" })*@
                         <div class="input-group-sm">
@@ -170,7 +170,7 @@
                     <div class="row g-3 mb-3">                        
                         @foreach (var attachment in Model.TicketAttachments)
                         {
-                            <div class="col-sm-6">
+                            <div class="col-xl-6 col-md-12 col-sm-6">
                                 <div class="card">                                    
                                     <img src="~/Images/@attachment.FilePath" asp-append-version="true" class="card-img-top img-fluid" alt="@attachment.FilePath" />                                    
                                     <div class="card-footer">
@@ -178,7 +178,7 @@
                                             <h5 class="card-subtitle mt-0 mb-1">@attachment.Name</h5>
                                             <div>
                                                 <a asp-action="Edit" asp-controller="TicketAttachment" asp-route-id="@attachment.Id" class="link-info">Edit</a>
-                                                <a class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteAttachmentModal">Delete</a>
+                                                <a href="" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteAttachmentModal-@attachment.Id">Delete</a>
                                             </div>
                                         </div>                                        
                                         <p class="text-secondary mb-0">@attachment.CreatedAt</p>
@@ -187,7 +187,7 @@
                             </div>
                             
                             <!-- Delete Ticket Attachment Modal -->
-                            <div class="modal fade" id="deleteAttachmentModal" tabindex="-1" aria-labelledby="deleteAttachmentModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="deleteAttachmentModal-@attachment.Id" tabindex="-1" aria-labelledby="deleteAttachmentModalLabel-@attachment.Id" aria-hidden="true">
                               <div class="modal-dialog">
                                 <div class="modal-content">
                                   <div class="modal-header">
@@ -195,7 +195,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                   </div>
                                   <div class="modal-footer">
-                                    <button asp-action="Delete" asp-controller="TicketAttachment" asp-route-id="@attachment.Id" type="button" id="deleteAttachmentBtn" class="btn btn-danger" aria-label="Confirm">Confirm</button>       
+                                    <a asp-action="Delete" asp-controller="TicketAttachment" asp-route-id="@attachment.Id" class="btn btn-danger" aria-label="Confirm">Confirm</a>       
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>       
                                   </div>
                                 </div>
