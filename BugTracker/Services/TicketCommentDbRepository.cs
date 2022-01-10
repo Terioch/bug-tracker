@@ -52,7 +52,15 @@ namespace BugTracker.Services
             context.TicketComments.Remove(comment);
             context.SaveChanges();
             return comment;
-        }        
+        }
+
+        public IEnumerable<TicketComment> DeleteCommentsByTicketId(string ticketId)
+        {
+            var comments = context.TicketComments.Where(c => c.TicketId == ticketId);
+            context.TicketComments.RemoveRange(comments);
+            context.SaveChanges();
+            return comments;
+        }
 
         public TicketComment Update(TicketComment comment)
         {

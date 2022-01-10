@@ -10,5 +10,6 @@ namespace BugTracker.Services
         public TicketComment Create(TicketComment comment);
         public TicketComment Update(TicketComment comment);
         public TicketComment Delete(string id);
+        public IEnumerable<TicketComment> DeleteCommentsByTicketId(string ticketId);
     }
 }

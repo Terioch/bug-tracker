@@ -9,5 +9,6 @@ namespace BugTracker.Services
         public TicketAttachment Create(TicketAttachment attachment);
         public TicketAttachment Update(TicketAttachment attachment);
         public TicketAttachment Delete(string id);
+        public IEnumerable<TicketAttachment> DeleteAttachmentsByTicketId(string ticketId);
     }
 }

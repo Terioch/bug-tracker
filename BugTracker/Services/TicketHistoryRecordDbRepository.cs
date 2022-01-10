@@ -64,10 +64,10 @@ namespace BugTracker.Services
 
         public IEnumerable<TicketHistoryRecord> DeleteRecordsByTicketId(string ticketId)
         {
-            var filteredRecords = context.TicketHistoryRecords.Where(r => r.TicketId == ticketId);
-            context.TicketHistoryRecords.RemoveRange(filteredRecords);
+            var records = context.TicketHistoryRecords.Where(r => r.TicketId == ticketId);
+            context.TicketHistoryRecords.RemoveRange(records);
             context.SaveChanges();
-            return filteredRecords;
+            return records;
         }
 
         public TicketHistoryRecord Update(TicketHistoryRecord record)

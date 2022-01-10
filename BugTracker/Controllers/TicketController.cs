@@ -201,8 +201,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("Details", new { id = ticket.Id });
         }                
 
-        [Authorize(Roles = "Admin, Project Manager, Submitter")]
-        [HttpDelete]
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]   
         public IActionResult Delete(string id)
         {
             Ticket ticket = repo.GetTicketById(id);
@@ -214,8 +213,10 @@ namespace BugTracker.Controllers
             }            
 
             ticketHistoryRepo.DeleteRecordsByTicketId(id);
+            ticketAttachmentRepo.DeleteAttachmentsByTicketId(id);
+            ticketCommentRepo.DeleteCommentsByTicketId(id);
             repo.Delete(id);
-            return Json(ticket);
+            return RedirectToAction("ListTickets");
         }
     }
 }

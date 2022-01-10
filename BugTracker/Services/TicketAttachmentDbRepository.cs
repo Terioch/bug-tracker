@@ -15,7 +15,7 @@ namespace BugTracker.Services
         }
 
         public IEnumerable<TicketAttachment> GetAllAttachments()
-        {       
+        {
             return context.TicketAttachments.Include(a => a.Submitter);
         }
 
@@ -44,7 +44,15 @@ namespace BugTracker.Services
             context.TicketAttachments.Remove(attachment);
             context.SaveChanges();
             return attachment;
-        }        
+        }
+
+        public IEnumerable<TicketAttachment> DeleteAttachmentsByTicketId(string ticketId) 
+        {
+            var attachments = context.TicketAttachments.Where(a => a.TicketId == ticketId);
+            context.TicketAttachments.RemoveRange(attachments);
+            context.SaveChanges();
+            return attachments;
+        }
 
         public TicketAttachment Update(TicketAttachment attachment)
         {

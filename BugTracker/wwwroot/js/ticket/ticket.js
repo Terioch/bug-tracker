@@ -4,7 +4,7 @@ class Ticket {
         if (document.getElementById("ticketContainer")) {
             console.log("Initialized Ticket");
             this.ticketContainer = document.getElementById("ticketContainer");
-            this.handleDelete = this.handleDelete.bind(this);
+            // this.handleDelete = this.handleDelete.bind(this);
             this.commentListClickHandler = this.commentListClickHandler.bind(this);
             this.handleCommentCreation = this.handleCommentCreation.bind(this);           
             this.handleCommentDeletion = this.handleCommentDeletion.bind(this);
@@ -13,7 +13,7 @@ class Ticket {
     }
 
     events() {
-        document.getElementById("deleteTicketBtn").addEventListener("click", this.handleDelete);
+        // document.getElementById("deleteTicketBtn").addEventListener("click", this.handleDelete);
         document.getElementById("createCommentBtn").addEventListener("click", this.handleCommentCreation);
         document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler);
         document.getElementById("deleteCommentBtn").addEventListener("click", this.handleCommentDeletion);
@@ -26,7 +26,7 @@ class Ticket {
         return el;
     }
 
-    async handleDelete() {
+    /*async handleDelete() {
         const id = this.ticketContainer.getAttribute("data-id");
         console.log("delete");
         try {
@@ -45,7 +45,7 @@ class Ticket {
         } catch (err) {
             console.error(err);
         }
-    }
+    }*/
 
     commentListClickHandler(e) {
         const commentId = this.findNearestParentElement(e.target, "comment-list-item").getAttribute("data-commentId");
