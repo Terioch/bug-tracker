@@ -139,8 +139,9 @@
             <h1 class="fs-3 mb-3">Ticket Attachments</h1>
           
             <div class="card-body bg-light mb-3">  
-                <form class="mb-0" method="post" asp-controller="TicketAttachment" asp-action="Create" asp-route-ticketId="@Model.Id" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>                                   
+                <form class="mb-0" method="post" asp-controller="TicketAttachment" asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>                
+                    <input name="TicketId" type="hidden" />
                     <div class="mb-3">
                         @*@Html.TextBox("AttachmentName", null, new { @class = "form-control cell-fill-input", placeholder = "Name", style="max-width: 300px" })*@
                         <div class="input-group-sm">
@@ -176,14 +177,30 @@
                                         <div class="d-flex justify-content-between">
                                             <h5 class="card-subtitle mt-0 mb-1">@attachment.Name</h5>
                                             <div>
-                                                <a asp-action="Edit" asp-route-id="@Model.Id" class="link-info">Edit</a>
-                                                <a asp-action="Delete" asp-route-id="@Model.Id" class="link-danger">Delete</a>
+                                                <a asp-action="Edit" asp-controller="TicketAttachment" asp-route-id="@attachment.Id" class="link-info">Edit</a>
+                                                <a class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteAttachmentModal">Delete</a>
                                             </div>
                                         </div>                                        
                                         <p class="text-secondary mb-0">@attachment.CreatedAt</p>
                                     </div>
                                 </div>
-                            </div>     
+                            </div>
+                            
+                            <!-- Delete Ticket Attachment Modal -->
+                            <div class="modal fade" id="deleteAttachmentModal" tabindex="-1" aria-labelledby="deleteAttachmentModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Confirm Attachment Removal</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button asp-action="Delete" asp-controller="TicketAttachment" asp-route-id="@attachment.Id" type="button" id="deleteAttachmentBtn" class="btn btn-danger" aria-label="Confirm">Confirm</button>       
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>       
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                         }
                     </div>                                    
 

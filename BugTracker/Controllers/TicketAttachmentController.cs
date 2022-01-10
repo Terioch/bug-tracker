@@ -32,7 +32,8 @@ namespace BugTracker.Controllers
                 ApplicationUser submitter = await GetCurrentUserAsync();
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName); 
+                fileAttachment.CopyTo(new FileStream(filePath, FileMode.Create));                
 
                 TicketAttachment attachment = new()
                 {
@@ -42,22 +43,50 @@ namespace BugTracker.Controllers
                     Name = attachmentName,
                     FilePath = uniqueFileName,
                     CreatedAt = DateTimeOffset.Now,
-                };
-
-                fileAttachment.CopyTo(new FileStream(filePath, FileMode.Create));
+                };                
                 repo.Create(attachment);   
             }
             return RedirectToAction("Details", "Ticket", new { id = ticketId });
         }
 
+        [HttpGet]
         public IActionResult Edit(string id)
         {
-            return View();
+            TicketAttachment attachment = repo.GetAttachmentById(id);
+            return View(attachment);
         }
 
+        [HttpPost]
+        public IActionResult Edit(TicketAttachment model)
+        {
+            TicketAttachment attachment = repo.GetAttachmentById(model.Id);   
+            
+            if (attachment == null)
+            {
+                ViewBag.ErrorMessage = $"Ticket Attachment with id { model.Id } could not found.";
+                return View("NotFound");
+            }
+            
+            if (ModelState.IsValid)
+            {
+                attachment.Name = model.Name;
+                attachment.FilePath = model.FilePath;
+                repo.Update(attachment);
+                return RedirectToAction("Details", "Ticket", new { id = model.Id });
+            }
+            return View(model);
+        }
+
+        [HttpPost]
         public IActionResult Delete(string id) 
         {
-            // repo.Delete(id);
+            if (id == null)
+            {
+                ViewBag.ErrorMessage = $"Ticket Attachment with id { id } could not found.";
+                return View("NotFound");
+            }
+
+            repo.Delete(id);
             return RedirectToAction("Details", "Ticket", new { id });
         }
     }

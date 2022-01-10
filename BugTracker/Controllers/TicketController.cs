@@ -84,9 +84,8 @@ namespace BugTracker.Controllers
 
         [HttpGet]
         public IActionResult Details(string id, int? historyPage, int? attachmentsPage, int? commentsPage)
-        {
+        {           
             Ticket ticket = repo.GetTicketById(id);
-
             TicketViewModel model = new()
             {
                 Id = ticket.Id,
@@ -104,9 +103,9 @@ namespace BugTracker.Controllers
                 AssignedDeveloper = ticket.AssignedDeveloper,
                 TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(historyPage ?? 1, 6),
                 TicketAttachments = ticket.TicketAttachments.ToPagedList(attachmentsPage ?? 1, 6),
-                TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 5),                
+                TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 5),
             };
-            return View(model);
+            return View(model);                               
         }
 
         [HttpGet]
