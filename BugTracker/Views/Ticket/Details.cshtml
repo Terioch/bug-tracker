@@ -140,7 +140,7 @@
           
             <div class="card-body bg-light mb-3">  
                 <form class="mb-0" method="post" asp-controller="TicketAttachment" asp-action="Create" asp-route-ticketId="@Model.Id" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>                
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>                                   
                     <div class="mb-3">
                         @*@Html.TextBox("AttachmentName", null, new { @class = "form-control cell-fill-input", placeholder = "Name", style="max-width: 300px" })*@
                         <div class="input-group-sm">

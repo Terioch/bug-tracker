@@ -42,7 +42,7 @@
             </p>                   
             @Html.PagedListPager(
                 Model, 
-                page => Url.Action("Details", new { ViewBag.Id, page }),
+                page => Url.Action("Details", "Ticket" ,new { ViewBag.Id, commentsPage = page }),
                 new PagedListRenderOptions() 
                 {
                     UlElementClasses = new string[] { "pagination", "mb-0" },

@@ -25,23 +25,25 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TicketComment model, string id)
         {
-            if (ModelState.IsValid)
+            if (model.Value.Length < 1 || model.Value.Length > 200)
             {
-                ApplicationUser user = await GetCurrentUserAsync();
-                TicketComment comment = new()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    TicketId = id,
-                    AuthorId = user.Id,
-                    Value = model.Value,
-                    CreatedAt = DateTimeOffset.Now,
-                };
-                repo.Create(comment);
-                IEnumerable<TicketComment> comments = repo.GetCommentsByTicketId(id);
-                ViewBag.Id = id;
-                return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
+                return new BadRequestObjectResult("Comment must be between 1 and 200 characters");
             }
-            return new BadRequestObjectResult("Comment must be between 1 and 200 characters");
+
+            ApplicationUser user = await GetCurrentUserAsync();
+            TicketComment comment = new()
+            {
+                Id = Guid.NewGuid().ToString(),
+                TicketId = id,
+                AuthorId = user.Id,
+                Value = model.Value,
+                CreatedAt = DateTimeOffset.Now,
+            };
+                      
+            repo.Create(comment);
+            IEnumerable<TicketComment> comments = repo.GetCommentsByTicketId(id);
+            ViewBag.Id = id;
+            return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));            
         }
 
         [HttpDelete]

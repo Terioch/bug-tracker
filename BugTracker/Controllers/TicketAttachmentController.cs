@@ -26,14 +26,13 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create(string ticketId, string attachmentName, IFormFile fileAttachment)
-        {
+        {            
             if (ModelState.IsValid)
             {
-                ApplicationUser submitter = await GetCurrentUserAsync();                       
+                ApplicationUser submitter = await GetCurrentUserAsync();
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                fileAttachment.CopyTo(new FileStream(filePath, FileMode.Create));
 
                 TicketAttachment attachment = new()
                 {
@@ -44,6 +43,8 @@ namespace BugTracker.Controllers
                     FilePath = uniqueFileName,
                     CreatedAt = DateTimeOffset.Now,
                 };
+
+                fileAttachment.CopyTo(new FileStream(filePath, FileMode.Create));
                 repo.Create(attachment);   
             }
             return RedirectToAction("Details", "Ticket", new { id = ticketId });
