@@ -27,7 +27,7 @@
 
                     | <a asp-action="ListTickets" class="text-primary">Back to List</a> |
 
-                    @if(await ticketHelper.IsAuthorizedToManage(loggedInUser))
+                    @if (await ticketHelper.IsAuthorizedToManage(loggedInUser))
                     {
                         <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteTicketModal">Delete</a>
                     }
@@ -162,7 +162,7 @@
                     <div class="mb-3">
                         <!--<input type="file" value="Attach File" class="btn btn-primary"><i class="fs-5 bi-paperclip pe-2"></i>-->
                         <div class="input-group-sm">
-                            <input type="file" name="fileAttachment" class="form-control" style="max-width: 300px">                      
+                            <input type="file" name="FileAttachment" class="form-control" style="max-width: 300px">                      
                         </div>
                     </div>   
                     @if (await ticketHelper.IsAuthorizedToManage(loggedInUser)) 

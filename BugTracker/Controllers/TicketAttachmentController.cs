@@ -14,9 +14,9 @@ namespace BugTracker.Controllers
         private readonly ITicketAttachmentRepository repo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment hostingEnvironment;
-        private readonly AttachmentHelper attachmentHelper;
+        private readonly TicketAttachmentHelper attachmentHelper;
 
-        public TicketAttachmentController(ITicketAttachmentRepository repo, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostingEnvironment, AttachmentHelper attachmentHelper)
+        public TicketAttachmentController(ITicketAttachmentRepository repo, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostingEnvironment, TicketAttachmentHelper attachmentHelper)
         {
             this.repo = repo;
             this.userManager = userManager;
@@ -37,23 +37,24 @@ namespace BugTracker.Controllers
                 ApplicationUser submitter = await GetCurrentUserAsync();              
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                string completeFilePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                 if (attachmentHelper.IsValidAttachment(fileAttachment.FileName))
-                {                    
-                    fileAttachment.CopyTo(new FileStream(filePath, FileMode.Create));
-                }                              
-
-                TicketAttachment attachment = new()
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    TicketId = ticketId,
-                    SubmitterId = submitter.Id,
-                    Name = attachmentName,
-                    FilePath = uniqueFileName,
-                    CreatedAt = DateTimeOffset.Now,
-                };                
-                repo.Create(attachment);   
+                    FileStream stream = new(completeFilePath, FileMode.Create);
+                    await fileAttachment.CopyToAsync(stream);
+                    stream.Close();
+                    TicketAttachment attachment = new()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        TicketId = ticketId,
+                        SubmitterId = submitter.Id,
+                        Name = attachmentName,
+                        FilePath = uniqueFileName,
+                        CreatedAt = DateTimeOffset.Now,
+                    };
+                    repo.Create(attachment);                    
+                }                                               
             }
             return RedirectToAction("Details", "Ticket", new { id = ticketId });
         }
@@ -66,7 +67,7 @@ namespace BugTracker.Controllers
         }
         
         [HttpPost]
-        public IActionResult Edit(TicketAttachment model)
+        public async Task<IActionResult> Edit(TicketAttachment model, IFormFile fileAttachment)
         {
             TicketAttachment attachment = repo.GetAttachmentById(model.Id);   
             
@@ -76,22 +77,28 @@ namespace BugTracker.Controllers
                 return View("NotFound");
             }
             
-            if (ModelState.IsValid)
-            {
-                // Remove current uploaded attachment         
+            if (ModelState.IsValid && attachmentHelper.IsValidAttachment(model.FilePath))
+            {                                                   
+                // Remove currently uploaded attachment
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Images");
-                string filePath = Path.Combine(uploadsFolder, attachment.FilePath);
-                System.IO.File.Delete(filePath);
+                string completeFilePath = Path.Combine(uploadsFolder, attachment.FilePath);
+                FileInfo fileInfo = new(completeFilePath);
+                System.IO.File.Delete(completeFilePath);
+                fileInfo.Delete();
 
-                if (attachmentHelper.IsValidAttachment(model.FilePath))
-                {
-                    attachment.Name = model.Name;
-                    attachment.FilePath = Guid.NewGuid().ToString() + "_" + model.FilePath;
-                    repo.Update(attachment);
-                }                
+                // Update attachment with new values
+                attachment.Name = model.Name;
+                attachment.FilePath = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
+
+                // Upload and save new attachment
+                string updatedCompleteFilePath = Path.Combine(uploadsFolder, attachment.FilePath);
+                FileStream stream = new(updatedCompleteFilePath, FileMode.Create);
+                await fileAttachment.CopyToAsync(stream);
+                stream.Close();
+                repo.Update(attachment);                                                               
                 return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
             }
-            return View(model);
+            return View(attachment);
         }
         
         public IActionResult Delete(string id) 
@@ -102,9 +109,12 @@ namespace BugTracker.Controllers
                 return View("NotFound");
             }
 
-            // Remove uploaded file
-
             TicketAttachment attachment = repo.Delete(id);
+            string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Images");
+            string completeFilePath = Path.Combine(uploadsFolder, attachment.FilePath);
+            FileInfo fileInfo = new(completeFilePath);
+            System.IO.File.Delete(completeFilePath);
+            fileInfo.Delete();
             return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
         }
     }

@@ -8,19 +8,20 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-            <input type="hidden" asp-for="Id" />                                    
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="FilePath" />
             <input type="hidden" asp-for="CreatedAt" />                                    
             <div class="form-group mb-3">
                 <label asp-for="Name" class="control-label mb-1"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control mb-1" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="FilePath" class="control-label mb-1"></label>
-                <input asp-for="FilePath" type="file" class="form-control">       
-                <span asp-validation-for="FilePath" class="text-danger"></span>
+                <input name="FileAttachment" type="file" class="form-control mb-1">       
+                <span for="FileAttachment" class="text-danger"></span>
             </div>            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

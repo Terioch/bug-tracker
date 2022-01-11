@@ -2,9 +2,9 @@
 
 namespace BugTracker.Helpers
 {
-    public class AttachmentHelper
+    public class TicketAttachmentHelper
     {
-        public AttachmentHelper()
+        public TicketAttachmentHelper()
         {
 
         }
@@ -14,7 +14,7 @@ namespace BugTracker.Helpers
             string extension = Path.GetExtension(filePath);
             bool isValid = false;
 
-            if (extension == "png" || extension == "jpg" || extension == "jpeg")
+            if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
             {
                 isValid = true;
             }
