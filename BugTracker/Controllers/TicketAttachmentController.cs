@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
-using System.IO;
+using BugTracker.Helpers;
 
 namespace BugTracker.Controllers
 {
@@ -14,12 +14,14 @@ namespace BugTracker.Controllers
         private readonly ITicketAttachmentRepository repo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment hostingEnvironment;
+        private readonly AttachmentHelper attachmentHelper;
 
-        public TicketAttachmentController(ITicketAttachmentRepository repo, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostingEnvironment)
+        public TicketAttachmentController(ITicketAttachmentRepository repo, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostingEnvironment, AttachmentHelper attachmentHelper)
         {
             this.repo = repo;
             this.userManager = userManager;
             this.hostingEnvironment = hostingEnvironment;
+            this.attachmentHelper = attachmentHelper;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
@@ -32,13 +34,12 @@ namespace BugTracker.Controllers
         {            
             if (ModelState.IsValid)
             {
-                ApplicationUser submitter = await GetCurrentUserAsync();
-                string extension = Path.GetExtension(fileAttachment.FileName);
+                ApplicationUser submitter = await GetCurrentUserAsync();              
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                if (extension == "jpg" || extension == "png" || extension == "jpeg")
+                if (attachmentHelper.IsValidAttachment(fileAttachment.FileName))
                 {                    
                     fileAttachment.CopyTo(new FileStream(filePath, FileMode.Create));
                 }                              
@@ -77,13 +78,12 @@ namespace BugTracker.Controllers
             
             if (ModelState.IsValid)
             {
-                // Remove current uploaded attachment
-                string? extension = Path.GetExtension(model.FilePath);
+                // Remove current uploaded attachment         
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Images");
                 string filePath = Path.Combine(uploadsFolder, attachment.FilePath);
                 System.IO.File.Delete(filePath);
 
-                if (extension == "jpg" || extension == "png" || extension == "jpeg")
+                if (attachmentHelper.IsValidAttachment(model.FilePath))
                 {
                     attachment.Name = model.Name;
                     attachment.FilePath = Guid.NewGuid().ToString() + "_" + model.FilePath;

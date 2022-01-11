@@ -24,6 +24,7 @@ builder.Services.AddScoped<ITicketCommentRepository, TicketCommentDbRepository>(
 builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
 builder.Services.AddScoped<TicketHelper, TicketHelper>();
 builder.Services.AddScoped<RoleHelper, RoleHelper>();
+builder.Services.AddScoped<AttachmentHelper, AttachmentHelper>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = true;
