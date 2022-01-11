@@ -266,7 +266,7 @@
                         @foreach (var comment in Model.TicketComments)
                         {
                             <li class="comment-list-item list-group-item" data-commentId="@comment.Id">
-                                @if (comment.Author == loggedInUser || await userManager.IsInRoleAsync(comment.Author, "Admin"))
+                                @if (comment.Author == loggedInUser || await userManager.IsInRoleAsync(loggedInUser, "Admin"))
                                 {
                                     <small class="text-secondary">@comment.Author.UserName commented on @comment.CreatedAt <a href="" class="delete-comment-trigger link-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteCommentModal">Delete</a></small>   
                                 } else

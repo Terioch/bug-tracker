@@ -51,7 +51,7 @@ namespace BugTracker.Controllers
     
         [Authorize(Roles = "Admin, Project Manager, Submitter")]        
         [HttpGet]        
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {              
             // ViewBag.Projects = await projectHelper.GetUserRoleProjects();
             return View();
@@ -136,7 +136,7 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {            
             Ticket ticket = repo.GetTicketById(id);
 
@@ -152,7 +152,7 @@ namespace BugTracker.Controllers
                 Priority = ticket.Priority,
             };
 
-            ViewBag.Projects = await projectHelper.GetUserRoleProjects();
+            // ViewBag.Projects = await projectHelper.GetUserRoleProjects();
             return View(model);
         }
 
