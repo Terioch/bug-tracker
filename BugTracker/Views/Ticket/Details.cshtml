@@ -1,9 +1,11 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using BugTracker.Helpers
+@using Microsoft.AspNetCore.Identity
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
 
 @inject UserManager<ApplicationUser> userManager
+@inject TicketHelper ticketHelper
 
 @model BugTracker.Models.TicketViewModel
 
@@ -18,9 +20,17 @@
             <div class="card-header">
                 <h4>@Model.Title</h4> 
                 <div>
-                    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                    <a asp-action="ListTickets" class="text-primary">Back to List</a> |
-                    <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteTicketModal">Delete</a>
+                    @if (await ticketHelper.IsAuthorizedToManage(loggedInUser))
+                    {
+                        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>                                                
+                    }       
+
+                    | <a asp-action="ListTickets" class="text-primary">Back to List</a> |
+
+                    @if(await ticketHelper.IsAuthorizedToManage(loggedInUser))
+                    {
+                        <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteTicketModal">Delete</a>
+                    }
                 </div>
             </div>   
 
@@ -31,7 +41,8 @@
                 </li>
                 <li class="list-group-item list-group-item-light">
                 <p class="mb-1 fw-bold">Assigned Developer</p>
-                @if (Model.AssignedDeveloper != null) {
+                @if (Model.AssignedDeveloper != null) 
+                {
                     <small>@Model.AssignedDeveloper.UserName</small>
                 } else
                 {
@@ -154,7 +165,13 @@
                             <input type="file" name="fileAttachment" class="form-control" style="max-width: 300px">                      
                         </div>
                     </div>   
-                    <button type="submit" class="btn btn-success">Upload Attachment</button>
+                    @if (await ticketHelper.IsAuthorizedToManage(loggedInUser)) 
+                    {
+                        <button type="submit" class="btn btn-success">Upload Attachment</button>
+                    } else 
+                    {
+                        <button type="submit" class="btn btn-success disabled">Upload Attachment</button>
+                    }
                 </form>  
             </div>                      
 
@@ -177,8 +194,11 @@
                                         <div class="d-flex justify-content-between">
                                             <h5 class="card-subtitle mt-0 mb-1">@attachment.Name</h5>
                                             <div>
-                                                <a asp-action="Edit" asp-controller="TicketAttachment" asp-route-id="@attachment.Id" class="link-info">Edit</a>
-                                                <a href="" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteAttachmentModal-@attachment.Id">Delete</a>
+                                                @if (attachment.Submitter == loggedInUser || await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                                                {
+                                                    <a asp-action="Edit" asp-controller="TicketAttachment" asp-route-id="@attachment.Id" class="link-info">Edit</a>
+                                                    <a href="" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteAttachmentModal-@attachment.Id">Delete</a>   
+                                                }                                              
                                             </div>
                                         </div>                                        
                                         <p class="text-secondary mb-0">@attachment.CreatedAt</p>

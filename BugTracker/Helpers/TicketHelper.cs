@@ -50,7 +50,7 @@ namespace BugTracker.Helpers
             return projects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id));            
         }
 
-        public async Task<bool> IsAuthorizedToCreate(ApplicationUser user)
+        public async Task<bool> IsAuthorizedToManage(ApplicationUser user)
         {
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
             bool isAuthorized = false;

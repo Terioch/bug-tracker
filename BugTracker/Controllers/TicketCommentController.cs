@@ -1,11 +1,13 @@
 ﻿using BugTracker.Models;
 using BugTracker.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
 
 namespace BugTracker.Controllers
 {
+    [Authorize]
     public class TicketCommentController : Controller
     {
         private readonly ITicketCommentRepository repo;

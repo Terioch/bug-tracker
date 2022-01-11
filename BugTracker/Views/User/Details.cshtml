@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity;
 @using BugTracker.Helpers;
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
@@ -113,7 +113,7 @@
                     <div class="input-group-sm">
                         <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Tickets..." />
                     </div>
-                        @if (await ticketHelper.IsAuthorizedToCreate(loggedInUser))
+                        @if (await ticketHelper.IsAuthorizedToManage(loggedInUser))
                         {
                             <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>
                         } else
