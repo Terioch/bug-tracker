@@ -20,8 +20,11 @@ namespace BugTracker.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
         private readonly TicketHelper ticketHelper;
+        private readonly TicketAttachmentHelper attachmentHelper;
 
-        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, ITicketCommentRepository ticketCommentRepo, ITicketAttachmentRepository ticketAttachmentRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
+        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, ITicketCommentRepository ticketCommentRepo,
+            ITicketAttachmentRepository ticketAttachmentRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper, 
+            TicketAttachmentHelper attachmentHelper)
         {
             this.repo = repo;
             this.projectRepo = projectRepo;
@@ -31,6 +34,7 @@ namespace BugTracker.Controllers
             this.userManager = userManager;
             this.projectHelper = projectHelper;
             this.ticketHelper = ticketHelper;
+            this.attachmentHelper = attachmentHelper;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
@@ -211,9 +215,13 @@ namespace BugTracker.Controllers
                 ViewBag.ErrorMessage = $"Ticket with Id {id} cannot be found";
                 return View("NotFound");
             }            
-
+          
             ticketHistoryRepo.DeleteRecordsByTicketId(id);
-            ticketAttachmentRepo.DeleteAttachmentsByTicketId(id);
+            foreach (var attachment in ticketAttachmentRepo.GetAttachmentsByTicketId(id))
+            {
+                attachmentHelper.RemoveUploadedFileAttachment(attachment);
+            }
+            ticketAttachmentRepo.DeleteAttachmentsByTicketId(id);            
             ticketCommentRepo.DeleteCommentsByTicketId(id);
             repo.Delete(id);
             return RedirectToAction("ListTickets");

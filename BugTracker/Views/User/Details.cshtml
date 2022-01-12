@@ -12,8 +12,8 @@
 @{
     ViewData["Title"] = "User";
     ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
-    ApplicationUser user = userManager.Users.First(u => u.Id == Model.Id);    
-    List<string> roles = (List<string>)await userManager.GetRolesAsync(user);    
+    ApplicationUser user = userManager.Users.First(u => u.Id == Model.Id);
+    List<string> roles = (List<string>)await userManager.GetRolesAsync(user) ?? new List<string>();    
 }
 
 <div id="userContainer" class="card">
@@ -78,7 +78,10 @@
                                 <td>@project.Description</td> 
                                 <td class="d-flex flex-column" style="gap: 0.25rem">
                                     <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="link-success">Details</a>    
-                                    <a href="/User/RemoveProject/@Model.Id?projectId=@project.Id" class="link-danger">Remove</a>    
+                                    <a href="/User/RemoveProject/@Model.Id?projectId=@project.Id" class="link-danger"
+                                        onclick="return confirm('Are you sure you want to remove the project @project.Name from the user @Model.UserName?')">
+                                        Remove
+                                    </a>    
                                 </td>                                                                                                           
                             </tr>                                         
                         }

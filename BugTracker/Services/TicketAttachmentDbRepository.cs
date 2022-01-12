@@ -26,6 +26,11 @@ namespace BugTracker.Services
                 .FirstOrDefault(a => a.Id == id) ?? new TicketAttachment();
         }
 
+        public IEnumerable<TicketAttachment> GetAttachmentsByTicketId(string ticketId)
+        {
+            return context.TicketAttachments.Include(a => a.Submitter).Where(a => a.TicketId == ticketId);
+        }
+
         public TicketAttachment Create(TicketAttachment attachment)
         {
             context.TicketAttachments.Add(attachment);
@@ -35,12 +40,7 @@ namespace BugTracker.Services
 
         public TicketAttachment Delete(string id)
         {
-            TicketAttachment? attachment = context.TicketAttachments.Find(id);
-
-            if (attachment == null)
-            {
-                return new TicketAttachment();
-            }
+            TicketAttachment? attachment = context.TicketAttachments.Find(id);            
             context.TicketAttachments.Remove(attachment);
             context.SaveChanges();
             return attachment;

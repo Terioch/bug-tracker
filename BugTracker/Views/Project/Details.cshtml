@@ -109,7 +109,7 @@
                                             @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, Model.Id))
                                             {
                                                 <a asp-controller="Project" asp-action="RemoveUser" asp-route-id="@Model.Id" asp-route-userId="@user.Id" class="link-danger"
-                                                    onclick="return confirm('Are you sure you want to remove the user @user.UserName?')">
+                                                    onclick="return confirm('Are you sure you want to remove the user @user.UserName from the project @Model.Name?')">
                                                     Remove
                                                 </a>       
                                             }
