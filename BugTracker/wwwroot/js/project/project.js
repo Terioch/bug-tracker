@@ -4,18 +4,18 @@ class Project {
         if (document.getElementById("projectContainer")) {
             console.log("Initialized Project");
             this.projectContainer = document.getElementById("projectContainer");
-            this.handleDelete = this.handleDelete.bind(this);
+            // this.handleDelete = this.handleDelete.bind(this);
             this.onUsersManagementModalOpen = this.onUsersManagementModalOpen.bind(this);
             this.events();
         }          
     }
 
     events() {
-        document.getElementById("deleteProjectBtn").addEventListener("click", this.handleDelete);
+        // document.getElementById("deleteProjectBtn").addEventListener("click", this.handleDelete);
         document.getElementById("manageUsersBtn").addEventListener("click", this.onUsersManagementModalOpen);
     }
 
-    async handleDelete() {
+    /*async handleDelete() {
         const id = this.projectContainer.getAttribute("data-id");       
 
         try {
@@ -35,7 +35,7 @@ class Project {
         } catch (err) {
             console.error(err);
         }
-    }    
+    }    */
 
     /*onUsersManagementModalOpen() {       
         const addUserBtn = document.querySelector(".add-user");

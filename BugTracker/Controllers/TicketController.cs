@@ -49,15 +49,15 @@ namespace BugTracker.Controllers
             return View(tickets.ToPagedList(page ?? 1, 5));
         }
     
-        [Authorize(Roles = "Admin, Project Manager, Submitter")]        
+        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]        
         [HttpGet]        
         public IActionResult Create()
         {              
             // ViewBag.Projects = await projectHelper.GetUserRoleProjects();
             return View();
-        }        
+        }
 
-        [Authorize(Roles = "Admin, Project Manager, Submitter")]
+        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
         [HttpPost]        
         public async Task<IActionResult> Create(CreateTicketViewModel model)
         {
@@ -134,7 +134,7 @@ namespace BugTracker.Controllers
             return PartialView("_TicketList", filteredTickets.ToPagedList(1, 5));
         }
 
-        [Authorize(Roles = "Admin, Project Manager, Submitter")]
+        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter, Developer, Demo Developer")]
         [HttpGet]
         public IActionResult Edit(string id)
         {            
@@ -156,7 +156,7 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin, Project Manager, Submitter")]
+        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter, Developer, Demo Developer")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditTicketViewModel model)
         {            
@@ -199,9 +199,9 @@ namespace BugTracker.Controllers
             }            
             repo.Update(ticket);
             return RedirectToAction("Details", new { id = ticket.Id });
-        }                
+        }
 
-        [Authorize(Roles = "Admin, Project Manager, Submitter")]   
+        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
         public IActionResult Delete(string id)
         {
             Ticket ticket = repo.GetTicketById(id);

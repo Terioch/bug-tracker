@@ -5,7 +5,7 @@
 @inject UserManager<ApplicationUser> userManager;
 
 @{
-    // TODO: Get current users first name
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User?.Identity?.Name);
 }
 
 <style>
@@ -71,7 +71,7 @@
                     <!-- Nav Header -->
                     <div class="w-100 d-flex flex-column mx-auto pb-3 text-center fs-2">
                         <p class="p-0 m-0">Welcome,</p>
-                        <p class="p-0 m-0 fw-bold">Rio</p>
+                        <p class="p-0 m-0 fw-bold">@loggedInUser.FirstName</p>
                     </div>              
                     
                     <div style="height: 1px; width: 100%; background-color: grey" />

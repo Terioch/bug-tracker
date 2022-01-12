@@ -4,19 +4,16 @@ class Ticket {
         if (document.getElementById("ticketContainer")) {
             console.log("Initialized Ticket");
             this.ticketContainer = document.getElementById("ticketContainer");
-            // this.handleDelete = this.handleDelete.bind(this);
-            this.commentListClickHandler = this.commentListClickHandler.bind(this);
+            // this.commentListClickHandler = this.commentListClickHandler.bind(this);
             this.handleCommentCreation = this.handleCommentCreation.bind(this);           
-            this.handleCommentDeletion = this.handleCommentDeletion.bind(this);
+            // this.handleCommentDeletion = this.handleCommentDeletion.bind(this);
             this.events();
         }
     }
 
     events() {
-        // document.getElementById("deleteTicketBtn").addEventListener("click", this.handleDelete);
         document.getElementById("createCommentBtn").addEventListener("click", this.handleCommentCreation);
-        document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler);
-        document.getElementById("deleteCommentBtn").addEventListener("click", this.handleCommentDeletion);
+        // document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler);
     }
 
     findNearestParentElement(el, className) {
@@ -24,37 +21,16 @@ class Ticket {
             el = el.parentElement;
         }
         return el;
-    }
+    }   
 
-    /*async handleDelete() {
-        const id = this.ticketContainer.getAttribute("data-id");
-        console.log("delete");
-        try {
-            const res = await fetch(`/ticket/delete/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "Application/Json",
-                }
-            });
-
-            if (res.status === 400 && res.url) {
-                window.location.href = res.url;
-            }
-            await res.json();    
-            window.location.href = "/Ticket/ListTickets";
-        } catch (err) {
-            console.error(err);
-        }
-    }*/
-
-    commentListClickHandler(e) {
+    /*commentListClickHandler(e) {
         const commentId = this.findNearestParentElement(e.target, "comment-list-item").getAttribute("data-commentId");
         console.log(commentId);
-
-        if (e.target.classList.contains("delete-comment-trigger")) {
-            document.getElementById("deleteCommentBtn").setAttribute("data-id", commentId) // Attach the current comment id           
+        
+        if (e.target.classList.contains("delete-comment-btn")) {
+            this.handleCommentDeletion(commentId);
         }
-    }
+    }*/
 
     async handleCommentCreation() {
         const id = this.ticketContainer.getAttribute("data-id");
@@ -73,8 +49,7 @@ class Ticket {
             });
             
             const commentListHTML = await res.text();            
-            if (res.status == 400) throw commentListHTML; // Throw initial error
-            console.log("comment added");
+            if (res.status == 400) throw commentListHTML; // Throw initial error                
             commentsContainer.innerHTML = commentListHTML;
             document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler); // Attach event listener to replacement list
             commentDescriptionInput.value = "";
@@ -84,9 +59,8 @@ class Ticket {
         }
     }
 
-    async handleCommentDeletion() {
-        const commentsContainer = document.getElementById("commentListContainer");         
-        const commentId = document.getElementById("deleteCommentBtn").getAttribute("data-id");
+    /*async handleCommentDeletion(commentId) {
+        const commentsContainer = document.getElementById("commentListContainer");                 
 
         try {
             const res = await fetch(`/ticketComment/delete/${commentId}`, {
@@ -102,7 +76,7 @@ class Ticket {
         } catch (err) {
             console.error(err);
         }
-    }
+    }*/
 }
 
 export default Ticket;

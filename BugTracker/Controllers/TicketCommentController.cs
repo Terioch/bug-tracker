@@ -48,12 +48,10 @@ namespace BugTracker.Controllers
             return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));            
         }
 
-        [HttpDelete]
         public IActionResult Delete(string id)
         {
-            TicketComment comment = repo.Delete(id);
-            IEnumerable<TicketComment> comments = repo.GetCommentsByTicketId(comment.TicketId);
-            return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
+            TicketComment comment = repo.Delete(id);            
+            return RedirectToAction("Details", "Ticket", new { id = comment.TicketId });
         }
     }
 }

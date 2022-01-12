@@ -40,6 +40,7 @@ namespace BugTracker.Services
                 .Include(t => t.TicketHistoryRecords)
                 .Include(t => t.TicketAttachments)
                 .Include(t => t.TicketComments)
+                    .ThenInclude(c => c.Author)
                 .FirstOrDefault(t => t.Id == id);            
             return ticket;
         }

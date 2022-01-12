@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using X.PagedList;
 
 namespace BugTracker.Controllers
-{    
+{
     [Authorize]
     public class ProjectController : Controller
     {
@@ -43,14 +43,14 @@ namespace BugTracker.Controllers
             return View(projects.ToPagedList(page ?? 1, 8));
         } 
         
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Demo Admin")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Demo Admin")]
         [HttpPost]
         public IActionResult Create(Project project)
         {
@@ -98,23 +98,24 @@ namespace BugTracker.Controllers
 
             var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
             return PartialView("_ProjectList", filteredProjects.ToPagedList(1, 8));
-        }   
-        
+        }
+
+        [Authorize(Roles = "Admin, Demo Admin")]
         [HttpGet]
         public IActionResult Edit()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin, Demo Admin")]
         [HttpPut]
         public IActionResult Edit(Project project)
         {
             repo.Update(project);
             return RedirectToAction("Details", "Project", project.Id);
-        }       
+        }
 
-        [Authorize(Roles = "Admin")]
-        [HttpDelete]
+        [Authorize(Roles = "Admin, Demo Admin")]    
         public IActionResult Delete(string id)
         {            
             List<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
@@ -132,11 +133,11 @@ namespace BugTracker.Controllers
                 userProjectRepo.Delete(user.Id, id);
             }
 
-            Project deletedProject = repo.Delete(id);
-            return Json(deletedProject);
-        }        
+            repo.Delete(id);
+            return RedirectToAction("ListProjects");
+        }
 
-        [Authorize(Roles = "Admin, Project Manager")]
+        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager")]
         [HttpPost]
         public IActionResult AddUser(string id, ProjectViewModel model)
         {            
@@ -166,7 +167,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("Details", new { id });     
         }
 
-        [Authorize(Roles = "Admin, Project Manager")]
+        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager")]
         public IActionResult RemoveUser(string id, string userId)
         {
             ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == userId);
