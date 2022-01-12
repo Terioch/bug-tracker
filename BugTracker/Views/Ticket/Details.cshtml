@@ -20,14 +20,14 @@
             <div class="card-header">
                 <h4>@Model.Title</h4> 
                 <div>
-                    @if (await ticketHelper.IsAuthorizedToManage(loggedInUser))
+                    @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
                     {
                         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>                                                
                     }       
 
                     | <a asp-action="ListTickets" class="text-primary">Back to List</a> |
 
-                    @if (await ticketHelper.IsAuthorizedToManage(loggedInUser))
+                    @if (await ticketHelper.IsAuthorizedToDelete(loggedInUser, Model.Id))
                     {
                         <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteTicketModal">Delete</a>
                     }
@@ -165,7 +165,7 @@
                             <input type="file" name="FileAttachment" class="form-control" style="max-width: 300px">                      
                         </div>
                     </div>   
-                    @if (await ticketHelper.IsAuthorizedToManage(loggedInUser)) 
+                    @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id)) 
                     {
                         <button type="submit" class="btn btn-success">Upload Attachment</button>
                     } else 

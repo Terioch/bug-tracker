@@ -40,9 +40,19 @@ namespace BugTracker.Helpers
             return userProjectRepo.GetProjectsByUserId(user.Id);     
         }
 
-        public Project GetFullProject(string id)
+        public async Task<bool> IsUserAuthorizedToManageUsers(ApplicationUser user, string projectId)
         {
-            return new Project();
+            List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
+
+            if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
+            {
+                return true;
+            }
+            else if (roles.Contains("Project Manager") || roles.Contains("Demo Project Manager"))
+            {
+                return userProjectRepo.GetProjectsByUserId(user.Id).Select(p => p.Id).Contains(projectId);
+            }            
+            return false;
         }
     }
 }
