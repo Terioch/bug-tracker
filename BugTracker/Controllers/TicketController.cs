@@ -124,10 +124,10 @@ namespace BugTracker.Controllers
                 return PartialView("_TicketList", tickets.ToPagedList(1, 5));
             }
 
-            if (tickets.ToList().Count == 0)
+            /*if (tickets.ToList().Count == 0)
             {
                 throw new Exception("No tickets to filter based on predicate");
-            }
+            }*/
 
             var filteredTickets = tickets.Where(t => 
                 t.Title.ToLowerInvariant().Contains(searchTerm)

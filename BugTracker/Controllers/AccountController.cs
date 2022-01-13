@@ -8,15 +8,17 @@ namespace BugTracker.Controllers
     public class AccountController : Controller
     {
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IConfiguration config;
 
-        public AccountController(SignInManager<ApplicationUser> signInManager)
+        public AccountController(SignInManager<ApplicationUser> signInManager, IConfiguration config)
         {
             this.signInManager = signInManager;
+            this.config = config;
         }       
 
         public IList<AuthenticationScheme>? ExternalLogins { get; set; }
 
-        public InputModel? Input { get; set; }
+        public InputModel? Input { get; set; } = new InputModel();
 
         public class InputModel
         {
@@ -29,11 +31,11 @@ namespace BugTracker.Controllers
         {
             return View("DemoLoginForm");
         }
-
+        
         public async Task<IActionResult> LoginWithDemoAccount(string role)
         {
             string returnUrl = "/Project/ListProjects";
-            Input.Password = "7sH73jfdFr5!";
+            Input.Password = config["ADMIN_PASSWORD"];    
 
             switch (role)
             {
@@ -52,7 +54,7 @@ namespace BugTracker.Controllers
             }
 
             ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            var result = await signInManager.PasswordSignInAsync("Demo Admin", "7sH73jfdFr5!", false, lockoutOnFailure: false);
+            var result = await signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {             
@@ -65,13 +67,9 @@ namespace BugTracker.Controllers
             if (result.IsLockedOut)
             {              
                 return RedirectToPage("./Lockout");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return RedirectToAction("DisplayDemoLoginForm");
-            }
-            return View();
+            }            
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return RedirectToAction("DisplayDemoLoginForm");                    
         }
     }
 }

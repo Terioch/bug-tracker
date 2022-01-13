@@ -21,17 +21,19 @@
       <h1 class="fs-3 mt-2">@Model.Name</h1>
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Demo Admin"))
         {
-            <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>     
+            <span><a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |</span>
         }
         
-        | <a asp-action="ListProjects">Back to List</a> |
+        <a asp-action="ListProjects">Back to List</a>
 
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Demo Admin"))
         {
-            <a asp-action="Delete" asp-route-id="@Model.Id" class="text-danger" 
-                onclick="return confirm('Are you sure you want to delete the project @Model.Name?')">
-                Delete
-            </a>   
+            <span>
+                | <a asp-action="Delete" asp-route-id="@Model.Id" class="text-danger" 
+                    onclick="return confirm('Are you sure you want to delete the project @Model.Name?')">
+                    Delete
+                </a>
+            </span>           
         }       
   </div>
   <div class="card-body">

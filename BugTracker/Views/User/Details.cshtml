@@ -19,8 +19,11 @@
 <div id="userContainer" class="card">
   <div class="card-header bg-light">
       <h1 class="fs-3 mt-2">@Model.UserName</h1>     
-      <a asp-action="ListUsers">Back to List</a> |      
-      <a href="" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</a>     
+      <a asp-action="ListUsers">Back to List</a>
+      @if (await userManager.IsInRoleAsync(loggedInUser, "Admin")) 
+      {
+          <span>| <a href="" class="text-danger">Delete</a></span>            
+      }         
   </div>
   <div class="card-body">
       <ul class="list-group list-group-horizontal d-flex flex-wrap">

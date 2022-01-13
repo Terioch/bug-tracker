@@ -22,17 +22,19 @@
                 <div>
                     @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
                     {
-                        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>                                                
+                        <span><a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |</span>                                                                      
                     }       
 
-                    | <a asp-action="ListTickets" class="text-primary">Back to List</a> |
+                    <a asp-action="ListTickets" class="text-primary">Back to List</a>
 
                     @if (await ticketHelper.IsAuthorizedToDelete(loggedInUser, Model.Id))
                     {
-                        <a asp-action="Delete" asp-route-id="@Model.Id" class="text-danger" 
-                            onclick="return confirm('Are you sure you want to delete the ticket @Model.Title?')">
-                            Delete
-                        </a>
+                        <span>
+                            | <a asp-action="Delete" asp-route-id="@Model.Id" class="text-danger" 
+                                onclick="return confirm('Are you sure you want to delete the ticket @Model.Title?')">
+                                Delete
+                            </a>
+                        </span>                        
                     }
                 </div>
             </div>   
