@@ -1,14 +1,14 @@
-﻿@page
-@model BugTracker.Areas.Identity.Pages.Account.LoginModel
+﻿@model BugTracker.Areas.Identity.Pages.Account.LoginModel
 
 <div class="row d-flex justify-content-center p-3">
     <div class="col-md-6 border rounded">
         <section>
             <form id="account" method="post">
-                <h2 class="mt-3">Select a demo account</h2>
-                <hr />
+                <div class="d-flex justify-content-center align-items-center my-3 border-bottom">
+                    <h1 class="fs-3">Select a demo account</h1>
+                </div>                              
                 <div class="row g-4 mb-3">
-                    <a href="" type="submit" class="col col-sm-6">
+                    <button asp-route-role="Admin" type="submit" class="col col-sm-6 border-0 bg-transparent">
                         <!--Demo Admin Card-->
                         <div class="card h-100">
                             <img src="~/Images/default-user-icon.jpg" />
@@ -16,8 +16,8 @@
                                 <p class="card-text fs-5">Demo Admin</p>
                             </div>
                         </div>        
-                    </a>
-                    <button class="col col-sm-6 border-0 bg-transparent">
+                    </button>
+                    <button asp-route-role="Project Manager" type="submit" class="col col-sm-6 border-0 bg-transparent">
                         <!--Demo Project Manager Card-->
                         <div class="card h-100">
                             <img src="~/Images/default-user-icon.jpg" />
@@ -26,7 +26,7 @@
                             </div>
                         </div>        
                     </button>
-                    <div class="col col-sm-6">
+                    <button asp-route-role="Demo Developer" type="submit" class="col col-sm-6 border-0 bg-transparent">
                         <!--Demo Developer Card-->
                         <div class="card h-100">
                             <img src="~/Images/default-user-icon.jpg" />
@@ -34,8 +34,8 @@
                                 <p class="card-text fs-5">Demo Developer</p>
                             </div>
                         </div>        
-                    </div>
-                    <div class="col col-sm-6">
+                    </button>
+                    <button asp-route-role="Demo Submitter" type="submit" class="col col-sm-6 border-0 bg-transparent">
                         <!--Demo Submitter Card-->
                         <div type="submit" class="card h-100">
                             <img src="~/Images/default-user-icon.jpg" />
@@ -43,7 +43,7 @@
                                 <p class="card-text fs-5">Demo Submitter</p>
                             </div>
                         </div>        
-                    </div>
+                    </button>
                     <a class="link-secondary text-decoration-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("ListProjects", "Project", new { area = "" })">
                         Have an account? <span class="text-decoration-underline">Login Here</span>   
                     </a>
