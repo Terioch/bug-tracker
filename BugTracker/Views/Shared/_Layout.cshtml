@@ -5,7 +5,11 @@
 @inject UserManager<ApplicationUser> userManager;
 
 @{
-    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User?.Identity?.Name);
+    ApplicationUser loggedInUser = new ApplicationUser();
+    if (User?.Identity?.Name != null)
+    {
+        loggedInUser = await userManager.FindByNameAsync(User?.Identity?.Name);   
+    }   
 }
 
 <style>

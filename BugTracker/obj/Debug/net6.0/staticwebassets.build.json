@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tNvBVq9s/ay0zLN9N9jKOD0mHJ4/p/SlA/OqGFkWyd0=",
+  "Hash": "YjmWeTSKsnpbxp9e76/xBf3bxy55k6nGt3RxrLBX5/g=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1105,6 +1105,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\5bea72a0-71e4-4321-b7fe-8e32470541e1_office.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Images/5bea72a0-71e4-4321-b7fe-8e32470541e1_office.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\5bea72a0-71e4-4321-b7fe-8e32470541e1_office.jpg"
+    },
+    {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\5e89ccf4-e74b-49f2-a31b-02b7d74ecfed_saltwater-crocodile.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
@@ -1173,6 +1190,23 @@
       "OriginalItemSpec": "wwwroot\\Images\\973ec77a-43ba-4ef7-a44c-51ceff8288a2_graph.jpg"
     },
     {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\default-user-icon.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Images/default-user-icon.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\default-user-icon.jpg"
+    },
+    {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\f5ec6bb8-a290-4d39-97c5-c9ebf03702bd_calendar.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
@@ -1188,6 +1222,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\f5ec6bb8-a290-4d39-97c5-c9ebf03702bd_calendar.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\js\\account\\account.js",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "js/account/account.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\account\\account.js"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\js\\project\\project.js",

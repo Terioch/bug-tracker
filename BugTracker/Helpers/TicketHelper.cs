@@ -28,12 +28,7 @@ namespace BugTracker.Helpers
         {            
             user ??= await userManager.GetUserAsync(claimUser);
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
-            List<Project> projects = userProjectRepo.GetProjectsByUserId(user.Id);
-
-            /* foreach (var project in projects)
-            {
-                project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id);
-            }*/
+            List<Project> projects = userProjectRepo.GetProjectsByUserId(user.Id);            
 
             if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
             {
@@ -70,11 +65,7 @@ namespace BugTracker.Helpers
             else if (roles.Contains("Submitter") || roles.Contains("Demo Submitter"))
             {
                 return user.Id == ticket.SubmitterId;
-            }
-            else if (roles.Contains("Developer") || roles.Contains("Demo Developer"))
-            {
-                return user.Id == ticket.AssignedDeveloperId;
-            }                     
+            }                              
             return false;
         }
 
