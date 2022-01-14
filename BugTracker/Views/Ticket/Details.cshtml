@@ -19,11 +19,17 @@
         <div class="col col-xl-auto p-0">
             <div class="card-header">
                 <h4>@Model.Title</h4> 
-                <div>
-                    @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
-                    {
-                        <span><a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |</span>                                                                      
-                    }       
+                <div>                    
+                    @{
+                        if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
+                        {
+                            <span><a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |</span>                                                                      
+                        }
+                        else if (await ticketHelper.IsOnlyAuthorizedToUpdateStatus(loggedInUser, Model.Id))
+                        {
+                            <Span><a href="" class="link-success" data-bs-toggle="modal" data-bs-target="#updateTicketStatusModal">Update Status</a> |</Span>
+                        }
+                    }
 
                     <a asp-action="ListTickets" class="text-primary">Back to List</a>
 
@@ -292,6 +298,37 @@
                     </div>
                 }
             </div>                                    
+        </div>
+    </div>
+</div>
+
+<!-- Update Ticket Status Modal -->
+<div class="modal fade" id="updateTicketStatusModal" tabindex="-1" aria-labelledby="updateTicketStatusModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">     
+            <form asp-action="EditStatus" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update the status of this ticket</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input asp-for="Id" type="hidden" />
+                    <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Status</label>                     
+                    <select asp-for="Status" class="form-select mb-4" aria-label="Ticket project">                                                
+                        <option selected>New</option>
+                        <option>Open</option>
+                        <option>In Progress</option>
+                        <option>Closed</option>
+                        <option>Under Review</option>  
+                    </select>           
+                    <div asp-validation-summary="ModelOnly" class="text-danger mt-3"></div>
+                </div>
+                <div class="modal-footer text-left">                
+                    <button type="submit" class="btn btn-success add-user">Update</button>                
+                </div> 
+            </form>                           
         </div>
     </div>
 </div>

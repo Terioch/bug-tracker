@@ -205,6 +205,33 @@ namespace BugTracker.Controllers
             return RedirectToAction("Details", new { id = ticket.Id });
         }
 
+        [Authorize(Roles = "Developer, Demo Developer")]
+        [HttpPost]
+        public async Task <IActionResult> EditStatus(TicketViewModel model)
+        {
+            Ticket ticket = repo.GetTicketById(model.Id);
+            ApplicationUser modifier = await GetCurrentUserAsync();
+
+            if (ticket.Status != model.Status)
+            {
+                TicketHistoryRecord record = new()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    TicketId = ticket.Id,
+                    Property = "Status",
+                    OldValue = ticket.Status,
+                    NewValue = model.Status,
+                    Modifier = modifier.UserName,
+                    ModifiedAt = DateTime.Now,
+                };
+
+                ticketHistoryRepo.Create(record);
+                ticket.Status = model.Status;
+                repo.Update(ticket);
+            }                        
+            return RedirectToAction("Details", new { id = ticket.Id });
+        }
+
         [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
         public IActionResult Delete(string id)
         {
