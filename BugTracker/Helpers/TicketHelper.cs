@@ -73,6 +73,7 @@ namespace BugTracker.Helpers
         {
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
             Ticket ticket = ticketRepo.GetTicketById(ticketId);
+
             if (roles.Contains("Developer") || roles.Contains("Demo Developer"))
             {
                 return user.Id == ticket.AssignedDeveloperId;

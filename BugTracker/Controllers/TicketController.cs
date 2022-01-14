@@ -14,6 +14,7 @@ namespace BugTracker.Controllers
     {
         private readonly ITicketRepository repo;
         private readonly IProjectRepository projectRepo;
+        private readonly IUserProjectRepository userProjectRepo;
         private readonly ITicketHistoryRecordRepository ticketHistoryRepo;
         private readonly ITicketCommentRepository ticketCommentRepo;
         private readonly ITicketAttachmentRepository ticketAttachmentRepo;
@@ -22,12 +23,13 @@ namespace BugTracker.Controllers
         private readonly TicketHelper ticketHelper;
         private readonly TicketAttachmentHelper attachmentHelper;
 
-        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, ITicketCommentRepository ticketCommentRepo,
-            ITicketAttachmentRepository ticketAttachmentRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper, 
-            TicketAttachmentHelper attachmentHelper)
+        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRecordRepository ticketHistoryRepo,
+            ITicketCommentRepository ticketCommentRepo, ITicketAttachmentRepository ticketAttachmentRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, 
+            TicketHelper ticketHelper, TicketAttachmentHelper attachmentHelper)
         {
             this.repo = repo;
             this.projectRepo = projectRepo;
+            this.userProjectRepo = userProjectRepo;
             this.ticketHistoryRepo = ticketHistoryRepo;
             this.ticketCommentRepo = ticketCommentRepo;
             this.ticketAttachmentRepo = ticketAttachmentRepo;
@@ -172,9 +174,10 @@ namespace BugTracker.Controllers
                 return View("NotFound");
             }
 
+            // Update property and property history if new value differs from original
             PropertyInfo[] modelProperties = model.GetType().GetProperties();
             ApplicationUser modifier = await GetCurrentUserAsync();            
-          
+            
             foreach (var property in modelProperties) 
             {          
                 PropertyInfo? ticketProperty = ticket.GetType().GetProperty(property.Name);               
@@ -200,7 +203,22 @@ namespace BugTracker.Controllers
                         ticketProperty.SetValue(ticket, property.GetValue(model));
                     }                 
                 }                                
-            }            
+            }
+
+            // Ensure that the assigned developer is assigned to the corresponding project
+            IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
+            bool isDeveloperAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.AssignedDeveloperId);
+
+            if (!isDeveloperAssigned)
+            {
+                UserProject userProject = new()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = ticket.AssignedDeveloperId,
+                    ProjectId = ticket.ProjectId,
+                };
+                userProjectRepo.Create(userProject);
+            }
             repo.Update(ticket);
             return RedirectToAction("Details", new { id = ticket.Id });
         }
