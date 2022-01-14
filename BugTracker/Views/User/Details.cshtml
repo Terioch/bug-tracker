@@ -80,7 +80,7 @@
                                 <td>@project.Name</td>                        
                                 <td>@project.Description</td> 
                                 <td class="d-flex flex-column" style="gap: 0.25rem">
-                                    <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="link-success">Details</a>    
+                                    <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="link-success">Details</a>                                        
                                     <a href="/User/RemoveProject/@Model.Id?projectId=@project.Id" class="link-danger"
                                         onclick="return confirm('Are you sure you want to remove the project @project.Name from the user @Model.UserName?')">
                                         Remove
@@ -119,8 +119,8 @@
                     <div class="input-group-sm">
                         <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Tickets..." />
                     </div>                      
-                        <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>                                                                         
-                    </div>                    
+                    <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>                                                                         
+                </div>                    
                 <table class="table">
                     <thead>
                         <tr>          

@@ -10,8 +10,8 @@
                 <div class="row g-4 mb-3">                    
                     <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Admin" class="col col-sm-6 border-0 bg-transparent text-decoration-none text-secondary">
                         <!--Demo Admin Card-->
-                        <div class="card h-100">
-                            <img src="~/Images/default-user-icon.jpg" />
+                        <div class="card h-100" style="max-height: 200px; max-width: 200px">
+                            <img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" />
                             <div class="card-body">
                                 <p class="card-text fs-5 text-decoration-none">Demo Admin</p>
                             </div>
@@ -52,5 +52,9 @@
         </section>
     </div>    
 </div>
+
+@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
 
 <!--<i class="bi bi-person-circle bg-light"></i>-->
