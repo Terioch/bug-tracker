@@ -33,7 +33,7 @@ namespace BugTracker.Services
 
         public Ticket GetTicketById(string id)
         {
-            Ticket? ticket = context.Tickets
+            return context.Tickets
                 .Include(t => t.Project)
                 .Include(t => t.Submitter)
                 .Include(t => t.AssignedDeveloper)
@@ -41,8 +41,7 @@ namespace BugTracker.Services
                 .Include(t => t.TicketAttachments)
                 .Include(t => t.TicketComments)
                     .ThenInclude(c => c.Author)
-                .FirstOrDefault(t => t.Id == id);            
-            return ticket;
+                .First(t => t.Id == id);            
         }
 
         public Ticket Create(Ticket ticket)
