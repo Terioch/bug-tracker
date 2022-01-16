@@ -18,19 +18,20 @@ namespace BugTracker.Controllers
         private readonly IProjectRepository repo;
         private readonly ITicketRepository ticketRepo;
         private readonly IUserProjectRepository userProjectRepo;
-        private readonly ITicketHistoryRecordRepository ticketHistoryRecordRepo;
+        private readonly ITicketHistoryRecordRepository ticketHistoryRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
-
-        public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
+        
+        public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, 
+            UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
         {
             this.repo = repo;
             this.ticketRepo = ticketRepo;
             this.userProjectRepo = userProjectRepo;
-            this.ticketHistoryRecordRepo = ticketHistoryRepo;
+            this.ticketHistoryRepo = ticketHistoryRepo;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
-        }     
+        }    
         
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
@@ -39,7 +40,7 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> ListProjects(int? page)
         {   
-            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();            
+            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();               
             return View(projects.ToPagedList(page ?? 1, 8));
         } 
         
@@ -64,7 +65,7 @@ namespace BugTracker.Controllers
         {
             Project project = repo.GetProjectById(id);
             // project.Tickets = ticketRepository.GetTicketsByProjectId(id);
-            project.Users = userProjectRepo.GetUsersByProjectId(id);
+            // project.Users = userProjectRepo.GetUsersByProjectId(id);
 
             List<ApplicationUser> unassignedUsers = userManager.Users.ToList();
             project.Users.ToList().ForEach(u => unassignedUsers.Remove(u));
@@ -123,7 +124,7 @@ namespace BugTracker.Controllers
             foreach (var ticket in tickets)
             {
                 ticketRepo.Delete(ticket.Id);
-                ticketHistoryRecordRepo.DeleteRecordsByTicketId(ticket.Id);
+                ticketHistoryRepo.DeleteRecordsByTicketId(ticket.Id);
             }
 
             List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id); 

@@ -24,16 +24,14 @@ namespace BugTracker.Services
 
         public Project GetProjectById(string id)
         {
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
             return context.Projects
                 .Where(p => p.Id == id)
                 .Include(p => p.Tickets)
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
                     .ThenInclude(t => t.Submitter)
                 .Include(p => p.Tickets)
                     .ThenInclude(t => t.AssignedDeveloper)
                 .Include(p => p.Users)
-                .FirstOrDefault() ?? new Project();
+                .FirstOrDefault();
         }
 
         public Project GetProjectByName(string name)

@@ -7,7 +7,7 @@ namespace BugTracker.Services
 {    
     public class TicketDbRepository : ITicketRepository
     {
-        private readonly BugTrackerDbContext context;
+        private readonly BugTrackerDbContext context;        
 
         public TicketDbRepository(BugTrackerDbContext context)
         {
