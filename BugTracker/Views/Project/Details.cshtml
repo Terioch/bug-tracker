@@ -12,9 +12,15 @@
 @model BugTracker.Models.ProjectViewModel
 
 @{
-    ViewData["Title"] = "Project Details";  
+    ViewData["Title"] = "Project Details";
     ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
 
 <div id="projectContainer" data-id="@Model?.Id" class="card">
     <div class="card-header bg-light">
@@ -114,7 +120,7 @@
                             </p>                   
                             @Html.PagedListPager(
                                 Model.Users.ToPagedList(), 
-                                page => Url.Action("Details", new { page }),
+                                page => Url.Action("Details", new { usersPage = page }),
                                 new PagedListRenderOptions() 
                                 {
                                     UlElementClasses = new string[] { "pagination", "mb-0" },
@@ -182,7 +188,7 @@
                         </p>                   
                         @Html.PagedListPager(
                             Model.Tickets, 
-                            page => Url.Action("Details", new { Model.Id, page }),
+                            page => Url.Action("Details", new { Model.Id, ticketsPage = page }),
                             new PagedListRenderOptions() 
                             {
                                 UlElementClasses = new string[] { "pagination", "mb-0" },

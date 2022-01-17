@@ -61,7 +61,7 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(string id, int? page)
+        public IActionResult Details(string id, int? usersPage, int? ticketsPage)
         {            
             Project project = repo.GetProjectById(id);
             // project.Tickets = ticketRepository.GetTicketsByProjectId(id);
@@ -76,9 +76,9 @@ namespace BugTracker.Controllers
                 Name = project.Name,
                 Description = project.Description,                
                 UnassignedUsers = unassignedUsers,
-                Users = project.Users.ToPagedList(page ?? 1, 5),
-                Tickets = project.Tickets.ToPagedList(page ?? 1, 5),
-            };
+                Users = project.Users.ToPagedList(usersPage ?? 1, 5),
+                Tickets = project.Tickets.ToPagedList(ticketsPage ?? 1, 5),
+            };            
             return View(model);
         }
       
@@ -148,6 +148,7 @@ namespace BugTracker.Controllers
 
             if (users.Contains(user))
             {
+                TempData["Error"] = "The user you're attempting to add is already in this project";
                 return RedirectToAction("Details", new { id });
             }
 
@@ -165,12 +166,21 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, Project Manager")]
         public IActionResult RemoveUser(string id, string userId)
         {
+            Project project = repo.GetProjectById(id);
             ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == userId);            
-
             List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 
             if (!users.Contains(user))
             {
+                TempData["Error"] = "The user you're attempting to remove is not in this project";
+                return RedirectToAction("Details", new { id });
+            }
+
+            bool IsUserInProject = project.Tickets.Where(t => t.AssignedDeveloperId == userId || t.SubmitterId == userId).Any();
+
+            if (IsUserInProject)
+            {
+                TempData["Error"] = "This user is associated with at least one ticket within the assigned project and must be disassociated with all tickets before they're removed.";                
                 return RedirectToAction("Details", new { id });
             }
 
