@@ -35,14 +35,13 @@ namespace BugTracker.Services
 
         public Project GetProjectByName(string name)
         {
-            return context.Projects
-                .Where(p => p.Name == name)
+            return context.Projects        
                 .Include(p => p.Tickets ?? new List<Ticket>())
                     .ThenInclude(t => t.Submitter)
                 .Include(p => p.Tickets ?? new List<Ticket>())
                     .ThenInclude(t => t.AssignedDeveloper)
                 .Include(p => p.Users)
-                .FirstOrDefault() ?? new Project();
+                .First(p => p.Name == name);
         }
 
         public Project Create(Project project)

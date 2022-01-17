@@ -62,7 +62,7 @@ namespace BugTracker.Controllers
 
         [HttpGet]
         public IActionResult Details(string id, int? page)
-        {
+        {            
             Project project = repo.GetProjectById(id);
             // project.Tickets = ticketRepository.GetTicketsByProjectId(id);
             // project.Users = userProjectRepo.GetUsersByProjectId(id);
@@ -142,13 +142,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public IActionResult AddUser(string id, ProjectViewModel model)
         {            
-            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == model.ToBeAssignedUserId);
-
-            if (user == null)
-            {
-                ViewBag.ErrorMessage = $"User with Id {model.ToBeAssignedUserId} cannot be found";
-                return View("NotFound");
-            }
+            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == model.ToBeAssignedUserId);           
 
             List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 
@@ -171,13 +165,7 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager")]
         public IActionResult RemoveUser(string id, string userId)
         {
-            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == userId);
-
-            if (user == null)
-            {
-                ViewBag.ErrorMessage = $"User with Id {userId} cannot be found";
-                return View("NotFound");
-            }
+            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == userId);            
 
             List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 

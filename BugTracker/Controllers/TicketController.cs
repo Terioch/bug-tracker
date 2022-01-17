@@ -140,7 +140,7 @@ namespace BugTracker.Controllers
             return PartialView("_TicketList", filteredTickets.ToPagedList(1, 5));
         }
 
-        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter, Developer, Demo Developer")]
+        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
         [HttpGet]
         public IActionResult Edit(string id)
         {            
@@ -162,17 +162,11 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter, Developer, Demo Developer")]
+        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditTicketViewModel model)
         {            
-            Ticket ticket = repo.GetTicketById(model.Id);
-
-            if (ticket == null)
-            {
-                ViewBag.ErrorMessage = $"Ticket with Id {model.Id} cannot be found";
-                return View("NotFound");
-            }
+            Ticket ticket = repo.GetTicketById(model.Id);            
 
             // Update property and property history if new value differs from original
             PropertyInfo[] modelProperties = model.GetType().GetProperties();
@@ -253,13 +247,7 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
         public IActionResult Delete(string id)
         {
-            Ticket ticket = repo.GetTicketById(id);
-
-            if (ticket == null)
-            {
-                ViewBag.ErrorMessage = $"Ticket with Id {id} cannot be found";
-                return View("NotFound");
-            }            
+            Ticket ticket = repo.GetTicketById(id);                    
           
             ticketHistoryRepo.DeleteRecordsByTicketId(id);
             foreach (var attachment in ticketAttachmentRepo.GetAttachmentsByTicketId(id))

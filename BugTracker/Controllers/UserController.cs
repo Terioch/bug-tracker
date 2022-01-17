@@ -30,20 +30,6 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult ListUsers(int? page)
         {
-            /*List<UserProjectViewModel> users = new();
-
-            foreach (var user in userManager.Users)
-            {
-                List<Project> projects = repository.GetProjectsByUserId(user.Id);               
-
-                users.Add(new()
-                {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    Projects = projects,
-                });
-            }*/
             IPagedList<ApplicationUser> users = userManager.Users.ToPagedList(page ?? 1, 8);
             return View(users);
         }

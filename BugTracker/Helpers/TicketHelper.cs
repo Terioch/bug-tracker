@@ -25,9 +25,9 @@ namespace BugTracker.Helpers
         }
 
         public async Task<IEnumerable<Ticket>> GetUserRoleTickets(ApplicationUser? user = null)
-        {            
+        {                   
             user ??= await userManager.GetUserAsync(claimUser);
-            List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
+            IList<string> roles = await userManager.GetRolesAsync(user);
             List<Project> projects = userProjectRepo.GetProjectsByUserId(user.Id);            
 
             if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
@@ -47,7 +47,7 @@ namespace BugTracker.Helpers
 
         public async Task<bool> IsAuthorizedToEdit(ApplicationUser user, string ticketId)
         {
-            List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
+            IList<string> roles = await userManager.GetRolesAsync(user);
             Ticket ticket = ticketRepo.GetTicketById(ticketId);
 
             if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
@@ -71,7 +71,7 @@ namespace BugTracker.Helpers
 
         public async Task<bool> IsOnlyAuthorizedToUpdateStatus(ApplicationUser user, string ticketId)
         {
-            List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
+            IList<string> roles = await userManager.GetRolesAsync(user);
             Ticket ticket = ticketRepo.GetTicketById(ticketId);
 
             if (roles.Contains("Developer") || roles.Contains("Demo Developer"))
@@ -83,7 +83,7 @@ namespace BugTracker.Helpers
 
         public async Task<bool> IsAuthorizedToDelete(ApplicationUser user, string ticketId)
         {
-            List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
+            IList<string> roles = await userManager.GetRolesAsync(user);
             Ticket ticket = ticketRepo.GetTicketById(ticketId);
 
             if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
