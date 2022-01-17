@@ -144,9 +144,18 @@
                         <div class="input-group-sm">
                             <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..."  />
                         </div>
-                        <a asp-controller="Ticket" asp-action="Create" class="btn btn-success mb-3">
-                            Create New Ticket
-                        </a>
+                        @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
+                            || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))
+                            {
+                                <a asp-controller="Ticket" asp-action="Create" class="btn btn-success mb-3">
+                                    Create New Ticket
+                                </a>
+                            } else
+                            {
+                                <a asp-controller="Ticket" asp-action="Create" class="btn btn-success mb-3 disabled">
+                                    Create New Ticket
+                                </a> 
+                            }                                                        
                     </div>  
                     <table class="table">
                         <thead>

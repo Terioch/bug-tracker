@@ -119,7 +119,14 @@
                     <div class="input-group-sm">
                         <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Tickets..." />
                     </div>                      
-                    <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>                                                                         
+                    @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
+                        || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))
+                    {
+                        <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>     
+                    } else
+                    {
+                        <a class="btn btn-success mb-3 disabled" asp-controller="Ticket" asp-action="Create">Create New Ticket</a>
+                    }                                                                                                        
                 </div>                    
                 <table class="table">
                     <thead>
