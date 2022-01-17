@@ -52,10 +52,10 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> ListTickets(int? page)
         {
             IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();            
-            return View(tickets.ToPagedList(page ?? 1, 5));
+            return View(tickets.ToPagedList(page ?? 1, 8));
         }
-    
-        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]        
+
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]        
         public IActionResult Create()
         {              
@@ -63,7 +63,7 @@ namespace BugTracker.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpPost]        
         public async Task<IActionResult> Create(CreateTicketViewModel model)
         {
@@ -84,6 +84,23 @@ namespace BugTracker.Controllers
                     Priority = model.Priority,
                 };
 
+                if (ticket.ProjectId != null)
+                {
+                    // Ensure that the submitter is assigned to the corresponding project
+                    IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
+                    bool isSubmitterAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.SubmitterId);
+
+                    if (!isSubmitterAssigned)
+                    {
+                        UserProject userProject = new()
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            UserId = ticket.SubmitterId,
+                            ProjectId = ticket.ProjectId,
+                        };
+                        userProjectRepo.Create(userProject);
+                    }
+                }                
                 ticket = repo.Create(ticket);
                 return RedirectToAction("Details", new { id = ticket.Id });
             }
@@ -140,7 +157,7 @@ namespace BugTracker.Controllers
             return PartialView("_TicketList", filteredTickets.ToPagedList(1, 5));
         }
 
-        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]
         public IActionResult Edit(string id)
         {            
@@ -162,7 +179,7 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditTicketViewModel model)
         {            
@@ -199,25 +216,28 @@ namespace BugTracker.Controllers
                 }                                
             }
 
-            // Ensure that the assigned developer is assigned to the corresponding project
-            IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
-            bool isDeveloperAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.AssignedDeveloperId);
-
-            if (!isDeveloperAssigned)
+            if (ticket.ProjectId != null)
             {
-                UserProject userProject = new()
+                // Ensure that the assigned developer is assigned to the corresponding project
+                IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
+                bool isDeveloperAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.AssignedDeveloperId);
+
+                if (!isDeveloperAssigned)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    UserId = ticket.AssignedDeveloperId,
-                    ProjectId = ticket.ProjectId,
-                };
-                userProjectRepo.Create(userProject);
-            }
+                    UserProject userProject = new()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        UserId = ticket.AssignedDeveloperId,
+                        ProjectId = ticket.ProjectId,
+                    };
+                    userProjectRepo.Create(userProject);
+                }
+            }            
             repo.Update(ticket);
             return RedirectToAction("Details", new { id = ticket.Id });
         }
 
-        [Authorize(Roles = "Developer, Demo Developer")]
+        [Authorize(Roles = "Developer")]
         [HttpPost]
         public async Task <IActionResult> EditStatus(TicketViewModel model)
         {
@@ -244,7 +264,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("Details", new { id = ticket.Id });
         }
 
-        [Authorize(Roles = "Admin, Demo Admin, Project Manager, Demo Project Manager, Submitter, Demo Submitter")]
+        [Authorize(Roles = "Admin, Project Manager, Submitter")]
         public IActionResult Delete(string id)
         {
             Ticket ticket = repo.GetTicketById(id);                    

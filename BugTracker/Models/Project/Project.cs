@@ -16,10 +16,10 @@ namespace BugTracker.Models
 
         [Required]
         [StringLength(200)]
-        public string? Description { get; set; }
-
-        public virtual ICollection<ApplicationUser>? Users { get; set; } = new HashSet<ApplicationUser>();
+        public string? Description { get; set; }       
 
         public virtual ICollection<Ticket>? Tickets { get; set; } = new HashSet<Ticket>();
+        
+        public virtual ICollection<ApplicationUser>? Users { get; set; } = new HashSet<ApplicationUser>();
     }
 }

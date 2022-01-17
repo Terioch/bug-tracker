@@ -23,22 +23,22 @@ namespace BugTracker.Services
         }
 
         public Project GetProjectById(string id)
-        {            
-            return context.Projects
-                .Include(p => p.Tickets ?? new List<Ticket>())
+        {
+            return context.Projects               
+                .Include(p => p.Tickets)
                     .ThenInclude(t => t.Submitter)
-                .Include(p => p.Tickets ?? new List<Ticket>())
+                .Include(p => p.Tickets)
                     .ThenInclude(t => t.AssignedDeveloper)
-                .Include(p => p.Users)
+                 .Include(p => p.Users)
                 .First(p => p.Id == id);
         }
 
         public Project GetProjectByName(string name)
         {
             return context.Projects        
-                .Include(p => p.Tickets ?? new List<Ticket>())
+                .Include(p => p.Tickets)
                     .ThenInclude(t => t.Submitter)
-                .Include(p => p.Tickets ?? new List<Ticket>())
+                .Include(p => p.Tickets)
                     .ThenInclude(t => t.AssignedDeveloper)
                 .Include(p => p.Users)
                 .First(p => p.Name == name);

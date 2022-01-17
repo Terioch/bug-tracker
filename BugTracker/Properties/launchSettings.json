@@ -22,7 +22,8 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ADMIN_PASSWORD": "7sH73jfdFr5!"
       }
     }
   }
