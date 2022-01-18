@@ -49,6 +49,7 @@
                             <th scope="col">Developer</th>
                             <th scope="col">Status</th>
                             <th scope="col">Priority</th>
+                            <th scope="col">Created At</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -67,6 +68,7 @@
                                 }
                                 <td>@ticket.Status</td>
                                 <td>@ticket.Priority</td>
+                                <td>@ticket.CreatedAt</td>
                                 <td class="d-flex flex-column">                                
                                     <a asp-action="Details" asp-route-id="@ticket.Id" class="link-success">Details</a>                            
                                 </td>

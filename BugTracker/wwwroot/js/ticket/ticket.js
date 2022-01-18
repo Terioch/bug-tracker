@@ -65,11 +65,11 @@ class Ticket {
 
     async filterCommentList(e) {
         console.log(e.target.value);
-        const id = this.ticketContainer.getAttribute("data-id");
+        const ticketId = this.ticketContainer.getAttribute("data-id");
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/ticketComment/filterCommentsByAuthorReturnPartial?id=${id}&searchTerm=${searchTerm}`);
+            const res = await fetch(`/ticketComment/filterCommentsByAuthorReturnPartial?id=${ticketId}&searchTerm=${searchTerm}`);
             const commentListHTML = await res.text();
             document.getElementById("commentListContainer").innerHTML = commentListHTML;
         } catch (err) {
@@ -78,11 +78,11 @@ class Ticket {
     }    
 
     async filterHistoryList(e) {
-        const id = this.ticketContainer.getAttribute("data-id");
+        const ticketId = this.ticketContainer.getAttribute("data-id");
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/ticketHistory/filterHistoryReturnPartial?id=${id}&searchTerm=${searchTerm}`);
+            const res = await fetch(`/ticketHistory/filterHistoryReturnPartial?id=${ticketId}&searchTerm=${searchTerm}`);
             const historyListHTML = await res.text();
             document.getElementById("historyListContainer").innerHTML = historyListHTML;
         } catch (err) {

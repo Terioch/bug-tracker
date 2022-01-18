@@ -5,7 +5,9 @@ class Project {
             console.log("Initialized Project");
             this.projectContainer = document.getElementById("projectContainer");
             // this.handleDelete = this.handleDelete.bind(this);
-            this.onUsersManagementModalOpen = this.onUsersManagementModalOpen.bind(this);
+            // this.onUsersManagementModalOpen = this.onUsersManagementModalOpen.bind(this);
+            this.filterTicketList = this.filterTicketList.bind(this);
+            this.filterUserList = this.filterUserList.bind(this);
             this.events();
         }          
     }
@@ -13,6 +15,35 @@ class Project {
     events() {
         // document.getElementById("deleteProjectBtn").addEventListener("click", this.handleDelete);
         document.getElementById("manageUsersBtn").addEventListener("click", this.onUsersManagementModalOpen);
+        document.getElementById("ticketListSearchInput").addEventListener("keyup", this.filterTicketList);
+        document.getElementById("userListSearchInput").addEventListener("keyup", this.filterUserList);
+    }
+
+    async filterTicketList(e) {
+        const projectId = this.projectContainer.getAttribute("data-id");     
+        const searchTerm = e.target.value.toLowerCase();
+
+        try {
+            const res = await fetch(`/project/filterTicketsReturnPartial?id=${projectId}&searchTerm=${searchTerm}`);
+            const ticketListHTML = await res.text();
+            document.getElementById("ticketListContainer").innerHTML = ticketListHTML;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async filterUserList(e) {
+        const projectId = this.projectContainer.getAttribute("data-id");
+        const searchTerm = e.target.value.toLowerCase();
+
+        try {
+            const res = await fetch(`/project/filterUsersByNameReturnPartial?id=${projectId}&searchTerm=${searchTerm}`);
+            const userListHTML = await res.text();
+            console.log(userListHTML);
+            document.getElementById("userListContainer").innerHTML = userListHTML;
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     /*async handleDelete() {

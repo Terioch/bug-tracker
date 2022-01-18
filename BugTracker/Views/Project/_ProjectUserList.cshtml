@@ -1,0 +1,78 @@
+﻿@using BugTracker.Helpers
+@using Microsoft.AspNetCore.Identity
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@inject UserManager<ApplicationUser> userManager
+@inject ProjectHelper projectHelper
+
+@model IPagedList<ApplicationUser>
+
+@{
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
+}
+
+<div>
+    @if (!Model.Any())
+    {
+        <div class="alert alert-primary">
+            There are no users associated with this project.
+        </div>
+    } else
+    {                                
+        <table class="table">
+            <thead>
+                <tr>          
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role(s)</th>                     
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
+
+                    <tr>
+                        <td>@user.UserName</td>                        
+                        <td>@user.Email</td> 
+                        <td>@string.Join(", ", roles)</td>
+                        @*@if (!roles.Any())
+                        {
+                            <td>@string.Join(", ", roles)</td>
+                        } else
+                        {
+                            <td>No assigned roles</td>
+                        }  *@     
+                        <td class="d-flex flex-column">                                            
+                            <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id" class="link-success">Details</a>
+                            @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, ViewBag.Project.Id))
+                            {
+                                <a asp-controller="Project" asp-action="RemoveUser" asp-route-id="@ViewBag.Project.Id" asp-route-userId="@user.Id" class="link-danger"
+                                    onclick="return confirm('Are you sure you want to remove the user @user.UserName from the project @ViewBag.Project.Name?')">
+                                    Remove
+                                </a>       
+                            }
+                        </td>
+                    </tr>                                                                              
+                }
+            </tbody> 
+        </table>
+        <div>
+            <p class="text-secondary" style="font-size: 14px">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
+                of @Model.PageCount
+            </p>                   
+            @Html.PagedListPager(
+                Model.ToPagedList(), 
+                page => Url.Action("Details", "Project", new { ViewBag.Project.Id, usersPage = page }),
+                new PagedListRenderOptions() 
+                {
+                    UlElementClasses = new string[] { "pagination", "mb-0" },
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new string[] { "page-link" }
+                })
+        </div>
+    }                                
+</div>

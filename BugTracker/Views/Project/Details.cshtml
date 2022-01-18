@@ -1,8 +1,8 @@
-﻿@using BugTracker.Helpers;
+﻿@using BugTracker.Helpers
 @using Microsoft.AspNetCore.Identity
-@using X.PagedList;
-@using X.PagedList.Mvc.Core;
-@using X.PagedList.Web.Common;
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
 
 @inject UserManager<ApplicationUser> userManager
 @inject RoleManager<IdentityRole> roleManager
@@ -61,7 +61,7 @@
                     <div class="card-body table-responsive">
                         <div class="d-sm-flex justify-content-between align-items-center">
                             <div class="input-group-sm">
-                                <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Users..." />
+                                <input id="userListSearchInput" class="form-control mb-3" placeholder="Search Users..." />
                             </div>
                                 @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, Model.Id))
                                 {
@@ -74,60 +74,71 @@
                                         Assign New User
                                     </button>
                                 }                                                                                          
-                        </div>                    
-                        <table class="table">
-                            <thead>
-                                <tr>          
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Role(s)</th>                     
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var user in Model.Users)
-                                {
-                                    List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
+                        </div>     
+                        
+                        <div id="userListContainer">
+                            @if (!Model.Users.Any())
+                            {
+                                <div class="alert alert-primary">
+                                    There are no users associated with this project.
+                                </div>
+                            } else
+                            {                                
+                                <table class="table">
+                                    <thead>
+                                        <tr>          
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Role(s)</th>                     
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var user in Model.Users)
+                                        {
+                                            List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
 
-                                    <tr>
-                                        <td>@user.UserName</td>                        
-                                        <td>@user.Email</td> 
-                                        <td>@string.Join(", ", roles)</td>
-                                        @*@if (!roles.Any())
+                                            <tr>
+                                                <td>@user.UserName</td>                        
+                                                <td>@user.Email</td> 
+                                                <td>@string.Join(", ", roles)</td>
+                                                @*@if (!roles.Any())
+                                                {
+                                                    <td>@string.Join(", ", roles)</td>
+                                                } else
+                                                {
+                                                    <td>No assigned roles</td>
+                                                }  *@     
+                                                <td class="d-flex flex-column">                                            
+                                                    <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id" class="link-success">Details</a>
+                                                    @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, Model.Id))
+                                                    {
+                                                        <a asp-controller="Project" asp-action="RemoveUser" asp-route-id="@Model.Id" asp-route-userId="@user.Id" class="link-danger"
+                                                            onclick="return confirm('Are you sure you want to remove the user @user.UserName from the project @Model.Name?')">
+                                                            Remove
+                                                        </a>       
+                                                    }
+                                                </td>
+                                            </tr>                                                                              
+                                        }
+                                    </tbody> 
+                                </table>
+                                <div>
+                                    <p class="text-secondary" style="font-size: 14px">
+                                        Page @(Model.Users.PageCount < Model.Users.PageNumber ? 0 : Model.Users.PageNumber) 
+                                        of @Model.Users.PageCount
+                                    </p>                   
+                                    @Html.PagedListPager(
+                                        Model.Users.ToPagedList(), 
+                                        page => Url.Action("Details", new { Model.Id, usersPage = page }),
+                                        new PagedListRenderOptions() 
                                         {
-                                            <td>@string.Join(", ", roles)</td>
-                                        } else
-                                        {
-                                            <td>No assigned roles</td>
-                                        }  *@     
-                                        <td class="d-flex flex-column">                                            
-                                            <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id" class="link-success">Details</a>
-                                            @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, Model.Id))
-                                            {
-                                                <a asp-controller="Project" asp-action="RemoveUser" asp-route-id="@Model.Id" asp-route-userId="@user.Id" class="link-danger"
-                                                    onclick="return confirm('Are you sure you want to remove the user @user.UserName from the project @Model.Name?')">
-                                                    Remove
-                                                </a>       
-                                            }
-                                        </td>
-                                    </tr>                                                                              
-                                }
-                            </tbody> 
-                        </table>
-                        <div>
-                            <p class="text-secondary" style="font-size: 14px">
-                                Page @(Model.Users.PageCount < Model.Users.PageNumber ? 0 : Model.Users.PageNumber) 
-                                of @Model.Users.PageCount
-                            </p>                   
-                            @Html.PagedListPager(
-                                Model.Users.ToPagedList(), 
-                                page => Url.Action("Details", new { usersPage = page }),
-                                new PagedListRenderOptions() 
-                                {
-                                    UlElementClasses = new string[] { "pagination", "mb-0" },
-                                    LiElementClasses = new string[] { "page-item" },
-                                    PageClasses = new string[] { "page-link" }
-                                })
-                        </div>  
+                                            UlElementClasses = new string[] { "pagination", "mb-0" },
+                                            LiElementClasses = new string[] { "page-item" },
+                                            PageClasses = new string[] { "page-link" }
+                                        })
+                                </div>
+                            }                                
+                        </div>                          
                     </div>
                 </div>
             </div>
@@ -146,65 +157,76 @@
                         </div>
                         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
                             || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))
-                            {
-                                <a asp-controller="Ticket" asp-action="Create" class="btn btn-success mb-3">
-                                    Create New Ticket
-                                </a>
-                            } else
-                            {
-                                <a asp-controller="Ticket" asp-action="Create" class="btn btn-success mb-3 disabled">
-                                    Create New Ticket
-                                </a> 
-                            }                                                        
-                    </div>  
-                    <table class="table">
-                        <thead>
-                            <tr>          
-                                <th scope="col">Title</th>
-                                <th scope="col">Submitted By</th>
-                                <th scope="col">Developer</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Created</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var ticket in Model.Tickets)
-                            {                                                
-                                <tr>
-                                    <td>@ticket.Title</td>                        
-                                    <td>@ticket.Submitter.UserName</td>   
-                                    @if (ticket.AssignedDeveloper != null)
-                                    {
-                                        <td>@ticket.AssignedDeveloper.UserName</td>
-                                    } else
-                                    {
-                                        <td>None</td>
+                        {
+                            <a asp-controller="Ticket" asp-action="Create" class="btn btn-success mb-3">
+                                Create New Ticket
+                            </a>
+                        } else
+                        {
+                            <a asp-controller="Ticket" asp-action="Create" class="btn btn-success mb-3 disabled">
+                                Create New Ticket
+                            </a> 
+                        }                                                        
+                    </div> 
+
+                    <div id="ticketListContainer">
+                        @if (!Model.Tickets.Any())
+                        {                            
+                            <div class="alert alert-primary">
+                                There are no tickets associated with this project.
+                            </div>
+                        } else
+                        {
+                            <table class="table">
+                                <thead>
+                                    <tr>          
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Submitted By</th>
+                                        <th scope="col">Developer</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Created At</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var ticket in Model.Tickets)
+                                    {                                                
+                                        <tr>
+                                            <td>@ticket.Title</td>                        
+                                            <td>@ticket.Submitter.UserName</td>   
+                                            @if (ticket.AssignedDeveloper != null)
+                                            {
+                                                <td>@ticket.AssignedDeveloper.UserName</td>
+                                            } else
+                                            {
+                                                <td>None</td>
+                                            }
+                                            <td>@ticket.Status</td>
+                                            <td>@ticket.CreatedAt</td>
+                                            <td class="">                                        
+                                                <a asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
+                                            </td>
+                                        </tr>                               
                                     }
-                                    <td>@ticket.Status</td>
-                                    <td>@ticket.CreatedAt</td>
-                                    <td class="">                                        
-                                        <a asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
-                                    </td>
-                                </tr>                               
-                            }
-                        </tbody>     
-                    </table>
-                    <div>
-                        <p class="text-secondary" style="font-size: 14px">
-                            Page @(Model.Tickets.PageCount < Model.Tickets.PageNumber ? 0 : Model.Tickets.PageNumber) 
-                            of @Model.Tickets.PageCount
-                        </p>                   
-                        @Html.PagedListPager(
-                            Model.Tickets, 
-                            page => Url.Action("Details", new { Model.Id, ticketsPage = page }),
-                            new PagedListRenderOptions() 
-                            {
-                                UlElementClasses = new string[] { "pagination", "mb-0" },
-                                LiElementClasses = new string[] { "page-item" },
-                                PageClasses = new string[] { "page-link" }
-                            })
-                    </div>  
+                                </tbody>     
+                            </table>
+                            <div>
+                                <p class="text-secondary" style="font-size: 14px">
+                                    Page @(Model.Tickets.PageCount < Model.Tickets.PageNumber ? 0 : Model.Tickets.PageNumber) 
+                                    of @Model.Tickets.PageCount
+                                </p>                   
+                                @Html.PagedListPager(
+                                    Model.Tickets, 
+                                    page => Url.Action("Details", new { Model.Id, ticketsPage = page }),
+                                    new PagedListRenderOptions() 
+                                    {
+                                        UlElementClasses = new string[] { "pagination", "mb-0" },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        PageClasses = new string[] { "page-link" }
+                                    })
+                            </div>
+                        }
+                    </div>                      
                 </div>
             </div>
         </div>

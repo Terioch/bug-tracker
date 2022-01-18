@@ -21,9 +21,10 @@ namespace BugTracker.Controllers
         private readonly ITicketHistoryRecordRepository ticketHistoryRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
-        
+        private readonly TicketHelper ticketHelper;
+
         public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, 
-            UserManager<ApplicationUser> userManager, ProjectHelper projectHelper)
+            UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
         {
             this.repo = repo;
             this.ticketRepo = ticketRepo;
@@ -31,6 +32,7 @@ namespace BugTracker.Controllers
             this.ticketHistoryRepo = ticketHistoryRepo;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
+            this.ticketHelper = ticketHelper;
         }    
         
         private Task<ApplicationUser> GetCurrentUserAsync()
@@ -99,6 +101,42 @@ namespace BugTracker.Controllers
 
             var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
             return PartialView("_ProjectList", filteredProjects.ToPagedList(1, 8));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FilterTicketsReturnPartial(string id, string? searchTerm)
+        {
+            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();
+
+            if (searchTerm == null)
+            {
+                return PartialView("_ProjectTicketList", tickets.ToPagedList(1, 5));
+            }
+
+            var filteredTickets = tickets.Where(t => 
+                t.Title.ToLowerInvariant().Contains(searchTerm) 
+                || t.Status.ToLowerInvariant().Contains(searchTerm)
+                || t.Priority.ToLowerInvariant().Contains(searchTerm)
+                || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
+                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
+
+            ViewBag.Id = id;
+            return PartialView("_ProjectTicketList", filteredTickets.ToPagedList(1, 5));
+        }
+
+        [HttpGet]
+        public IActionResult FilterUsersByNameReturnPartial(string id, string? searchTerm)
+        {
+            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
+
+            if (searchTerm == null)
+            {
+                return PartialView("_ProjectUserList", users.ToPagedList(1, 5));
+            }          
+
+            var filteredUsers = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
+            ViewBag.Id = id;
+            return PartialView("_ProjectUserList", filteredUsers.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin")]

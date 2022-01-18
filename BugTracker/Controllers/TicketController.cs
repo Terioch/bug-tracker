@@ -152,6 +152,8 @@ namespace BugTracker.Controllers
                 t.Title.ToLowerInvariant().Contains(searchTerm)
                 || t.Status.ToLowerInvariant().Contains(searchTerm)
                 || t.Priority.ToLowerInvariant().Contains(searchTerm)
+                || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
+                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm)
             );
 
             return PartialView("_TicketList", filteredTickets.ToPagedList(1, 5));

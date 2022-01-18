@@ -97,62 +97,64 @@
                     <div class="input-group-sm">
                         <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search By Name..." style="max-width: 300px"  />
                     </div>
-                    @if (!Model.TicketHistoryRecords.Any())
-                    {
-                        <div class="alert alert-info fs-5 mt-3" role="alert">
-                          There is no available history for this ticket.
-                        </div>
-                    } else
-                    {                                        
-                        <table class="table">
-                            <thead>
-                                <tr>          
-                                    <th scope="col">Property</th>
-                                    <th scope="col">Old Value</th>
-                                    <th scope="col">New Value</th>                     
-                                    <th scope="col">Modified By</th>                     
-                                    <th scope="col">Date Changed</th>                     
-                                </tr>
-                            </thead>                                                
-                            <tbody>                                     
-                                @foreach (var record in Model.TicketHistoryRecords) 
-                                {
-                                    <tr>
-                                        <td>@record.Property</td>
-                                        @if (record.OldValue != null) {
-                                            <td>@record.OldValue</td>
-                                        } else
-                                        {
-                                            <td>Null</td>
-                                        }     
-                                        @if (record.NewValue != null) {
-                                            <td>@record.NewValue</td>
-                                        } else
-                                        {
-                                            <td>Null</td>
-                                        }   
-                                        <td>@record.Modifier</td>
-                                        <td>@record.ModifiedAt</td>
-                                    </tr>   
-                                }                                                  
-                            </tbody>
-                        </table>
-                        <div>
-                            <p class="text-secondary" style="font-size: 14px">
-                                Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
-                                of @Model.TicketHistoryRecords.PageCount
-                            </p>                   
-                            @Html.PagedListPager(
-                                Model.TicketHistoryRecords, 
-                                page => Url.Action("Details", new { Model.Id, historyPage = page }),
-                                new PagedListRenderOptions() 
-                                {
-                                    UlElementClasses = new string[] { "pagination", "mb-0" },
-                                    LiElementClasses = new string[] { "page-item" },
-                                    PageClasses = new string[] { "page-link" }
-                                })
-                        </div>                         
-                    }  
+                    <div id="historyListContainer">
+                        @if (!Model.TicketHistoryRecords.Any())
+                        {
+                            <div class="alert alert-info fs-5 mt-3" role="alert">
+                              There is no available history for this ticket.
+                            </div>
+                        } else
+                        {                                        
+                            <table class="table">
+                                <thead>
+                                    <tr>          
+                                        <th scope="col">Property</th>
+                                        <th scope="col">Old Value</th>
+                                        <th scope="col">New Value</th>                     
+                                        <th scope="col">Modified By</th>                     
+                                        <th scope="col">Date Changed</th>                     
+                                    </tr>
+                                </thead>                                                
+                                <tbody>                                     
+                                    @foreach (var record in Model.TicketHistoryRecords) 
+                                    {
+                                        <tr>
+                                            <td>@record.Property</td>
+                                            @if (record.OldValue != null) {
+                                                <td>@record.OldValue</td>
+                                            } else
+                                            {
+                                                <td>Null</td>
+                                            }     
+                                            @if (record.NewValue != null) {
+                                                <td>@record.NewValue</td>
+                                            } else
+                                            {
+                                                <td>Null</td>
+                                            }   
+                                            <td>@record.Modifier</td>
+                                            <td>@record.ModifiedAt</td>
+                                        </tr>   
+                                    }                                                  
+                                </tbody>
+                            </table>
+                            <div>
+                                <p class="text-secondary" style="font-size: 14px">
+                                    Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
+                                    of @Model.TicketHistoryRecords.PageCount
+                                </p>                   
+                                @Html.PagedListPager(
+                                    Model.TicketHistoryRecords, 
+                                    page => Url.Action("Details", new { Model.Id, historyPage = page }),
+                                    new PagedListRenderOptions() 
+                                    {
+                                        UlElementClasses = new string[] { "pagination", "mb-0" },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        PageClasses = new string[] { "page-link" }
+                                    })
+                            </div>                         
+                        }
+                    </div>                      
                 </div>
             </div>            
         </div>

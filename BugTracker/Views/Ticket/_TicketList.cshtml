@@ -18,10 +18,11 @@
                 <thead>
                     <tr>          
                         <th scope="col">Title</th>
-                        <th scope="col">Reported By</th>
+                        <th scope="col">Submitted By</th>
                         <th scope="col">Developer</th>
                         <th scope="col">Status</th>
                         <th scope="col">Priority</th>
+                        <th scope="col">Created At</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -29,11 +30,12 @@
                     @foreach (var ticket in Model)
                     {                                                     
                         <tr>
-                            <td class="">@ticket.Title</td>                        
-                            <td class="">@ticket.Submitter</td>   
-                            <td class="">@ticket.AssignedDeveloper</td>
-                            <td class="">@ticket.Status</td>
-                            <td class="">@ticket.Priority</td>
+                            <td>@ticket.Title</td>                        
+                            <td>@ticket.Submitter</td>   
+                            <td>@ticket.AssignedDeveloper</td>
+                            <td>@ticket.Status</td>
+                            <td>@ticket.Priority</td>
+                            <td>@ticket.CreatedAt</td>
                             <td class="d-flex flex-column">                               
                                 <a asp-action="Details" asp-route-id="@ticket.Id" class="link-success">Details</a>                            
                             </td>
