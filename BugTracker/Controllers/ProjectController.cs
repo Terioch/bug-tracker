@@ -92,12 +92,7 @@ namespace BugTracker.Controllers
             if (searchTerm == null)
             {
                 return PartialView("_ProjectList", projects.ToPagedList(1, 8));
-            }
-
-           /* if (projects.ToList().Count == 0)
-            {
-                throw new Exception("No projects to filter based on predicate");
-            }*/
+            }          
 
             var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
             return PartialView("_ProjectList", filteredProjects.ToPagedList(1, 8));

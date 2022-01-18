@@ -72,6 +72,39 @@ namespace BugTracker.Controllers
             return PartialView("_UserList", filteredUsers.ToPagedList(1, 8));
         }
 
+        [HttpGet]
+        public IActionResult FilterProjectsByNameReturnPartial(string id, string? searchTerm)
+        {
+            IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
+
+            if (searchTerm == null)
+            {
+                return PartialView("~/Views/Project/_ProjectList", projects.ToPagedList(1, 5));
+            }
+
+            var filteredUsers = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
+            return PartialView("~/Views/Project/_ProjectList", filteredUsers.ToPagedList(1, 5));
+        }
+
+        [HttpGet]
+        public IActionResult FilterTicketsReturnPartial(string id, string? searchTerm)
+        {
+            IEnumerable<Ticket> tickets = ticketRepo.GetAllTickets()
+                .Where(t => t.AssignedDeveloperId == id || t.SubmitterId == id);
+
+            if (searchTerm == null)
+            {
+                return PartialView("~/Views/Ticket/_CondensedTicketList", tickets.ToPagedList(1, 5));
+            }
+
+            var filteredUsers = tickets.Where(t => t.Title.ToLowerInvariant().Contains(searchTerm)
+                || t.Status.ToLowerInvariant().Contains(searchTerm)                
+                || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
+                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
+
+            return PartialView("~/Views/Ticket/_CondensedTicketList", filteredUsers.ToPagedList(1, 5));
+        }
+
         [HttpPost]
         public IActionResult AddProject(string id, UserViewModel model)
         {
