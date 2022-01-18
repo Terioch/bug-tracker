@@ -93,7 +93,10 @@
                     <h1 class="fs-3 mt-1">Ticket History</h1>
                     <p class="text-secondary mb-0">Record of changes to this ticket</p>
                 </div>
-                <div class="card-body">                 
+                <div class="card-body">
+                    <div class="input-group-sm">
+                        <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search By Name..." style="max-width: 300px"  />
+                    </div>
                     @if (!Model.TicketHistoryRecords.Any())
                     {
                         <div class="alert alert-info fs-5 mt-3" role="alert">
@@ -242,15 +245,18 @@
         </div>
 
         <!-- Ticket Comment Section -->
-        <div class="col">
+        <div class="col">       
             <h1 class="fs-3 mb-3">Ticket Comments</h1>
             <div id="commentCreationValidationErrors" class="text-danger mb-3"></div>
             <div class="input-group mb-3" style="max-width: 300px">
                 <input id="commentDescriptionInput" type="text" class="form-control" placeholder="Comment..." aria-label="Comment" aria-describedby="ticket-comment">
             </div>
-            <div class="pb-3 border-bottom">
-                <button id="createCommentBtn" class="btn btn-secondary mb-3">Add comment</button>
-            </div>            
+            <div class="pb-3 mb-3 border-bottom">
+                <button id="createCommentBtn" class="btn btn-secondary">Add comment</button>
+            </div>                    
+            <div class="input-group-sm mb-3">
+                <input id="commentListSearchInput" class="form-control" type="text" placeholder="Search by Author..." style="max-width: 300px" />
+            </div>                      
 
             <div id="commentListContainer">
                 @if (!Model.TicketComments.Any())

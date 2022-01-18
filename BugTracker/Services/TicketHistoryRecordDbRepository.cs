@@ -15,21 +15,7 @@ namespace BugTracker.Services
         public IEnumerable<TicketHistoryRecord> GetAllRecords()
         {
             return context.TicketHistoryRecords;
-        }
-
-        public List<TicketHistoryRecord> GetRecordsByTicket(string id)
-        {
-            List<TicketHistoryRecord> records = new();
-
-            foreach (var record in context.TicketHistoryRecords)
-            {
-                if (record.TicketId == id)
-                {
-                    records.Add(record);
-                }
-            }
-            return records;
-        }
+        }        
 
         public TicketHistoryRecord GetRecordById(string id)
         {
@@ -40,6 +26,11 @@ namespace BugTracker.Services
                 throw new Exception("Ticket history record Not Found");
             }
             return record;
+        }
+
+        public IEnumerable<TicketHistoryRecord> GetRecordsByTicketId(string id)
+        {
+            return context.TicketHistoryRecords.Where(t => t.TicketId == id);
         }
 
         public TicketHistoryRecord Create(TicketHistoryRecord record)

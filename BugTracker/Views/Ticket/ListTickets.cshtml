@@ -1,11 +1,15 @@
-﻿@using X.PagedList;
+﻿@using Microsoft.AspNetCore.Identity
+@using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
+
+@inject UserManager<ApplicationUser> userManager
 
 @model IPagedList<BugTracker.Models.Ticket>
 
 @{
     ViewData["Title"] = "ListTickets";
+    var loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
 <div id="ticketListPageContainer" class="card">

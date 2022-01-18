@@ -7,13 +7,17 @@ class Ticket {
             // this.commentListClickHandler = this.commentListClickHandler.bind(this);
             this.handleCommentCreation = this.handleCommentCreation.bind(this);           
             // this.handleCommentDeletion = this.handleCommentDeletion.bind(this);
+            this.filterCommentList = this.filterCommentList.bind(this);
+            this.filterHistoryList = this.filterHistoryList.bind(this);
             this.events();
         }
     }
 
     events() {
         document.getElementById("createCommentBtn").addEventListener("click", this.handleCommentCreation);
-        // document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler);
+        // document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler);       
+        document.getElementById("commentListSearchInput").addEventListener("keyup", this.filterCommentList);
+        document.getElementById("historyListSearchInput").addEventListener("keyup", this.filterHistoryList);
     }
 
     findNearestParentElement(el, className) {
@@ -56,6 +60,33 @@ class Ticket {
         } catch (err) {
             console.error(err);
             document.getElementById("commentCreationValidationErrors").innerHTML = err;
+        }
+    }        
+
+    async filterCommentList(e) {
+        console.log(e.target.value);
+        const id = this.ticketContainer.getAttribute("data-id");
+        const searchTerm = e.target.value.toLowerCase();
+
+        try {
+            const res = await fetch(`/ticketComment/filterCommentsByAuthorReturnPartial?id=${id}&searchTerm=${searchTerm}`);
+            const commentListHTML = await res.text();
+            document.getElementById("commentListContainer").innerHTML = commentListHTML;
+        } catch (err) {
+            console.error(err);
+        }
+    }    
+
+    async filterHistoryList(e) {
+        const id = this.ticketContainer.getAttribute("data-id");
+        const searchTerm = e.target.value.toLowerCase();
+
+        try {
+            const res = await fetch(`/ticketHistory/filterHistoryReturnPartial?id=${id}&searchTerm=${searchTerm}`);
+            const historyListHTML = await res.text();
+            document.getElementById("historyListContainer").innerHTML = historyListHTML;
+        } catch (err) {
+            console.error(err);
         }
     }
 

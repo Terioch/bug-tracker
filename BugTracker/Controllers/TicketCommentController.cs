@@ -48,6 +48,21 @@ namespace BugTracker.Controllers
             return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));            
         }
 
+        [HttpGet]
+        public IActionResult FilterCommentsByAuthorReturnPartial(string id, string? searchTerm)
+        {
+            IEnumerable<TicketComment> comments = repo.GetCommentsByTicketId(id);
+
+            if (searchTerm == null)
+            {
+                return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
+            }
+
+            var filteredComments = comments.Where(c => c.Author.UserName.ToLowerInvariant().Contains(searchTerm));
+            ViewBag.Id = id;
+            return PartialView("_TicketCommentList", filteredComments.ToPagedList(1, 5));
+        }
+
         public IActionResult Delete(string id)
         {
             TicketComment comment = repo.Delete(id);            

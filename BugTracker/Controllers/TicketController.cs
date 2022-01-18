@@ -51,7 +51,7 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> ListTickets(int? page)
         {
-            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();            
+            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();           
             return View(tickets.ToPagedList(page ?? 1, 8));
         }
 

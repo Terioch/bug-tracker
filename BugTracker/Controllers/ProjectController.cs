@@ -40,7 +40,7 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> ListProjects(int? page)
         {   
-            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();               
+            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();            
             return View(projects.ToPagedList(page ?? 1, 8));
         } 
         

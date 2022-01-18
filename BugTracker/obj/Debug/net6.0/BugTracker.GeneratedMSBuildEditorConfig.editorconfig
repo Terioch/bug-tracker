@@ -259,6 +259,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0Q29tbWVudFxfVGlja2V0Q29tbWVudExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/User/source/repos/BugTracker/BugTracker/Views/TicketHistory/_TicketHistoryList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0SGlzdG9yeVxfVGlja2V0SGlzdG9yeUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/User/source/repos/BugTracker/BugTracker/Views/Ticket/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
