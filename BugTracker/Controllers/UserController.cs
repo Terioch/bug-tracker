@@ -35,7 +35,7 @@ namespace BugTracker.Controllers
         }
                
         [HttpGet]
-        public IActionResult Details(string id, int? page)
+        public IActionResult Details(string id, int? projectsPage, int? ticketsPage)
         {
             ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == id);      
             IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
@@ -52,12 +52,26 @@ namespace BugTracker.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 UnassignedProjects = unassignedProjects,
-                Projects = projects.ToPagedList(page ?? 1, 5),
-                Tickets = tickets.ToPagedList(page ?? 1, 5),
+                Projects = projects.ToPagedList(projectsPage ?? 1, 5),
+                Tickets = tickets.ToPagedList(ticketsPage ?? 1, 5),
             };
             return View(model);
         }
-        
+
+        [HttpGet]
+        public IActionResult FilterUsersByNameReturnPartial(string? searchTerm)
+        {
+            IEnumerable<ApplicationUser> users = userManager.Users;
+
+            if (searchTerm == null)
+            {          
+                return PartialView("_UserList", users.ToPagedList(1, 8));
+            }
+
+            var filteredUsers = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
+            return PartialView("_UserList", filteredUsers.ToPagedList(1, 8));
+        }
+
         [HttpPost]
         public IActionResult AddProject(string id, UserViewModel model)
         {

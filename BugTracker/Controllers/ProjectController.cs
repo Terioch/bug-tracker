@@ -110,7 +110,8 @@ namespace BugTracker.Controllers
 
             if (searchTerm == null)
             {
-                return PartialView("_ProjectTicketList", tickets.ToPagedList(1, 5));
+                ViewBag.Id = id;
+                return PartialView("~/Ticket/_CondensedTicketList", tickets.ToPagedList(1, 5));
             }
 
             var filteredTickets = tickets.Where(t => 
@@ -121,7 +122,7 @@ namespace BugTracker.Controllers
                 || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
 
             ViewBag.Id = id;
-            return PartialView("_ProjectTicketList", filteredTickets.ToPagedList(1, 5));
+            return PartialView("~/Ticket/_CondensedTicketList", filteredTickets.ToPagedList(1, 5));
         }
 
         [HttpGet]
@@ -131,12 +132,13 @@ namespace BugTracker.Controllers
 
             if (searchTerm == null)
             {
-                return PartialView("_ProjectUserList", users.ToPagedList(1, 5));
+                ViewBag.Id = id;
+                return PartialView("~/User/_UserList", users.ToPagedList(1, 5));
             }          
 
             var filteredUsers = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
             ViewBag.Id = id;
-            return PartialView("_ProjectUserList", filteredUsers.ToPagedList(1, 5));
+            return PartialView("~/User/_UserList", filteredUsers.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin")]

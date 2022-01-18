@@ -55,6 +55,7 @@ namespace BugTracker.Controllers
 
             if (searchTerm == null)
             {
+                ViewBag.Id = id;
                 return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
             }
 

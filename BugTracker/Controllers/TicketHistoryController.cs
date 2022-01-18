@@ -20,6 +20,7 @@ namespace BugTracker.Controllers
 
             if (searchTerm == null)
             {
+                ViewBag.Id = id;
                 return PartialView("_TicketHistoryList", records.ToPagedList(1, 6));
             }
 

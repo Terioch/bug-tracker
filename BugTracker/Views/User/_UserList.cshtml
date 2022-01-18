@@ -1,1 +1,63 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+@inject UserManager<ApplicationUser> userManager
+
+@model IPagedList<ApplicationUser>
+
+
+<div>  
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info fs-5">
+            There are no users matching that search term
+        </div>
+    } else
+    {                    
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>          
+                        <th scope="col">UserName</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role(s)</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {                 
+                        List<string> roles = (List<string>)await userManager.GetRolesAsync(user);
+
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>                                                                                            
+                            <td>@string.Join(", ", roles)</td>
+                            <td class="d-flex flex-column">                                   
+                                <a asp-action="Details" asp-route-id="@user.Id" class="link-success">Details</a>                            
+                            </td>
+                        </tr>                                 
+                    }     
+                </tbody> 
+            </table> 
+
+            <div>
+                <p class="text-secondary" style="font-size: 14px">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
+                    of @Model.PageCount
+                </p>                   
+                @Html.PagedListPager(
+                    Model, 
+                    page => Url.Action("ListUsers", new { page }),
+                    new PagedListRenderOptions() 
+                    {
+                        UlElementClasses = new string[] { "pagination", "mb-0" },
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" }
+                    })
+            </div>       
+        </div>                                          
+    }                                      
+</div>

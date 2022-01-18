@@ -183,8 +183,7 @@
                                         <th scope="col">Title</th>
                                         <th scope="col">Submitted By</th>
                                         <th scope="col">Developer</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Created At</th>
+                                        <th scope="col">Status</th>                                      
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -202,7 +201,6 @@
                                                 <td>None</td>
                                             }
                                             <td>@ticket.Status</td>
-                                            <td>@ticket.CreatedAt</td>
                                             <td class="">                                        
                                                 <a asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket?.Id" class="link-info">Details</a>                            
                                             </td>

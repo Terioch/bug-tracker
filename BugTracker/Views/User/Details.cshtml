@@ -97,7 +97,7 @@
                     </p>                   
                     @Html.PagedListPager(
                         Model.Projects.ToPagedList(), 
-                        page => Url.Action("Details", new { page }),
+                        page => Url.Action("Details", new { projectsPage = page }),
                         new PagedListRenderOptions() 
                         {
                             UlElementClasses = new string[] { "pagination", "mb-0" },
@@ -134,8 +134,7 @@
                             <th scope="col">Title</th>
                             <th scope="col">Submitted By</th>
                             <th scope="col">Developer</th>                     
-                            <th scope="col">Status</th>                     
-                            <th scope="col">Priority</th>  
+                            <th scope="col">Status</th>                                             
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -168,7 +167,7 @@
                     </p>                   
                     @Html.PagedListPager(
                         Model.Tickets.ToPagedList(), 
-                        page => Url.Action("Details", new { page }),
+                        page => Url.Action("Details", new { ticketsPage = page }),
                         new PagedListRenderOptions() 
                         {
                             UlElementClasses = new string[] { "pagination", "mb-0" },
