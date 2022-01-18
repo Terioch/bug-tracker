@@ -106,7 +106,7 @@ namespace BugTracker.Controllers
             if (searchTerm == null)
             {
                 ViewBag.Id = id;
-                return PartialView("~/Ticket/_CondensedTicketList", tickets.ToPagedList(1, 5));
+                return PartialView("~/Views/Ticket/_CondensedTicketList.cshtml", tickets.ToPagedList(1, 5));
             }
 
             var filteredTickets = tickets.Where(t => 
@@ -117,7 +117,7 @@ namespace BugTracker.Controllers
                 || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
 
             ViewBag.Id = id;
-            return PartialView("~/Ticket/_CondensedTicketList", filteredTickets.ToPagedList(1, 5));
+            return PartialView("~/Views/Ticket/_CondensedTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
         }
 
         [HttpGet]

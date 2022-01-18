@@ -20,16 +20,14 @@
             <div class="card-header">
                 <h4>@Model.Title</h4> 
                 <div>                    
-                    @{
-                        if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
-                        {
-                            <span><a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |</span>                                                                      
-                        }
-                        else if (await ticketHelper.IsOnlyAuthorizedToUpdateStatus(loggedInUser, Model.Id))
-                        {
-                            <Span><a href="" class="link-success" data-bs-toggle="modal" data-bs-target="#updateTicketStatusModal">Update Status</a> |</Span>
-                        }
-                    }
+                    @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
+                    {
+                        <span><a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |</span>                                                                      
+                    } 
+                    else if (await ticketHelper.IsOnlyAuthorizedToUpdateStatus(loggedInUser, Model.Id))
+                    {
+                        <Span><a href="" class="link-success" data-bs-toggle="modal" data-bs-target="#updateTicketStatusModal">Update Status</a> |</Span>
+                    }                    
 
                     <a asp-action="ListTickets" class="text-primary">Back to List</a>
 
@@ -95,7 +93,7 @@
                 </div>
                 <div class="card-body">
                     <div class="input-group-sm">
-                        <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search By Name..." style="max-width: 200px"  />
+                        <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search by Property or Modifier..." style="max-width: 200px"  />
                     </div>
                     <div id="historyListContainer">
                         @if (!Model.TicketHistoryRecords.Any())

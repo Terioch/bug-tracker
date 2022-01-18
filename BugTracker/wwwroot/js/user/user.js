@@ -4,11 +4,13 @@ class User {
         console.log("Initialized User");
         this.userContainer = document.getElementById("userContainer");
         this.filterProjectList = this.filterProjectList.bind(this);
+        this.filterTicketList = this.filterTicketList.bind(this);
         this.events();
     }
 
     events() {
         document.getElementById("projectListSearchInput").addEventListener("keyup", this.filterProjectList);
+        document.getElementById("ticketListSearchInput").addEventListener("keyup", this.filterTicketList);
     }
 
     async filterProjectList(e) {

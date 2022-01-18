@@ -79,11 +79,11 @@ namespace BugTracker.Controllers
 
             if (searchTerm == null)
             {
-                return PartialView("~/Views/Project/_ProjectList", projects.ToPagedList(1, 5));
+                return PartialView("~/Views/Project/_ProjectList.cshtml", projects.ToPagedList(1, 5));
             }
 
             var filteredUsers = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
-            return PartialView("~/Views/Project/_ProjectList", filteredUsers.ToPagedList(1, 5));
+            return PartialView("~/Views/Project/_ProjectList.cshtml", filteredUsers.ToPagedList(1, 5));
         }
 
         [HttpGet]
@@ -94,7 +94,7 @@ namespace BugTracker.Controllers
 
             if (searchTerm == null)
             {
-                return PartialView("~/Views/Ticket/_CondensedTicketList", tickets.ToPagedList(1, 5));
+                return PartialView("~/Views/Ticket/_CondensedTicketList.cshtml", tickets.ToPagedList(1, 5));
             }
 
             var filteredUsers = tickets.Where(t => t.Title.ToLowerInvariant().Contains(searchTerm)
@@ -102,7 +102,7 @@ namespace BugTracker.Controllers
                 || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
                 || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
 
-            return PartialView("~/Views/Ticket/_CondensedTicketList", filteredUsers.ToPagedList(1, 5));
+            return PartialView("~/Views/Ticket/_CondensedTicketList.cshtml", filteredUsers.ToPagedList(1, 5));
         }
 
         [HttpPost]
