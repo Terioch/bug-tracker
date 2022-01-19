@@ -52,8 +52,8 @@ namespace BugTracker.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 UnassignedProjects = unassignedProjects,
-                Projects = projects.ToPagedList(projectsPage ?? 1, 5),
-                Tickets = tickets.ToPagedList(ticketsPage ?? 1, 5),
+                Projects = projects.ToPagedList(projectsPage ?? 1, 2),
+                Tickets = tickets.ToPagedList(ticketsPage ?? 1, 2),
             };
             return View(model);
         }
@@ -75,15 +75,20 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult FilterProjectsByNameReturnPartial(string id, string? searchTerm)
         {
+            ApplicationUser user = userManager.Users.First(u => u.Id == id);
             IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
 
             if (searchTerm == null)
             {
-                return PartialView("~/Views/Project/_ProjectList.cshtml", projects.ToPagedList(1, 5));
+                ViewBag.Id = id;
+                ViewBag.UserName = user.UserName;
+                return PartialView("~/Views/User/_UserProjectList.cshtml", projects.ToPagedList(1, 2));
             }
 
             var filteredUsers = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
-            return PartialView("~/Views/Project/_ProjectList.cshtml", filteredUsers.ToPagedList(1, 5));
+            ViewBag.Id = id;
+            ViewBag.UserName = user.UserName;
+            return PartialView("~/Views/User/_UserProjectList.cshtml", filteredUsers.ToPagedList(1, 2));
         }
 
         [HttpGet]
@@ -94,15 +99,18 @@ namespace BugTracker.Controllers
 
             if (searchTerm == null)
             {
-                return PartialView("~/Views/Ticket/_CondensedTicketList.cshtml", tickets.ToPagedList(1, 5));
+                ViewBag.Id = id;
+                return PartialView("~/Views/User/_UserTicketList.cshtml", tickets.ToPagedList(1, 2));
             }
 
-            var filteredUsers = tickets.Where(t => t.Title.ToLowerInvariant().Contains(searchTerm)
+            var filteredUsers = tickets.Where(t => 
+                t.Title.ToLowerInvariant().Contains(searchTerm)
                 || t.Status.ToLowerInvariant().Contains(searchTerm)                
                 || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
                 || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
 
-            return PartialView("~/Views/Ticket/_CondensedTicketList.cshtml", filteredUsers.ToPagedList(1, 5));
+            ViewBag.Id = id;
+            return PartialView("~/Views/User/_UserTicketList.cshtml", filteredUsers.ToPagedList(1, 2));
         }
 
         [HttpPost]

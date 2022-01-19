@@ -16,8 +16,8 @@
 <div>
     @if (!Model.Any())
     {
-        <div class="alert alert-primary">
-            There are no users associated with this project.
+        <div class="alert alert-info">
+            There are no users matching that search term.
         </div>
     } else
     {                                
@@ -47,10 +47,10 @@
                         }  *@     
                         <td class="d-flex flex-column">                                            
                             <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id" class="link-success">Details</a>
-                            @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, ViewBag.Project.Id))
+                            @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, ViewBag.Id))
                             {
-                                <a asp-controller="Project" asp-action="RemoveUser" asp-route-id="@ViewBag.Project.Id" asp-route-userId="@user.Id" class="link-danger"
-                                    onclick="return confirm('Are you sure you want to remove the user @user.UserName from the project @ViewBag.Project.Name?')">
+                                <a asp-controller="Project" asp-action="RemoveUser" asp-route-id="@ViewBag.Id" asp-route-userId="@user.Id" class="link-danger"
+                                    onclick="return confirm('Are you sure you want to remove the user @user.UserName from the project @ViewBag.Name?')">
                                     Remove
                                 </a>       
                             }
@@ -66,7 +66,7 @@
             </p>                   
             @Html.PagedListPager(
                 Model.ToPagedList(), 
-                page => Url.Action("Details", "Project", new { ViewBag.Project.Id, usersPage = page }),
+                page => Url.Action("Details", "Project", new { ViewBag.Id, usersPage = page }),
                 new PagedListRenderOptions() 
                 {
                     UlElementClasses = new string[] { "pagination", "mb-0" },

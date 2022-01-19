@@ -59,7 +59,7 @@
                     </div>      
                     @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
                     {
-                        <a class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#userProjectsAssignmentModal">Assign New Project</a>
+                        <a class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#userProjectsAssignmentModal">Assign New Project</a>
                     } else
                     {
                         <a class="btn btn-info mb-3 disabled">Assign New Project</a>   

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -99,14 +100,14 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> FilterTicketsReturnPartial(string id, string? searchTerm)
+        public IActionResult FilterTicketsReturnPartial(string id, string? searchTerm)
         {
-            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();
+            IEnumerable<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
 
             if (searchTerm == null)
             {
                 ViewBag.Id = id;
-                return PartialView("~/Views/Ticket/_CondensedTicketList.cshtml", tickets.ToPagedList(1, 5));
+                return PartialView("~/Views/Project/_ProjectTicketList.cshtml", tickets.ToPagedList(1, 5));
             }
 
             var filteredTickets = tickets.Where(t => 
@@ -117,23 +118,26 @@ namespace BugTracker.Controllers
                 || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
 
             ViewBag.Id = id;
-            return PartialView("~/Views/Ticket/_CondensedTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
+            return PartialView("~/Views/Project/_ProjectTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
         }
 
         [HttpGet]
         public IActionResult FilterUsersByNameReturnPartial(string id, string? searchTerm)
         {
+            Project project = repo.GetProjectById(id);
             IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 
             if (searchTerm == null)
             {
                 ViewBag.Id = id;
-                return PartialView("~/User/_UserList", users.ToPagedList(1, 5));
+                ViewBag.Name = project.Name;
+                return PartialView("~/Views/Project/_ProjectUserList.cshtml", users.ToPagedList(1, 5));
             }          
 
             var filteredUsers = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
             ViewBag.Id = id;
-            return PartialView("~/User/_UserList", filteredUsers.ToPagedList(1, 5));
+            ViewBag.Name = project.Name;
+            return PartialView("~/Views/Project/_ProjectUserList.cshtml", filteredUsers.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin")]
