@@ -103,6 +103,7 @@ namespace BugTracker.Controllers
         public IActionResult FilterTicketsReturnPartial(string id, string? searchTerm)
         {
             IEnumerable<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
+            TempData["ProjectId"] = id;
 
             if (searchTerm == null)
             {
@@ -126,6 +127,8 @@ namespace BugTracker.Controllers
         {
             Project project = repo.GetProjectById(id);
             IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
+            TempData["ProjectId"] = id;
+            TempData["ProjectName"] = project.Name;
 
             if (searchTerm == null)
             {
