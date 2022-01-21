@@ -19,11 +19,11 @@
 <div id="userContainer" data-id="@Model.Id" class="card">
   <div class="card-header bg-light">
       <h1 class="fs-3 mt-2">@Model.UserName</h1>     
-      <a asp-action="ListUsers">Back to List</a>
-      @if (await userManager.IsInRoleAsync(loggedInUser, "Admin")) 
+      <a class="link-success" asp-action="ListUsers">Back to List</a>
+      @*@if (await userManager.IsInRoleAsync(loggedInUser, "Admin")) 
       {
           <span>| <a href="" class="text-danger">Delete</a></span>            
-      }         
+      }*@         
   </div>
   <div class="card-body">
       <ul class="list-group list-group-horizontal d-flex flex-wrap">

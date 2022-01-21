@@ -2,10 +2,13 @@
 @using Microsoft.AspNetCore.Identity;
 @using BugTracker.Models;
 
+@inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> userManager;
 
 @{
     ApplicationUser loggedInUser = new ApplicationUser();
+    IList<string> roles = await userManager.GetRolesAsync(await userManager.FindByNameAsync(User.Identity.Name)) ?? new List<string>();
+
     if (User?.Identity?.Name != null)
     {
         loggedInUser = await userManager.FindByNameAsync(User?.Identity?.Name);   
@@ -39,16 +42,38 @@
                     <!-- Top Nav -->            
                     <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light border-bottom box-shadow">
                         <div class="container-fluid">
-                            <a class="navbar-brand" asp-area="" asp-controller="Project" asp-action="ListProjects">BugTracker</a>
+                            <a class="navbar-brand fs-4 text-secondary" asp-controller="Project" asp-action="ListProjects">Bug Tracker <i class="fas fa-bug text-dark"></i></a>                            
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
-                            <div class="navbar-collapse collapse d-md-inline-flex justify-content-between align-items-center">                
-                                <partial name="_LoginPartial" />
-                            </div>
+                            <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">                
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" aria-current="page" href="#">Profile</a>
+                                    </li>                              
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        @*<li class="nav-item">
+                                            <a  class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Logged in as: @roles.First()</a>
+                                        </li>*@
+                                        <li class="nav-item">                                                                                      
+                                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("ListProjects", "Project", new { area = "" })">Logout</a>                                           
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>                             
                         </div>
-                    </nav> 
+                    </nav>                   
                 </div>
 
                 <div class="row">
@@ -86,25 +111,25 @@
                         <li class="nav-item mb-3">
                             <a class="nav-link align-middle" asp-controller="Project" asp-action="ListProjects">                             
                                 <span class="me-2 d-none d-md-inline">My Projects</span>
-                                <i class="fs-5 bi-house"></i> 
+                                <i class="fs-5 fas fa-toolbox"></i> 
                             </a>
                         </li>
                         <li class="nav-item mb-3">
                             <a class="nav-link align-middle" asp-controller="Ticket" asp-action="ListTickets">                                
                                 <span class="me-2 d-none d-md-inline">My Tickets</span>
-                                <i class="fs-5 bi-table"></i>
+                                <i class="fs-5 fas fa-tasks"></i>
                             </a>
                         </li>                        
                         <li class="nav-item mb-3">
                             <a class="nav-link align-middle" asp-controller="User" asp-action="ListUsers">
                                 <span class="me-2 d-none d-md-inline">User Management</span>
-                                <i class="fs-5 bi-speedometer"></i>                                 
+                                <i class="fs-5 fas fa-users"></i>                                 
                             </a>
                         </li>
                         <li class="nav-item mb-3">
                             <a class="nav-link align-middle" asp-controller="Role" asp-action="ListRoles">                                
                                 <span class="me-2 d-none d-md-inline">Role Management</span>
-                                <i class="fs-5 bi-bootstrap"></i> 
+                                <i class="fs-5 fas fa-user-shield"></i> 
                             </a>
                         </li>
                     </ul>
