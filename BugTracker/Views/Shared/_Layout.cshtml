@@ -7,11 +7,12 @@
 
 @{
     ApplicationUser loggedInUser = new ApplicationUser();
-    IList<string> roles = await userManager.GetRolesAsync(await userManager.FindByNameAsync(User.Identity.Name)) ?? new List<string>();
+    IList<string> roles = new List<string>();
 
-    if (User != null && User?.Identity?.Name != null)
+    if (User?.Identity?.Name != null)
     {
-        loggedInUser = await userManager.FindByNameAsync(User?.Identity?.Name);   
+        loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
+        roles = await userManager.GetRolesAsync(await userManager.FindByNameAsync(User.Identity.Name));
     }   
 }
 

@@ -10,7 +10,7 @@
         <form id="account" method="post">
             <div class="d-flex flex-column justify-content-center align-items-center mt-3 mb-2">                
                 <i class="fas fa-bug text-dark mb-3" style="font-size: 2.2em"></i>                
-                <h1 class="fs-3 text-secondary">Log in here</h1>
+                <h1 class="fs-3 text-secondary">Log in Here</h1>
             </div>         
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-floating mb-3">
@@ -47,10 +47,8 @@
                     </p>
                     @*<p>
                         <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>*@
-                    <p>
-                        <a asp-action="DisplayDemoLoginForm" asp-controller="Account" class="text-decoration-none link-secondary">Login with a demo account</a>
-                    </p>
+                    </p>*@                   
+                    <a asp-action="DisplayDemoLoginForm" asp-controller="Account" class="text-decoration-none link-secondary">Login with a demo account</a>                   
                 </div>
             </div>                
         </form>             
