@@ -2,6 +2,8 @@
     ViewBag.Title = "Not Found";
 }
 
-<h1>@ViewBag.ErrorMessage</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+<hr />
+<h3>@ViewBag.ErrorMessage</h3>
 
 <a asp-controller="Project" asp-action="ListProjects" >Click here to navigate to the project list page</a>
