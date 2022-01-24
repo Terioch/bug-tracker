@@ -49,7 +49,7 @@
                                     @if (SignInManager.IsSignedIn(User))
                                     {                                          
                                         <li class="nav-item">
-                                            <a  class="nav-link" title="Manage">Logged in as: @loggedInAs</a>
+                                            <a class="nav-link" title="Manage">Logged in as: @loggedInAs</a>
                                         </li>
                                         <li class="nav-item">
                                             <a asp-action="Details" asp-controller="User" asp-route-id="@loggedInUser.Id" class="nav-link">Profile</a>

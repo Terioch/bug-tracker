@@ -178,15 +178,15 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager")]
         [HttpPost]
-        public IActionResult AddUser(string id, ProjectViewModel model)
-        {            
-            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == model.ToBeAssignedUserId);           
+        public async Task<IActionResult> AddUser(string id, ProjectViewModel model)
+        {
+            ApplicationUser? user = await userManager.FindByIdAsync(model.ToBeAssignedUserId);
 
             List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 
             if (users.Contains(user))
             {
-                TempData["Error"] = "The user you're attempting to add is already in this project";
+                TempData["Error"] = "The user you're attempting to add is already assigned to this project";
                 return RedirectToAction("Details", new { id });
             }
 
@@ -202,15 +202,15 @@ namespace BugTracker.Controllers
         }
 
         [Authorize(Roles = "Admin, Project Manager")]
-        public IActionResult RemoveUser(string id, string userId)
+        public async Task<IActionResult> RemoveUser(string id, string userId)
         {
             Project project = repo.GetProjectById(id);
-            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == userId);            
+            ApplicationUser? user = await userManager.FindByIdAsync(userId);
             List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 
             if (!users.Contains(user))
             {
-                TempData["Error"] = "The user you're attempting to remove is not in this project";
+                TempData["Error"] = "The user you're attempting to remove is not assigned to this project";
                 return RedirectToAction("Details", new { id });
             }
 

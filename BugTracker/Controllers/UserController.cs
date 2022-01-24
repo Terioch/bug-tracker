@@ -165,6 +165,14 @@ namespace BugTracker.Controllers
         [HttpPost]
         public IActionResult AddProject(string id, UserViewModel model)
         {
+            var projects = userProjectRepo.GetProjectsByUserId(id);
+            bool isInProject = projects.Select(p => p.Id).Contains(model.ToBeAssignedProjectId);
+
+            if (isInProject)
+            {
+                TempData["Error"] = "The project you're attempting to add is already assigned to this user";
+            }
+
             UserProject userProject = new()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -177,6 +185,14 @@ namespace BugTracker.Controllers
         
         public IActionResult RemoveProject(string id, string projectId)
         {
+            var projects = userProjectRepo.GetProjectsByUserId(id);
+            bool isInProject = projects.Select(p => p.Id).Contains(projectId);
+
+            if (!isInProject)
+            {
+                TempData["Error"] = "The project you're attempting to remove is not assigned to this user";
+            }
+
             userProjectRepo.Delete(id, projectId);
             return RedirectToAction("Details", new { id });
         }
