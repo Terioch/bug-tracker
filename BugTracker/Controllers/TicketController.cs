@@ -141,7 +141,9 @@ namespace BugTracker.Controllers
             if (searchTerm == null)
             {
                 return PartialView("_TicketList", tickets.ToPagedList(1, 8));
-            }          
+            }
+
+            tickets = tickets.Where(t => t.AssignedDeveloperId != null); // Remove tickets without an assigned developer
 
             var filteredTickets = tickets.Where(t => 
                 t.Title.ToLowerInvariant().Contains(searchTerm)

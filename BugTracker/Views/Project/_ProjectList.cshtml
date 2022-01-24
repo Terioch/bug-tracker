@@ -23,20 +23,19 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-
+                <tbody>
                 @foreach (var project in Model)
-                {                               
-                    <tbody>
-                        <tr>
-                            <td>@project.Name</td>                        
-                            <td>@project?.Tickets.ToList().Count</td>   
-                            <td>@project?.Description</td>
-                            <td class="d-flex flex-column">
-                                <a asp-action="Details" asp-route-id="@project?.Id" class="link-success">Details</a>                            
-                            </td>
-                        </tr>     
-                    </tbody>            
+                {                                                   
+                    <tr>
+                        <td>@project.Name</td>                        
+                        <td>@project?.Tickets.ToList().Count</td>   
+                        <td>@project?.Description</td>
+                        <td class="d-flex flex-column">
+                            <a asp-action="Details" asp-route-id="@project?.Id" class="link-success">Details</a>                            
+                        </td>
+                    </tr>                                
                 }           
+                </tbody>     
             </table>        
             <div>
                 <p class="text-secondary" style="font-size: 14px">
