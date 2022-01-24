@@ -31,7 +31,7 @@
                         <td class="d-flex flex-column" style="gap: 0.25rem">
                             <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="link-success">Details</a>                                        
                             <a href="/User/RemoveProject/@ViewBag.Id?projectId=@project.Id" class="link-danger"
-                                onclick="return confirm('Are you sure you want to remove the project @project.Name from the user @ViewBag.UserName?')">
+                                onclick="return confirm('Are you sure you want to remove the project @project.Name from the user @TempData["UserName"]?')">
                                 Remove
                             </a>    
                         </td>                                                                                                           
@@ -46,7 +46,7 @@
             </p>                   
             @Html.PagedListPager(
                 Model.ToPagedList(), 
-                page => Url.Action("Details", new { ViewBag.Id, projectsPage = page }),
+                page => Url.Action("Details", new { id = TempData["UserId"], projectsPage = page }),
                 new PagedListRenderOptions() 
                 {
                     UlElementClasses = new string[] { "pagination", "mb-0" },

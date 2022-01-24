@@ -79,17 +79,15 @@ namespace BugTracker.Controllers
         {
             ApplicationUser user = userManager.Users.First(u => u.Id == id);
             IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
+            TempData["UserId"] = id;
+            TempData["UserName"] = user.UserName;
 
             if (searchTerm == null)
-            {
-                ViewBag.Id = id;
-                ViewBag.UserName = user.UserName;
+            {         
                 return PartialView("~/Views/User/_UserProjectList.cshtml", projects.ToPagedList(1, 2));
             }
 
-            var filteredUsers = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
-            ViewBag.Id = id;
-            ViewBag.UserName = user.UserName;
+            var filteredUsers = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));  
             return PartialView("~/Views/User/_UserProjectList.cshtml", filteredUsers.ToPagedList(1, 2));
         }
 

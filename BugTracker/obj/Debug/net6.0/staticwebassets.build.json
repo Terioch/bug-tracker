@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Db1lqBehz2ZHZPglJswWZ7f07SAlSXf99F1ilHtYYG4=",
+  "Hash": "HuuyzFXVMrpRomNJF/cdSeRio8hqVs19A7QdyGutYfU=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1171,6 +1171,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\81472fd8-c1a7-4080-b618-4ba60053d70f_academic.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\85a43d2d-629a-4a35-b246-e1ccf080c1bc_bookcase-books-bookshelves-256541.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Images/85a43d2d-629a-4a35-b246-e1ccf080c1bc_bookcase-books-bookshelves-256541.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\85a43d2d-629a-4a35-b246-e1ccf080c1bc_bookcase-books-bookshelves-256541.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\973ec77a-43ba-4ef7-a44c-51ceff8288a2_graph.jpg",

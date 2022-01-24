@@ -106,8 +106,7 @@ namespace BugTracker.Controllers
             TempData["ProjectId"] = id;
 
             if (searchTerm == null)
-            {
-                ViewBag.Id = id;
+            {                
                 return PartialView("~/Views/Project/_ProjectTicketList.cshtml", tickets.ToPagedList(1, 5));
             }
 
@@ -120,7 +119,6 @@ namespace BugTracker.Controllers
                 || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
                 || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
 
-            ViewBag.Id = id;
             return PartialView("~/Views/Project/_ProjectTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
         }
 
@@ -133,15 +131,11 @@ namespace BugTracker.Controllers
             TempData["ProjectName"] = project.Name;
 
             if (searchTerm == null)
-            {
-                ViewBag.Id = id;
-                ViewBag.Name = project.Name;
+            {                
                 return PartialView("~/Views/Project/_ProjectUserList.cshtml", users.ToPagedList(1, 5));
             }          
 
             var filteredUsers = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
-            ViewBag.Id = id;
-            ViewBag.Name = project.Name;
             return PartialView("~/Views/Project/_ProjectUserList.cshtml", filteredUsers.ToPagedList(1, 5));
         }
 
