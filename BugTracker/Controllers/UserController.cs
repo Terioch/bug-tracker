@@ -12,16 +12,18 @@ namespace BugTracker.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IUserProjectRepository userProjectRepo;
         private readonly IProjectRepository projectRepo;
         private readonly ITicketRepository ticketRepo;
         private readonly TicketHelper ticketHelper;
 
-        public UserController(UserManager<ApplicationUser> userManager, IUserProjectRepository userProjectRepository, IProjectRepository projectRepository, ITicketRepository ticketRepository, TicketHelper ticketHelper) 
+        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserProjectRepository userProjectRepo, IProjectRepository projectRepo, ITicketRepository ticketRepository, TicketHelper ticketHelper) 
         {
             this.userManager = userManager;
-            this.userProjectRepo = userProjectRepository;
-            this.projectRepo = projectRepository;
+            this.signInManager = signInManager;
+            this.userProjectRepo = userProjectRepo;
+            this.projectRepo = projectRepo;
             this.ticketRepo = ticketRepository;
             this.ticketHelper = ticketHelper;
         }
@@ -35,9 +37,9 @@ namespace BugTracker.Controllers
         }
                
         [HttpGet]
-        public IActionResult Details(string id, int? projectsPage, int? ticketsPage)
+        public async Task<IActionResult> Details(string id, int? projectsPage, int? ticketsPage)
         {
-            ApplicationUser? user = userManager.Users.FirstOrDefault(u => u.Id == id);      
+            ApplicationUser? user = await userManager.FindByIdAsync(id);
             IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
             IEnumerable<Ticket> tickets = ticketRepo.GetAllTickets().Where(t => t.SubmitterId == id || t.AssignedDeveloperId == id);
 
@@ -111,6 +113,55 @@ namespace BugTracker.Controllers
 
             ViewBag.Id = id;
             return PartialView("~/Views/User/_UserTicketList.cshtml", filteredUsers.ToPagedList(1, 2));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            ApplicationUser user = await userManager.FindByIdAsync(id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ApplicationUser model)
+        {
+            ApplicationUser user = await userManager.FindByIdAsync(model.Id);
+     
+            if (ModelState.IsValid)
+            {                
+                if (model.UserName != user.UserName)
+                {
+                    var result = await userManager.SetUserNameAsync(user, model.UserName);
+
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+
+                        return View(model);
+                    }                                        
+                }
+
+                if (model.Email != user.Email)
+                {
+                    var result = await userManager.SetEmailAsync(user, model.Email);
+
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+
+                        return View(model);
+                    }
+                }
+                await signInManager.RefreshSignInAsync(user);
+                return RedirectToAction("Details", new { id = user.Id });
+            }           
+            return View(model);
         }
 
         [HttpPost]

@@ -18,7 +18,7 @@ namespace BugTracker.Services
 
         public IEnumerable<Project> GetAllProjects()
         {
-            // return context.Projects.Include(p => p.Tickets).Include(p => p.Users);            
+            // return context.Projects.Include(p => p.Tickets).Include(p => p.Users);
             return context.Projects.ToList() ?? new List<Project>();
         }
 

@@ -27,7 +27,7 @@ builder.Services.AddScoped<RoleHelper, RoleHelper>();
 builder.Services.AddScoped<TicketAttachmentHelper, TicketAttachmentHelper>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
-        options.SignIn.RequireConfirmedAccount = true;
+        options.SignIn.RequireConfirmedAccount = false;
         options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
     })
     .AddRoles<IdentityRole>()
