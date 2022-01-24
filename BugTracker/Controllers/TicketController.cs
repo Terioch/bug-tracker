@@ -214,7 +214,7 @@ namespace BugTracker.Controllers
                 }                                
             }
 
-            if (ticket.ProjectId != null)
+            if (ticket.ProjectId != null && ticket.AssignedDeveloperId != null)
             {
                 // Ensure that the assigned developer is assigned to the corresponding project
                 IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);

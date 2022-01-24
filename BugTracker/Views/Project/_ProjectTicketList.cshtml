@@ -51,7 +51,7 @@
                 of @Model.PageCount
             </p>                   
             @Html.PagedListPager(
-                Model, 
+                Model.ToPagedList(), 
                 page => Url.Action("Details", "Project", new { ViewBag.Id, ticketsPage = page }),
                 new PagedListRenderOptions() 
                 {

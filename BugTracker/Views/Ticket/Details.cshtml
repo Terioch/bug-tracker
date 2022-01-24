@@ -14,6 +14,11 @@
     ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
 <div id="ticketContainer" data-id="@Model.Id">    
     <div class="row g-4 d-flex mb-3">        
         <div class="col col-xl-auto p-0">

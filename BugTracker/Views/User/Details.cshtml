@@ -16,6 +16,11 @@
     List<string> roles = (List<string>)await userManager.GetRolesAsync(user) ?? new List<string>();    
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
 <div id="userContainer" data-id="@Model.Id" class="card">
   <div class="card-header bg-light">
     <h1 class="fs-3 mt-2">@Model.UserName</h1>     
