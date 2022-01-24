@@ -17,7 +17,7 @@ namespace BugTracker.Models
 
         public string? Description { get; set; }
 
-        public DateTime? SubmittedDate { get; set; }     
+        public DateTimeOffset? SubmittedDate { get; set; }     
 
         public string? Type { get; set; }
 

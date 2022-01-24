@@ -26,7 +26,7 @@ namespace BugTracker.Models
         public string? Description { get; set; }
 
         [Required]
-        public DateTime? CreatedAt { get; set; }       
+        public DateTimeOffset? CreatedAt { get; set; }       
 
         [Required]
         public string? Type { get; set; }

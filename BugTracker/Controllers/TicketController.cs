@@ -78,7 +78,7 @@ namespace BugTracker.Controllers
                     SubmitterId = submitter.Id,
                     Title = model.Title,
                     Description = model.Description,
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTimeOffset.Now,
                     Type = model.Type,
                     Status = model.Status,
                     Priority = model.Priority,
@@ -140,7 +140,7 @@ namespace BugTracker.Controllers
 
             if (searchTerm == null)
             {
-                return PartialView("_TicketList", tickets.ToPagedList(1, 5));
+                return PartialView("_TicketList", tickets.ToPagedList(1, 8));
             }          
 
             var filteredTickets = tickets.Where(t => 
@@ -150,7 +150,7 @@ namespace BugTracker.Controllers
                 || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
                 || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
 
-            return PartialView("_TicketList", filteredTickets.ToPagedList(1, 5));
+            return PartialView("_TicketList", filteredTickets.ToPagedList(1, 8));
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
@@ -204,7 +204,7 @@ namespace BugTracker.Controllers
                             OldValue = ticketPropertyValue,
                             NewValue = propertyValue,
                             Modifier = modifier.UserName,
-                            ModifiedAt = DateTime.Now
+                            ModifiedAt = DateTimeOffset.Now
                         };
                         ticketHistoryRepo.Create(record);
                         ticketProperty.SetValue(ticket, property.GetValue(model));
@@ -250,7 +250,7 @@ namespace BugTracker.Controllers
                     OldValue = ticket.Status,
                     NewValue = model.Status,
                     Modifier = modifier.UserName,
-                    ModifiedAt = DateTime.Now,
+                    ModifiedAt = DateTimeOffset.Now,
                 };
 
                 ticketHistoryRepo.Create(record);
