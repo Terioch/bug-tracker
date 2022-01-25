@@ -5,22 +5,21 @@
     ViewData["ActivePage"] = ManageNavPages.Username;
 }
 
-<h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
-    <div class="col-md-6">
+    <div class="col">
         <form id="username-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input asp-for="Username" class="form-control" disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input asp-for="Input.UserName" class="form-control" />
                 <label asp-for="Input.UserName" class="form-label"></label>
                 <span asp-validation-for="Input.UserName" class="text-danger"></span>
             </div>
-            <button id="update-username-button" type="submit" class="w-100 btn btn-lg btn-primary">Update</button>
+            <button id="update-username-button" type="submit" class="w-100 btn btn-lg btn-success mb-3">Update username</button>
         </form>
     </div>
 </div>

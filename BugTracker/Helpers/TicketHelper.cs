@@ -30,15 +30,15 @@ namespace BugTracker.Helpers
             IList<string> roles = await userManager.GetRolesAsync(user);
             List<Project> projects = userProjectRepo.GetProjectsByUserId(user.Id);            
 
-            if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
+            if (roles.Contains("Admin"))
             {
                 return ticketRepo.GetAllTickets();
             }
-            else if (roles.Contains("Project Manager") || roles.Contains("Demo Project Manager"))
+            else if (roles.Contains("Project Manager"))
             {
                 return projects.SelectMany(p => p.Tickets ?? new List<Ticket>());
             }
-            else if (roles.Contains("Developer") || roles.Contains("Demo Developer"))
+            else if (roles.Contains("Developer"))
             {
                 return projects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id));                
             }
@@ -50,11 +50,11 @@ namespace BugTracker.Helpers
             IList<string> roles = await userManager.GetRolesAsync(user);
             Ticket ticket = ticketRepo.GetTicketById(ticketId);
 
-            if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
+            if (roles.Contains("Admin"))
             {
                 return true;
             }   
-            else if (roles.Contains("Project Manager") || roles.Contains("Demo Project Manager"))
+            else if (roles.Contains("Project Manager"))
             {
                 return userProjectRepo
                     .GetProjectsByUserId(user.Id)
@@ -62,7 +62,7 @@ namespace BugTracker.Helpers
                     .Select(t => t.Id)
                     .Contains(ticketId);
             }
-            else if (roles.Contains("Submitter") || roles.Contains("Demo Submitter"))
+            else if (roles.Contains("Submitter"))
             {
                 return user.Id == ticket.SubmitterId;
             }                              
@@ -74,7 +74,7 @@ namespace BugTracker.Helpers
             IList<string> roles = await userManager.GetRolesAsync(user);
             Ticket ticket = ticketRepo.GetTicketById(ticketId);
 
-            if (roles.Contains("Developer") || roles.Contains("Demo Developer"))
+            if (roles.Contains("Developer"))
             {
                 return user.Id == ticket.AssignedDeveloperId;
             }
@@ -86,11 +86,11 @@ namespace BugTracker.Helpers
             IList<string> roles = await userManager.GetRolesAsync(user);
             Ticket ticket = ticketRepo.GetTicketById(ticketId);
 
-            if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
+            if (roles.Contains("Admin"))
             {
                 return true;
             }
-            else if (roles.Contains("Project Manager") || roles.Contains("Demo Project Manager"))
+            else if (roles.Contains("Project Manager"))
             {
                 return userProjectRepo
                     .GetProjectsByUserId(user.Id)
@@ -98,7 +98,7 @@ namespace BugTracker.Helpers
                     .Select(t => t.Id)
                     .Contains(ticketId);
             }
-            else if (roles.Contains("Submitter") || roles.Contains("Demo Submitter"))
+            else if (roles.Contains("Submitter"))
             {
                 return user.Id == ticket.SubmitterId;
             }           

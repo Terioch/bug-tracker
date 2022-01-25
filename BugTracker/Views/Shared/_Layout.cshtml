@@ -3,13 +3,12 @@
 @using BugTracker.Models;
 
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> userManager;
+@inject UserManager<ApplicationUser> userManager
 
 @{
-    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
-    // Modify such that the role of the highest degree is prioritized during selection
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);   
     IList<string> roles = await userManager.GetRolesAsync(await userManager.FindByNameAsync(User.Identity.Name)) ?? new List<string>();
-    var loggedInAs = roles.First() ?? User.Identity.Name;
+    var loggedInAs = String.Join(", ", roles) != "" ? String.Join(", ", roles) : User.Identity.Name;
 }
 
 <style>

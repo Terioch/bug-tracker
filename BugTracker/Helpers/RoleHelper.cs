@@ -23,5 +23,18 @@ namespace BugTracker.Helpers
             var user = await userManager.FindByNameAsync(userName);
             return (List<string>)await userManager.GetRolesAsync(user);
         }
+
+        public string SelectHighestLevelRole(List<string> roles)
+        {
+            List<string> systemRoles = new() { "Admin", "Project Manager", "Developer", "Submitter" };
+            foreach (var role in systemRoles)
+            {
+                if (roles.Contains(role))
+                {
+                    return role;
+                }
+            }
+            return "";
+        }
     }
 }
