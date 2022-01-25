@@ -26,11 +26,17 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Username { get; set; }
+
+        public string Email { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -58,20 +64,18 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Phone]
             [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; }                   
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var email = await _userManager.GetEmailAsync(user);
 
+            FirstName = user.FirstName;
+            LastName = user.LastName;
             Username = userName;
-
-            Input = new InputModel
-            {
-                PhoneNumber = phoneNumber
-            };
+            Email = email;           
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -98,7 +102,7 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
-            }
+            }            
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
