@@ -24,14 +24,14 @@
 <div id="projectContainer" data-id="@Model?.Id" class="card">
     <div class="card-header bg-light">
         <h1 class="fs-3 mt-2">@Model.Name</h1>
-        @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Demo Admin"))
+        @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
         {
             <span><a class="link-primary" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |</span>
         }
         
         <a asp-action="ListProjects">Back to List</a>
 
-        @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Demo Admin"))
+        @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
         {
             <span>
                 | <a asp-action="Delete" asp-route-id="@Model.Id" class="text-danger" 
@@ -98,15 +98,14 @@
 
                                             <tr>
                                                 <td>@user.UserName</td>                        
-                                                <td>@user.Email</td> 
-                                                <td>@string.Join(", ", roles)</td>
-                                                @*@if (!roles.Any())
+                                                <td>@user.Email</td>                                               
+                                                @if (roles.Any())
                                                 {
                                                     <td>@string.Join(", ", roles)</td>
                                                 } else
                                                 {
-                                                    <td>No assigned roles</td>
-                                                }  *@     
+                                                    <td>None</td>
+                                                }       
                                                 <td class="d-flex flex-column">                                            
                                                     <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id" class="link-success">Details</a>
                                                     @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, Model.Id))

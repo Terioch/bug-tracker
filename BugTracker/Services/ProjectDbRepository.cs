@@ -67,7 +67,7 @@ namespace BugTracker.Services
 
         public Project Update(Project project)
         {
-            EntityEntry<Project> attachedProject = context?.Projects.Attach(project);
+            EntityEntry<Project>? attachedProject = context.Projects.Attach(project);
             attachedProject.State = EntityState.Modified;
             context.SaveChanges();
             return project;

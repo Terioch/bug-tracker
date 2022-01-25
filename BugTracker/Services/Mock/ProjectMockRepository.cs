@@ -53,12 +53,16 @@ namespace BugTracker.Services.Mock
 
         public Project Update(Project project)
         {
-            throw new NotImplementedException();
+            Project projectToBeUpdated = projects.First(p => p.Id == project.Id);
+            projectToBeUpdated = project;
+            return project;
         }
 
         public Project Delete(string id)
         {
-            throw new NotImplementedException();
+            Project project = projects.First(p => p.Id == id);
+            projects.Remove(project);
+            return project;
         }
     }
 }
