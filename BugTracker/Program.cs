@@ -4,6 +4,7 @@ using BugTracker.Helpers;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using BugTracker.Services.Mock;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ builder.Services.AddDbContext<BugTrackerDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Dependency Injection
-builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectMockRepository>();
 builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
 builder.Services.AddScoped<ITicketHistoryRecordRepository, TicketHistoryRecordDbRepository>();
@@ -25,6 +26,7 @@ builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
 builder.Services.AddScoped<TicketHelper, TicketHelper>();
 builder.Services.AddScoped<RoleHelper, RoleHelper>();
 builder.Services.AddScoped<TicketAttachmentHelper, TicketAttachmentHelper>();
+builder.Services.AddScoped<BugTrackerMockContext, BugTrackerMockContext>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;

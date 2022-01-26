@@ -1,44 +1,54 @@
 ﻿using BugTracker.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Services.Mock
 {
     public class ProjectMockRepository : IProjectRepository
     {
-        static readonly List<Project> projects = new();       
+        private readonly BugTrackerMockContext context;
+
+        public ProjectMockRepository(BugTrackerMockContext context)
+        {
+            this.context = context;
+        }
+
+        private static List<Project> projects = new() 
+        {
+            new Project
+            {
+                Id = "p1,
+                Name = "Bug Tracker",
+                Description = "A Bug/Issue Tracker MVC project."
+            },
+            new Project
+            {
+                Id = "p2",
+                Name = "Technology Blog",
+                Description = "A programming tutorial blog built using .Net Web API and React.JS."
+            },
+            new Project
+            {
+                Id = "p3",
+                Name = "Demo Project 1",
+                Description = "This is a demo project."
+            },
+            new Project
+            {
+                Id = "p4",
+                Name = "Demo Project 2",
+                Description = "This is a demo project."
+            }
+        };
 
         public Project Create(Project project)
         {
-            projects.Add(project);
+            context.Projects.Add(project);
             return project;
         }       
 
         public IEnumerable<Project> GetAllProjects()
-        {
-            projects.Add(new Project
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Bug Tracker",
-                Description = "A Bug/Issue Tracker MVC project."
-            });
-            projects.Add(new Project
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Technology Blog",
-                Description = "A programming tutorial blog built using .Net Web API and React.JS."
-            });
-            projects.Add(new Project
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Demo Project 0",
-                Description = "This is a demo project."
-            });
-            projects.Add(new Project
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Demo Project 1",
-                Description = "This is a demo project."
-            });
-            return projects;
+        {            
+            return projects;              
         }
 
         public Project GetProjectById(string id)
@@ -53,8 +63,8 @@ namespace BugTracker.Services.Mock
 
         public Project Update(Project project)
         {
-            Project projectToBeUpdated = projects.First(p => p.Id == project.Id);
-            projectToBeUpdated = project;
+            int index = projects.FindIndex(p => p.Id == project.Id);
+            projects[index] = project;
             return project;
         }
 

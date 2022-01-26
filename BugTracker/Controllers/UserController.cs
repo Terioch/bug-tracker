@@ -8,7 +8,7 @@ using BugTracker.Helpers;
 
 namespace BugTracker.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -27,8 +27,7 @@ namespace BugTracker.Controllers
             this.ticketRepo = ticketRepository;
             this.ticketHelper = ticketHelper;
         }
-
-        [Authorize]
+        
         [HttpGet]
         public IActionResult ListUsers(int? page)
         {
@@ -59,7 +58,7 @@ namespace BugTracker.Controllers
             };
             return View(model);
         }
-
+   
         [HttpGet]
         public IActionResult FilterUsersByNameReturnPartial(string? searchTerm)
         {
@@ -113,6 +112,7 @@ namespace BugTracker.Controllers
             return PartialView("~/Views/User/_UserTicketList.cshtml", filteredUsers.ToPagedList(1, 2));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
@@ -120,6 +120,7 @@ namespace BugTracker.Controllers
             return View(user);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(ApplicationUser model)
         {
@@ -162,6 +163,7 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddProject(string id, UserViewModel model)
         {
@@ -182,7 +184,8 @@ namespace BugTracker.Controllers
             userProjectRepo.Create(userProject);
             return RedirectToAction("Details", new { id });
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult RemoveProject(string id, string projectId)
         {
             var projects = userProjectRepo.GetProjectsByUserId(id);

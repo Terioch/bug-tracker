@@ -141,17 +141,22 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(string id)
         {
-            return View();
+            Project project = repo.GetProjectById(id);
+            return View(project);
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPut]
+        [HttpPost]
         public IActionResult Edit(Project project)
         {
-            repo.Update(project);
-            return RedirectToAction("Details", "Project", project.Id);
+            if (ModelState.IsValid)
+            {
+                repo.Update(project);
+                return RedirectToAction("Details", new { id = project.Id });
+            }
+            return View(project);
         }
 
         [Authorize(Roles = "Admin")]    

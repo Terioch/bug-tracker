@@ -18,6 +18,7 @@ namespace BugTracker.Models
         [StringLength(200)]
         public string? Description { get; set; }       
 
+        // Navigation properties
         public virtual ICollection<Ticket>? Tickets { get; set; } = new HashSet<Ticket>();
         
         public virtual ICollection<ApplicationUser>? Users { get; set; } = new HashSet<ApplicationUser>();
