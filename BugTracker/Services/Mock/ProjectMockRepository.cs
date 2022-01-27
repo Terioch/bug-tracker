@@ -1,4 +1,4 @@
-﻿using BugTracker.Models;
+﻿/*using BugTracker.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Services.Mock
@@ -16,7 +16,7 @@ namespace BugTracker.Services.Mock
         {
             new Project
             {
-                Id = "p1,
+                Id = "p1",
                 Name = "Bug Tracker",
                 Description = "A Bug/Issue Tracker MVC project."
             },
@@ -58,7 +58,7 @@ namespace BugTracker.Services.Mock
 
         public Project GetProjectByName(string name)
         {
-            throw new NotImplementedException();
+            return projects.First(p => p.Name == name);
         }
 
         public Project Update(Project project)
@@ -76,3 +76,4 @@ namespace BugTracker.Services.Mock
         }
     }
 }
+*/

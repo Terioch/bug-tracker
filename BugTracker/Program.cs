@@ -5,18 +5,42 @@ using BugTracker.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BugTracker.Services.Mock;
+using Npgsql;
+
+static string GetHerokuConnectionString()
+{
+    string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URI") ?? "postgres://xofsabfoeatohw:c11fd9533cc550e302820db1453b010ee88c4f997636cfa37df617fff4f5a42a@ec2-107-21-146-133.compute-1.amazonaws.com:5432/d9b915952ucg8c";
+
+    var databaseUri = new Uri(connectionUrl);
+
+    string db = databaseUri.LocalPath.TrimStart('/');
+    string[] userInfo = databaseUri.UserInfo.Split(':', StringSplitOptions.RemoveEmptyEntries);
+
+    return $"Host={databaseUri.Host};Port={databaseUri.Port};Username={userInfo[0]};Password={userInfo[1]};Pooling=true;sslmode=Prefer;Trust Server Certificate=true";
+}
 
 var builder = WebApplication.CreateBuilder(args);
+bool isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-    options.UseSqlServer(connectionString));builder.Services.AddDbContext<BugTrackerDbContext>(options =>
+if (!isDev)
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<BugTrackerDbContext>(options =>
+    options.UseSqlServer(connectionString)); builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+} else
+{
+    var connectionString = GetHerokuConnectionString();
+    builder.Services.AddDbContext<BugTrackerDbContext>(options =>
+    options.UseNpgsql(connectionString)); builder.Services.AddDbContext<BugTrackerDbContext>(options =>
+    options.UseNpgsql(connectionString));
+    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+}
 
 // Dependency Injection
-builder.Services.AddScoped<IProjectRepository, ProjectMockRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
 builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
 builder.Services.AddScoped<ITicketHistoryRecordRepository, TicketHistoryRecordDbRepository>();
