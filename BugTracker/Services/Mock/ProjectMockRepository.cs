@@ -1,4 +1,4 @@
-﻿/*using BugTracker.Models;
+﻿using BugTracker.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Services.Mock
@@ -12,7 +12,7 @@ namespace BugTracker.Services.Mock
             this.context = context;
         }
 
-        private static List<Project> projects = new() 
+        public static List<Project> projects = new()
         {
             new Project
             {
@@ -38,17 +38,17 @@ namespace BugTracker.Services.Mock
                 Name = "Demo Project 2",
                 Description = "This is a demo project."
             }
-        };
+        };       
+
+        public IEnumerable<Project> GetAllProjects()
+        {                              
+            return projects;           
+        }
 
         public Project Create(Project project)
         {
-            context.Projects.Add(project);
+            projects.Add(project);
             return project;
-        }       
-
-        public IEnumerable<Project> GetAllProjects()
-        {            
-            return projects;              
         }
 
         public Project GetProjectById(string id)
@@ -76,4 +76,3 @@ namespace BugTracker.Services.Mock
         }
     }
 }
-*/

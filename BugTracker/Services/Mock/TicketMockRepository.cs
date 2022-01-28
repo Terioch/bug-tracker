@@ -8,11 +8,10 @@ namespace BugTracker.Services.Mock
 
         public TicketMockRepository(BugTrackerMockContext context)
         {
-            this.context = context;
+            this.context = context;            
         }
 
-
-        private static List<Ticket> tickets = new()
+        public static List<Ticket> tickets = new() 
         {
             new Ticket()
             {

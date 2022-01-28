@@ -9,21 +9,25 @@ using Npgsql;
 
 static string GetHerokuConnectionString()
 {
-    string connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URI") ?? "postgres://xofsabfoeatohw:c11fd9533cc550e302820db1453b010ee88c4f997636cfa37df617fff4f5a42a@ec2-107-21-146-133.compute-1.amazonaws.com:5432/d9b915952ucg8c";
+    string databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "postgres://goztfvfaridqxa:597a2d5ffcd5f5a25bb10eac832acd4e6b250368f2d7b9b8207630fddad9401b@ec2-54-211-96-137.compute-1.amazonaws.com:5432/df257q70amg4e2";
+    bool isUrl = Uri.TryCreate(databaseUrl, UriKind.Absolute, out Uri? url);
 
-    var databaseUri = new Uri(connectionUrl);
-
-    string db = databaseUri.LocalPath.TrimStart('/');
-    string[] userInfo = databaseUri.UserInfo.Split(':', StringSplitOptions.RemoveEmptyEntries);
-
-    return $"Host={databaseUri.Host};Port={databaseUri.Port};Username={userInfo[0]};Password={userInfo[1]};Pooling=true;sslmode=Prefer;Trust Server Certificate=true";
+    if (isUrl)
+    {       
+        return $"host={url.Host};username={url.UserInfo.Split(':')[0]};password={url.UserInfo.Split(':')[1]};database={url.LocalPath.Substring(1)};pooling=true;";              
+    }
+    return "";
 }
 
 var builder = WebApplication.CreateBuilder(args);
 bool isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
 // Add services to the container.
-if (!isDev)
+var connectionString = GetHerokuConnectionString();
+builder.Services.AddDbContext<BugTrackerDbContext>(options =>
+options.UseNpgsql(connectionString));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+/*if (!isDev)
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
@@ -34,10 +38,9 @@ if (!isDev)
 {
     var connectionString = GetHerokuConnectionString();
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-    options.UseNpgsql(connectionString)); builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(connectionString));    
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-}
+}*/
 
 // Dependency Injection
 builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();

@@ -1,11 +1,15 @@
-﻿@using X.PagedList;
+﻿@using Microsoft.AspNetCore.Identity
+@using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
-@model IPagedList<Project>;
+@inject UserManager<ApplicationUser> userManager
+
+@model IPagedList<Project>
 
 @{
     ViewData["Title"] = "Projects Page";
+    var loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
 <div id="projectListPageContainer" class="card">
@@ -17,7 +21,13 @@
         <div class="input-group-sm">
             <input id="projectListSearchInput" class="form-control mb-3" placeholder="Search Project..."  />
         </div>        
-        <a class="btn btn-primary mb-3" asp-action="Create">Create New Project</a>
+        @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+        {
+            <a class="btn btn-primary mb-3" asp-action="Create">Create New Project</a>
+        } else
+        {
+            <a class="btn btn-primary mb-3 disabled" asp-action="Create">Create New Project</a>
+        }            
     </div>
     <div id="projectListContainer">
         @if (!Model.Any() || Model == null) 

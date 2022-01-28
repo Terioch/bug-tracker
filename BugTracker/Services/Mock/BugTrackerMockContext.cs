@@ -6,7 +6,7 @@ namespace BugTracker.Services.Mock
 {
     public class BugTrackerMockContext
     {
-        public List<Project>? Projects { get; set; } = new()
+        public static List<Project>? Projects { get; set; } = new()
         {
             new Project
             {
@@ -34,14 +34,52 @@ namespace BugTracker.Services.Mock
             }
         };
 
-        public List<Ticket>? Tickets { get; set; }
+        public static List<Ticket>? Tickets { get; set; } = new()
+        {
+            new Ticket()
+            {
+                Id = "t1",
+                ProjectId = "p1",
+                SubmitterId = "u1",
+                AssignedDeveloperId = "u1",
+                Title = "Test Ticket",
+                Description = "Testing ticket creation",
+                CreatedAt = DateTimeOffset.UtcNow,
+                Type = "Bugs/Errors",
+                Priority = "Medium",
+            },
+            new Ticket()
+            {
+                Id = "t2",
+                ProjectId = "p1",
+                SubmitterId = "u3",
+                AssignedDeveloperId = "u2",
+                Title = "Test Ticket 2",
+                Description = "Testing login functionality",
+                CreatedAt = DateTimeOffset.UtcNow,
+                Type = "Feature Requests",
+                Priority = "Low",
+            },
+            new Ticket()
+            {
+                Id = "t3",
+                ProjectId = "p2",
+                SubmitterId = "u5",
+                AssignedDeveloperId = "u1",
+                Title = "Test Ticket 3",
+                Description = "This is a test ticket",
+                CreatedAt = DateTimeOffset.UtcNow,
+                Type = "Other Comments",
+                Priority = "High",
+            }
+        };
 
-        public List<UserProject>? UserProjects { get; set; }
+        public static List<UserProject>? UserProjects { get; set; } = new();
 
-        public List<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
+        public static List<TicketHistoryRecord>? TicketHistoryRecords { get; set; } = new();
 
-        public List<TicketAttachment>? TicketAttachments { get; set; }
+        public static List<TicketAttachment>? TicketAttachments { get; set; } = new();
 
-        public List<TicketComment>? TicketComments { get; set; }        
+        public static List<TicketComment>? TicketComments { get; set; } = new();
     }
 }
