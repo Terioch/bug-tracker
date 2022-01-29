@@ -56,20 +56,8 @@ namespace BugTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateRole()
-        {
-            RoleViewModel roleModel = new();
-            var role = roleManager.Roles.ToList()[3];
-            foreach (var user in userManager.Users)
-            {
-                bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
-
-                if (isInRole)
-                {
-                    roleModel.Users.Add($"{user.FirstName} {user.LastName}");
-                }
-            }
-            Console.WriteLine(roleModel.Users);
+        public IActionResult CreateRole()
+        {            
             return View();
         }
 
