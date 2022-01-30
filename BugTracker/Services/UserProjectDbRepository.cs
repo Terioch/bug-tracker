@@ -21,12 +21,13 @@ namespace BugTracker.Services
 
         public List<Project> GetProjectsByUserId(string userId)
         {
-            IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.UserId == userId);                            
+            IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.UserId == userId);
+            var projectIds = userProjects.Select(u => u.ProjectId).ToList();
             List<Project> projects = new();               
 
-            foreach (var userProject in userProjects)
+            for (int i = 0; i < projectIds.Count; i++)
             {                
-                Project project = projectRepo.GetProjectById(userProject.ProjectId);
+                Project project = projectRepo.GetProjectById(projectIds[i]);
                 projects.Add(project);
             }           
             return projects;
@@ -35,11 +36,12 @@ namespace BugTracker.Services
         public List<ApplicationUser> GetUsersByProjectId(string projectId)
         {
             IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.ProjectId == projectId);
+            var userIds = userProjects.Select(u => u.UserId).ToList();
             List<ApplicationUser> users = new();
 
-            foreach (var userProject in userProjects)
+            for (int i = 0; i < userIds.Count; i++)
             {
-                ApplicationUser user = userManager.Users.First(u => u.Id == userProject.UserId);
+                ApplicationUser user = userManager.Users.First(u => u.Id == userIds[i]);
                 users.Add(user);
             }
             return users;

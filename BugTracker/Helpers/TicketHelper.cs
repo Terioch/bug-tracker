@@ -28,7 +28,7 @@ namespace BugTracker.Helpers
         {                   
             user ??= await userManager.GetUserAsync(claimUser);
             IList<string> roles = await userManager.GetRolesAsync(user);
-            List<Project> projects = userProjectRepo.GetProjectsByUserId(user.Id);            
+            List<Project> projects = userProjectRepo.GetProjectsByUserId(user.Id); // Provenance of issue         
 
             if (roles.Contains("Admin"))
             {
