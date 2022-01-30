@@ -19,15 +19,15 @@ using Npgsql;
     return "";
 }*/
 
-static string GetHerokuConnectionString()
-{
-    string? databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-    Uri url = new Uri(databaseUrl);
-    return $"host={url.Host};username={url.UserInfo.Split(':')[0]};password={url.UserInfo.Split(':')[1]};database={url.LocalPath.Substring(1)};pooling=true;";
-}
-
 var builder = WebApplication.CreateBuilder(args);
 bool isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
+string GetHerokuConnectionString()
+{
+    string? databaseUrl = builder.Configuration["DATABASE_URL"];
+    Uri uri = new Uri(databaseUrl);
+    return $"host={uri.Host};username={uri.UserInfo.Split(':')[0]};password={uri.UserInfo.Split(':')[1]};database={uri.LocalPath.Substring(1)};pooling=true;";
+}
 
 // Add services to the container.
 var connectionString = GetHerokuConnectionString();

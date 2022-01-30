@@ -14,8 +14,7 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7114;http://localhost:5114",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "DATABASE_URL": "postgres://goztfvfaridqxa:597a2d5ffcd5f5a25bb10eac832acd4e6b250368f2d7b9b8207630fddad9401b@ec2-54-211-96-137.compute-1.amazonaws.com:5432/df257q70amg4e2"
+        "ASPNETCORE_ENVIRONMENT": "Development"        
       }
     },
     "IIS Express": {
