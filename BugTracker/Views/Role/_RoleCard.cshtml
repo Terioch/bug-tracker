@@ -18,8 +18,8 @@
     }
 </style>
 
-<div class="card mb-3 role-card border-0 border-bottom" style="min-height: 366px; background-color: #FAFAFA" data-id="@Model.Id" data-index="@Model.Index">
-   @* <div class="card-header">
+<div class="card mb-3 role-card border-0 border-bottom" style="min-height: 366px" data-id="@Model.Id" data-index="@Model.Index">
+   @*<div class="card-header">
         Role id: @Model.Id
     </div>*@
     <div class="card-body">      
@@ -44,7 +44,7 @@
                     @if (!Model.Users.Any())
                     {
                         <ul>
-                            <li class="list-group-item border-0" style="background-color: #FAFAFA">No users are associated with this role</li>
+                            <li class="list-group-item border-0">No users are associated with this role</li>
                         </ul>
                     }
                     else
@@ -52,7 +52,7 @@
                         <ul class="list-group list-group-horizontal w-80 d-flex flex-wrap">     
                             @foreach (var user in Model.Users)
                             {
-                                <li class="list-group-item border-0" style="min-width: max-content; background-color: #FAFAFA">@user</li>   
+                                <li class="list-group-item border-0" style="min-width: max-content">@user</li>   
                             }
                         </ul>                                           
                     }   
@@ -78,10 +78,10 @@
             @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
             {
                 <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info text-white edit-role">Edit Role</a>
-                <button asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-warning delete-role" 
+                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-warning delete-role" 
                     onclick="return confirm('Are you sure you want to delete the role: @Model.Name?')">
                     Delete Role
-                </button>          
+                </a>          
             } else
             {
                 <button class="btn btn-info text-white edit-role disabled">Edit Role</button>

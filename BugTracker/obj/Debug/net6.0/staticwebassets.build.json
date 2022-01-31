@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4xMV4KWYr3saZ0AiNX/Ez/7I+9Q5XXVdZMIJke1IBd8=",
+  "Hash": "YrCg9iM6tEGB0xZ7dz0tohWpZl7fg4DzfIzLz0oRLIY=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1105,12 +1105,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\85a43d2d-629a-4a35-b246-e1ccf080c1bc_bookcase-books-bookshelves-256541.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\00e2e5a0-fecb-4fc4-918c-05e43bd8aeba_code-desk.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "Images/85a43d2d-629a-4a35-b246-e1ccf080c1bc_bookcase-books-bookshelves-256541.jpg",
+      "RelativePath": "Images/00e2e5a0-fecb-4fc4-918c-05e43bd8aeba_code-desk.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1119,15 +1119,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\85a43d2d-629a-4a35-b246-e1ccf080c1bc_bookcase-books-bookshelves-256541.jpg"
+      "OriginalItemSpec": "wwwroot\\Images\\00e2e5a0-fecb-4fc4-918c-05e43bd8aeba_code-desk.jpg"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\9d42df53-a496-46e4-9818-b250bb7b6a6e_bookcase-books-bookshelves-256541.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\42eebfa7-45f7-46f0-9cc3-b2020672eaeb_code-desk.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "Images/9d42df53-a496-46e4-9818-b250bb7b6a6e_bookcase-books-bookshelves-256541.jpg",
+      "RelativePath": "Images/42eebfa7-45f7-46f0-9cc3-b2020672eaeb_code-desk.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1136,7 +1136,41 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\9d42df53-a496-46e4-9818-b250bb7b6a6e_bookcase-books-bookshelves-256541.jpg"
+      "OriginalItemSpec": "wwwroot\\Images\\42eebfa7-45f7-46f0-9cc3-b2020672eaeb_code-desk.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\8d866d84-85cc-48f1-b2ff-bdc55a4f1d8c_portfolio-logo.png",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Images/8d866d84-85cc-48f1-b2ff-bdc55a4f1d8c_portfolio-logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\8d866d84-85cc-48f1-b2ff-bdc55a4f1d8c_portfolio-logo.png"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\935fce45-ebbf-4c43-8a40-5fef051f47fd_bookcase-books-bookshelves-256541.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Images/935fce45-ebbf-4c43-8a40-5fef051f47fd_bookcase-books-bookshelves-256541.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\935fce45-ebbf-4c43-8a40-5fef051f47fd_bookcase-books-bookshelves-256541.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\default-user-icon.jpg",

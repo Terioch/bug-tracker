@@ -157,8 +157,8 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(id);          
-
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            List<ApplicationUser> users = userManager.Users.ToList();
             IdentityResult result = await roleManager.DeleteAsync(role);
 
             if (result.Succeeded)
@@ -169,13 +169,11 @@ namespace BugTracker.Controllers
                     Name = role.Name,
                 };
 
-                foreach (var user in userManager.Users)
-                {
-                    bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
-
-                    if (isInRole)
+                for (int i = 0; i < users.Count; i++)
+                {  
+                    if (await userManager.IsInRoleAsync(users[i], role.Name))
                     {
-                        model.Users.Add(user.UserName);
+                        model.Users.Add(users[i].UserName);
                     }
                 }
 
@@ -201,24 +199,26 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> AddUser(UserRoleViewModel model)
         {
             IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);            
-
             ApplicationUser user = await userManager.FindByIdAsync(model.UserId);
-            bool isInRole = await userManager.IsInRoleAsync(user, role.Name);         
+            bool isInRole = await userManager.IsInRoleAsync(user, role.Name);                     
 
-            if (!isInRole)
+            if (isInRole)
             {
-                IdentityResult result = await userManager.AddToRoleAsync(user, role.Name);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("ListRoles");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }                
+                TempData["Error"] = "The user you're attempting to add is already assigned to this role";
             }
+        
+            IdentityResult result = await userManager.AddToRoleAsync(user, role.Name);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ListRoles");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }                            
+
             return RedirectToAction("ListRoles");
         }
 
@@ -226,24 +226,26 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> RemoveUser(UserRoleViewModel model)
         {
             IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);           
-
             ApplicationUser user = await userManager.FindByIdAsync(model.UserId);  
-            bool isInRole = await userManager.IsInRoleAsync(user, role.Name);            
+            bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
 
-            if (isInRole)
+            if (!isInRole)
             {
-                IdentityResult result = await userManager.RemoveFromRoleAsync(user, role.Name);               
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("ListRoles");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+                TempData["Error"] = "The user you're attempting to remove is not assigned to this role";
             }
+            
+            IdentityResult result = await userManager.RemoveFromRoleAsync(user, role.Name);               
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ListRoles");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            
             return RedirectToAction("ListRoles");
         }
     }

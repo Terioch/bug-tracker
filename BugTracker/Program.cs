@@ -30,24 +30,24 @@ string GetHerokuConnectionString()
 }
 
 // Add services to the container.
-var connectionString = GetHerokuConnectionString();
+/*var connectionString = GetHerokuConnectionString();
 builder.Services.AddDbContext<BugTrackerDbContext>(options =>
 options.UseNpgsql(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-/*if (!isDev)
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();*/
+if (isDev)
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-    options.UseSqlServer(connectionString)); builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString)); 
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-} else
+}
+else
 {
     var connectionString = GetHerokuConnectionString();
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-    options.UseNpgsql(connectionString));    
+    options.UseNpgsql(connectionString));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-}*/
+}
 
 // Dependency Injection
 builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();

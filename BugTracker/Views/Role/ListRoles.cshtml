@@ -18,6 +18,14 @@
     }   
 </style>
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <div id="rolesMain" class="card">
     <div class="card-header bg-light mb-3">
         <h3 class="mb-0">Manage users assigned to each role</h3>
@@ -57,8 +65,8 @@
             @foreach (var role in Model.Roles) 
             {               
                 <div class="col">
-                    <partial name="_RoleCard" model="role" />
-                </div>  
+                    <partial name="_RoleCard" model="role" />  
+                </div>
             }                               
         </div>                             
 
