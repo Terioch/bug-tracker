@@ -263,7 +263,7 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         public IActionResult Delete(string id)
         {
-            Ticket ticket = repo.GetTicketById(id);                    
+            repo.GetTicketById(id);                    
           
             ticketHistoryRepo.DeleteRecordsByTicketId(id);
             foreach (var attachment in ticketAttachmentRepo.GetAttachmentsByTicketId(id))

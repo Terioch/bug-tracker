@@ -32,8 +32,14 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(string ticketId, string attachmentName, IFormFile fileAttachment)
         {            
-            if (ModelState.IsValid && attachmentHelper.IsValidAttachment(fileAttachment.FileName))
+            if (ModelState.IsValid)
             {
+                if (!attachmentHelper.IsValidAttachment(fileAttachment.FileName))
+                {
+                    TempData["Error"] = "The attachment you attempted to upload is invalid";
+                    return RedirectToAction("Details", "Ticket", new { id = ticketId });
+                }
+
                 ApplicationUser submitter = await GetCurrentUserAsync();              
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
@@ -68,10 +74,16 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(TicketAttachment model, IFormFile fileAttachment)
         {
-            TicketAttachment attachment = repo.GetAttachmentById(model.Id);                          
+            TicketAttachment attachment = repo.GetAttachmentById(model.Id);             
             
-            if (ModelState.IsValid && attachmentHelper.IsValidAttachment(model.FilePath))
+            if (ModelState.IsValid)
             {
+                if (!attachmentHelper.IsValidAttachment(fileAttachment.FileName))
+                {
+                    TempData["Error"] = "The attachment you attempted to upload is invalid";
+                    return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
+                }
+
                 // Remove currently uploaded attachment                
                 attachmentHelper.RemoveUploadedFileAttachment(attachment);
 
