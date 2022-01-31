@@ -12,7 +12,8 @@ namespace BugTracker.Helpers
         private readonly RoleHelper roleHelper;
         private readonly string? userName;
 
-        public ProjectHelper(IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, UserManager<ApplicationUser> userManager, RoleHelper roleHelper, IHttpContextAccessor httpContextAccessor)
+        public ProjectHelper(IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, UserManager<ApplicationUser> userManager, 
+            RoleHelper roleHelper, IHttpContextAccessor httpContextAccessor)
         {
             this.projectRepo = projectRepo;
             this.userProjectRepo = userProjectRepo;
@@ -33,7 +34,7 @@ namespace BugTracker.Helpers
             List<string> roles = await roleHelper.GetRoleNamesOfUser(userName);
             user ??= userManager.Users.First(u => u.UserName == userName);
 
-            if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
+            if (roles.Contains("Admin"))
             {
                 return projectRepo.GetAllProjects();
             }            
@@ -44,11 +45,11 @@ namespace BugTracker.Helpers
         {
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);
 
-            if (roles.Contains("Admin") || roles.Contains("Demo Admin"))
+            if (roles.Contains("Admin"))
             {
                 return true;
             }
-            else if (roles.Contains("Project Manager") || roles.Contains("Demo Project Manager"))
+            else if (roles.Contains("Project Manager"))
             {
                 return userProjectRepo.GetProjectsByUserId(user.Id).Select(p => p.Id).Contains(projectId);
             }            

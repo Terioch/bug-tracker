@@ -170,10 +170,8 @@ namespace BugTracker.Controllers
                 AssignedDeveloperId = ticket.AssignedDeveloperId,
                 Type = ticket.Type,
                 Status = ticket.Status,
-                Priority = ticket.Priority,
+                Priority = ticket.Priority,                 
             };
-
-            // ViewBag.Projects = await projectHelper.GetUserRoleProjects();
             return View(model);
         }
 
