@@ -4,11 +4,12 @@
 }
 
 <h2 class="text-danger">An error occurred while processing your request.</h2>
-<h5>The support team has been notified and are working on a fix.</h5>
+<h5>Please try again or return back to the application homepage.</h5>
+<a asp-action="ListProjects" asp-controller="Project">Go Home</a>
 
 <hr />
 
-@*<h5>Exception Details:</h5>
+<h5>Exception Details:</h5>
 <div class="alert alert-danger">
     <h5>Exception Path</h5>
     <hr />
@@ -32,5 +33,5 @@
     <p>
         <strong>Request ID:</strong> <code>@Model?.RequestId</code>
     </p>
-}*@
+}
 

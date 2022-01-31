@@ -68,13 +68,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(TicketAttachment model, IFormFile fileAttachment)
         {
-            TicketAttachment attachment = repo.GetAttachmentById(model.Id);   
-            
-            if (attachment == null)
-            {
-                ViewBag.ErrorMessage = $"Ticket Attachment with id { model.Id } could not found.";
-                return View("NotFound");
-            }
+            TicketAttachment attachment = repo.GetAttachmentById(model.Id);                          
             
             if (ModelState.IsValid && attachmentHelper.IsValidAttachment(model.FilePath))
             {
@@ -98,13 +92,7 @@ namespace BugTracker.Controllers
         }
         
         public IActionResult Delete(string id) 
-        {                   
-            if (id == null)
-            {
-                ViewBag.ErrorMessage = $"Ticket Attachment with id { id ?? "null" } could not found.";
-                return View("NotFound");
-            }
-
+        {                               
             TicketAttachment attachment = repo.Delete(id);
             attachmentHelper.RemoveUploadedFileAttachment(attachment);
             return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
