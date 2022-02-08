@@ -40,15 +40,17 @@ namespace BugTracker.Services
             return comment;
         }
 
+        public TicketComment Update(TicketComment comment)
+        {
+            EntityEntry<TicketComment> attachedComment = context.TicketComments.Attach(comment);
+            attachedComment.State = EntityState.Modified;
+            context.SaveChanges();
+            return comment;
+        }
+
         public TicketComment Delete(string id)
         {
-            TicketComment? comment = context.TicketComments.Find(id);
-
-            if (comment == null)
-            {
-                return new TicketComment();
-            }
-
+            TicketComment? comment = context.TicketComments.Find(id);            
             context.TicketComments.Remove(comment);
             context.SaveChanges();
             return comment;
@@ -60,14 +62,6 @@ namespace BugTracker.Services
             context.TicketComments.RemoveRange(comments);
             context.SaveChanges();
             return comments;
-        }
-
-        public TicketComment Update(TicketComment comment)
-        {
-            EntityEntry<TicketComment> attachedComment = context.TicketComments.Attach(comment);
-            attachedComment.State = EntityState.Modified;
-            context.SaveChanges();
-            return comment;
-        }
+        }        
     }
 }

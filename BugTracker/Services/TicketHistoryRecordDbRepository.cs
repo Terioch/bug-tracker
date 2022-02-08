@@ -19,13 +19,7 @@ namespace BugTracker.Services
 
         public TicketHistoryRecord GetRecordById(string id)
         {
-            TicketHistoryRecord? record = context.TicketHistoryRecords.Find(id);
-
-            if (record == null)
-            {
-                throw new Exception("Ticket history record Not Found");
-            }
-            return record;
+            return context.TicketHistoryRecords.Find(id);            
         }
 
         public IEnumerable<TicketHistoryRecord> GetRecordsByTicketId(string id)
@@ -40,14 +34,14 @@ namespace BugTracker.Services
             return record;
         }
 
+        public TicketHistoryRecord Update(TicketHistoryRecord record)
+        {
+            throw new NotImplementedException();
+        }
+
         public TicketHistoryRecord Delete(string id)
         {
-            TicketHistoryRecord? record = context.TicketHistoryRecords.Find(id);
-
-            if (record == null)
-            {
-                throw new NullReferenceException("Ticket history record Not Found");
-            }
+            TicketHistoryRecord? record = context.TicketHistoryRecords.Find(id);            
             context.TicketHistoryRecords.Remove(record);
             context.SaveChanges();
             return record;
@@ -59,11 +53,6 @@ namespace BugTracker.Services
             context.TicketHistoryRecords.RemoveRange(records);
             context.SaveChanges();
             return records;
-        }
-
-        public TicketHistoryRecord Update(TicketHistoryRecord record)
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }

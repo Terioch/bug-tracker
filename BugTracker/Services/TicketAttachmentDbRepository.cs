@@ -23,7 +23,7 @@ namespace BugTracker.Services
         {
             return context.TicketAttachments
                 .Include(a => a.Submitter)
-                .FirstOrDefault(a => a.Id == id) ?? new TicketAttachment();
+                .First(a => a.Id == id);
         }
 
         public IEnumerable<TicketAttachment> GetAttachmentsByTicketId(string ticketId)
@@ -34,6 +34,14 @@ namespace BugTracker.Services
         public TicketAttachment Create(TicketAttachment attachment)
         {
             context.TicketAttachments.Add(attachment);
+            context.SaveChanges();
+            return attachment;
+        }
+
+        public TicketAttachment Update(TicketAttachment attachment)
+        {
+            EntityEntry<TicketAttachment> attachedAttachment = context.TicketAttachments.Attach(attachment);
+            attachedAttachment.State = EntityState.Modified;
             context.SaveChanges();
             return attachment;
         }
@@ -52,14 +60,6 @@ namespace BugTracker.Services
             context.TicketAttachments.RemoveRange(attachments);
             context.SaveChanges();
             return attachments;
-        }
-
-        public TicketAttachment Update(TicketAttachment attachment)
-        {
-            EntityEntry<TicketAttachment> attachedAttachment = context.TicketAttachments.Attach(attachment);
-            attachedAttachment.State = EntityState.Modified;
-            context.SaveChanges();
-            return attachment;
-        }
+        }        
     }
 }
