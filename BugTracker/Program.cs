@@ -5,24 +5,11 @@ using BugTracker.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BugTracker.Services.Mock;
-using Npgsql;
-
-/*static string GetHerokuConnectionString()
-{
-    string databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "postgres://goztfvfaridqxa:597a2d5ffcd5f5a25bb10eac832acd4e6b250368f2d7b9b8207630fddad9401b@ec2-54-211-96-137.compute-1.amazonaws.com:5432/df257q70amg4e2";
-    bool isUrl = Uri.TryCreate(databaseUrl, UriKind.Absolute, out Uri? url);
-
-    if (isUrl)
-    {       
-        return $"host={url.Host};username={url.UserInfo.Split(':')[0]};password={url.UserInfo.Split(':')[1]};database={url.LocalPath.Substring(1)};pooling=true;";              
-    }
-    return "";
-}*/
 
 var builder = WebApplication.CreateBuilder(args);
 bool isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
-string GetHerokuConnectionString()
+string GetPgsqlConnectionString()
 {
     string? databaseUrl = builder.Configuration["DATABASE_URL"];
     Uri uri = new Uri(databaseUrl);
@@ -30,7 +17,7 @@ string GetHerokuConnectionString()
 }
 
 // Add services to the container.
-/*var connectionString = GetHerokuConnectionString();
+/*var connectionString = GetPgsqlConnectionString();
 builder.Services.AddDbContext<BugTrackerDbContext>(options =>
 options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();*/
@@ -43,16 +30,16 @@ if (isDev)
 }
 else
 {
-    var connectionString = GetHerokuConnectionString();
+    var connectionString = GetPgsqlConnectionString();
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseNpgsql(connectionString));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 }
 
 // Dependency Injection
-builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectMockRepository>();
 builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
-builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
+builder.Services.AddScoped<ITicketRepository, TicketMockRepository>();
 builder.Services.AddScoped<ITicketHistoryRecordRepository, TicketHistoryRecordDbRepository>();
 builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentDbRepository>();
 builder.Services.AddScoped<ITicketCommentRepository, TicketCommentDbRepository>();

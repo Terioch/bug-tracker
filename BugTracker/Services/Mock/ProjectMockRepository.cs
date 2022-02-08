@@ -12,7 +12,7 @@ namespace BugTracker.Services.Mock
             this.context = context;
         }
 
-        public static List<Project> projects = new()
+        private static List<Project> projects = new()
         {
             new Project
             {
@@ -43,13 +43,7 @@ namespace BugTracker.Services.Mock
         public IEnumerable<Project> GetAllProjects()
         {                              
             return projects;           
-        }
-
-        public Project Create(Project project)
-        {
-            projects.Add(project);
-            return project;
-        }
+        }       
 
         public Project GetProjectById(string id)
         {
@@ -59,6 +53,12 @@ namespace BugTracker.Services.Mock
         public Project GetProjectByName(string name)
         {
             return projects.First(p => p.Name == name);
+        }
+
+        public Project Create(Project project)
+        {
+            projects.Add(project);
+            return project;
         }
 
         public Project Update(Project project)

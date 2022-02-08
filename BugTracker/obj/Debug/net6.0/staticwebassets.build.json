@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YrCg9iM6tEGB0xZ7dz0tohWpZl7fg4DzfIzLz0oRLIY=",
+  "Hash": "uuWZ5NOb6OKL4uqxmz/5X+E/qq/QnzeJUJzZSJZONdM=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1105,12 +1105,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\00e2e5a0-fecb-4fc4-918c-05e43bd8aeba_code-desk.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\6a2b53c3-b6cb-4aaa-a173-454cc95759d3_white-robot.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "Images/00e2e5a0-fecb-4fc4-918c-05e43bd8aeba_code-desk.jpg",
+      "RelativePath": "Images/6a2b53c3-b6cb-4aaa-a173-454cc95759d3_white-robot.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1119,24 +1119,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\00e2e5a0-fecb-4fc4-918c-05e43bd8aeba_code-desk.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\42eebfa7-45f7-46f0-9cc3-b2020672eaeb_code-desk.jpg",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "Images/42eebfa7-45f7-46f0-9cc3-b2020672eaeb_code-desk.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\42eebfa7-45f7-46f0-9cc3-b2020672eaeb_code-desk.jpg"
+      "OriginalItemSpec": "wwwroot\\Images\\6a2b53c3-b6cb-4aaa-a173-454cc95759d3_white-robot.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\8d866d84-85cc-48f1-b2ff-bdc55a4f1d8c_portfolio-logo.png",
@@ -1154,23 +1137,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\8d866d84-85cc-48f1-b2ff-bdc55a4f1d8c_portfolio-logo.png"
-    },
-    {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\935fce45-ebbf-4c43-8a40-5fef051f47fd_bookcase-books-bookshelves-256541.jpg",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "Images/935fce45-ebbf-4c43-8a40-5fef051f47fd_bookcase-books-bookshelves-256541.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\935fce45-ebbf-4c43-8a40-5fef051f47fd_bookcase-books-bookshelves-256541.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\default-user-icon.jpg",
