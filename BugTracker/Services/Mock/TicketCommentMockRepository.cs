@@ -4,11 +4,8 @@ namespace BugTracker.Services.Mock
 {
     public class TicketCommentMockRepository : ITicketCommentRepository
     {
-        private readonly BugTrackerMockContext context;
-
-        public TicketCommentMockRepository(BugTrackerMockContext context)
+        public TicketCommentMockRepository()
         {
-            this.context = context;
         }
 
         private static readonly List<TicketComment> ticketComments = new()

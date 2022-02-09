@@ -43,7 +43,11 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> ListProjects(int? page)
         {   
-            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();            
+            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();
+            foreach (var project in projects)
+            {
+                project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id);
+            }
             return View(projects.ToPagedList(page ?? 1, 8));
         } 
         
@@ -67,7 +71,7 @@ namespace BugTracker.Controllers
         public IActionResult Details(string id, int? usersPage, int? ticketsPage)
         {            
             Project project = repo.GetProjectById(id);
-            // project.Tickets = ticketRepository.GetTicketsByProjectId(id);
+            project.Tickets = ticketRepo.GetTicketsByProjectId(id);
             project.Users = userProjectRepo.GetUsersByProjectId(id);
 
             List<ApplicationUser> unassignedUsers = userManager.Users.ToList();

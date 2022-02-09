@@ -5,14 +5,11 @@ namespace BugTracker.Services.Mock
 {
     public class ProjectMockRepository : IProjectRepository
     {
-        private readonly BugTrackerMockContext context;
-
-        public ProjectMockRepository(BugTrackerMockContext context)
-        {
-            this.context = context;          
+        public ProjectMockRepository()
+        {                      
         }
 
-        private static List<Project> projects = new()
+        private static readonly List<Project> projects = new()
         {
             new Project
             {

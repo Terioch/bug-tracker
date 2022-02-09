@@ -6,14 +6,10 @@ namespace BugTracker.Services.Mock
 {
     public class TicketAttachmentMockRepository : ITicketAttachmentRepository
     {
-        private readonly BugTrackerMockContext context;
-        private readonly ITicketRepository ticketRepo;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public TicketAttachmentMockRepository(BugTrackerMockContext context, ITicketRepository ticketRepo, UserManager<ApplicationUser> userManager)
+        public TicketAttachmentMockRepository(UserManager<ApplicationUser> userManager)
         {
-            this.context = context;
-            this.ticketRepo = ticketRepo;
             this.userManager = userManager;
         }
 
@@ -51,10 +47,9 @@ namespace BugTracker.Services.Mock
         public IEnumerable<TicketAttachment> GetAllAttachments()
         {
             List<TicketAttachment> attachments = ticketAttachments;
-            attachments.ForEach(async a =>
+            attachments.ForEach(a =>
             {
-                a.Ticket = ticketRepo.GetTicketById(a.TicketId);
-                a.Submitter = await userManager.FindByIdAsync(a.SubmitterId);
+                a.Submitter = userManager.Users.First(u => u.Id == a.SubmitterId);
             });
             return attachments;
         }
@@ -70,10 +65,9 @@ namespace BugTracker.Services.Mock
         public IEnumerable<TicketAttachment> GetAttachmentsByTicketId(string ticketId)
         {
             var attachments = ticketAttachments.Where(a => a.TicketId == ticketId);
-            ticketAttachments.ForEach(async a =>
+            ticketAttachments.ForEach(a =>
             {
-                a.Ticket = ticketRepo.GetTicketById(a.TicketId);
-                a.Submitter = await userManager.FindByIdAsync(a.SubmitterId);
+                a.Submitter = userManager.Users.First(u => u.Id == a.SubmitterId);
             });
             return attachments;
         }

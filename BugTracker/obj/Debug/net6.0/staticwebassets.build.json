@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uuWZ5NOb6OKL4uqxmz/5X+E/qq/QnzeJUJzZSJZONdM=",
+  "Hash": "Oxdkm2HmB7b+ewmmo+iRsqOTQfOWZ/atxaLtnXz862A=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1103,6 +1103,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\3302aff6-057d-48f1-b74b-a2503b8ab137_academic.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Images/3302aff6-057d-48f1-b74b-a2503b8ab137_academic.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\3302aff6-057d-48f1-b74b-a2503b8ab137_academic.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Images\\6a2b53c3-b6cb-4aaa-a173-454cc95759d3_white-robot.jpg",

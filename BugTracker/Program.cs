@@ -42,7 +42,6 @@ else
     builder.Services.AddScoped<ITicketHistoryRepository, TicketHistoryMockRepository>();
     builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentMockRepository>();
     builder.Services.AddScoped<ITicketCommentRepository, TicketCommentMockRepository>();
-    builder.Services.AddScoped<BugTrackerMockContext, BugTrackerMockContext>();
 }
 
 builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
