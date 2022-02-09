@@ -53,26 +53,20 @@ namespace BugTracker.Services
             return ticket;
         }
 
-        public Ticket Delete(string id)
-        {
-            Ticket? ticket = context.Tickets.Find(id);
-
-            if (ticket == null)
-            {
-                return new Ticket();
-            }
-
-            context.Tickets.Remove(ticket);
-            context.SaveChanges();
-            return ticket;
-        }        
-
         public Ticket Update(Ticket ticket)
         {
             EntityEntry<Ticket> attachedTicket = context.Tickets.Attach(ticket);
             attachedTicket.State = EntityState.Modified;
             context.SaveChanges();
             return ticket;
-        }       
+        }
+
+        public Ticket Delete(string id)
+        {
+            Ticket? ticket = context.Tickets.Find(id);            
+            context.Tickets.Remove(ticket);
+            context.SaveChanges();
+            return ticket;
+        }                
     }
 }

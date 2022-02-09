@@ -17,16 +17,18 @@ string GetPgsqlConnectionString()
 }
 
 // Add services to the container.
-/*var connectionString = GetPgsqlConnectionString();
-builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-options.UseNpgsql(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();*/
-if (isDev)
+if (!isDev)
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseSqlServer(connectionString)); 
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
+    builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
+    builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
+    builder.Services.AddScoped<ITicketHistoryRepository, TicketHistoryDbRepository>();
+    builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentDbRepository>();
+    builder.Services.AddScoped<ITicketCommentRepository, TicketCommentDbRepository>();
 }
 else
 {
@@ -34,20 +36,19 @@ else
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseNpgsql(connectionString));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    builder.Services.AddScoped<IProjectRepository, ProjectMockRepository>();
+    builder.Services.AddScoped<IUserProjectRepository, UserProjectMockRepository>();
+    builder.Services.AddScoped<ITicketRepository, TicketMockRepository>();
+    builder.Services.AddScoped<ITicketHistoryRepository, TicketHistoryMockRepository>();
+    builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentMockRepository>();
+    builder.Services.AddScoped<ITicketCommentRepository, TicketCommentMockRepository>();
+    builder.Services.AddScoped<BugTrackerMockContext, BugTrackerMockContext>();
 }
 
-// Dependency Injection
-builder.Services.AddScoped<IProjectRepository, ProjectMockRepository>();
-builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
-builder.Services.AddScoped<ITicketRepository, TicketMockRepository>();
-builder.Services.AddScoped<ITicketHistoryRecordRepository, TicketHistoryRecordDbRepository>();
-builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentDbRepository>();
-builder.Services.AddScoped<ITicketCommentRepository, TicketCommentDbRepository>();
 builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
 builder.Services.AddScoped<TicketHelper, TicketHelper>();
 builder.Services.AddScoped<RoleHelper, RoleHelper>();
 builder.Services.AddScoped<TicketAttachmentHelper, TicketAttachmentHelper>();
-builder.Services.AddScoped<BugTrackerMockContext, BugTrackerMockContext>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;

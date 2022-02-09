@@ -1,17 +1,29 @@
 ﻿using BugTracker.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Services.Mock
 {
     public class TicketMockRepository : ITicketRepository
     {
         private readonly BugTrackerMockContext context;
+        private readonly IProjectRepository projectRepo;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public TicketMockRepository(BugTrackerMockContext context)
+        public TicketMockRepository(BugTrackerMockContext context, IProjectRepository projectRepo, UserManager<ApplicationUser> userManager)
         {
-            this.context = context;            
+            this.context = context;
+            this.projectRepo = projectRepo;
+            this.userManager = userManager;
+
+            /*tickets.ForEach(async t =>
+            {
+                t.Project = projectRepo.GetProjectById(t.ProjectId);
+                t.Submitter = await userManager.FindByIdAsync(t.SubmitterId);
+                t.AssignedDeveloper = await userManager.FindByIdAsync(t.AssignedDeveloperId);
+            });*/
         }
 
-        public static List<Ticket> tickets = new() 
+        public static readonly List<Ticket> tickets = new()
         {
             new Ticket()
             {
@@ -55,18 +67,29 @@ namespace BugTracker.Services.Mock
         };
 
         public IEnumerable<Ticket> GetAllTickets()
-        {
+        {            
             return tickets;
         }
 
         public Ticket GetTicketById(string id)
         {
-            return tickets.First(t => t.Id == id);
+            Ticket ticket = tickets.First(t => t.Id == id);
+            /*ticket.Project = projectRepo.GetProjectById(ticket.ProjectId);
+            ticket.Submitter = await userManager.FindByIdAsync(ticket.SubmitterId);
+            ticket.AssignedDeveloper = await userManager.FindByIdAsync(ticket.AssignedDeveloperId);*/
+            return ticket;
         }
 
         public List<Ticket> GetTicketsByProjectId(string projectId)
         {
-            return tickets.Where(t => t.ProjectId == projectId).ToList();
+            List<Ticket> tickets = TicketMockRepository.tickets.Where(t => t.ProjectId == projectId).ToList();
+            tickets.ForEach(async t =>
+            {
+                t.Project = projectRepo.GetProjectById(t.ProjectId);
+                t.Submitter = await userManager.FindByIdAsync(t.SubmitterId);
+                t.AssignedDeveloper = await userManager.FindByIdAsync(t.AssignedDeveloperId);
+            });
+            return tickets;
         }        
 
         public Ticket Create(Ticket ticket)

@@ -2,7 +2,7 @@
 
 namespace BugTracker.Services.Mock
 {
-    public class TicketHistoryMockRepository
+    public class TicketHistoryMockRepository : ITicketHistoryRepository
     {
         private readonly BugTrackerMockContext context;
 
@@ -11,7 +11,7 @@ namespace BugTracker.Services.Mock
             this.context = context;
         }
 
-        private static List<TicketHistoryRecord> ticketHistoryRecords = new()
+        private static readonly List<TicketHistoryRecord> ticketHistoryRecords = new()
         {
             new TicketHistoryRecord()
             {
@@ -82,13 +82,7 @@ namespace BugTracker.Services.Mock
 
         public TicketHistoryRecord GetRecordById(string id)
         {
-            TicketHistoryRecord? record = ticketHistoryRecords.Find(r => r.Id == id);
-
-            if (record == null)
-            {
-                throw new Exception("Ticket history record Not Found");
-            }
-            return record;
+            return ticketHistoryRecords.Find(r => r.Id == id);            
         }
 
         public IEnumerable<TicketHistoryRecord> GetRecordsByTicketId(string id)
@@ -111,12 +105,7 @@ namespace BugTracker.Services.Mock
 
         public TicketHistoryRecord Delete(string id)
         {
-            TicketHistoryRecord? record = ticketHistoryRecords.Find(r => r.Id == id);
-
-            if (record == null)
-            {
-                throw new NullReferenceException("Ticket history record Not Found");
-            }
+            TicketHistoryRecord? record = ticketHistoryRecords.Find(r => r.Id == id);            
             ticketHistoryRecords.Remove(record);            
             return record;
         }

@@ -1,9 +1,10 @@
 ﻿using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Text;
 
 namespace BugTracker.Services.Mock
 {
-    public class TicketAttachmentMockRepository
+    public class TicketAttachmentMockRepository : ITicketAttachmentRepository
     {
         private readonly BugTrackerMockContext context;
         private readonly ITicketRepository ticketRepo;
@@ -25,7 +26,7 @@ namespace BugTracker.Services.Mock
                 SubmitterId = "2ae32131-606d-495c-81cf-86f38875f9a7",
                 Name = "Test attachment",
                 FilePath = "academic.jpg",
-                CreatedAt = DateTimeOffset.UtcNow
+                CreatedAt = DateTimeOffset.UtcNow,
             },
             new TicketAttachment()
             {
@@ -44,13 +45,13 @@ namespace BugTracker.Services.Mock
                 Name = "Test attachment 3",
                 FilePath = "calendar.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
-            },            
+            }            
         };
 
         public IEnumerable<TicketAttachment> GetAllAttachments()
         {
-            List<TicketAttachment> attachments = new();
-            ticketAttachments.ForEach(async a =>
+            List<TicketAttachment> attachments = ticketAttachments;
+            attachments.ForEach(async a =>
             {
                 a.Ticket = ticketRepo.GetTicketById(a.TicketId);
                 a.Submitter = await userManager.FindByIdAsync(a.SubmitterId);
@@ -58,11 +59,11 @@ namespace BugTracker.Services.Mock
             return attachments;
         }
 
-        public async Task<TicketAttachment> GetAttachmentById(string id)
+        public TicketAttachment GetAttachmentById(string id)
         {
             var attachment = ticketAttachments.Find(a => a.Id == id);
-            attachment.Ticket = ticketRepo.GetTicketById(attachment.TicketId);
-            attachment.Submitter = await userManager.FindByIdAsync(attachment.SubmitterId);
+           /* attachment.Ticket = ticketRepo.GetTicketById(attachment.TicketId);
+            attachment.Submitter = await userManager.FindByIdAsync(attachment.SubmitterId);*/
             return attachment;
         }
 

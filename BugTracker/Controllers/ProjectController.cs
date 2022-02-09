@@ -19,12 +19,12 @@ namespace BugTracker.Controllers
         private readonly IProjectRepository repo;
         private readonly ITicketRepository ticketRepo;
         private readonly IUserProjectRepository userProjectRepo;
-        private readonly ITicketHistoryRecordRepository ticketHistoryRepo;
+        private readonly ITicketHistoryRepository ticketHistoryRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
         private readonly TicketHelper ticketHelper;
 
-        public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRecordRepository ticketHistoryRepo, 
+        public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRepository ticketHistoryRepo, 
             UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
         {
             this.repo = repo;

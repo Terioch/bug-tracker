@@ -15,7 +15,7 @@ namespace BugTracker.Controllers
         private readonly ITicketRepository repo;
         private readonly IProjectRepository projectRepo;
         private readonly IUserProjectRepository userProjectRepo;
-        private readonly ITicketHistoryRecordRepository ticketHistoryRepo;
+        private readonly ITicketHistoryRepository ticketHistoryRepo;
         private readonly ITicketCommentRepository ticketCommentRepo;
         private readonly ITicketAttachmentRepository ticketAttachmentRepo;
         private readonly UserManager<ApplicationUser> userManager;
@@ -23,7 +23,7 @@ namespace BugTracker.Controllers
         private readonly TicketHelper ticketHelper;
         private readonly TicketAttachmentHelper attachmentHelper;
 
-        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRecordRepository ticketHistoryRepo,
+        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRepository ticketHistoryRepo,
             ITicketCommentRepository ticketCommentRepo, ITicketAttachmentRepository ticketAttachmentRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, 
             TicketHelper ticketHelper, TicketAttachmentHelper attachmentHelper)
         {

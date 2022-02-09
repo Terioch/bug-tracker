@@ -2,7 +2,7 @@
 
 namespace BugTracker.Services
 {
-    public interface ITicketHistoryRecordRepository
+    public interface ITicketHistoryRepository
     {
         public IEnumerable<TicketHistoryRecord> GetAllRecords();
         public IEnumerable<TicketHistoryRecord> GetRecordsByTicketId(string ticketId);

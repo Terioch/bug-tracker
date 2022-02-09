@@ -3,11 +3,11 @@ using BugTracker.Models;
 
 namespace BugTracker.Services
 {
-    public class TicketHistoryRecordDbRepository : ITicketHistoryRecordRepository
+    public class TicketHistoryDbRepository : ITicketHistoryRepository
     {
         private readonly BugTrackerDbContext context;
 
-        public TicketHistoryRecordDbRepository(BugTrackerDbContext context)
+        public TicketHistoryDbRepository(BugTrackerDbContext context)
         {
             this.context = context;
         }
@@ -19,7 +19,7 @@ namespace BugTracker.Services
 
         public TicketHistoryRecord GetRecordById(string id)
         {
-            return context.TicketHistoryRecords.Find(id);            
+            return context.TicketHistoryRecords.Find(id);
         }
 
         public IEnumerable<TicketHistoryRecord> GetRecordsByTicketId(string id)

@@ -9,7 +9,7 @@ namespace BugTracker.Services.Mock
 
         public ProjectMockRepository(BugTrackerMockContext context)
         {
-            this.context = context;
+            this.context = context;          
         }
 
         private static List<Project> projects = new()
@@ -18,7 +18,7 @@ namespace BugTracker.Services.Mock
             {
                 Id = "p1",
                 Name = "Bug Tracker",
-                Description = "A Bug/Issue Tracker MVC project."
+                Description = "A Bug/Issue Tracker MVC project.",                
             },
             new Project
             {
@@ -41,13 +41,15 @@ namespace BugTracker.Services.Mock
         };       
 
         public IEnumerable<Project> GetAllProjects()
-        {                              
+        {            
             return projects;           
         }       
 
         public Project GetProjectById(string id)
-        {
-            return projects.First(p => p.Id == id);
+        {            
+            Project project = projects.First(p => p.Id == id);
+            // project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id);
+            return project;
         }
 
         public Project GetProjectByName(string name)

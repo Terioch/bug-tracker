@@ -7,9 +7,9 @@ namespace BugTracker.Controllers
 {
     public class TicketHistoryController : Controller
     {
-        private readonly ITicketHistoryRecordRepository repo;
+        private readonly ITicketHistoryRepository repo;
 
-        public TicketHistoryController(ITicketHistoryRecordRepository repo)
+        public TicketHistoryController(ITicketHistoryRepository repo)
         {
             this.repo = repo;
         }
