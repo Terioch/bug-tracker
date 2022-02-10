@@ -1,6 +1,6 @@
 ﻿using BugTracker.Data;
 
-namespace BugTracker.Services
+namespace BugTracker.Repositories
 {
     public class DbRepository
     {

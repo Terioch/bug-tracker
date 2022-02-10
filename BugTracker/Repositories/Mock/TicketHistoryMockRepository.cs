@@ -1,6 +1,6 @@
 ﻿using BugTracker.Models;
 
-namespace BugTracker.Services.Mock
+namespace BugTracker.Repositories.Mock
 {
     public class TicketHistoryMockRepository : ITicketHistoryRepository
     {

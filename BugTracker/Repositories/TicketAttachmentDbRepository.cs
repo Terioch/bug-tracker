@@ -3,7 +3,7 @@ using BugTracker.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace BugTracker.Services
+namespace BugTracker.Repositories
 {
     public class TicketAttachmentDbRepository : ITicketAttachmentRepository
     {

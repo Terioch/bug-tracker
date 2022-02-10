@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BugTracker.Services.Mock
+namespace BugTracker.Repositories.Mock
 {
     public class BugTrackerMockContext
     {

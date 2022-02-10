@@ -1,7 +1,7 @@
 ﻿using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace BugTracker.Services.Mock
+namespace BugTracker.Repositories.Mock
 {
     public class TicketMockRepository : ITicketRepository
     {

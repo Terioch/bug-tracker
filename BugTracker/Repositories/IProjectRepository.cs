@@ -1,7 +1,7 @@
 ﻿using BugTracker.Models;
 using System;
 
-namespace BugTracker.Services
+namespace BugTracker.Repositories
 {
     public interface IProjectRepository
     {

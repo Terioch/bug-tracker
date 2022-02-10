@@ -1,7 +1,7 @@
 ﻿using BugTracker.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BugTracker.Services.Mock
+namespace BugTracker.Repositories.Mock
 {
     public class ProjectMockRepository : IProjectRepository
     {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System.Text;
 
-namespace BugTracker.Services.Mock
+namespace BugTracker.Repositories.Mock
 {
     public class TicketAttachmentMockRepository : ITicketAttachmentRepository
     {
@@ -39,7 +39,7 @@ namespace BugTracker.Services.Mock
                 TicketId = "t2",
                 SubmitterId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
                 Name = "Test attachment 3",
-                FilePath = "calendar.jpg",
+                FilePath = "bookcase-books-bookshelves-256541.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
             }            
         };
@@ -56,9 +56,8 @@ namespace BugTracker.Services.Mock
 
         public TicketAttachment GetAttachmentById(string id)
         {
-            var attachment = ticketAttachments.Find(a => a.Id == id);
-           /* attachment.Ticket = ticketRepo.GetTicketById(attachment.TicketId);
-            attachment.Submitter = await userManager.FindByIdAsync(attachment.SubmitterId);*/
+            var attachment = ticketAttachments.Find(a => a.Id == id);          
+            attachment.Submitter = userManager.Users.First(u => u.Id == attachment.SubmitterId);
             return attachment;
         }
 

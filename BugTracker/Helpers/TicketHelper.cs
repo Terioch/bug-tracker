@@ -1,5 +1,5 @@
 ﻿using BugTracker.Models;
-using BugTracker.Services;
+using BugTracker.Repositories;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 

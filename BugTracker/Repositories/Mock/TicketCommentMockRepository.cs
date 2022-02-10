@@ -1,11 +1,13 @@
 ﻿using BugTracker.Models;
+using Microsoft.AspNetCore.Identity;
 
-namespace BugTracker.Services.Mock
+namespace BugTracker.Repositories.Mock
 {
     public class TicketCommentMockRepository : ITicketCommentRepository
     {
-        public TicketCommentMockRepository()
+        public TicketCommentMockRepository(UserManager<ApplicationUser> userManager)
         {
+            this.userManager = userManager;
         }
 
         private static readonly List<TicketComment> ticketComments = new()
@@ -35,16 +37,25 @@ namespace BugTracker.Services.Mock
                 CreatedAt = DateTimeOffset.UtcNow
             },
         };
+        private readonly UserManager<ApplicationUser> userManager;
 
         public IEnumerable<TicketComment> GetAllComments()
         {
-            IEnumerable<TicketComment>? comments = ticketComments;
-            return comments ?? new List<TicketComment>();
+            ticketComments.ForEach(c =>
+            {
+                c.Author = userManager.Users.First(u => u.Id == c.AuthorId);
+            });
+            return ticketComments;
         }
 
         public IEnumerable<TicketComment> GetCommentsByTicketId(string id)
         {
-            return ticketComments.Where(c => c.TicketId == id) ?? new List<TicketComment>();
+            List<TicketComment> comments = ticketComments.Where(c => c.TicketId == id).ToList();
+            comments.ForEach(c =>
+            {
+                c.Author = userManager.Users.First(u => u.Id == c.AuthorId);
+            });
+            return comments;
         }
 
         public TicketComment GetComment(string id)

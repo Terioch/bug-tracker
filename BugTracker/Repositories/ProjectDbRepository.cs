@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 
-namespace BugTracker.Services
+namespace BugTracker.Repositories
 {
     public class ProjectDbRepository : IProjectRepository
     {

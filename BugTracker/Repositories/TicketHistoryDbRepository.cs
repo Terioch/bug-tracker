@@ -1,7 +1,7 @@
 ﻿using BugTracker.Data;
 using BugTracker.Models;
 
-namespace BugTracker.Services
+namespace BugTracker.Repositories
 {
     public class TicketHistoryDbRepository : ITicketHistoryRepository
     {

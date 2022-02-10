@@ -1,10 +1,10 @@
 using BugTracker.Models;
 using BugTracker.Data;
 using BugTracker.Helpers;
-using BugTracker.Services;
+using BugTracker.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using BugTracker.Services.Mock;
+using BugTracker.Repositories.Mock;
 
 var builder = WebApplication.CreateBuilder(args);
 bool isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
