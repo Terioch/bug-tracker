@@ -8,34 +8,33 @@
     ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
-<style>
-    a {
-        cursor: pointer;
-    }
-
+<style>  
     .role-card {
         max-width: 800px;
     }
 </style>
 
-<div class="card mb-3 role-card border-0 border-bottom" style="min-height: 366px" data-id="@Model.Id" data-index="@Model.Index">
+<div class="card mb-3 role-card border-0" style="min-height: 366px" data-id="@Model.Id">
    @*<div class="card-header">
         Role id: @Model.Id
     </div>*@
-    <div class="card-body">      
-        <input class="card-title fs-3 p-2 rounded border border-0 font-weight-bold role-name-input" disabled asp-for="@Model.Name" />
+    <div class="card-body">    
+        <div class="role-card-header d-flex align-items-center">
+            <h1 class="fs-3 fw-light mb-0 me-3">@Model.Name</h1>
+            <i class="fa fa-user-tie fa-2x"></i>
+        </div>       
         
         <hr style="background-color: #d1d1d1" />        
 
         <div class="role-users-container"> 
             <div class="d-flex flex-wrap align-items-end mb-3">
-                <p class="fs-5 me-3 mb-0 pb-0 fw-bold text-decoration-underline">Users in this role</p>
+                <p class="fs-5 me-3 mb-0 pb-0 text-decoration-underline">Users in this role</p>
                 @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
                 {                    
-                    <a class="edit-user-list edit-user-list-onload mb-0 pb-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>   
+                    <a href="" class="edit-user-list edit-user-list-onload mb-0 pb-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>   
                 } else
                 {
-                    <a class="edit-user-list edit-user-list-onload mb-0 pb-0 text-decoration-none disabled" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>   
+                    <a href="" class="edit-user-list edit-user-list-onload mb-0 pb-0 text-decoration-none disabled" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>   
                 }                             
             </div>
             <div class="role-user-list-container">                
@@ -52,28 +51,17 @@
                         <ul class="list-group list-group-horizontal w-80 d-flex flex-wrap">     
                             @foreach (var user in Model.Users)
                             {
-                                <li class="list-group-item border-0" style="min-width: max-content">@user</li>   
+                                <li class="list-group-item border-0 text-secondary" style="min-width: max-content">@user</li>   
                             }
                         </ul>                                           
                     }   
                    
                 </div>                
-            </div>                   
-
-            <!-- User Pagination -->
-            @*<nav id="userPagination" class="align-self-end" aria-label="collection of roles">                    
-                <ul class="pagination mb-1">
-                    <li class="page-item page-item-previous"><a class="page-link">Previous</a></li>
-                    <li class="page-item page-item-one"><a class="page-link">1</a></li>
-                    <li class="page-item page-item-two"><a class="page-link">2</a></li>     
-                    <li class="page-item page-item-two"><a class="page-link">3</a></li>     
-                    <li class="page-item page-item-next"><a class="page-link">Next</a></li>
-                </ul>                    
-            </nav>*@
+            </div>                            
         </div>                    
 
     </div>
-    <div class="card-footer">
+    <div class="card-footer" style="border: transparent">
         <div class="my-2">
             @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
             {

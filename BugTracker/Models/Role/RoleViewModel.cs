@@ -13,8 +13,6 @@ namespace BugTracker.Models
         [Required(ErrorMessage = "Role Name is required")]
         public string? Name { get; set; }
 
-        public int? Index { get; set; }
-
         public List<string> Users { get; set; } = new List<string>();
     }
 }

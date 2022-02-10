@@ -8,6 +8,8 @@ namespace BugTracker.Models
 
         public string? RoleId { get; set; }
 
+        public List<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
+
         public List<RoleViewModel>? Roles { get; set; } = new List<RoleViewModel>();
     }
 }

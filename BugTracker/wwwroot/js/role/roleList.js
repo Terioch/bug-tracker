@@ -15,7 +15,8 @@ class RoleList {
             this.clickHandler = this.clickHandler.bind(this);
             this.onUserDropdownModalOpen = this.onUserDropdownModalOpen.bind(this);
             this.paginateRoles = this.paginateRoles.bind(this);
-            this.populateUserDropdown();
+            this.addRoleIconColours();
+            // this.populateUserDropdown();
             this.events();
         }       
     }
@@ -31,6 +32,13 @@ class RoleList {
         // else if (e.target.classList.contains("update-role")) this.handleUpdate(e);
         // else if (e.target.classList.contains("delete-role")) this.handleDelete(e);
         if (e.target.classList.contains("edit-user-list-onload")) this.onUserDropdownModalOpen(e);
+    }
+
+    addRoleIconColours() {
+        const headers = document.getElementsByClassName("role-card-header");
+        headers[1].children[1].classList.add("text-danger");
+        headers[2].children[1].classList.add("text-primary");
+        headers[3].children[1].classList.add("text-success");        
     }
 
     findNearestParentCard(el) {

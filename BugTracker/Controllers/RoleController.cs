@@ -25,21 +25,23 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> ListRoles()
         {
-            var roles = roleManager.Roles.ToList();
-            var users = userManager.Users.ToList();
-            UserRoleViewModel model = new();          
+            var roles = roleManager.Roles.ToList();        
+            UserRoleViewModel model = new()
+            {
+                Users = userManager.Users.ToList()
+            };          
             
             for (int i = 0; i < roles.Count; i++) 
             {
                 List<string> usersInRole = new();
 
-                for (int j = 0; j < users.Count; j++)
+                for (int j = 0; j < model.Users.Count; j++)
                 {
-                    bool isInRole = await userManager.IsInRoleAsync(users[j], roles[i].Name);
+                    bool isInRole = await userManager.IsInRoleAsync(model.Users[j], roles[i].Name);
 
                     if (isInRole)
                     {
-                        usersInRole.Add(users[j].UserName);
+                        usersInRole.Add(model.Users[j].UserName);
                     }
                 }
 
@@ -47,7 +49,7 @@ namespace BugTracker.Controllers
                 {
                     Id = roles[i].Id,
                     Name = roles[i].Name,                   
-                    Users = usersInRole
+                    Users = usersInRole,
                 });              
             }
             return View(model);
@@ -103,8 +105,7 @@ namespace BugTracker.Controllers
                     newRole = new() 
                     { 
                         Id = role.Id,
-                        Name = role.Name,
-                        Index = roleIndex,
+                        Name = role.Name,          
                     };
 
                     foreach (var user in userManager.Users)

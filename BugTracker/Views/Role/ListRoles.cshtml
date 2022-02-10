@@ -26,9 +26,9 @@
     </div>
 }
 
-<div id="rolesMain" class="card">
-    <div class="card-header bg-light mb-3">
-        <h3 class="mb-0">Manage users assigned to each role</h3>
+<div id="rolesMain" class="card bg-light">
+    <div class="card-header mb-3">
+        <h2 class="mt-2">Manage users assigned to each role</h2>
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
         {
             <a asp-action="CreateRole" class="btn-link">Create a new role</a>
@@ -86,7 +86,7 @@
                     <!-- User Select Dropdown -->
                     <label class="control-label mb-2 text-secondary" for="userSelectDropdown">Users</label>
                     <select asp-for="UserId" class="form-select" id="userSelectDropdown">
-                        @foreach (var user in userManager.Users) 
+                        @foreach (var user in Model.Users) 
                         {     
                             <option value="@user.Id">@user.UserName</option>           
                         }
