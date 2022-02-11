@@ -88,7 +88,9 @@ namespace BugTracker.Repositories.Mock
 
         public TicketAttachment Update(TicketAttachment attachment)
         {
-            throw new NotImplementedException();
+            int index = ticketAttachments.FindIndex(a => a.Id == attachment.Id);
+            ticketAttachments[index] = attachment;
+            return attachment;
         }
 
         public TicketAttachment Delete(string id)
