@@ -65,14 +65,14 @@
         <div class="my-2">
             @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
             {
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info text-white edit-role">Edit Role</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary edit-role">Edit Role</a>
                 <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-warning delete-role" 
                     onclick="return confirm('Are you sure you want to delete the role: @Model.Name?')">
                     Delete Role
                 </a>          
             } else
             {
-                <button class="btn btn-info text-white edit-role disabled">Edit Role</button>
+                <button class="btn btn-primary edit-role disabled">Edit Role</button>
                 <button class="btn btn-warning delete-role disabled">Delete Role</button>       
             }         
         </div>                

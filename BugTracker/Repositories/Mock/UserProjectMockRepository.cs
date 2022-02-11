@@ -39,13 +39,25 @@ namespace BugTracker.Repositories.Mock
             new UserProject()
             {
                 Id = "up4",
+                UserId = "4687e432-58fc-448a-b639-6288ee716fa0",
+                ProjectId = "p1"
+            },
+            new UserProject()
+            {
+                Id = "up5",
                 UserId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
                 ProjectId = "p2"
             },
             new UserProject()
             {
-                Id = "up5",
+                Id = "up6",
                 UserId = "cd448813-e865-49e8-933a-dff582b72509",
+                ProjectId = "p2"
+            },
+            new UserProject()
+            {
+                Id = "up7",
+                UserId = "2ae32131-606d-495c-81cf-86f38875f9a7",
                 ProjectId = "p2"
             },
         };       

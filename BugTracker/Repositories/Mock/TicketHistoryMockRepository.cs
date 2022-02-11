@@ -47,7 +47,7 @@ namespace BugTracker.Repositories.Mock
                 Property = "AssignedDeveloperId",
                 OldValue = null,
                 NewValue = "cd448813-e865-49e8-933a-dff582b72509",
-                Modifier = "Demo Project Manager",
+                Modifier = "Demo Admin",
                 ModifiedAt = DateTimeOffset.UtcNow
             },
             new TicketHistoryRecord()
@@ -57,7 +57,7 @@ namespace BugTracker.Repositories.Mock
                 Property = "Status",
                 OldValue = "New",
                 NewValue = "In Progress",
-                Modifier = "Demo Project Manager",
+                Modifier = "Demo Developer",
                 ModifiedAt = DateTimeOffset.UtcNow
             },
             new TicketHistoryRecord()
@@ -67,6 +67,26 @@ namespace BugTracker.Repositories.Mock
                 Property = "Priority",
                 OldValue = "Medium",
                 NewValue = "High",
+                Modifier = "Demo Admin",
+                ModifiedAt = DateTimeOffset.UtcNow
+            },
+            new TicketHistoryRecord()
+            {
+                Id = "th6",
+                TicketId = "t4",
+                Property = "AssignedDeveloperId",
+                OldValue = null,
+                NewValue = "cd448813-e865-49e8-933a-dff582b72509",
+                Modifier = "Demo Project Manager",
+                ModifiedAt = DateTimeOffset.UtcNow
+            },
+            new TicketHistoryRecord()
+            {
+                Id = "th7",
+                TicketId = "t4",
+                Property = "Status",
+                OldValue = "In Progress",
+                NewValue = "Resolved",
                 Modifier = "Demo Project Manager",
                 ModifiedAt = DateTimeOffset.UtcNow
             },

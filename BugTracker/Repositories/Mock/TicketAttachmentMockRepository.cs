@@ -29,7 +29,7 @@ namespace BugTracker.Repositories.Mock
                 Id = "ta2",
                 TicketId = "t1",
                 SubmitterId = "cd448813-e865-49e8-933a-dff582b72509",
-                Name = "Test attachment 2",
+                Name = "Code Desk",
                 FilePath = "code-desk.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
             },
@@ -38,10 +38,19 @@ namespace BugTracker.Repositories.Mock
                 Id = "ta3",
                 TicketId = "t2",
                 SubmitterId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
-                Name = "Test attachment 3",
+                Name = "Library",
                 FilePath = "bookcase-books-bookshelves-256541.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
-            }            
+            },
+            new TicketAttachment()
+            {
+                Id = "ta4",
+                TicketId = "t4",
+                SubmitterId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
+                Name = "Node Network",
+                FilePath = "node-network.jpg",
+                CreatedAt = DateTimeOffset.UtcNow
+            }
         };
 
         public IEnumerable<TicketAttachment> GetAllAttachments()
