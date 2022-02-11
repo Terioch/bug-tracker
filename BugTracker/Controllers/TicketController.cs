@@ -141,18 +141,23 @@ namespace BugTracker.Controllers
             if (searchTerm == null)
             {
                 return PartialView("_TicketList", tickets.ToPagedList(1, 8));
-            }
+            }           
 
-            tickets = tickets.Where(t => t.AssignedDeveloperId != null); // Remove tickets without an assigned developer
+            var filteredTickets = tickets.Where(t =>
+            {
+                if (t.AssignedDeveloperId == null)
+                {
+                    t.AssignedDeveloper = new ApplicationUser() { UserName = "" };
+                }
 
-            var filteredTickets = tickets.Where(t => 
-                t.Title.ToLowerInvariant().Contains(searchTerm)
+                return t.Title.ToLowerInvariant().Contains(searchTerm)
                 || t.Status.ToLowerInvariant().Contains(searchTerm)
                 || t.Priority.ToLowerInvariant().Contains(searchTerm)
                 || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
-                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
+                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm);
+            });
 
-            return PartialView("_TicketList", filteredTickets.ToPagedList(1, 8));
+           return PartialView("_TicketList", filteredTickets.ToPagedList(1, 8));
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]

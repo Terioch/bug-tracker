@@ -32,7 +32,13 @@
                         <tr>
                             <td>@ticket.Title</td>                        
                             <td>@ticket.Submitter</td>   
-                            <td>@ticket.AssignedDeveloper</td>
+                            @if (ticket.AssignedDeveloperId != null)
+                            {
+                                <td>@ticket.AssignedDeveloper.UserName</td>
+                            } else
+                            {
+                                <td>None</td>
+                            }
                             <td>@ticket.Status</td>
                             <td>@ticket.Priority</td>
                             <td>@ticket.CreatedAt</td>

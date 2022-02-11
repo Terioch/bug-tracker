@@ -103,10 +103,17 @@ namespace BugTracker.Controllers
             }
 
             var filteredUsers = tickets.Where(t => 
-                t.Title.ToLowerInvariant().Contains(searchTerm)
-                || t.Status.ToLowerInvariant().Contains(searchTerm)                
+            {
+                if (t.AssignedDeveloperId == null)
+                {
+                    t.AssignedDeveloper = new ApplicationUser() { UserName = "" };
+                }
+
+                return t.Title.ToLowerInvariant().Contains(searchTerm)
+                || t.Status.ToLowerInvariant().Contains(searchTerm)
                 || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
-                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm));
+                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm);
+            });             
 
             ViewBag.Id = id;
             return PartialView("~/Views/User/_UserTicketList.cshtml", filteredUsers.ToPagedList(1, 2));

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Zwnd+tRVYrDxXARop1+NT7NZDU+q1Zdpw9rPx2SgyLs=",
+  "Hash": "IjTXDytA8OIQYd6I7wuMTKn6fbj4VLLKSVhf8614Qpg=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1496,6 +1496,23 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-flatly.min.css",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "lib/bootstrap/dist/css/bootstrap-flatly.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-flatly.min.css"
+    },
+    {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
@@ -1632,12 +1649,12 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-literia.min.css",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-journal.min.css",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "lib/bootstrap/dist/css/bootstrap-literia.min.css",
+      "RelativePath": "lib/bootstrap/dist/css/bootstrap-journal.min.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1646,7 +1663,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-literia.min.css"
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-journal.min.css"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-lumen.min.css",
