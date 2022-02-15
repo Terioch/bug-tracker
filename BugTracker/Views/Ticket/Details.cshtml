@@ -30,14 +30,14 @@
                 <div>                    
                     @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
                     {
-                        <span><a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |</span>                                                                      
+                        <span><a asp-action="Edit" asp-route-id="@Model.Id" class="link-success">Edit</a> |</span>                                                                      
                     } 
                     else if (await ticketHelper.IsOnlyAuthorizedToUpdateStatus(loggedInUser, Model.Id))
                     {
                         <Span><a href="" class="link-success" data-bs-toggle="modal" data-bs-target="#updateTicketStatusModal">Update Status</a> |</Span>
                     }                    
 
-                    <a asp-action="ListTickets" class="text-primary">Back to List</a>
+                    <a asp-action="ListTickets" class="link-primary">Back to List</a>
 
                     @if (await ticketHelper.IsAuthorizedToDelete(loggedInUser, Model.Id))
                     {
@@ -111,7 +111,7 @@
                 </div>
                 <div class="card-body">
                     <div class="input-group-sm">
-                        <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search by Property or Modifier..." style="max-width: 200px"  />
+                        <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search History..." style="max-width: 200px"  />
                     </div>
                     <div id="historyListContainer">
                         @if (!Model.TicketHistoryRecords.Any())
@@ -220,7 +220,7 @@
                         {
                             <div class="col-xl-6 col-md-12 col-sm-6">
                                 <div class="card">                                    
-                                    <img src="~/Images/@attachment.FilePath" asp-append-version="true" class="card-img-top img-fluid" alt="@attachment.FilePath" />                                    
+                                    <img src="~/Attachments/@attachment.FilePath" asp-append-version="true" class="card-img-top img-fluid" alt="@attachment.FilePath" />                                    
                                     <div class="card-footer">
                                         <div class="d-flex justify-content-between">
                                             <h5 class="card-subtitle mt-0 mb-1">@attachment.Name</h5>

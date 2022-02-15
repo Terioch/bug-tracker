@@ -29,10 +29,10 @@
         <h1 class="fs-3 mt-2">@Model.Name</h1>
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
         {
-            <span><a class="link-primary" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |</span>
+            <span><a asp-action="Edit" asp-route-id="@Model?.Id" class="link-success">Edit</a> |</span>
         }
         
-        <a asp-action="ListProjects">Back to List</a>
+        <a asp-action="ListProjects" class="link-primary">Back to List</a>
 
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
         {

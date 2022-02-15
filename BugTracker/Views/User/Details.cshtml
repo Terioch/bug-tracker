@@ -29,9 +29,9 @@
     <h1 class="fs-3 mt-2">@Model.UserName</h1>     
     @if (Model.Id == loggedInUser.Id || await userManager.IsInRoleAsync(loggedInUser, "Admin"))
     {
-        <span><a asp-action="Edit" asp-route-id="@Model.Id" class="link-primary">Edit</a> |</span>
+        <span><a asp-action="Edit" asp-route-id="@Model.Id" class="link-success">Edit</a> |</span>
     }
-    <a class="link-success" asp-action="ListUsers">Back to List</a>
+    <a asp-action="ListUsers" class="link-primary">Back to List</a>
     @*@if (await userManager.IsInRoleAsync(loggedInUser, "Admin")) 
     {
         <span>| <a href="" class="text-danger">Delete</a></span>            
@@ -104,13 +104,16 @@
                                 {                            
                                     <tr>
                                         <td>@project.Name</td>                        
-                                        <td>@project.Description</td> 
+                                        <td>@project.Description</td>                                         
                                         <td class="d-flex flex-column" style="gap: 0.25rem">
                                             <a asp-controller="Project" asp-action="Details" asp-route-id="@project.Id" class="link-success">Details</a>                                        
-                                            <a href="/User/RemoveProject/@Model.Id?projectId=@project.Id" class="link-danger"
-                                                onclick="return confirm('Are you sure you want to remove the project @project.Name from the user @Model.UserName?')">
-                                                Remove
-                                            </a>    
+                                            @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                                            {
+                                                <a href="/User/RemoveProject/@Model.Id?projectId=@project.Id" class="link-danger"
+                                                    onclick="return confirm('Are you sure you want to remove the project @project.Name from the user @Model.UserName?')">
+                                                    Remove
+                                                </a>   
+                                            }                                                
                                         </td>                                                                                                           
                                     </tr>                                         
                                 }

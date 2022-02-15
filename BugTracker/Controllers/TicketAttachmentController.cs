@@ -41,7 +41,7 @@ namespace BugTracker.Controllers
                 }
 
                 ApplicationUser submitter = await GetCurrentUserAsync();              
-                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Images");
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Attachments");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
                 string completeFilePath = Path.Combine(uploadsFolder, uniqueFileName);
                 
@@ -92,7 +92,7 @@ namespace BugTracker.Controllers
                 attachment.FilePath = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
 
                 // Upload and save new attachment
-                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Images");
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Attachments");
                 string updatedCompleteFilePath = Path.Combine(uploadsFolder, attachment.FilePath);
                 FileStream stream = new(updatedCompleteFilePath, FileMode.Create);
                 await fileAttachment.CopyToAsync(stream);

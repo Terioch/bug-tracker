@@ -25,7 +25,7 @@ namespace BugTracker.Helpers
 
         public void RemoveUploadedFileAttachment(TicketAttachment attachment)
         {
-            string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Images");
+            string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Attachments");
             string completeFilePath = Path.Combine(uploadsFolder, attachment.FilePath);
             FileInfo fileInfo = new(completeFilePath);
             File.Delete(completeFilePath);
