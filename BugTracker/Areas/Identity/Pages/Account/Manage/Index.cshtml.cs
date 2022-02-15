@@ -102,7 +102,7 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
-            }            
+            }                       
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)

@@ -15,6 +15,10 @@
     body, html {
         height: max-content;
     }
+    nav-item-pill {
+        background-color: #4582EC !important;
+        color: #FFF !important;
+    }
 </style>
 
 <!DOCTYPE html>
@@ -47,16 +51,16 @@
                                 <ul class="navbar-nav ms-auto">                                                            
                                     @if (SignInManager.IsSignedIn(User))
                                     {                                          
-                                        <li class="nav-item text-uppercase fw-bold">
+                                        <li class="nav-item text-uppercase fw-bold" style="font-size: .9em">
                                             <a class="nav-link" title="Manage">Logged in as: @loggedInAs</a>
                                         </li>
                                         @*<li class="nav-item">
                                             <a asp-action="Details" asp-controller="User" asp-route-id="@loggedInUser.Id" class="nav-link">Profile</a>
                                         </li>  *@
-                                        <li class="nav-item text-uppercase fw-bold">
+                                        <li class="nav-item text-uppercase fw-bold" style="font-size: .9em">
                                             <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link">Profile</a>
                                         </li>  
-                                        <li class="nav-item text-uppercase fw-bold">                                                                                      
+                                        <li class="nav-item text-uppercase fw-bold" style="font-size: .9em">                                                                                      
                                             <a class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("ListProjects", "Project", new { area = "" })">Logout</a>                                           
                                         </li>
                                     }

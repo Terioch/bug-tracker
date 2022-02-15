@@ -1,3 +1,4 @@
+using BugTracker.Helpers;
 using BugTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -59,7 +60,8 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User);            
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -67,6 +69,13 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
+                await LoadAsync(user);
+                return Page();
+            }            
+
+            if (!AccountHelper.IsAccountEditable(user))
+            {
+                ModelState.AddModelError(string.Empty, "You are not authorized to modify demo account details");
                 await LoadAsync(user);
                 return Page();
             }
