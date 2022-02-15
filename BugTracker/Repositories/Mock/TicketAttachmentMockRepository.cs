@@ -32,7 +32,7 @@ namespace BugTracker.Repositories.Mock
                 Name = "Code Desk",
                 FilePath = "code-desk.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
-            },
+            },            
             new TicketAttachment()
             {
                 Id = "ta3",
@@ -49,6 +49,15 @@ namespace BugTracker.Repositories.Mock
                 SubmitterId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
                 Name = "Node Network",
                 FilePath = "node-network.jpg",
+                CreatedAt = DateTimeOffset.UtcNow
+            },
+            new TicketAttachment()
+            {
+                Id = "ta5",
+                TicketId = "t4",
+                SubmitterId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
+                Name = "Countryside House",
+                FilePath = "countryside-house.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
             }
         };
