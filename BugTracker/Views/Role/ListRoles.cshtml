@@ -31,7 +31,7 @@
         <h1 class="fs-3 mt-2">Manage users assigned to each role</h1>
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
         {
-            <a asp-action="CreateRole" class="btn-link">Create a new role</a>
+            <a asp-action="CreateRole" class="btn-link link-primary">Create a new role</a>
         } 
     </div>  
 

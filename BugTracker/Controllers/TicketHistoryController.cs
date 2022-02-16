@@ -21,7 +21,7 @@ namespace BugTracker.Controllers
             if (searchTerm == null)
             {
                 ViewBag.Id = id;
-                return PartialView("_TicketHistoryList", records.ToPagedList(1, 6));
+                return PartialView("_TicketHistoryList", records.ToPagedList(1, 5));
             }
 
             var filteredRecords = records.Where(c => 
@@ -29,7 +29,7 @@ namespace BugTracker.Controllers
                 || c.Modifier.ToLowerInvariant().Contains(searchTerm));
 
             ViewBag.Id = id;
-            return PartialView("_TicketHistoryList", filteredRecords.ToPagedList(1, 6));
+            return PartialView("_TicketHistoryList", filteredRecords.ToPagedList(1, 5));
         }
     }
 }

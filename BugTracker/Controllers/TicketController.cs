@@ -58,8 +58,7 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]        
         public IActionResult Create()
-        {              
-            // ViewBag.Projects = await projectHelper.GetUserRoleProjects();
+        {                         
             return View();
         }
 
@@ -126,7 +125,7 @@ namespace BugTracker.Controllers
                 Project = ticket.Project,
                 Submitter = ticket.Submitter,
                 AssignedDeveloper = ticket.AssignedDeveloper,
-                TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(historyPage ?? 1, 6),
+                TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(historyPage ?? 1, 5),
                 TicketAttachments = ticket.TicketAttachments.ToPagedList(attachmentsPage ?? 1, 6),
                 TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 5),
             };
@@ -267,14 +266,12 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         public IActionResult Delete(string id)
-        {
-            repo.GetTicketById(id);                    
-          
+        {                      
             ticketHistoryRepo.DeleteRecordsByTicketId(id);
-            foreach (var attachment in ticketAttachmentRepo.GetAttachmentsByTicketId(id))
+            /*foreach (var attachment in ticketAttachmentRepo.GetAttachmentsByTicketId(id))
             {
                 attachmentHelper.RemoveUploadedFileAttachment(attachment);
-            }
+            }*/
             ticketAttachmentRepo.DeleteAttachmentsByTicketId(id);            
             ticketCommentRepo.DeleteCommentsByTicketId(id);
             repo.Delete(id);

@@ -8,7 +8,7 @@ using BugTracker.Helpers;
 
 namespace BugTracker.Controllers
 {
-    [Authorize(Roles = "Admin, Project Manager, Submitter")]
+    [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
     public class TicketAttachmentController : Controller
     {
         private readonly ITicketAttachmentRepository repo;
