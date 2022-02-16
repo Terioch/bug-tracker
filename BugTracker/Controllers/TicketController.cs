@@ -127,7 +127,7 @@ namespace BugTracker.Controllers
                 AssignedDeveloper = ticket.AssignedDeveloper,
                 TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(historyPage ?? 1, 5),
                 TicketAttachments = ticket.TicketAttachments.ToPagedList(attachmentsPage ?? 1, 6),
-                TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 5),
+                TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 8),
             };
             return View(model);                               
         }

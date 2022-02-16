@@ -45,7 +45,7 @@ namespace BugTracker.Controllers
             repo.Create(comment);
             IEnumerable<TicketComment> comments = repo.GetCommentsByTicketId(id);
             ViewBag.Id = id;
-            return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));            
+            return PartialView("_TicketCommentList", comments.ToPagedList(1, 8));            
         }
 
         [HttpGet]
@@ -56,12 +56,12 @@ namespace BugTracker.Controllers
             if (searchTerm == null)
             {
                 ViewBag.Id = id;
-                return PartialView("_TicketCommentList", comments.ToPagedList(1, 5));
+                return PartialView("_TicketCommentList", comments.ToPagedList(1, 8));
             }
 
             var filteredComments = comments.Where(c => c.Author.UserName.ToLowerInvariant().Contains(searchTerm));
             ViewBag.Id = id;
-            return PartialView("_TicketCommentList", filteredComments.ToPagedList(1, 5));
+            return PartialView("_TicketCommentList", filteredComments.ToPagedList(1, 8));
         }
 
         public IActionResult Delete(string id)

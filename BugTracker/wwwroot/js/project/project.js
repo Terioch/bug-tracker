@@ -14,7 +14,7 @@ class Project {
 
     events() {
         // document.getElementById("deleteProjectBtn").addEventListener("click", this.handleDelete);
-        document.getElementById("manageUsersBtn").addEventListener("click", this.onUsersManagementModalOpen);
+        // document.getElementById("manageUsersBtn").addEventListener("click", this.onUsersManagementModalOpen);
         document.getElementById("ticketListSearchInput").addEventListener("keyup", this.filterTicketList);
         document.getElementById("userListSearchInput").addEventListener("keyup", this.filterUserList);
     }
@@ -39,7 +39,6 @@ class Project {
         try {
             const res = await fetch(`/project/filterUsersByNameReturnPartial?id=${projectId}&searchTerm=${searchTerm}`);
             const userListHTML = await res.text();
-            console.log(userListHTML);
             document.getElementById("userListContainer").innerHTML = userListHTML;
         } catch (err) {
             console.error(err);

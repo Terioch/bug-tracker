@@ -44,7 +44,7 @@ namespace BugTracker.Repositories.Mock
 
         public Project GetProjectById(string id)
         {            
-            Project project = projects.First(p => p.Id == id);
+            Project? project = projects.Find(p => p.Id == id);
             // project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id);
             return project;
         }
