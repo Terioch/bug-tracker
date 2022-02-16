@@ -85,7 +85,7 @@ namespace BugTracker.Controllers
                 }
 
                 // Remove currently uploaded attachment                
-                attachmentHelper.RemoveUploadedFileAttachment(attachment);
+                // attachmentHelper.RemoveUploadedFileAttachment(attachment);
 
                 // Update attachment with new values
                 attachment.Name = model.Name;
@@ -106,7 +106,7 @@ namespace BugTracker.Controllers
         public IActionResult Delete(string id) 
         {                               
             TicketAttachment attachment = repo.Delete(id);
-            attachmentHelper.RemoveUploadedFileAttachment(attachment);
+            // attachmentHelper.RemoveUploadedFileAttachment(attachment);
             return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
         }
     }

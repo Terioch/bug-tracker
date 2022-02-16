@@ -30,6 +30,21 @@ namespace BugTracker.Helpers
             FileInfo fileInfo = new(completeFilePath);
             File.Delete(completeFilePath);
             fileInfo.Delete();
-        }        
+        }
+        
+        public void UploadMockAttachments()
+        {
+            string[] fileAttachmentPaths = new string[] { "academic.jpg", "bookcase-books-bookshelves-256541.jpg", "code-desk.jpg", "countryside-house.jpg", "node-network.jpg" };
+            foreach (string filePath in fileAttachmentPaths)
+            {
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Attachments");
+                string completeFilePath = Path.Combine(uploadsFolder, filePath);
+                // FileStream stream = new(completeFilePath, FileMode.Create);
+                // await fileAttachment.CopyToAsync(stream);
+                FileInfo fileInfo = new(completeFilePath);
+                fileInfo.CopyTo(completeFilePath); 
+                // stream.Close();
+            }            
+        }
     }
 }
