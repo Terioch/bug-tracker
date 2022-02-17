@@ -77,17 +77,15 @@ namespace BugTracker.Controllers
         public IActionResult FilterProjectsByNameReturnPartial(string id, string? searchTerm)
         {
             ApplicationUser user = userManager.Users.First(u => u.Id == id);
-            IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
-            TempData["UserId"] = id;
-            TempData["UserName"] = user.UserName;
+            IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);          
 
             if (searchTerm == null)
             {         
-                return PartialView("~/Views/User/_UserProjectList.cshtml", projects.ToPagedList(1, 2));
+                return PartialView("~/Views/User/_UserProjectList.cshtml", projects.ToPagedList(1, 5));
             }
 
-            var filteredUsers = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));  
-            return PartialView("~/Views/User/_UserProjectList.cshtml", filteredUsers.ToPagedList(1, 2));
+            var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));  
+            return PartialView("~/Views/User/_UserProjectList.cshtml", filteredProjects.ToPagedList(1, 5));
         }
 
         [HttpGet]
@@ -99,10 +97,10 @@ namespace BugTracker.Controllers
             if (searchTerm == null)
             {
                 ViewBag.Id = id;
-                return PartialView("~/Views/User/_UserTicketList.cshtml", tickets.ToPagedList(1, 2));
+                return PartialView("~/Views/User/_UserTicketList.cshtml", tickets.ToPagedList(1, 5));
             }
 
-            var filteredUsers = tickets.Where(t => 
+            var filteredTickets = tickets.Where(t => 
             {
                 if (t.AssignedDeveloperId == null)
                 {
@@ -116,7 +114,7 @@ namespace BugTracker.Controllers
             });             
 
             ViewBag.Id = id;
-            return PartialView("~/Views/User/_UserTicketList.cshtml", filteredUsers.ToPagedList(1, 2));
+            return PartialView("~/Views/User/_UserTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Super Admin")]

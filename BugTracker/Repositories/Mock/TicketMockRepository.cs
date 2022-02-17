@@ -91,7 +91,13 @@ namespace BugTracker.Repositories.Mock
         };
 
         public IEnumerable<Ticket> GetAllTickets()
-        {            
+        {               
+            tickets.ForEach(t =>
+            {
+                t.Project = projectRepo.GetProjectById(t.ProjectId);
+                t.Submitter = userManager.Users.First(u => u.Id == t.SubmitterId);
+                t.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
+            });
             return tickets;
         }
 

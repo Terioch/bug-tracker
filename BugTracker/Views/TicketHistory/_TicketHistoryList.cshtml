@@ -53,7 +53,7 @@
             </p>                   
             @Html.PagedListPager(
                 Model, 
-                page => Url.Action("Details", "Ticket", new { ViewBag.Id, historyPage = page }),
+                page => Url.Action("Details", "Ticket", new { ViewBag.Data.Id, historyPage = page }),
                 new PagedListRenderOptions() 
                 {
                     UlElementClasses = new string[] { "pagination", "mb-0" },
