@@ -8,21 +8,22 @@ namespace BugTracker.Models
     {
         public string? Id { get; set; }        
        
-        public string? TicketId { get; set; }        
+        public string? TicketId { get; set; }
+                
+        public string? ModifierId { get; set; }
 
         [Required]
         public string? Property { get; set; }
         
         public string? OldValue { get; set; }
   
-        public string? NewValue { get; set; }
-
-        [Required]
-        public string? Modifier { get; set; }
+        public string? NewValue { get; set; }        
 
         [Required]
         public DateTimeOffset? ModifiedAt { get; set; }
 
         public virtual Ticket? Ticket { get; set; }
+     
+        public virtual ApplicationUser? Modifier { get; set; }
     }
 }
