@@ -1,6 +1,7 @@
 ﻿using BugTracker.Data;
+using BugTracker.Repositories.Interfaces;
 
-namespace BugTracker.Repositories
+namespace BugTracker.Repositories.Db
 {
     public class DbRepository
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BugTracker.Models;
-using BugTracker.Repositories;
 using X.PagedList;
 using System.Dynamic;
+using BugTracker.Repositories.Interfaces;
 
 namespace BugTracker.Controllers
 {

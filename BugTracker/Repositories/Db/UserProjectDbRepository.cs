@@ -1,10 +1,11 @@
 ﻿using BugTracker.Data;
 using BugTracker.Models;
+using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace BugTracker.Repositories
+namespace BugTracker.Repositories.Db
 {
     public class UserProjectDbRepository : IUserProjectRepository
     {

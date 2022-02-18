@@ -1,4 +1,5 @@
 ﻿using BugTracker.Models;
+using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
