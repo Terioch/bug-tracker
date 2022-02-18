@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "b/Sgu16143jZUxhivQIIn2vSFYPNR78KLM9znuA5UoQ=",
+  "Hash": "XTLkumfspdM3/6ffbdWPWdkthf9k0z7vWdx0NWlKilE=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1069,40 +1069,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BugTracker.bundle.scp.css"
-    },
-    {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\6a2b53c3-b6cb-4aaa-a173-454cc95759d3_white-robot.jpg",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "Attachments/6a2b53c3-b6cb-4aaa-a173-454cc95759d3_white-robot.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Attachments\\6a2b53c3-b6cb-4aaa-a173-454cc95759d3_white-robot.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\8d866d84-85cc-48f1-b2ff-bdc55a4f1d8c_portfolio-logo.png",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "Attachments/8d866d84-85cc-48f1-b2ff-bdc55a4f1d8c_portfolio-logo.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Attachments\\8d866d84-85cc-48f1-b2ff-bdc55a4f1d8c_portfolio-logo.png"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\academic.jpg",

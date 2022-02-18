@@ -1,4 +1,5 @@
 ﻿using BugTracker.Models;
+using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Repositories.Mock
@@ -34,7 +35,7 @@ namespace BugTracker.Repositories.Mock
                 CreatedAt = DateTimeOffset.UtcNow,
                 Type = "Bugs/Errors",
                 Status = "In Progress",
-                Priority = "Medium",
+                Priority = "Low",
             },
             new Ticket()
             {
@@ -55,7 +56,7 @@ namespace BugTracker.Repositories.Mock
                 ProjectId = "p1",
                 SubmitterId = "2ae32131-606d-495c-81cf-86f38875f9a7",
                 AssignedDeveloperId = null,
-                Title = "Add project user bug",
+                Title = "Assign project user bug",
                 Description = "Fix issue when assigning a user to a project",
                 CreatedAt = DateTimeOffset.UtcNow,
                 Type = "Bugs/Errors",

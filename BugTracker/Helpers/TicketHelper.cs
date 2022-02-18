@@ -1,10 +1,10 @@
 ﻿using BugTracker.Models;
-using BugTracker.Repositories;
+using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace BugTracker.Helpers
-{    
+{
     public class TicketHelper
     {
         private readonly IProjectRepository projectRepo;

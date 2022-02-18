@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BugTracker.Models;
-using BugTracker.Repositories;
 using X.PagedList;
 using System.Dynamic;
+using BugTracker.Repositories.Interfaces;
 
 namespace BugTracker.Controllers
 {
@@ -29,7 +29,7 @@ namespace BugTracker.Controllers
 
             var filteredRecords = records.Where(c => 
                 c.Property.ToLowerInvariant().Contains(searchTerm)
-                || c.Modifier.ToLowerInvariant().Contains(searchTerm));
+                || c.Modifier.UserName.ToLowerInvariant().Contains(searchTerm));
           
             return PartialView("_TicketHistoryList", filteredRecords.ToPagedList(1, 5));
         }

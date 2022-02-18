@@ -1,6 +1,6 @@
 ﻿using BugTracker.Helpers;
 using BugTracker.Models;
-using BugTracker.Repositories;
+using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -204,10 +204,10 @@ namespace BugTracker.Controllers
                         {
                             Id = Guid.NewGuid().ToString(),
                             TicketId = ticket.Id,
+                            ModifierId = modifier.Id,
                             Property = property.Name,
                             OldValue = ticketPropertyValue,
-                            NewValue = propertyValue,
-                            Modifier = modifier.UserName,
+                            NewValue = propertyValue,                           
                             ModifiedAt = DateTimeOffset.Now
                         };
                         ticketHistoryRepo.Create(record);
@@ -250,10 +250,10 @@ namespace BugTracker.Controllers
                 {
                     Id = Guid.NewGuid().ToString(),
                     TicketId = ticket.Id,
+                    ModifierId = modifier.Id,
                     Property = "Status",
                     OldValue = ticket.Status,
-                    NewValue = model.Status,
-                    Modifier = modifier.UserName,
+                    NewValue = model.Status,                    
                     ModifiedAt = DateTimeOffset.Now,
                 };
 

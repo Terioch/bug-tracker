@@ -1,5 +1,5 @@
 ﻿using BugTracker.Models;
-using BugTracker.Repositories;
+using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Helpers

@@ -1,6 +1,6 @@
 ﻿using BugTracker.Helpers;
 using BugTracker.Models;
-using BugTracker.Repositories;
+using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
