@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BugTracker.Models;
-using BugTracker.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using X.PagedList;
 using BugTracker.Helpers;
+using BugTracker.Repositories.Interfaces;
 
 namespace BugTracker.Controllers
 {

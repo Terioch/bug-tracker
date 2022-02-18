@@ -1,6 +1,6 @@
 ﻿using BugTracker.Models;
 
-namespace BugTracker.Repositories
+namespace BugTracker.Repositories.Interfaces
 {
     public interface ITicketHistoryRepository
     {

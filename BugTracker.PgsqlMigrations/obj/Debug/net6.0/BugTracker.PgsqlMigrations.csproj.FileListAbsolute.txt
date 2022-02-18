@@ -9,3 +9,13 @@ C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.dll
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\ref\BugTracker.PgsqlMigrations.dll
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.pdb
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\bin\Debug\net6.0\BugTracker.deps.json
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\bin\Debug\net6.0\BugTracker.runtimeconfig.json
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\bin\Debug\net6.0\appsettings.json
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\bin\Debug\net6.0\BugTracker.staticwebassets.runtime.json
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\bin\Debug\net6.0\BugTracker.exe
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\bin\Debug\net6.0\BugTracker.dll
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\bin\Debug\net6.0\BugTracker.pdb
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.csproj.CopyComplete

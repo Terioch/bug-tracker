@@ -1,4 +1,5 @@
 ﻿using BugTracker.Models;
+using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Repositories.Mock

@@ -1,8 +1,9 @@
 ﻿using BugTracker.Data;
 using BugTracker.Models;
+using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace BugTracker.Repositories
+namespace BugTracker.Repositories.Db
 {
     public class TicketHistoryDbRepository : ITicketHistoryRepository
     {
