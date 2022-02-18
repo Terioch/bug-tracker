@@ -1,5 +1,6 @@
 ﻿using BugTracker.Data;
 using BugTracker.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Repositories
 {
@@ -19,12 +20,16 @@ namespace BugTracker.Repositories
 
         public TicketHistoryRecord GetRecordById(string id)
         {
-            return context.TicketHistoryRecords.Find(id);
+            return context.TicketHistoryRecords
+                .Include(t => t.Modifier)
+                .First(t => t.Id == id);
         }
 
         public IEnumerable<TicketHistoryRecord> GetRecordsByTicketId(string id)
         {
-            return context.TicketHistoryRecords.Where(t => t.TicketId == id);
+            return context.TicketHistoryRecords
+                .Where(t => t.TicketId == id)
+                .Include(t => t.Modifier);
         }
 
         public TicketHistoryRecord Create(TicketHistoryRecord record)

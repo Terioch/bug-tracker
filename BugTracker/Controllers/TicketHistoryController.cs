@@ -29,7 +29,7 @@ namespace BugTracker.Controllers
 
             var filteredRecords = records.Where(c => 
                 c.Property.ToLowerInvariant().Contains(searchTerm)
-                || c.Modifier.ToLowerInvariant().Contains(searchTerm));
+                || c.Modifier.UserName.ToLowerInvariant().Contains(searchTerm));
           
             return PartialView("_TicketHistoryList", filteredRecords.ToPagedList(1, 5));
         }
