@@ -17,7 +17,9 @@ namespace BugTracker.Repositories.Db
 
         public IEnumerable<TicketAttachment> GetAllAttachments()
         {
-            return context.TicketAttachments.Include(a => a.Submitter);
+            return context.TicketAttachments
+                .Include(a => a.Submitter)
+                .OrderByDescending(a => a.CreatedAt);
         }
 
         public TicketAttachment GetAttachmentById(string id)
@@ -29,7 +31,10 @@ namespace BugTracker.Repositories.Db
 
         public IEnumerable<TicketAttachment> GetAttachmentsByTicketId(string ticketId)
         {
-            return context.TicketAttachments.Include(a => a.Submitter).Where(a => a.TicketId == ticketId);
+            return context.TicketAttachments
+                .Where(a => a.TicketId == ticketId)
+                .Include(a => a.Submitter)                
+                .OrderByDescending(a => a.CreatedAt);
         }
 
         public TicketAttachment Create(TicketAttachment attachment)

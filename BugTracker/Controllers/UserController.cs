@@ -117,7 +117,7 @@ namespace BugTracker.Controllers
             return PartialView("~/Views/User/_UserTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
@@ -125,7 +125,7 @@ namespace BugTracker.Controllers
             return View(user);
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         public async Task<IActionResult> Edit(ApplicationUser model)
         {
@@ -161,14 +161,13 @@ namespace BugTracker.Controllers
 
                         return View(model);
                     }
-                }
-                await signInManager.RefreshSignInAsync(user);
+                }                
                 return RedirectToAction("Details", new { id = user.Id });
             }           
             return View(model);
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddProject(string id, UserViewModel model)
         {
@@ -190,7 +189,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("Details", new { id });
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult RemoveProject(string id, string projectId)
         {
             var projects = userProjectRepo.GetProjectsByUserId(id);

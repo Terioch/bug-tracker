@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace BugTracker.Migrations
+namespace BugTracker.PgsqlMigrations.Migrations
 {
     [DbContext(typeof(BugTrackerDbContext))]
     partial class BugTrackerDbContextModelSnapshot : ModelSnapshot

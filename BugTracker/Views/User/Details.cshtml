@@ -27,9 +27,9 @@
 <div id="userContainer" data-id="@Model.Id" class="card">
   <div class="card-header bg-light">
     <h1 class="fs-3 mt-2">@Model.UserName</h1>     
-    @if (Model.Id == loggedInUser.Id || await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+    @if (Model.Id == loggedInUser.Id || await userManager.IsInRoleAsync(loggedInUser, "Super Admin"))
     {
-        <span><a asp-action="Edit" asp-route-id="@Model.Id" class="link-success">Edit</a> |</span>
+        <span><a asp-action="Edit" asp-route-id="@Model.Id" class="link-info">Edit</a> |</span>
     }
     <a asp-action="ListUsers" class="link-primary">Back to List</a>
     @*@if (await userManager.IsInRoleAsync(loggedInUser, "Admin")) 
@@ -80,7 +80,7 @@
                         <a class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#userProjectsAssignmentModal">Assign New Project</a>
                     } else
                     {
-                        <a class="btn btn-info mb-3 disabled">Assign New Project</a>   
+                        <a class="btn btn-primary mb-3 disabled">Assign New Project</a>   
                     }                 
                 </div>
                 <div id="projectListContainer">

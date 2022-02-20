@@ -36,9 +36,27 @@ class RoleList {
 
     addRoleIconColours() {
         const headers = document.getElementsByClassName("role-card-header");
-        headers[1].children[1].classList.add("text-danger");
-        headers[2].children[1].classList.add("text-primary");
-        headers[3].children[1].classList.add("text-success");        
+     
+        for (let i = 0; i < headers.length; i++) {
+            switch (i) {                
+                case 1:
+                    styleHeader(headers[i], "text-danger");
+                    break;
+                case 2:
+                    styleHeader(headers[i], "text-primary");
+                    break;
+                case 3:
+                    styleHeader(headers[i], "text-success");
+                    break;
+                case 4:
+                    styleHeader(headers[i], "text-secondary");
+                    break;
+            }
+        }
+        
+        function styleHeader(header, className) {
+            header.children[1].classList.add(className);
+        }        
     }
 
     findNearestParentCard(el) {

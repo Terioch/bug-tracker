@@ -109,7 +109,7 @@ namespace BugTracker.Repositories.Mock
 
         public IEnumerable<TicketHistoryRecord> GetAllRecords()
         {
-            return ticketHistoryRecords;
+            return ticketHistoryRecords.OrderByDescending(r => r.ModifiedAt);
         }
 
         public TicketHistoryRecord GetRecordById(string id)
@@ -126,7 +126,7 @@ namespace BugTracker.Repositories.Mock
             {
                 r.Modifier = userManager.Users.FirstOrDefault(u => u.Id == r.ModifierId);
             });
-            return records;
+            return records.OrderByDescending(r => r.ModifiedAt);
         }
 
         public TicketHistoryRecord Create(TicketHistoryRecord record)

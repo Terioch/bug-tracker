@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace BugTracker.Migrations
+namespace BugTracker.PgsqlMigrations.Migrations
 {
     public partial class AddedTicketHistoryModifierId : Migration
     {

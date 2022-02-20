@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BugTracker.Controllers
-{    
+{        
+    [Authorize]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -20,7 +21,6 @@ namespace BugTracker.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ListRoles()
         {
@@ -54,14 +54,14 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpGet]
         public IActionResult CreateRole()
         {            
             return View();
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel role)
         {
@@ -86,7 +86,7 @@ namespace BugTracker.Controllers
             }
             return View(role);
         }        
-
+        
         [HttpGet]
         public async Task<IActionResult> GetCurrentRoleReturnPartial(int id)
         {               
@@ -124,7 +124,7 @@ namespace BugTracker.Controllers
             return PartialView("_roleCard", newRole);
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
@@ -132,7 +132,7 @@ namespace BugTracker.Controllers
             return View(role);
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         public async Task<IActionResult> Edit(IdentityRole model)
         {            
@@ -159,7 +159,7 @@ namespace BugTracker.Controllers
             return View(role);
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Owner")]
         public async Task<IActionResult> Delete(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
@@ -200,10 +200,10 @@ namespace BugTracker.Controllers
             return Json(users);
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         public async Task<IActionResult> AddUser(UserRoleViewModel model)
-        {
+        {        
             IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);            
             ApplicationUser user = await userManager.FindByIdAsync(model.UserId);
             bool isInRole = await userManager.IsInRoleAsync(user, role.Name);                     
@@ -228,7 +228,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("ListRoles");
         }
 
-        [Authorize(Roles = "Super Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         public async Task<IActionResult> RemoveUser(UserRoleViewModel model)
         {

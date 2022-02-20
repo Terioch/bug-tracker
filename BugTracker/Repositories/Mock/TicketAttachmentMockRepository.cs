@@ -70,7 +70,7 @@ namespace BugTracker.Repositories.Mock
             {
                 a.Submitter = userManager.Users.First(u => u.Id == a.SubmitterId);
             });
-            return attachments;
+            return attachments.OrderByDescending(a => a.CreatedAt);
         }
 
         public TicketAttachment GetAttachmentById(string id)
@@ -87,7 +87,7 @@ namespace BugTracker.Repositories.Mock
             {
                 a.Submitter = userManager.Users.First(u => u.Id == a.SubmitterId);
             });
-            return attachments;
+            return attachments.OrderByDescending(a => a.CreatedAt);
         }
 
         public TicketAttachment Create(TicketAttachment attachment)

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace BugTracker.Migrations
+namespace BugTracker.PgsqlMigrations.Migrations
 {
     [DbContext(typeof(BugTrackerDbContext))]
     [Migration("20220217180057_AddedTicketHistoryModifierId")]

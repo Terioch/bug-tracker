@@ -16,7 +16,7 @@ namespace BugTracker.Repositories.Db
 
         public IEnumerable<TicketHistoryRecord> GetAllRecords()
         {
-            return context.TicketHistoryRecords;
+            return context.TicketHistoryRecords.OrderByDescending(t => t.ModifiedAt);
         }        
 
         public TicketHistoryRecord GetRecordById(string id)
@@ -30,7 +30,8 @@ namespace BugTracker.Repositories.Db
         {
             return context.TicketHistoryRecords
                 .Where(t => t.TicketId == id)
-                .Include(t => t.Modifier);
+                .Include(t => t.Modifier)
+                .OrderByDescending(t => t.ModifiedAt);
         }
 
         public TicketHistoryRecord Create(TicketHistoryRecord record)

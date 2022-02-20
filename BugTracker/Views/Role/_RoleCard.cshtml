@@ -24,17 +24,17 @@
             <i class="fa fa-user-tie fa-2x"></i>
         </div>       
         
-        <hr style="background-color: #d1d1d1" />        
+        <hr style="background-color: #d1d1d1" />       
 
         <div class="role-users-container"> 
             <div class="d-flex flex-wrap align-items-end mb-3">
                 <p class="fs-5 me-3 mb-0 pb-0 text-decoration-underline">Users in this role</p>
-                @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                @if (await userManager.IsInRoleAsync(loggedInUser, "Owner"))
                 {                    
                     <a href="" class="edit-user-list edit-user-list-onload link-success mb-0 pb-0 text-decoration-none" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>   
                 } else
                 {
-                    <a href="" class="edit-user-list edit-user-list-onload link-success mb-0 pb-0 text-decoration-none disabled" data-bs-toggle="modal" data-bs-target="#userDropdownModal">Add/Remove User</a>   
+                    <a class="edit-user-list edit-user-list-onload link-success mb-0 pb-0 text-decoration-none disabled">Add/Remove User</a>   
                 }                             
             </div>
             <div class="role-user-list-container">                
@@ -63,7 +63,7 @@
     </div>
     <div class="card-footer" style="border: transparent">
         <div class="my-2">
-            @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+            @if (await userManager.IsInRoleAsync(loggedInUser, "Owner"))
             {
                 <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary edit-role">Edit Role</a>
                 <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-warning delete-role" 
@@ -72,7 +72,7 @@
                 </a>          
             } else
             {
-                <button class="btn btn-primary edit-role disabled">Edit Role</button>
+                <button class="btn btn-primary edit-role disabled">Edit Role</button>                
                 <button class="btn btn-warning delete-role disabled">Delete Role</button>       
             }         
         </div>                

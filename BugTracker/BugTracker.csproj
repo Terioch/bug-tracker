@@ -7,7 +7,7 @@
     <UserSecretsId>aspnet-BugTracker-1D69BAE7-3336-4847-A259-BF69120C3899</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 

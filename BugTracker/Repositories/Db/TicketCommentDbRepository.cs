@@ -18,15 +18,15 @@ namespace BugTracker.Repositories.Db
         public IEnumerable<TicketComment> GetAllComments()
         {
             IEnumerable<TicketComment>? comments = context.TicketComments;
-            return comments ?? new List<TicketComment>();
+            return comments.OrderByDescending(c => c.CreatedAt);
         }
 
         public IEnumerable<TicketComment> GetCommentsByTicketId(string id)
         {
-            IEnumerable<TicketComment>? comments = context.TicketComments
+            return context.TicketComments
                 .Where(c => c.TicketId == id)
-                .Include(c => c.Author);
-            return comments ?? new List<TicketComment>();
+                .Include(c => c.Author)
+                .OrderByDescending(c => c.CreatedAt);
         }
 
         public TicketComment GetComment(string id)

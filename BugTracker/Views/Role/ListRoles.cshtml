@@ -29,23 +29,23 @@
 <div id="rolesMain" class="card bg-light">
     <div class="card-header mb-3">
         <h1 class="fs-3 mt-2">Manage users assigned to each role</h1>
-        @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+        @if (await userManager.IsInRoleAsync(loggedInUser, "Owner"))
         {
-            <a asp-action="CreateRole" class="btn-link link-primary">Create a new role</a>
+            <a asp-action="CreateRole" class="link-primary">Create a new role</a>
         } 
     </div>  
 
     @if (!Model.Roles.Any())
     {
-        <div class="card">
-            <div class="card-header">
-                No roles currently exist
+        <div>
+            <div class="alert alert-info">
+                No roles to display
             </div>
             <div class="card-body">
                 <h5 class="card-title">
                     Use the button below to create a new role
                 </h5>
-                @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                @if (await userManager.IsInRoleAsync(loggedInUser, "Owner"))
                 {
                     <a asp-action="CreateRole" class="btn btn-success text-white" style="width: auto">
                         Create Role
@@ -82,7 +82,7 @@
                     </button>
                   </div>
                   <div class="modal-body">                    
-                    <input id="userDropdownModalRoleIdInput" asp-for="RoleId" type="hidden" />
+                    <input id="userDropdownModalRoleIdInput" name="RoleId" type="hidden" />
                     <!-- User Select Dropdown -->
                     <label class="control-label mb-2 text-secondary" for="userSelectDropdown">Users</label>
                     <select asp-for="UserId" class="form-select" id="userSelectDropdown">
