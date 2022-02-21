@@ -18,7 +18,7 @@ string GetPgsqlConnectionString()
 }
 
 // Add services to the container.
-if (isDev)
+if (isDev && !isDev)
 {
     var connectionString = builder.Configuration.GetConnectionString("BugTrackerDbContextConnection");
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
