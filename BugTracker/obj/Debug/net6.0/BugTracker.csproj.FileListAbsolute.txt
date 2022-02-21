@@ -261,11 +261,6 @@ C:\Users\User\source\repos\BugTracker\BugTracker\BugTracker\bin\Debug\net6.0\run
 C:\Users\User\source\repos\BugTracker\BugTracker\BugTracker\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\appsettings.json
-C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker\bin\Debug\net6.0\appsettings.Development.json
-C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker\bin\Debug\net6.0\appsettings.json
-C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker\bin\Debug\net6.0\BugTracker.deps.json
-C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker\bin\Debug\net6.0\BugTracker.runtimeconfig.json
-C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker\bin\Debug\net6.0\BugTracker.staticwebassets.runtime.json
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.staticwebassets.runtime.json
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.exe
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.deps.json
