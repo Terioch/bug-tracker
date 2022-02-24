@@ -19,7 +19,7 @@
   <div class="card-body">
     <div class="d-sm-flex justify-content-between align-items-center">  
         <div class="input-group-sm">
-            <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Ticket..."  />
+            <input id="ticketListSearchInput" class="form-control mb-3" placeholder="Search Ticket..." style="max-width: 175px" />
         </div>  
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
             || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))

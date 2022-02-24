@@ -19,7 +19,7 @@
   <div class="card-body">
     <div class="d-sm-flex justify-content-between align-items-center">  
         <div class="input-group-sm">
-            <input id="projectListSearchInput" class="form-control mb-3" placeholder="Search Project..."  />
+            <input id="projectListSearchInput" class="form-control mb-3" placeholder="Search Project..." style="max-width: 175px" />
         </div>        
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
         {
