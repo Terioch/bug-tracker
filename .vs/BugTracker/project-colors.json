@@ -20,7 +20,17 @@
       "ProjectGuid": "6c4cceb1-278e-43fe-95f8-babc2aa4fece",
       "DisplayName": "BugTracker.PgsqlMigrations",
       "ColorIndex": 2
+    },
+    "0884eb30-aac1-4110-b262-caabc8adde3c": {
+      "ProjectGuid": "0884eb30-aac1-4110-b262-caabc8adde3c",
+      "DisplayName": "BugTracker.SqlServerMigrations",
+      "ColorIndex": 3
+    },
+    "c8e77a65-09e6-4d64-9d8e-51200cae3040": {
+      "ProjectGuid": "c8e77a65-09e6-4d64-9d8e-51200cae3040",
+      "DisplayName": "Solution Items",
+      "ColorIndex": 4
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 5
 }

@@ -8,11 +8,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C8E77A65-09E6-4D64-9D8E-51200CAE3040}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.PgsqlMigrations", "BugTracker.PgsqlMigrations\BugTracker.PgsqlMigrations.csproj", "{6C4CCEB1-278E-43FE-95F8-BABC2AA4FECE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTracker.SqlServerMigrations", "BugTracker.SqlServerMigrations\BugTracker.SqlServerMigrations.csproj", "{0884EB30-AAC1-4110-B262-CAABC8ADDE3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.SqlServerMigrations", "BugTracker.SqlServerMigrations\BugTracker.SqlServerMigrations.csproj", "{0884EB30-AAC1-4110-B262-CAABC8ADDE3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
