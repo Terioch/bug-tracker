@@ -34,7 +34,8 @@ namespace BugTracker.Controllers
             IPagedList<ApplicationUser> users = userManager.Users.ToPagedList(page ?? 1, 8);
             return View(users);
         }
-               
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Details(string id, int? projectsPage, int? ticketsPage)
         {
@@ -58,7 +59,8 @@ namespace BugTracker.Controllers
             };
             return View(model);
         }
-   
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult FilterUsersByNameReturnPartial(string? searchTerm)
         {
@@ -73,6 +75,7 @@ namespace BugTracker.Controllers
             return PartialView("_UserList", filteredUsers.ToPagedList(1, 8));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult FilterProjectsByNameReturnPartial(string id, string? searchTerm)
         {
@@ -88,6 +91,7 @@ namespace BugTracker.Controllers
             return PartialView("~/Views/User/_UserProjectList.cshtml", filteredProjects.ToPagedList(1, 5));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult FilterTicketsReturnPartial(string id, string? searchTerm)
         {

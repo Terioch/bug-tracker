@@ -14,7 +14,9 @@ namespace BugTracker.Helpers
         private readonly RoleHelper roleHelper;
         private readonly ClaimsPrincipal? claimUser;
 
-        public TicketHelper(IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, ITicketRepository ticketRepo, UserManager<ApplicationUser> userManager, RoleHelper roleHelper, IHttpContextAccessor httpContextAccessor)
+        public TicketHelper(IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, 
+            ITicketRepository ticketRepo, UserManager<ApplicationUser> userManager, 
+            RoleHelper roleHelper, IHttpContextAccessor httpContextAccessor)
         {
             this.projectRepo = projectRepo;
             this.userProjectRepo = userProjectRepo;

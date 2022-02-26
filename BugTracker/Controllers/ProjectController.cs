@@ -67,15 +67,14 @@ namespace BugTracker.Controllers
             return RedirectToAction("ListProjects", "Project");
         }
 
-        [HttpGet]
-        public IActionResult Details(string id, int? usersPage, int? ticketsPage)
-        {            
-            Project project = repo.GetProjectById(id);
-            project.Tickets = ticketRepo.GetTicketsByProjectId(id);
-            project.Users = userProjectRepo.GetUsersByProjectId(id);
-
-            List<ApplicationUser> unassignedUsers = userManager.Users.ToList();
-            project.Users.ToList().ForEach(u => unassignedUsers.Remove(u));
+        [HttpGet] 
+        public async Task<IActionResult> Details(string id, int? usersPage, int? ticketsPage)
+        {                        
+            Project project = repo.GetProjectById(id);         
+            var userRoleTickets = await ticketHelper.GetUserRoleTickets(); 
+            project.Tickets = userRoleTickets.Where(t => t.ProjectId == id).ToList();
+            project.Users = userProjectRepo.GetUsersByProjectId(id);            
+            var unassignedUsers = userManager.Users.Where(u => !project.Users.Contains(u));
 
             ProjectViewModel model = new()
             {
