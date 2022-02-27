@@ -11,8 +11,10 @@ namespace BugTracker.Models
     {
         public string? Id { get; set; }
 
+        [Required]
         public string? ProjectId { get; set; }
 
+        [Required]
         public string? SubmitterId { get; set; }
 
         public string? AssignedDeveloperId { get; set; }

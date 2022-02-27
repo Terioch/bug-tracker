@@ -46,7 +46,7 @@ namespace BugTracker.Controllers
             IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();
             foreach (var project in projects)
             {
-                project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id);
+                project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id).ToList();
             }
             return View(projects.ToPagedList(page ?? 1, 8));
         } 
@@ -170,7 +170,7 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin")]    
         public IActionResult Delete(string id)
         {            
-            List<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
+            IEnumerable<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
 
             foreach (var ticket in tickets)
             {

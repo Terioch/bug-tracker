@@ -61,8 +61,7 @@
                         @foreach (var project in await projectHelper.GetUserRoleProjects())
                         {
                             <option value="@project.Id">@project.Name</option>
-                        }      
-                        <option value="@null">None</option>
+                        }                              
                     </select>                  
                 </div>
                 <div class="col-md-4">
