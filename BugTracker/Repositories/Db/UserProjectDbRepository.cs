@@ -20,7 +20,7 @@ namespace BugTracker.Repositories.Db
             this.userManager = userManager;
         }
 
-        public List<Project> GetProjectsByUserId(string userId)
+        public IEnumerable<Project> GetProjectsByUserId(string userId)
         {
             IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.UserId == userId);
             var projectIds = userProjects.Select(u => u.ProjectId).ToList();
@@ -34,7 +34,7 @@ namespace BugTracker.Repositories.Db
             return projects;
         }
 
-        public List<ApplicationUser> GetUsersByProjectId(string projectId)
+        public IEnumerable<ApplicationUser> GetUsersByProjectId(string projectId)
         {
             IEnumerable<UserProject> userProjects = context.UserProjects.Where(u => u.ProjectId == projectId);
             var userIds = userProjects.Select(u => u.UserId).ToList();

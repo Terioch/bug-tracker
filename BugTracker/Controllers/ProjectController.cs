@@ -73,7 +73,7 @@ namespace BugTracker.Controllers
             Project project = repo.GetProjectById(id);         
             var userRoleTickets = await ticketHelper.GetUserRoleTickets(); 
             project.Tickets = userRoleTickets.Where(t => t.ProjectId == id).ToList();
-            project.Users = userProjectRepo.GetUsersByProjectId(id);            
+            project.Users = userProjectRepo.GetUsersByProjectId(id).ToList();            
             var unassignedUsers = userManager.Users.Where(u => !project.Users.Contains(u));
 
             ProjectViewModel model = new()
@@ -178,7 +178,7 @@ namespace BugTracker.Controllers
                 ticketHistoryRepo.DeleteRecordsByTicketId(ticket.Id);
             }
 
-            List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id); 
+            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id); 
 
             foreach (var user in users)
             {
@@ -195,7 +195,7 @@ namespace BugTracker.Controllers
         {
             ApplicationUser? user = await userManager.FindByIdAsync(model.ToBeAssignedUserId);
 
-            List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
+            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 
             if (users.Contains(user))
             {
@@ -219,7 +219,7 @@ namespace BugTracker.Controllers
         {
             Project project = repo.GetProjectById(id);
             ApplicationUser? user = await userManager.FindByIdAsync(userId);
-            List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
+            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
 
             if (!users.Contains(user))
             {
@@ -231,7 +231,7 @@ namespace BugTracker.Controllers
 
             if (IsUserOnTicketsInProject)
             {
-                TempData["Error"] = "This user is associated with at least one ticket within the assigned project and must be disassociated with all tickets before they're removed.";                
+                TempData["Error"] = "This user is associated with at least one ticket within the assigned project and must be disassociated with all tickets before they can be removed.";                
                 return RedirectToAction("Details", new { id });
             }
 

@@ -25,7 +25,7 @@ namespace BugTracker.Helpers
         public bool IsUserInProject(string projectId)
         {
             ApplicationUser user = userManager.Users.First(u => u.UserName == userName);
-            List<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(projectId);
+            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(projectId);
             return users.Contains(user);       
         }        
 

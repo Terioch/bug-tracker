@@ -196,20 +196,20 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult RemoveProject(string id, string projectId)
         {
-            var projects = userProjectRepo.GetProjectsByUserId(id);
+            IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
+            Project project = projectRepo.GetProjectById(projectId);
             bool isInProject = projects.Select(p => p.Id).Contains(projectId);
 
             if (!isInProject)
             {
                 TempData["Error"] = "The project you're attempting to remove is not assigned to this user";
             }
+            
+            bool IsUserOnTicketsInProject = project.Tickets.Where(t => t.AssignedDeveloperId == id || t.SubmitterId == id).Any();
 
-            // bool IsUserInProject = project.Tickets.Where(t => t.AssignedDeveloperId == userId || t.SubmitterId == userId).Any();
-            bool Is
-
-            if (IsUserInProject)
+            if (IsUserOnTicketsInProject)
             {
-                TempData["Error"] = "This user is associated with at least one ticket within the assigned project and must be disassociated with all tickets before they're removed.";
+                TempData["Error"] = "This user is associated with at least one ticket within the assigned project and must be disassociated with all tickets before they can be removed.";
                 return RedirectToAction("Details", new { id });
             }
 

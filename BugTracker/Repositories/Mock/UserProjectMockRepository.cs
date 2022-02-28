@@ -63,7 +63,7 @@ namespace BugTracker.Repositories.Mock
             },
         };       
 
-        public List<Project> GetProjectsByUserId(string userId)
+        public IEnumerable<Project> GetProjectsByUserId(string userId)
         {
             IEnumerable<UserProject> filteredUserProjects = userProjects.Where(u => u.UserId == userId);
             var projectIds = filteredUserProjects.Select(u => u.ProjectId).ToList();
@@ -77,7 +77,7 @@ namespace BugTracker.Repositories.Mock
             return projects;
         }
 
-        public List<ApplicationUser> GetUsersByProjectId(string projectId)
+        public IEnumerable<ApplicationUser> GetUsersByProjectId(string projectId)
         {
             IEnumerable<UserProject> filteredUserProjects = userProjects.Where(u => u.ProjectId == projectId);
             var userIds = filteredUserProjects.Select(u => u.UserId).ToList();
