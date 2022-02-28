@@ -60,7 +60,11 @@ namespace BugTracker.Controllers
                     CreatedAt = DateTimeOffset.Now,
                 };
                 repo.Create(attachment);                                                                                   
-            }
+            }           
+
+            TempData["Error"] = string.Join(" ", ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage));
             return RedirectToAction("Details", "Ticket", new { id = ticketId });
         }
         

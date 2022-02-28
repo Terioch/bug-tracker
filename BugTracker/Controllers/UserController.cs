@@ -204,6 +204,15 @@ namespace BugTracker.Controllers
                 TempData["Error"] = "The project you're attempting to remove is not assigned to this user";
             }
 
+            // bool IsUserInProject = project.Tickets.Where(t => t.AssignedDeveloperId == userId || t.SubmitterId == userId).Any();
+            bool Is
+
+            if (IsUserInProject)
+            {
+                TempData["Error"] = "This user is associated with at least one ticket within the assigned project and must be disassociated with all tickets before they're removed.";
+                return RedirectToAction("Details", new { id });
+            }
+
             userProjectRepo.Delete(id, projectId);
             return RedirectToAction("Details", new { id });
         }

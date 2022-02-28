@@ -158,7 +158,7 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {            
             Ticket ticket = repo.GetTicketById(id);
 
@@ -172,6 +172,7 @@ namespace BugTracker.Controllers
                 Type = ticket.Type,
                 Status = ticket.Status,
                 Priority = ticket.Priority,                 
+                AssignableUsers = await projectHelper.GetUsersInRolesOnProject(ticket.ProjectId, new string[] { "Admin", "Developer" }),
             };
             return View(model);
         }

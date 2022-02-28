@@ -23,8 +23,8 @@ Authentication and role-based authorization were implemented using Identity fram
 Each authenticated user can be assigned one of the following roles which applies a restriction to their access level:
 
 * Owner (Full unrestricted access)
-* Admin (Cannot control role management)
-* Project Manager (Has control over tickets for projects they're assigned to)
+* Admin (Full access but cannot control role management)
+* Project Manager (Can manage tickets for projects they're assigned to)
 * Developer (Can add comments, attachments and update the status of a ticket they're assigned to)
 * Submitter (Can submit tickets for projects they're assigned to)
 

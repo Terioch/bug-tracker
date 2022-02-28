@@ -41,6 +41,24 @@ namespace BugTracker.Helpers
             return userProjectRepo.GetProjectsByUserId(user.Id);     
         }
 
+        public async Task<IEnumerable<ApplicationUser>> GetUsersInRolesOnProject(string projectId, string[] roles)
+        {
+            Project project = projectRepo.GetProjectById(projectId);
+            List<ApplicationUser> users = new();
+
+            foreach (var user in project.Users)
+            {
+                foreach (string role in roles)
+                {
+                    if (await userManager.IsInRoleAsync(user, role))
+                    {
+                        users.Add(user);
+                    }
+                }
+            }
+            return users;
+        }
+
         public async Task<bool> IsUserAuthorizedToManageUsers(ApplicationUser user, string projectId)
         {
             List<string> roles = await roleHelper.GetRoleNamesOfUser(user.UserName);

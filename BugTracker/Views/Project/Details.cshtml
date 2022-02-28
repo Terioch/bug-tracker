@@ -67,12 +67,12 @@
                             </div>
                                 @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, Model.Id))
                                 {
-                                    <button id="manageUsersBtn" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersAssignmentModal">
+                                    <button id="manageUsersBtn" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersAssignmentModal">
                                         Assign New User
                                     </button>   
                                 } else
                                 {
-                                    <button class="btn btn-secondary mb-3 disabled">
+                                    <button class="btn btn-primary mb-3 disabled">
                                         Assign New User
                                     </button>
                                 }                                                                                          

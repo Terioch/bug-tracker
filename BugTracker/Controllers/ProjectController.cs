@@ -227,9 +227,9 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Details", new { id });
             }
 
-            bool IsUserInProject = project.Tickets.Where(t => t.AssignedDeveloperId == userId || t.SubmitterId == userId).Any();
+            bool IsUserOnTicketsInProject = project.Tickets.Where(t => t.AssignedDeveloperId == userId || t.SubmitterId == userId).Any();
 
-            if (IsUserInProject)
+            if (IsUserOnTicketsInProject)
             {
                 TempData["Error"] = "This user is associated with at least one ticket within the assigned project and must be disassociated with all tickets before they're removed.";                
                 return RedirectToAction("Details", new { id });

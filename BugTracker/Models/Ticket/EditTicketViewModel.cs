@@ -17,5 +17,7 @@
         public string? Status { get; set; }
 
         public string? Priority { get; set; }
+
+        public IEnumerable<ApplicationUser> AssignableUsers { get; set; } = new List<ApplicationUser>();
     }
 }

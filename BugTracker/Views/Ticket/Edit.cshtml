@@ -68,14 +68,8 @@
                 </div>
                 <div class="col-md-4">
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Assigned Developer</label>
-                    <select asp-for="AssignedDeveloperId" class="form-select mb-4" aria-label="Assigned Developer">                    
-                        @{
-                            IList<ApplicationUser> developers = await userManager.GetUsersInRoleAsync("Developer");
-                            IList<ApplicationUser> admins = await userManager.GetUsersInRoleAsync("Admin");
-                            List<ApplicationUser> users = developers.ToList().Concat(admins.ToList()).ToList();
-                        }
-
-                        @foreach (var user in users)
+                    <select asp-for="AssignedDeveloperId" class="form-select mb-4" aria-label="Assigned Developer">                                           
+                        @foreach (var user in Model.AssignableUsers)
                         {
                             <option value="@user.Id">@user.UserName</option>                            
                         }
