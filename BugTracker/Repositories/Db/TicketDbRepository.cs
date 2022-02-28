@@ -24,15 +24,14 @@ namespace BugTracker.Repositories.Db
                 .OrderByDescending(t => t.CreatedAt);            
         }
 
-        public List<Ticket> GetTicketsByProjectId(string id)
+        public IEnumerable<Ticket> GetTicketsByProjectId(string id)
         {
             return context.Tickets
                 .Where(t => t.ProjectId == id)
                 .Include(t => t.Project)
                 .Include(t => t.Submitter)
-                .Include(t => t.AssignedDeveloper)                
-                .OrderByDescending(t => t.CreatedAt)
-                .ToList();
+                .Include(t => t.AssignedDeveloper)
+                .OrderByDescending(t => t.CreatedAt);
         }
 
         public Ticket GetTicketById(string id)

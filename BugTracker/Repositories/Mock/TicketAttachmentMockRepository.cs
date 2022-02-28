@@ -30,7 +30,7 @@ namespace BugTracker.Repositories.Mock
                 Id = "ta2",
                 TicketId = "t1",
                 SubmitterId = "cd448813-e865-49e8-933a-dff582b72509",
-                Name = "Code Desk",
+                Name = "Attachment 2",
                 FilePath = "code-desk.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
             },            
@@ -39,7 +39,7 @@ namespace BugTracker.Repositories.Mock
                 Id = "ta3",
                 TicketId = "t2",
                 SubmitterId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
-                Name = "Library",
+                Name = "Attachment 3",
                 FilePath = "bookcase-books-bookshelves-256541.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
             },
@@ -48,7 +48,7 @@ namespace BugTracker.Repositories.Mock
                 Id = "ta4",
                 TicketId = "t4",
                 SubmitterId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
-                Name = "Node Network",
+                Name = "Attachment 4",
                 FilePath = "node-network.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
             },
@@ -57,7 +57,7 @@ namespace BugTracker.Repositories.Mock
                 Id = "ta5",
                 TicketId = "t4",
                 SubmitterId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
-                Name = "Countryside House",
+                Name = "Attachment 5",
                 FilePath = "countryside-house.jpg",
                 CreatedAt = DateTimeOffset.UtcNow
             }

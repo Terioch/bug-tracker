@@ -114,7 +114,7 @@ namespace BugTracker.Repositories.Mock
             return ticket;
         }
 
-        public List<Ticket> GetTicketsByProjectId(string projectId)
+        public IEnumerable<Ticket> GetTicketsByProjectId(string projectId)
         {
             List<Ticket> tickets = TicketMockRepository.tickets.Where(t => t.ProjectId == projectId).ToList();
             tickets.ForEach(t =>

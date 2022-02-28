@@ -30,21 +30,21 @@ namespace BugTracker.Helpers
         {                   
             user ??= await userManager.GetUserAsync(claimUser);
             IList<string> roles = await userManager.GetRolesAsync(user);
-            List<Project> projects = userProjectRepo.GetProjectsByUserId(user.Id);      
+            IEnumerable<Project> assignedProjects = userProjectRepo.GetProjectsByUserId(user.Id);
 
             if (roles.Contains("Admin"))
             {
                 return ticketRepo.GetAllTickets();
             }
             else if (roles.Contains("Project Manager"))
-            {
-                return projects.SelectMany(p => p.Tickets ?? new List<Ticket>());
+            {               
+                return assignedProjects.SelectMany(p => p.Tickets ?? new List<Ticket>());               
             }
             else if (roles.Contains("Developer"))
             {
-                return projects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id));                
+                return assignedProjects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id));                   
             }
-            return projects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id));            
+            return assignedProjects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id));                
         }
 
         public async Task<bool> IsAuthorizedToEdit(ApplicationUser user, string ticketId)

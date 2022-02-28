@@ -17,6 +17,11 @@
         border-radius: 0;       
     }
 
+    .create-ticket-input {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
     .create-ticket-input:focus {
         outline: none;
         box-shadow: none;
@@ -30,7 +35,7 @@
 <h4>Create a New Ticket</h4>
 <hr />
 <section class="card">
-    <form asp-action="Create">
+    <form asp-action="Create" class="pb-0 mb-0">
         <div class="card-body">          
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
             <div class="row g-md-3">
@@ -56,8 +61,7 @@
                         @foreach (var project in await projectHelper.GetUserRoleProjects())
                         {
                             <option value="@project.Id">@project.Name</option>
-                        }      
-                        <option value="@null">None</option>
+                        }                              
                     </select>                  
                 </div>
                 <div class="col-md-4">
