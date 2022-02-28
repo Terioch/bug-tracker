@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BugTracker.Controllers
 {        
-    [Authorize]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

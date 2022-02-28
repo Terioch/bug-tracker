@@ -13,7 +13,6 @@ using X.PagedList;
 
 namespace BugTracker.Controllers
 {
-    [Authorize]
     public class ProjectController : Controller
     {
         private readonly IProjectRepository repo;

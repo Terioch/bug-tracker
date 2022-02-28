@@ -8,7 +8,6 @@ using BugTracker.Repositories.Interfaces;
 
 namespace BugTracker.Controllers
 {
-    [Authorize]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;

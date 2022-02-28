@@ -1,10 +1,12 @@
 ﻿using BugTracker.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly SignInManager<ApplicationUser> signInManager;

@@ -7,7 +7,6 @@ using X.PagedList;
 
 namespace BugTracker.Controllers
 {
-    [Authorize]
     public class TicketCommentController : Controller
     {
         private readonly ITicketCommentRepository repo;

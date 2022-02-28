@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using BugTracker.Repositories.Mock;
 using BugTracker.Repositories.Interfaces;
 using BugTracker.Repositories.Db;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 bool isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
@@ -59,6 +61,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
     .AddEntityFrameworkStores<BugTrackerDbContext>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
+builder.Services.AddMvc(options =>
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});
 
 var app = builder.Build();
 
