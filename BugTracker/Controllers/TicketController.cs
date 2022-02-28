@@ -82,24 +82,21 @@ namespace BugTracker.Controllers
                     Status = model.Status,
                     Priority = model.Priority,
                 };
+                
+                // Ensure that the submitter is assigned to the corresponding project
+                IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
+                bool isSubmitterAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.SubmitterId);
 
-                if (ticket.ProjectId != null)
+                if (!isSubmitterAssigned)
                 {
-                    // Ensure that the submitter is assigned to the corresponding project
-                    IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
-                    bool isSubmitterAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.SubmitterId);
-
-                    if (!isSubmitterAssigned)
+                    UserProject userProject = new()
                     {
-                        UserProject userProject = new()
-                        {
-                            Id = Guid.NewGuid().ToString(),
-                            UserId = ticket.SubmitterId,
-                            ProjectId = ticket.ProjectId,
-                        };
-                        userProjectRepo.Create(userProject);
-                    }
-                }                
+                        Id = Guid.NewGuid().ToString(),
+                        UserId = ticket.SubmitterId,
+                        ProjectId = ticket.ProjectId,
+                    };
+                    userProjectRepo.Create(userProject);
+                }               
                 ticket = repo.Create(ticket);
                 return RedirectToAction("Details", new { id = ticket.Id });
             }
@@ -217,7 +214,7 @@ namespace BugTracker.Controllers
             }
 
             // Ensure that the assigned developer is assigned to the corresponding project
-            if (ticket.ProjectId != null && ticket.AssignedDeveloperId != null)
+            if (ticket.AssignedDeveloperId != null)
             {                
                 IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
                 bool isDeveloperAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.AssignedDeveloperId);
