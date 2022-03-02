@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XTLkumfspdM3/6ffbdWPWdkthf9k0z7vWdx0NWlKilE=",
+  "Hash": "xrkZ6mOQXr5/YpIVQdd4HftktLO5QRPysUWELXBh/ys=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1071,12 +1071,12 @@
       "OriginalItemSpec": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BugTracker.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\academic.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\afb42d60-0dc4-4810-b03a-f025704d6c90_book-store.png",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "Attachments/academic.jpg",
+      "RelativePath": "Attachments/afb42d60-0dc4-4810-b03a-f025704d6c90_book-store.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1085,15 +1085,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Attachments\\academic.jpg"
+      "OriginalItemSpec": "wwwroot\\Attachments\\afb42d60-0dc4-4810-b03a-f025704d6c90_book-store.png"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\bookcase-books-bookshelves-256541.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\b21e9f98-8c6a-4df8-9498-2d0a098c6c6d_davinci-code-book.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "Attachments/bookcase-books-bookshelves-256541.jpg",
+      "RelativePath": "Attachments/b21e9f98-8c6a-4df8-9498-2d0a098c6c6d_davinci-code-book.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1102,7 +1102,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Attachments\\bookcase-books-bookshelves-256541.jpg"
+      "OriginalItemSpec": "wwwroot\\Attachments\\b21e9f98-8c6a-4df8-9498-2d0a098c6c6d_davinci-code-book.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\code-desk.jpg",
@@ -1122,12 +1122,12 @@
       "OriginalItemSpec": "wwwroot\\Attachments\\code-desk.jpg"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\countryside-house.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\f0039e13-245f-4c4f-8ccd-a4ea85f2ea40_calendar.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "Attachments/countryside-house.jpg",
+      "RelativePath": "Attachments/f0039e13-245f-4c4f-8ccd-a4ea85f2ea40_calendar.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1136,7 +1136,41 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Attachments\\countryside-house.jpg"
+      "OriginalItemSpec": "wwwroot\\Attachments\\f0039e13-245f-4c4f-8ccd-a4ea85f2ea40_calendar.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\f00582bf-b21e-497e-ab89-881e8aac87ac_Arctodus Simus.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Attachments/f00582bf-b21e-497e-ab89-881e8aac87ac_Arctodus Simus.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Attachments\\f00582bf-b21e-497e-ab89-881e8aac87ac_Arctodus Simus.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\graph.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Attachments/graph.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Attachments\\graph.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\node-network.jpg",
@@ -1154,6 +1188,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Attachments\\node-network.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\website-layout.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Attachments/website-layout.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Attachments\\website-layout.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\website-layout-2.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Attachments/website-layout-2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Attachments\\website-layout-2.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\css\\site.css",

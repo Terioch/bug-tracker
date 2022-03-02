@@ -59,7 +59,8 @@ namespace BugTracker.Controllers
                     FilePath = uniqueFileName,
                     CreatedAt = DateTimeOffset.Now,
                 };
-                repo.Create(attachment);                                                                                   
+                repo.Create(attachment);
+                return RedirectToAction("Details", "Ticket", new { id = ticketId });
             }           
 
             TempData["Error"] = string.Join(" ", ModelState.Values

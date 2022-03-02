@@ -120,40 +120,42 @@
                               There is no available history for this ticket.
                             </div>
                         } else
-                        {                                        
-                            <table class="table">
-                                <thead>
-                                    <tr>          
-                                        <th scope="col">Property</th>
-                                        <th scope="col">Old Value</th>
-                                        <th scope="col">New Value</th>                     
-                                        <th scope="col">Modified By</th>                     
-                                        <th scope="col">Date Changed</th>                     
-                                    </tr>
-                                </thead>                                                
-                                <tbody>                                     
-                                    @foreach (var record in Model.TicketHistoryRecords) 
-                                    {
-                                        <tr>
-                                            <td>@record.Property</td>
-                                            @if (record.OldValue != null) {
-                                                <td>@record.OldValue</td>
-                                            } else
-                                            {
-                                                <td>Null</td>
-                                            }     
-                                            @if (record.NewValue != null) {
-                                                <td>@record.NewValue</td>
-                                            } else
-                                            {
-                                                <td>Null</td>
-                                            }   
-                                            <td>@record.Modifier.UserName</td>
-                                            <td>@record.ModifiedAt</td>
-                                        </tr>   
-                                    }                                                  
-                                </tbody>
-                            </table>
+                        {        
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>          
+                                            <th scope="col">Property</th>
+                                            <th scope="col">Old Value</th>
+                                            <th scope="col">New Value</th>                     
+                                            <th scope="col">Modified By</th>                     
+                                            <th scope="col">Date Changed</th>                     
+                                        </tr>
+                                    </thead>                                                
+                                    <tbody>                                     
+                                        @foreach (var record in Model.TicketHistoryRecords) 
+                                        {
+                                            <tr>
+                                                <td>@record.Property</td>
+                                                @if (record.OldValue != null) {
+                                                    <td>@record.OldValue</td>
+                                                } else
+                                                {
+                                                    <td>Null</td>
+                                                }     
+                                                @if (record.NewValue != null) {
+                                                    <td>@record.NewValue</td>
+                                                } else
+                                                {
+                                                    <td>Null</td>
+                                                }   
+                                                <td>@record.Modifier.UserName</td>
+                                                <td>@record.ModifiedAt</td>
+                                            </tr>   
+                                        }                                                  
+                                    </tbody>
+                                </table>
+                            </div>                            
                             <div>
                                 <p class="text-secondary" style="font-size: 14px">
                                     Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
@@ -217,10 +219,10 @@
                 {              
                     <div class="row g-3 mb-3">                        
                         @foreach (var attachment in Model.TicketAttachments)
-                        {
+                        {                           
                             <div class="col-xl-6 col-md-12 col-sm-6">
-                                <div class="card">                                    
-                                    <img src="~/Attachments/@attachment.FilePath" asp-append-version="true" class="card-img-top img-fluid" alt="@attachment.FilePath" />                                    
+                                <div class="card h-100 w-100">                                    
+                                    <img src="~/Attachments/@attachment.FilePath" asp-append-version="true" class="card-img-top img-fluid h-100 w-100" alt="@attachment.FilePath" style="object-fit: cover" />                                    
                                     <div class="card-footer">
                                         <div class="d-flex justify-content-between">
                                             <h5 class="card-subtitle mt-0 mb-1">@attachment.Name</h5>
