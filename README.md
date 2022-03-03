@@ -20,7 +20,7 @@ Each ticket is represented by the following properties:
 * Image Attachments
 * Ticket Comments
 
-Authentication and role-based authorization were implemented using Identity framework, whilst data-access was configured using Entity. 
+Authentication and role-based authorization were implemented with Identity, whilst data-access was configured using Entity Framework. 
 Each authenticated user can be assigned one of the following roles which restricts their access level:
 
 * Owner (Full unrestricted access)
