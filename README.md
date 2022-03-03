@@ -4,7 +4,8 @@ A bug/issue tracking web application built using Asp.Net MVC.
 
 ## General Information
 
-This project stores and maintains issues in the form of tickets for a collection of projects. Each ticket contains the following information:
+This project enables the storing and maintenance of issues/defects in the form of tickets for a collection of projects. 
+Each ticket is represented by the following properties:
 
 * Title
 * Description
@@ -20,7 +21,7 @@ This project stores and maintains issues in the form of tickets for a collection
 * Ticket Comments
 
 Authentication and role-based authorization were implemented using Identity framework, whilst data-access was configured using Entity. 
-Each authenticated user can be assigned one of the following roles which applies a restriction to their access level:
+Each authenticated user can be assigned one of the following roles which restricts their access level:
 
 * Owner (Full unrestricted access)
 * Admin (Full access but cannot control role management)

@@ -67,7 +67,11 @@ namespace BugTracker.Helpers
             else if (roles.Contains("Submitter"))
             {
                 return user.Id == ticket.SubmitterId;
-            }          
+            }
+            else if (roles.Contains("Developer"))
+            {
+                return user.Id == ticket.AssignedDeveloperId;
+            }
             return false;
         }
 
