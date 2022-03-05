@@ -19,7 +19,7 @@ namespace BugTracker.Repositories.Mock
             this.ticketCommentRepo = ticketCommentRepo;
             this.ticketAttachmentRepo = ticketAttachmentRepo;
             this.ticketHistoryRepo = ticketHistoryRepo;
-            this.userManager = userManager;
+            this.userManager = userManager;            
         }
 
         public static readonly List<Ticket> tickets = new()

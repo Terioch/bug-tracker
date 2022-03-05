@@ -21,7 +21,7 @@ namespace BugTracker.Controllers
         private readonly ITicketHistoryRepository ticketHistoryRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
-        private readonly TicketHelper ticketHelper;
+        private readonly TicketHelper ticketHelper;        
 
         public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRepository ticketHistoryRepo, 
             UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
@@ -32,11 +32,11 @@ namespace BugTracker.Controllers
             this.ticketHistoryRepo = ticketHistoryRepo;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
-            this.ticketHelper = ticketHelper;
+            this.ticketHelper = ticketHelper;                                
         }    
         
         private Task<ApplicationUser> GetCurrentUserAsync()
-        {
+        {   
             return userManager.GetUserAsync(HttpContext.User);
         }
 
