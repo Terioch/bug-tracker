@@ -92,7 +92,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Project}/{action=ListProjects}/{id?}");
+    pattern: "{controller=Home}/{action=Dashboard}/{id?}");
 app.MapRazorPages();
 
 app.Run();

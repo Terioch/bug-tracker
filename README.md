@@ -1,6 +1,6 @@
 # Bug Tracker
 
-A bug/issue tracking web application built using Asp.Net MVC.
+A bug/issue tracking web application built using C# .NET and MVC.
 
 ## General Information
 

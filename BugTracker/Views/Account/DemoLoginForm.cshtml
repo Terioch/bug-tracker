@@ -62,57 +62,6 @@
     </div>
 </div>
 
-@*<div class="row d-flex justify-content-center p-3">
-    <div class="col-md-6 card">
-        <div class="card-body">
-            <div class="d-flex justify-content-center align-items-center my-3 border-bottom">
-                <h1 class="fs-3">Select a demo account</h1>
-            </div>                              
-            <div class="row g-1 mb-3">                    
-                <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Admin" class="col col-sm-6 border-0 text-decoration-none text-secondary">
-                    <!--Demo Admin Card-->
-                    <div class="card h-100">
-                        <img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" style="max-height: 200px; max-width: 200px" />
-                        <div class="card-body">
-                            <p class="card-text fs-5 text-decoration-none">Demo Admin</p>
-                        </div>
-                    </div>        
-                </a>
-                <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Project Manager" class="col col-sm-6 border-0 bg-transparent text-decoration-none text-secondary">
-                    <!--Demo Project Manager Card-->
-                    <div class="card h-100">
-                        <img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" style="max-height: 200px; max-width: 200px" />
-                        <div class="card-body">
-                            <p class="card-text fs-5">Demo Project Manager</p>
-                        </div>
-                    </div>        
-                </a>
-                <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Developer" class="col col-sm-6 border-0 bg-transparent text-decoration-none text-secondary">
-                    <!--Demo Developer Card-->
-                    <div class="card h-100">                       
-                        <img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" style="max-height: 200px; max-width: 200px" />
-                        <div class="card-body">
-                            <p class="card-text fs-5">Demo Developer</p>
-                        </div>
-                    </div>        
-                </a>
-                <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Submitter" class="col col-sm-6 border-0 bg-transparent text-decoration-none text-secondary">
-                    <!--Demo Submitter Card-->
-                    <div class="card h-100">
-                        <img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" style="max-height: 200px; max-width: 200px" />
-                        <div class="card-body">
-                            <p class="card-text fs-5">Demo Submitter</p>
-                        </div>
-                    </div>        
-                </a>
-                <a class="link-secondary text-decoration-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("ListProjects", "Project", new { area = "" })">
-                    Have an account? <span class="text-decoration-underline">Login Here</span>   
-                </a>
-            </div>
-        </div>                    
-    </div>    
-</div>*@
-
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
