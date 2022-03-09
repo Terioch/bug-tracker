@@ -24,10 +24,14 @@
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
             || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))
         {
-            <a class="btn btn-primary mb-3" asp-action="Create">Create New Ticket</a>       
+            <a class="btn btn-primary mb-3" asp-action="Create">
+                <span class="me-1">Create</span> <i class="fa-solid fa-plus fa-lg"></i>
+            </a>       
         } else
         {
-            <a class="btn btn-primary mb-3 disabled" asp-action="Create">Create New Ticket</a>
+            <a class="btn btn-primary mb-3 disabled" asp-action="Create">
+                <span class="me-1">Create</span> <i class="fa-solid fa-plus fa-lg"></i>
+            </a>
         }            
     </div>
     

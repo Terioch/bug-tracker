@@ -200,10 +200,14 @@
                     </div>   
                     @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id)) 
                     {
-                        <button type="submit" class="btn btn-success">Upload Attachment</button>
+                        <button type="submit" class="btn btn-success">
+                            <span class="me-2">Upload</span><i class="fa-solid fa-file-arrow-up fa-lg"></i>
+                        </button>
                     } else 
                     {
-                        <button type="submit" class="btn btn-success disabled">Upload Attachment</button>
+                        <button type="submit" class="btn btn-success disabled">
+                            <span class="me-2">Upload</span><i class="fa-solid fa-file-arrow-up fa-lg"></i>
+                        </button>
                     }
                 </form>  
             </div>                      
@@ -271,7 +275,9 @@
                 <input id="commentDescriptionInput" type="text" class="form-control" placeholder="Comment..." aria-label="Comment" aria-describedby="ticket-comment">
             </div>
             <div class="pb-3 mb-3 border-bottom">
-                <button id="createCommentBtn" class="btn btn-secondary">Add comment</button>
+                <button id="createCommentBtn" class="btn btn-secondary">
+                    <span style="margin-right: 6px">Add New</span><i class="fa-solid fa-plus fa-lg"></i>
+                </button>
             </div>                    
             <div class="input-group-sm mb-3">
                 <input id="commentListSearchInput" class="form-control" type="text" placeholder="Search by Author..." style="max-width: 175px" />

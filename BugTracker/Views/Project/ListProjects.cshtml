@@ -23,10 +23,14 @@
         </div>        
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
         {
-            <a class="btn btn-primary mb-3" asp-action="Create">Create New Project</a>
+            <a class="btn btn-primary mb-3" asp-action="Create">
+                <span class="me-1">Create</span> <i class="fa-solid fa-plus fa-lg"></i>
+            </a>
         } else
         {
-            <a class="btn btn-primary mb-3 disabled" asp-action="Create">Create New Project</a>
+            <a class="btn btn-primary mb-3 disabled" asp-action="Create">
+                <span class="me-1">Create</span> <i class="fa-solid fa-plus fa-lg"></i>
+            </a>
         }            
     </div>
     <div id="projectListContainer">
