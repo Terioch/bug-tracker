@@ -6,11 +6,11 @@
 
 <div>
     <div class="row g-4">
-        <div class="col col-md-4">
-            <canvas id="ticketTypeChart" class=""></canvas>
+        <div class="col">
+            <canvas id="ticketTypeChart" style="height: 100px"></canvas>
         </div>
-        <div class="col col-md-8">
-            <canvas id="ticketPriorityChart" class=""></canvas>
+        <div class="col">
+            <canvas id="ticketPriorityChart" style="height: 100px" class=""></canvas>
         </div>
     </div>
     <div class="row g-4">
@@ -27,25 +27,197 @@
     <script type="text/javascript">
         class ChartRenderer {
             constructor() {
-                console.log("Initialized Chart");
+                console.log("Initialized Chart");                
                 this.renderTypeChart(); 
+                this.renderStatusChart();
+                this.renderPriorityChart();
             }
 
-            renderTypeChart() {
-                const context = document.getElementById('ticketTypeChart').getContext('2d');                
+            // Load data on the server and then serialize to json
+            renderTypeChart() {                
+                const context = document.getElementById("ticketTypeChart");                     
                 const ticketTypeChart = new Chart(context, {
-                    type: "bar",
-                    labels: @Html.Raw(Json.Serialize(Model.TicketTypeData.Labels)),
-                    datasets: [{
-                        label: "Tickets by Type",
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        data: @Html.Raw(Json.Serialize(Model.TicketTypeData.Values)),
-                    }],
-                    options: {}
+                    type: "doughnut",
+                    data: {
+                        labels: @Html.Raw(Json.Serialize(Model.TicketTypeData.Labels)),
+                        datasets: [{
+                            label: "Tickets by Type",
+                            backgroundColor: [                                
+                                'rgb(60,141,188)',
+                                'rgb(243,156,17)',
+                                'rgb(0,166,90)',
+                                'rgb(221,76,57)',
+                                'rgb(0, 192, 239)',                               
+                            ],
+                            data: @Html.Raw(Json.Serialize(Model.TicketTypeData.Values)),
+                        }],
+                    },                    
+                    options: {
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
                 });
             }
 
+            renderStatusChart() {                
+                const context = document.getElementById("ticketStatusChart");                     
+                const ticketStatusChart = new Chart(context, {
+                    type: "bar",
+                    data: {
+                        labels: @Html.Raw(Json.Serialize(Model.TicketStatusData.Labels)),
+                        datasets: [{
+                            label: "Tickets by Status",
+                            backgroundColor: [                                
+                                'rgb(60,141,188)',
+                                'rgb(243,156,17)',
+                                'rgb(0,166,90)',
+                                'rgb(221,76,57)',
+                                'rgb(0, 192, 239)',                               
+                            ],
+                            data: @Html.Raw(Json.Serialize(Model.TicketStatusData.Values)),
+                        }],
+                    },                    
+                    options: {
+                        title: {
+                            display: true,
+                            text: "Tickets by Status"
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            renderPriorityChart() {                
+                const context = document.getElementById("ticketPriorityChart");                     
+                const ticketPriorityChart = new Chart(context, {
+                    type: "doughnut",
+                    data: {
+                        labels: @Html.Raw(Json.Serialize(Model.TicketPriorityData.Labels)),
+                        datasets: [{
+                            label: "Tickets by Priority",
+                            backgroundColor: [                                
+                                'rgb(60,141,188)',
+                                'rgb(243,156,17)',
+                                'rgb(0,166,90)',
+                                'rgb(221,76,57)',
+                                'rgb(0, 192, 239)',                               
+                            ],                            
+                            data: @Html.Raw(Json.Serialize(Model.TicketPriorityData.Values)),
+                        }],
+                    },                    
+                    options: {                       
+                        title: {
+                            display: true,
+                            text: "Tickets by Priority"
+                        },                                                    
+                    }
+                });
+            }
+
+            // Render view and then fetch data from the server
+            @*async renderTypeChart() {                
+                const context = document.getElementById("ticketTypeChart");  
+                const response = await fetch("chart/getTicketTypeData");
+                const data = await response.json();
+                
+                const ticketTypeChart = new Chart(context, {
+                    type: "doughnut",
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: "Tickets by Type",
+                            backgroundColor: [                                
+                                'rgb(60,141,188)',
+                                'rgb(243,156,17)',
+                                'rgb(0,166,90)',
+                                'rgb(221,76,57)',
+                                'rgb(0, 192, 239)',                               
+                            ],                    
+                            data: data.values,
+                        }],
+                    },                    
+                    options: {
+                        title: {
+                            display: true,
+                            text: "Tickets by Type"
+                        },                        
+                    }
+                });
+            }
+
+            async renderStatusChart() {                
+                const context = document.getElementById("ticketStatusChart");  
+                const response = await fetch("chart/getTicketStatusData");
+                const data = await response.json();
+                
+                const ticketTypeChart = new Chart(context, {
+                    type: "bar",
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: "Tickets by Status",
+                            backgroundColor: [                                
+                                'rgb(60,141,188)',
+                                'rgb(243,156,17)',
+                                'rgb(0,166,90)',
+                                'rgb(221,76,57)',
+                                'rgb(0, 192, 239)',                               
+                            ],                    
+                            data: data.values,
+                        }],
+                    },                    
+                    options: {
+                        title: {
+                            display: true,
+                            text: "Tickets by Type"
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            }
+                        }
+                    }                        
+                });
+            }
+
+            async renderPriorityChart() {                
+                const context = document.getElementById("ticketPriorityChart");  
+                const response = await fetch("chart/getTicketPriorityData");
+                const data = await response.json();
+                
+                const ticketPriorityChart = new Chart(context, {
+                    type: "doughnut",
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: "Tickets by Priority",
+                            backgroundColor: [                                
+                                'rgb(60,141,188)',
+                                'rgb(243,156,17)',
+                                'rgb(0,166,90)',
+                                'rgb(221,76,57)',
+                                'rgb(0, 192, 239)',                               
+                            ],                    
+                            data: data.values,
+                        }],
+                    },                    
+                    options: {
+                        title: {
+                            display: true,
+                            text: "Tickets by Type"
+                        },
+                    }                    
+                });
+            }*@
+
+            // Google Visualization
             @*drawTypeChart() {
                 // Define the chart to be drawn.                               
                 const data = new google.visualization.arrayToDataTable([
@@ -98,6 +270,6 @@
             }*@
         }
 
-        const chart = new Chart();
+        const chartRenderer = new ChartRenderer();
     </script>
 }
