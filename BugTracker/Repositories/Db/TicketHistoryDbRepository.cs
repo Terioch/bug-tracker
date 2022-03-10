@@ -1,4 +1,4 @@
-﻿using BugTracker.Data;
+﻿using BugTracker.Contexts;
 using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;

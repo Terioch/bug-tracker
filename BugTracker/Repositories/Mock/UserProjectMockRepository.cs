@@ -17,7 +17,7 @@ namespace BugTracker.Repositories.Mock
             this.userManager = userManager;
         }
 
-        private static List<UserProject> userProjects = new()
+        private static readonly List<UserProject> userProjects = new()
         {
             new UserProject()
             {
@@ -46,21 +46,51 @@ namespace BugTracker.Repositories.Mock
             new UserProject()
             {
                 Id = "up5",
+                UserId = "0de2c4ff-6923-4b30-8d8a-e7b90b5edcbf",
+                ProjectId = "p1"
+            },
+            new UserProject()
+            {
+                Id = "up6",
                 UserId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
                 ProjectId = "p2"
             },
             new UserProject()
             {
-                Id = "up6",
+                Id = "up7",
                 UserId = "cd448813-e865-49e8-933a-dff582b72509",
                 ProjectId = "p2"
             },
             new UserProject()
             {
-                Id = "up7",
+                Id = "up8",
                 UserId = "2ae32131-606d-495c-81cf-86f38875f9a7",
                 ProjectId = "p2"
             },
+            new UserProject()
+            {
+                Id = "up9",
+                UserId = "0de2c4ff-6923-4b30-8d8a-e7b90b5edcbf",
+                ProjectId = "p2"
+            },
+            new UserProject()
+            {
+                Id = "up10",
+                UserId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
+                ProjectId = "p2"
+            },
+            new UserProject()
+            {
+                Id = "up11",
+                UserId = "cd448813-e865-49e8-933a-dff582b72509",
+                ProjectId = "p3"
+            },
+            new UserProject()
+            {
+                Id = "up12",
+                UserId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
+                ProjectId = "p3"
+            }
         };       
 
         public IEnumerable<Project> GetProjectsByUserId(string userId)

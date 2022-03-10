@@ -1,0 +1,103 @@
+﻿@model DashboardViewModel;
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div>
+    <div class="row g-4">
+        <div class="col col-md-4">
+            <canvas id="ticketTypeChart" class=""></canvas>
+        </div>
+        <div class="col col-md-8">
+            <canvas id="ticketPriorityChart" class=""></canvas>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col">
+            <div>Recent Activity List</div>
+        </div>
+        <div class="col">
+            <canvas id="ticketStatusChart">Status Bar Chart</canvas>
+        </div>
+    </div>    
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        class ChartRenderer {
+            constructor() {
+                console.log("Initialized Chart");
+                this.renderTypeChart(); 
+            }
+
+            renderTypeChart() {
+                const context = document.getElementById('ticketTypeChart').getContext('2d');                
+                const ticketTypeChart = new Chart(context, {
+                    type: "bar",
+                    labels: @Html.Raw(Json.Serialize(Model.TicketTypeData.Labels)),
+                    datasets: [{
+                        label: "Tickets by Type",
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: @Html.Raw(Json.Serialize(Model.TicketTypeData.Values)),
+                    }],
+                    options: {}
+                });
+            }
+
+            @*drawTypeChart() {
+                // Define the chart to be drawn.                               
+                const data = new google.visualization.arrayToDataTable([
+                    ['Type', 'Amount'],
+                    @foreach (var type in Model.TicketsByType) {                        
+                        <text>['@type.Label', @type.Value],</text>                
+                    }
+                ]);
+                const options = {
+                    title: 'Tickets by Type'
+                }
+                
+                // Instantiate and draw the chart.
+                const chart = new google.visualization.PieChart(document.getElementById('ticketTypeChart'));
+                chart.draw(data, options);
+            }
+
+            drawStatusChart() {
+                // Define the chart to be drawn.                               
+                const data = new google.visualization.arrayToDataTable([
+                    ['Status', 'Amount'],
+                    @foreach (var status in Model.TicketsByStatus) {                        
+                        <text>['@status.Label', @status.Value],</text>                
+                    }
+                ]);
+                const options = {
+                    title: 'Tickets by Status'
+                }
+                
+                // Instantiate and draw the chart.
+                const chart = new google.visualization.BarChart(document.getElementById('ticketStatusChart'));
+                chart.draw(data, options);
+            }
+
+            drawPriorityChart() {
+                // Define the chart to be drawn.                               
+                const data = new google.visualization.arrayToDataTable([
+                    ['Priority', 'Amount'],
+                    @foreach (var priority in Model.TicketsByPriority) {                        
+                        <text>['@priority.Label', @priority.Value],</text>                
+                    }
+                ]);
+                const options = {
+                    title: 'Tickets by Priority'
+                }
+                
+                // Instantiate and draw the chart.
+                const chart = new google.visualization.PieChart(document.getElementById('ticketPriorityChart'));
+                chart.draw(data, options);
+            }*@
+        }
+
+        const chart = new Chart();
+    </script>
+}
