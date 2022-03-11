@@ -18,6 +18,12 @@
     nav-item-pill {
         background-color: #4582EC !important;
         color: #FFF !important;
+    }     
+    .side-nav-dashboard-link {
+        color: #17A2B8 !important;          
+    }
+    .side-nav-link:hover, .side-nav-dashboard-link:hover {
+        background-color: #f7f7f7 !important;       
     }
 </style>
 
@@ -109,30 +115,36 @@
                         <p class="p-0 m-0 fw-bold">@loggedInUser.FirstName</p>
                     </div>              
                     
-                    <div style="height: 1px; width: 100%; background-color: grey" />
+                    <div style="height: 1px; width: 100%; background-color: #DDDDDD" />
                     
                     <!-- Nav Items -->
-                    <ul class="nav nav-pills flex-column mb-sm-auto mt-2 mb-0 align-items-center align-items-md-start">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mt-2 mb-0 align-items-center align-items-md-start border-bottom-0">
                         <li class="nav-item mb-3">
-                            <a class="nav-link align-middle" asp-controller="Project" asp-action="ListProjects">                             
+                            <a class="side-nav-dashboard-link nav-link align-middle fw-bold" asp-controller="Dashboard" asp-action="Index">                             
+                                <span class="me-2 d-none d-md-inline">Dashboard</span>
+                                <i class="fs-5 fas fa-tachometer-alt-fast"></i> 
+                            </a>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <a class="side-nav-link nav-link align-middle fw-bold" asp-controller="Project" asp-action="ListProjects">                             
                                 <span class="me-2 d-none d-md-inline">My Projects</span>
                                 <i class="fs-5 fas fa-toolbox"></i> 
                             </a>
                         </li>
                         <li class="nav-item mb-3">
-                            <a class="nav-link align-middle" asp-controller="Ticket" asp-action="ListTickets">                                
+                            <a class="side-nav-link nav-link align-middle fw-bold" asp-controller="Ticket" asp-action="ListTickets">                                
                                 <span class="me-2 d-none d-md-inline">My Tickets</span>
                                 <i class="fs-5 fas fa-tasks"></i>
                             </a>
                         </li>                        
                         <li class="nav-item mb-3">
-                            <a class="nav-link align-middle" asp-controller="User" asp-action="ListUsers">
+                            <a class="side-nav-link nav-link align-middle fw-bold" asp-controller="User" asp-action="ListUsers">
                                 <span class="me-2 d-none d-md-inline">User Management</span>
                                 <i class="fs-5 fas fa-users"></i>                                 
                             </a>
                         </li>
                         <li class="nav-item mb-3">
-                            <a class="nav-link align-middle" asp-controller="Role" asp-action="ListRoles">                                
+                            <a class="side-nav-link nav-link align-middle fw-bold" asp-controller="Role" asp-action="ListRoles">                                
                                 <span class="me-2 d-none d-md-inline">Role Management</span>
                                 <i class="fs-5 fas fa-user-shield"></i> 
                             </a>

@@ -23,8 +23,7 @@
         {
             "Low",
             "Medium",
-            "High",
-            "None"
+            "High",    
         };
     }
 }

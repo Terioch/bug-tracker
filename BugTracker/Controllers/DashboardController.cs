@@ -18,14 +18,14 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();
-            DashboardViewModel dashboardData = new()
+            /*IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();
+            DashboardViewModel model = new()
             {
                 TicketTypeData = chartHelper.GetTicketTypeData(tickets),
                 TicketStatusData = chartHelper.GetTicketStatusData(tickets),
                 TicketPriorityData = chartHelper.GetTicketPriorityData(tickets)
-            };         
-            return View(dashboardData);
+            };  */       
+            return View(new DashboardViewModel());
         }
 
         public IActionResult Privacy()

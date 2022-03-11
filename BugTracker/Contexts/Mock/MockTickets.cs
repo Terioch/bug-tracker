@@ -63,6 +63,19 @@ namespace BugTracker.Contexts.Mock
                 new Ticket()
                 {
                     Id = "t5",
+                    ProjectId = "p1",
+                    SubmitterId = "2ae32131-606d-495c-81cf-86f38875f9a7",
+                    AssignedDeveloperId = null,
+                    Title = "Edit profile functionality",
+                    Description = "Allow registered users to edit their account information",
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    Type = "Feature Requests",
+                    Status = "Open",
+                    Priority = "Medium",
+                },
+                new Ticket()
+                {
+                    Id = "t6",
                     ProjectId = "p2",
                     SubmitterId = "2ae32131-606d-495c-81cf-86f38875f9a7",
                     AssignedDeveloperId = "4687e432-58fc-448a-b639-6288ee716fa0",
@@ -75,7 +88,7 @@ namespace BugTracker.Contexts.Mock
                 },
                 new Ticket()
                 {
-                    Id = "t6",
+                    Id = "t7",
                     ProjectId = "p2",
                     SubmitterId = "cd448813-e865-49e8-933a-dff582b72509",
                     AssignedDeveloperId = null,
@@ -88,7 +101,7 @@ namespace BugTracker.Contexts.Mock
                 },
                 new Ticket()
                 {
-                    Id = "t7",
+                    Id = "t8",
                     ProjectId = "p2",
                     SubmitterId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
                     AssignedDeveloperId = "0de2c4ff-6923-4b30-8d8a-e7b90b5edcbf",
@@ -97,14 +110,27 @@ namespace BugTracker.Contexts.Mock
                     CreatedAt = DateTimeOffset.UtcNow,
                     Type = "Feature Requests",
                     Status = "Resolved",
-                    Priority = "None",
+                    Priority = "Medium",
                 },
                 new Ticket()
                 {
-                    Id = "t8",
-                    ProjectId = "p3",
-                    SubmitterId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
+                    Id = "t9",
+                    ProjectId = "p2",
+                    SubmitterId = "2ae32131-606d-495c-81cf-86f38875f9a7",
                     AssignedDeveloperId = "4687e432-58fc-448a-b639-6288ee716fa0",
+                    Title = "Dashboard chart display is broken",
+                    Description = "Chart titles are not shown and overall display is unresponsive",
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    Type = "Bugs/Errors",
+                    Status = "In Progress",
+                    Priority = "High",
+                },
+                new Ticket()
+                {
+                    Id = "t10",
+                    ProjectId = "p3",
+                    SubmitterId = "2ae32131-606d-495c-81cf-86f38875f9a7",
+                    AssignedDeveloperId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
                     Title = "Test Ticket",
                     Description = "This is a test ticket",
                     CreatedAt = DateTimeOffset.UtcNow,
@@ -114,7 +140,7 @@ namespace BugTracker.Contexts.Mock
                 },
                 new Ticket()
                 {
-                    Id = "t9",
+                    Id = "t11",
                     ProjectId = "p4",
                     SubmitterId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
                     AssignedDeveloperId = "4687e432-58fc-448a-b639-6288ee716fa0",
@@ -123,7 +149,7 @@ namespace BugTracker.Contexts.Mock
                     CreatedAt = DateTimeOffset.UtcNow,
                     Type = "Training/Document Requests",
                     Status = "New",
-                    Priority = "High",
+                    Priority = "Low",
                 }
             };
         }
