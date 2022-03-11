@@ -4,21 +4,41 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div>
-    <div class="row g-4">
-        <div class="col">
-            <canvas id="ticketTypeChart" style="height: 200px"></canvas>
+<div class="">
+    <div class="row mb-3">
+        <div class="col col-md-3">
+            <div class="alert alert-info text-center" role="alert">
+                <h4 class="alert-heading">4</h4>
+                <p class="fw-bold">Active Projects</p>                
+            </div>
+            <div class="alert alert-secondary text-center" role="alert">
+              <h4 class="alert-heading">12</h4>
+              <p class="fw-bold">Total Tickets</p>                  
+            </div>            
+            <div class="alert alert-success text-center" role="alert">
+              <h4 class="alert-heading">5</h4>
+              <p class="fw-bold">Tickets in Progress</p>                  
+            </div>
         </div>
-        <div class="col">
-            <canvas id="ticketPriorityChart" style="height: 200px" class=""></canvas>
+        <div class="col col-md-3 p-3">
+            <div class="bg-light p-3 h-100">
+                <canvas id="ticketPriorityChart"></canvas>
+            </div>            
+        </div>
+        <div class="col col-md-6 p-3 h-100">
+            <div class="bg-light p-3">
+                <canvas id="ticketStatusChart"></canvas>            
+            </div>
         </div>
     </div>
     <div class="row g-4">
         <div class="col">
             <div>Recent Activity List</div>
         </div>
-        <div class="col">
-            <canvas id="ticketStatusChart" style="height: 200px">Status Bar Chart</canvas>
+        <div class="col bg-light h-100">
+            <div class="bg-light p-3">
+                <canvas id="ticketTypeChart"></canvas>            
+            </div>
         </div>
     </div>    
 </div>
@@ -64,10 +84,10 @@
                     },                    
                     options: {
                         title: {
-                            display: true,
+                            display: false,
                             text: "Tickets by Type"
                         },    
-                        responsive: false,
+                        responsive: true,
                     }
                 });
             }
@@ -95,14 +115,19 @@
                     },                    
                     options: {
                         title: {
-                            display: true,
+                            display: false,
                             text: "Tickets by Status"
                         },
-                        responsive: false,
+                        responsive: true,
                         indexAxis: "x",
                         scales: {
                             x: {
                                 beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
                             }
                         }
                     }                        
@@ -130,10 +155,10 @@
                     },                    
                     options: {
                         title: {
-                            display: true,
+                            display: false,
                             text: "Tickets by Priority"
                         },
-                        responsive: false,
+                        responsive: true,
                     }                    
                 });
             }
