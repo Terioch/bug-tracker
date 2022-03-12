@@ -197,7 +197,7 @@ namespace BugTracker.Controllers
 
                     if (ticketPropertyValue != propertyValue)
                     {                        
-                        TicketHistoryRecord record = new()
+                        TicketHistoryRecord ticketHistoryRecord = new()
                         {
                             Id = Guid.NewGuid().ToString(),
                             TicketId = ticket.Id,
@@ -207,11 +207,18 @@ namespace BugTracker.Controllers
                             NewValue = propertyValue,                           
                             ModifiedAt = DateTimeOffset.Now
                         };
-                        ticketHistoryRepo.Create(record);
+                        ticketHistoryRepo.Create(ticketHistoryRecord);
                         ticketProperty.SetValue(ticket, property.GetValue(model));
                     }                 
                 }                                
             }
+
+            // Create new general history record
+            GeneralHistoryRecord generalHistoryRecord = new()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Description = "User updated a ticket with a title of This is a test ticket"
+            };
 
             // Ensure that the assigned developer is assigned to the corresponding project
             if (ticket.AssignedDeveloperId != null)

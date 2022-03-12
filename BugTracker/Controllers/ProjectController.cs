@@ -19,17 +19,22 @@ namespace BugTracker.Controllers
         private readonly ITicketRepository ticketRepo;
         private readonly IUserProjectRepository userProjectRepo;
         private readonly ITicketHistoryRepository ticketHistoryRepo;
+        private readonly ITicketAttachmentRepository ticketAttachmentRepo;
+        private readonly ITicketCommentRepository ticketCommentRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
         private readonly TicketHelper ticketHelper;        
 
         public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRepository ticketHistoryRepo, 
-            UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
+            ITicketAttachmentRepository ticketAttachmentRepo, ITicketCommentRepository ticketCommentRepo, UserManager<ApplicationUser> userManager, 
+            ProjectHelper projectHelper, TicketHelper ticketHelper)
         {
             this.repo = repo;
             this.ticketRepo = ticketRepo;
             this.userProjectRepo = userProjectRepo;
             this.ticketHistoryRepo = ticketHistoryRepo;
+            this.ticketAttachmentRepo = ticketAttachmentRepo;
+            this.ticketCommentRepo = ticketCommentRepo;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
             this.ticketHelper = ticketHelper;                                
@@ -59,9 +64,22 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult Create(Project project)
+        public async Task<IActionResult> Create(Project project)
         {
-            project.Id = Guid.NewGuid().ToString();            
+            project.Id = Guid.NewGuid().ToString();
+
+            // Assign all administrators 
+            var admins = await userManager.GetUsersInRoleAsync("Admin");
+            foreach (var admin in admins)
+            {
+                UserProject userProject = new()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = admin.Id,
+                    ProjectId = project.Id
+                };
+                userProjectRepo.Create(userProject);
+            }               
             repo.Create(project);
             return RedirectToAction("ListProjects", "Project");
         }
@@ -175,6 +193,8 @@ namespace BugTracker.Controllers
             {
                 ticketRepo.Delete(ticket.Id);
                 ticketHistoryRepo.DeleteRecordsByTicketId(ticket.Id);
+                ticketAttachmentRepo.DeleteAttachmentsByTicketId(ticket.Id);
+                ticketCommentRepo.DeleteCommentsByTicketId(ticket.Id);
             }
 
             IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id); 
