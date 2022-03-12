@@ -1,12 +1,15 @@
-﻿@model DashboardViewModel;
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@model DashboardViewModel
 
 @{
     ViewData["Title"] = "Dashboard";
 }
 
 <div>
-    <div class="row mb-3">
-        <div class="col col-md-3">
+    <div class="row g-4 mb-3">
+        <div class="col col-xl-3 col-md-6">
             <div class="alert alert-info text-center" role="alert">
                 <h4 class="alert-heading">4</h4>
                 <p class="fw-bold">Active Projects</p>                
@@ -20,25 +23,91 @@
               <p class="fw-bold">Total Users</p>                  
             </div>
         </div>
-        <div class="col col-md-3 p-3 pt-0">
+        <div class="col col-xl-3 col-md-6">
             <div class="bg-light p-3 h-100 text-center">
                 <h2 class="fs-5 text-dark">Tickets by Priority</h2>
                 <canvas id="ticketPriorityChart"></canvas>
             </div>            
         </div>
-        <div class="col col-md-6 p-3 pt-0 h-100 text-center">
-            <div class="bg-light p-3">
+        <div class="col col-xl-6 col-lg-12 h-100">
+            <div class="bg-light p-3 h-100 text-center">
                 <h2 class="fs-5 text-dark">Tickets by Status</h2>
                 <canvas id="ticketStatusChart"></canvas>            
             </div>
         </div>
     </div>
     <div class="row g-4">
-        <div class="col p-3 pt-0">
-            <div>Recent Activity List</div>
+        <div class="col col-md-8">
+            <div class="card-body">
+                <div class="input-group-sm">
+                    <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search History..." style="max-width: 175px"  />
+                </div>
+                <div id="historyListContainer">
+                    @if (2 + 2 == 3)
+                    {
+                        <div class="alert alert-info fs-5 mt-3" role="alert">
+                            There is no available history for this ticket.
+                        </div>
+                    } else
+                    {        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>          
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">New Value</th>                     
+                                        <th scope="col">Modified By</th>                     
+                                        <th scope="col">Date Changed</th>                     
+                                    </tr>
+                                </thead>                                                
+                                <tbody>                                     
+                                    @foreach (var record in Model.GeneralHistoryRecords) 
+                                    {
+                                        <tr>
+                                            <td>Type</td>
+                                            <td>Action</td>
+                                            <td>Modified By</td>
+                                            <td>Modified Date</td>
+                                        </tr>   
+                                    }                                                  
+                                </tbody>
+                            </table>
+                        </div>                            
+                        <div>
+                            <p class="text-secondary" style="font-size: 14px">
+                                Page @(Model.GeneralHistoryRecords.PageCount < Model.GeneralHistoryRecords.PageNumber ? 0 : Model.GeneralHistoryRecords.PageNumber) 
+                                of @Model.GeneralHistoryRecords.PageCount
+                            </p>                   
+                            @Html.PagedListPager(
+                                Model.GeneralHistoryRecords, 
+                                page => Url.Action("Details", new { Model, historyPage = page }),
+                                new PagedListRenderOptions() 
+                                {
+                                    UlElementClasses = new string[] { "pagination", "mb-0" },
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" }
+                                })
+                        </div>                         
+                    }
+                </div>                      
+            </div>
         </div>
-        <div class="col bg-light h-100 p-3 pt-0">
-            <div class="bg-light p-3">
+        <div class="col col-md-4 h-100">
+            <div class="card mb-4">
+                <header class="card-header">
+                    <h1 class="fs-4 mb-0">Quick Actions</h1>
+                </header>
+                <div class="card-body pb-0">                   
+                    <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">
+                        Create New Project
+                    </a>
+                    <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
+                        Create New Ticket
+                    </a>                                     
+                </div>
+            </div>
+            <div class="bg-light p-3 text-center">
                 <h2 class="fs-5 text-dark">Tickets by Type</h2>
                 <canvas id="ticketTypeChart"></canvas>            
             </div>
@@ -85,11 +154,7 @@
                             data: data.values,
                         }],
                     },                    
-                    options: {
-                        title: {
-                            display: false,
-                            text: "Tickets by Type"
-                        },    
+                    options: {                           
                         responsive: true,
                     }
                 });
@@ -116,18 +181,9 @@
                             data: data.values,
                         }],
                     },                    
-                    options: {
-                        title: {
-                            display: false,
-                            text: "Tickets by Status"
-                        },
+                    options: {                       
                         responsive: true,
-                        indexAxis: "x",
-                        scales: {
-                            x: {
-                                beginAtZero: true
-                            }
-                        },
+                        indexAxis: "x",                        
                         plugins: {
                             legend: {
                                 display: false
@@ -156,11 +212,7 @@
                             data: data.values,
                         }],
                     },                    
-                    options: {
-                        title: {
-                            display: false,
-                            text: "Tickets by Priority"
-                        },
+                    options: {                       
                         responsive: true,
                     }                    
                 });

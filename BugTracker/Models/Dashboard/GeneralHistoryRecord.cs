@@ -7,6 +7,14 @@ namespace BugTracker.Models
         public string? Id { get; set; }
 
         [Required]
-        public string? Description { get; set; }
+        public string? TypeId { get; set; }
+
+        public string? ModifierId { get; set; }
+
+        public string? Action { get; set; }
+
+        public DateTimeOffset? ModifiedAt { get; set; }
+
+        public virtual ApplicationUser? Modifier { get; set; }
     }
 }
