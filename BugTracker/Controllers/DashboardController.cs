@@ -27,11 +27,11 @@ namespace BugTracker.Controllers
             this.chartHelper = chartHelper;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int? historyPage)
         {          
             DashboardViewModel model = new()
             {                               
-                TicketHistoryRecords = ticketHistoryRepo.GetAllRecords().ToPagedList(),
+                TicketHistoryRecords = ticketHistoryRepo.GetAllRecords().ToPagedList(historyPage ?? 1, 8),
             };
             return View(model);
         }

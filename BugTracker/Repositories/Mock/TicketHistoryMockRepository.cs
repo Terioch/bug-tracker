@@ -109,6 +109,10 @@ namespace BugTracker.Repositories.Mock
 
         public IEnumerable<TicketHistoryRecord> GetAllRecords()
         {
+            ticketHistoryRecords.ForEach(r =>
+            {
+                r.Modifier = userManager.Users.FirstOrDefault(u => u.Id == r.ModifierId);
+            });
             return ticketHistoryRecords.OrderByDescending(r => r.ModifiedAt);
         }
 

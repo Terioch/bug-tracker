@@ -27,7 +27,7 @@
               <p class="fw-bold">Associated Tickets</p>                  
             </div>            
             <div class="alert alert-success text-center" role="alert">
-              <h4 class="alert-heading">@userManager.Users</h4>
+              <h4 class="alert-heading">@userManager.Users.Count()</h4>
               <p class="fw-bold">Total Users</p>                  
             </div>
         </div>
@@ -51,7 +51,7 @@
                     <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search History..." style="max-width: 175px"  />
                 </div>
                 <div id="historyListContainer">
-                    @if (2 + 2 == 3)
+                    @if (!Model.TicketHistoryRecords.Any())
                     {
                         <div class="alert alert-info fs-5 mt-3" role="alert">
                             There is no available history for this ticket.
@@ -100,7 +100,7 @@
                             </p>                   
                             @Html.PagedListPager(
                                 Model.TicketHistoryRecords, 
-                                page => Url.Action("Details", new { Model, historyPage = page }),
+                                page => Url.Action("Index", new { historyPage = page }),
                                 new PagedListRenderOptions() 
                                 {
                                     UlElementClasses = new string[] { "pagination", "mb-0" },

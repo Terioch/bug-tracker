@@ -16,7 +16,9 @@ namespace BugTracker.Repositories.Db
 
         public IEnumerable<TicketHistoryRecord> GetAllRecords()
         {
-            return context.TicketHistoryRecords.OrderByDescending(t => t.ModifiedAt);
+            return context.TicketHistoryRecords
+                .Include(t => t.Modifier)
+                .OrderByDescending(t => t.ModifiedAt);
         }        
 
         public TicketHistoryRecord GetRecordById(string id)
