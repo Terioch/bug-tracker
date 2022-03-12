@@ -11,6 +11,12 @@ namespace BugTracker.Models
         public ChartData? TicketPriorityData { get; set; }
 
         // Add property for recent activity
-        public IPagedList<GeneralHistoryRecord>? GeneralHistoryRecords { get; set; }
+        public IPagedList<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
+
+        public ICollection<Project> Projects { get; set; } = new HashSet<Project>();
+
+        public ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();
+
+        public ICollection<ApplicationUser> Users { get; set; } = new HashSet<ApplicationUser>();     
     }    
 }

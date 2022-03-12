@@ -1,25 +1,33 @@
-﻿@using X.PagedList.Mvc.Core
+﻿@using BugTracker.Helpers
+@using Microsoft.AspNetCore.Identity
+@using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
+
+@inject ProjectHelper projectHelper
+@inject TicketHelper ticketHelper
+@inject UserManager<ApplicationUser> userManager
 
 @model DashboardViewModel
 
 @{
     ViewData["Title"] = "Dashboard";
+    var projects = await projectHelper.GetUserRoleProjects();
+    var tickets = await ticketHelper.GetUserRoleTickets();  
 }
 
 <div>
     <div class="row g-4 mb-3">
         <div class="col col-xl-3 col-md-6">
             <div class="alert alert-info text-center" role="alert">
-                <h4 class="alert-heading">4</h4>
+                <h4 class="alert-heading">@projects.Count()</h4>
                 <p class="fw-bold">Active Projects</p>                
             </div>
             <div class="alert alert-secondary text-center" role="alert">
-              <h4 class="alert-heading">15</h4>
+              <h4 class="alert-heading">@tickets.Count()</h4>
               <p class="fw-bold">Associated Tickets</p>                  
             </div>            
             <div class="alert alert-success text-center" role="alert">
-              <h4 class="alert-heading">6</h4>
+              <h4 class="alert-heading">@userManager.Users</h4>
               <p class="fw-bold">Total Users</p>                  
             </div>
         </div>
@@ -54,21 +62,32 @@
                             <table class="table">
                                 <thead>
                                     <tr>          
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Property</th>
+                                        <th scope="col">Old Value</th>
                                         <th scope="col">New Value</th>                     
                                         <th scope="col">Modified By</th>                     
                                         <th scope="col">Date Changed</th>                     
                                     </tr>
                                 </thead>                                                
                                 <tbody>                                     
-                                    @foreach (var record in Model.GeneralHistoryRecords) 
+                                    @foreach (var record in Model.TicketHistoryRecords) 
                                     {
                                         <tr>
-                                            <td>Type</td>
-                                            <td>Action</td>
-                                            <td>Modified By</td>
-                                            <td>Modified Date</td>
+                                           <td>@record.Property</td>
+                                            @if (record.OldValue != null) {
+                                                <td>@record.OldValue</td>
+                                            } else
+                                            {
+                                                <td>Null</td>
+                                            }     
+                                            @if (record.NewValue != null) {
+                                                <td>@record.NewValue</td>
+                                            } else
+                                            {
+                                                <td>Null</td>
+                                            }   
+                                            <td>@record.Modifier.UserName</td>
+                                            <td>@record.ModifiedAt</td>
                                         </tr>   
                                     }                                                  
                                 </tbody>
@@ -76,11 +95,11 @@
                         </div>                            
                         <div>
                             <p class="text-secondary" style="font-size: 14px">
-                                Page @(Model.GeneralHistoryRecords.PageCount < Model.GeneralHistoryRecords.PageNumber ? 0 : Model.GeneralHistoryRecords.PageNumber) 
-                                of @Model.GeneralHistoryRecords.PageCount
+                                Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
+                                of @Model.TicketHistoryRecords.PageCount
                             </p>                   
                             @Html.PagedListPager(
-                                Model.GeneralHistoryRecords, 
+                                Model.TicketHistoryRecords, 
                                 page => Url.Action("Details", new { Model, historyPage = page }),
                                 new PagedListRenderOptions() 
                                 {

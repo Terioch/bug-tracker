@@ -217,7 +217,10 @@ namespace BugTracker.Controllers
             GeneralHistoryRecord generalHistoryRecord = new()
             {
                 Id = Guid.NewGuid().ToString(),
-                Description = "User updated a ticket with a title of This is a test ticket"
+                TypeId = ticket.Id,
+                ModifierId = modifier.Id,
+                Action = "UPDATE",                
+                ModifiedAt = DateTimeOffset.Now
             };
 
             // Ensure that the assigned developer is assigned to the corresponding project

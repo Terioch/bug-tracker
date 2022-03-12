@@ -13,6 +13,8 @@ namespace BugTracker.Models
 
         public string? Action { get; set; }
 
+        public string? Description { get; set; }
+
         public DateTimeOffset? ModifiedAt { get; set; }
 
         public virtual ApplicationUser? Modifier { get; set; }
