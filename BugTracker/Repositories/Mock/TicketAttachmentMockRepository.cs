@@ -1,4 +1,5 @@
-﻿using BugTracker.Models;
+﻿using BugTracker.Contexts.Mock;
+using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
@@ -14,54 +15,7 @@ namespace BugTracker.Repositories.Mock
             this.userManager = userManager;
         }
 
-        private static readonly List<TicketAttachment> ticketAttachments = new()
-        {
-            new TicketAttachment()
-            {
-                Id = "ta1",
-                TicketId = "t1",
-                SubmitterId = "2ae32131-606d-495c-81cf-86f38875f9a7",
-                Name = "Test attachment",
-                FilePath = "website-layout.jpg",
-                CreatedAt = DateTimeOffset.UtcNow,
-            },
-            new TicketAttachment()
-            {
-                Id = "ta2",
-                TicketId = "t1",
-                SubmitterId = "cd448813-e865-49e8-933a-dff582b72509",
-                Name = "Attachment 2",
-                FilePath = "website-layout-2.jpg",
-                CreatedAt = DateTimeOffset.UtcNow
-            },            
-            new TicketAttachment()
-            {
-                Id = "ta3",
-                TicketId = "t2",
-                SubmitterId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
-                Name = "Attachment 3",
-                FilePath = "code-desk.jpg",
-                CreatedAt = DateTimeOffset.UtcNow
-            },
-            new TicketAttachment()
-            {
-                Id = "ta4",
-                TicketId = "t4",
-                SubmitterId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
-                Name = "Attachment 4",
-                FilePath = "node-network.jpg",
-                CreatedAt = DateTimeOffset.UtcNow
-            },
-            new TicketAttachment()
-            {
-                Id = "ta5",
-                TicketId = "t4",
-                SubmitterId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
-                Name = "Attachment 5",
-                FilePath = "graph.jpg",
-                CreatedAt = DateTimeOffset.UtcNow
-            }
-        };
+        private static readonly List<TicketAttachment> ticketAttachments = MockTicketAttachments.GetAttachments();
 
         public IEnumerable<TicketAttachment> GetAllAttachments()
         {

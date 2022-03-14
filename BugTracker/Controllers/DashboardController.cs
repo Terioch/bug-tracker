@@ -12,26 +12,27 @@ namespace BugTracker.Controllers
     {
         private readonly ProjectHelper projectHelper;
         private readonly ITicketRepository ticketRepo;
-        private readonly ITicketHistoryRepository ticketHistoryRepo;
+        private readonly TicketHistoryHelper ticketHistoryHelper;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly TicketHelper ticketHelper;        
         private readonly ChartHelper chartHelper;
 
-        public DashboardController(ProjectHelper projectHelper, TicketHelper ticketHelper, ITicketHistoryRepository ticketHistoryRepo, 
+        public DashboardController(ProjectHelper projectHelper, TicketHelper ticketHelper, TicketHistoryHelper ticketHistoryHelper, 
             UserManager<ApplicationUser> userManager, ChartHelper chartHelper)
         {
             this.ticketHelper = ticketHelper;
             this.projectHelper = projectHelper;           
-            this.ticketHistoryRepo = ticketHistoryRepo;
+            this.ticketHistoryHelper = ticketHistoryHelper;
             this.userManager = userManager;
             this.chartHelper = chartHelper;
         }
 
-        public IActionResult Index(int? historyPage)
-        {          
+        public async Task<IActionResult> Index(int? historyPage)
+        {
+            IEnumerable<TicketHistoryRecord> historyRecords = await ticketHistoryHelper.GetUserRoleRecords();
             DashboardViewModel model = new()
             {                               
-                TicketHistoryRecords = ticketHistoryRepo.GetAllRecords().ToPagedList(historyPage ?? 1, 8),
+                TicketHistoryRecords = historyRecords.ToPagedList(historyPage ?? 1, 6),
             };
             return View(model);
         }

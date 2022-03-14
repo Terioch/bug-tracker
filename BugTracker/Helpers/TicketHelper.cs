@@ -110,5 +110,11 @@ namespace BugTracker.Helpers
             }           
             return false;
         }
+
+        public async Task<int> GetUserTicketCount()
+        {
+            var tickets = await GetUserRoleTickets();
+            return tickets.Count();
+        }
     }
 }

@@ -73,5 +73,11 @@ namespace BugTracker.Helpers
             }            
             return false;
         }
+
+        public async Task<int> GetUserProjectCount()
+        {
+            IEnumerable<Project> projects = await GetUserRoleProjects();
+            return projects.Count();
+        }
     }
 }

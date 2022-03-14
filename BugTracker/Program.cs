@@ -51,6 +51,7 @@ builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
 builder.Services.AddScoped<TicketHelper, TicketHelper>();
 builder.Services.AddScoped<RoleHelper, RoleHelper>();
 builder.Services.AddScoped<TicketAttachmentHelper, TicketAttachmentHelper>();
+builder.Services.AddScoped<TicketHistoryHelper, TicketHistoryHelper>();
 builder.Services.AddScoped<AccountHelper, AccountHelper>();
 builder.Services.AddScoped<ChartHelper, ChartHelper>();
 

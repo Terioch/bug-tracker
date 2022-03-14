@@ -54,6 +54,32 @@ namespace BugTracker.Controllers
             return View(tickets.ToPagedList(page ?? 1, 8));
         }
 
+        [HttpGet]
+        public IActionResult Details(string id, int? historyPage, int? attachmentsPage, int? commentsPage)
+        {
+            Ticket ticket = repo.GetTicketById(id);
+            TicketViewModel model = new()
+            {
+                Id = ticket.Id,
+                ProjectId = ticket.ProjectId,
+                SubmitterId = ticket.SubmitterId,
+                AssignedDeveloperId = ticket.AssignedDeveloperId,
+                Title = ticket.Title,
+                Description = ticket.Description,
+                SubmittedDate = ticket.CreatedAt,
+                Type = ticket.Type,
+                Status = ticket.Status,
+                Priority = ticket.Priority,
+                Project = ticket.Project,
+                Submitter = ticket.Submitter,
+                AssignedDeveloper = ticket.AssignedDeveloper,
+                TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(historyPage ?? 1, 5),
+                TicketAttachments = ticket.TicketAttachments.ToPagedList(attachmentsPage ?? 1, 6),
+                TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 8),
+            };
+            return View(model);
+        }
+
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]        
         public IActionResult Create()
@@ -100,33 +126,7 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Details", new { id = ticket.Id });
             }
             return View();
-        }        
-
-        [HttpGet]
-        public IActionResult Details(string id, int? historyPage, int? attachmentsPage, int? commentsPage)
-        {           
-            Ticket ticket = repo.GetTicketById(id);
-            TicketViewModel model = new()
-            {
-                Id = ticket.Id,
-                ProjectId = ticket.ProjectId,
-                SubmitterId = ticket.SubmitterId,
-                AssignedDeveloperId = ticket.AssignedDeveloperId,
-                Title = ticket.Title,
-                Description = ticket.Description,
-                SubmittedDate = ticket.CreatedAt,
-                Type = ticket.Type,
-                Status = ticket.Status,
-                Priority = ticket.Priority,
-                Project = ticket.Project,
-                Submitter = ticket.Submitter,
-                AssignedDeveloper = ticket.AssignedDeveloper,
-                TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(historyPage ?? 1, 5),
-                TicketAttachments = ticket.TicketAttachments.ToPagedList(attachmentsPage ?? 1, 6),
-                TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 8),
-            };
-            return View(model);                               
-        }
+        }                
 
         [HttpGet]
         public async Task<IActionResult> FilterTicketsReturnPartial(string? searchTerm)

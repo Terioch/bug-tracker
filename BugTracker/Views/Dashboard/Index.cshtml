@@ -11,19 +11,17 @@
 
 @{
     ViewData["Title"] = "Dashboard";
-    var projects = await projectHelper.GetUserRoleProjects();
-    var tickets = await ticketHelper.GetUserRoleTickets();  
 }
 
 <div>
-    <div class="row g-4 mb-3">
+    <div class="row g-4 mb-4">
         <div class="col col-xl-3 col-md-6">
             <div class="alert alert-info text-center" role="alert">
-                <h4 class="alert-heading">@projects.Count()</h4>
+                <h4 class="alert-heading">@await projectHelper.GetUserProjectCount()</h4>
                 <p class="fw-bold">Active Projects</p>                
             </div>
             <div class="alert alert-secondary text-center" role="alert">
-              <h4 class="alert-heading">@tickets.Count()</h4>
+              <h4 class="alert-heading">@await ticketHelper.GetUserTicketCount()</h4>
               <p class="fw-bold">Associated Tickets</p>                  
             </div>            
             <div class="alert alert-success text-center" role="alert">
@@ -45,91 +43,107 @@
         </div>
     </div>
     <div class="row g-4">
-        <div class="col col-md-8">
-            <div class="card-body">
-                <div class="input-group-sm">
-                    <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search History..." style="max-width: 175px"  />
+        <div class="col col-xl-8">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h1 class="fs-3 mt-1">Ticket history</h1>
+                    <p class="text-secondary mb-0">Records of changes to all associated tickets</p>
                 </div>
-                <div id="historyListContainer">
-                    @if (!Model.TicketHistoryRecords.Any())
-                    {
-                        <div class="alert alert-info fs-5 mt-3" role="alert">
-                            There is no available history for this ticket.
-                        </div>
-                    } else
-                    {        
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>          
-                                        <th scope="col">Property</th>
-                                        <th scope="col">Old Value</th>
-                                        <th scope="col">New Value</th>                     
-                                        <th scope="col">Modified By</th>                     
-                                        <th scope="col">Date Changed</th>                     
-                                    </tr>
-                                </thead>                                                
-                                <tbody>                                     
-                                    @foreach (var record in Model.TicketHistoryRecords) 
+                <div class="card-body">
+                    <div class="input-group-sm">
+                        <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search History..." style="max-width: 175px"  />
+                    </div>
+                    <div id="historyListContainer">
+                        @if (!Model.TicketHistoryRecords.Any())
+                        {
+                            <div class="alert alert-info fs-5 mt-3" role="alert">
+                                There is no available history for your tickets
+                            </div>
+                        } else
+                        {        
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>          
+                                            <th scope="col">Title</th>                                            
+                                            <th scope="col">Property</th>
+                                            <th scope="col">Old Value</th>
+                                            <th scope="col">New Value</th>                                                                                
+                                            <th scope="col">Date Changed</th>                     
+                                            <th scope="col"></th>                     
+                                        </tr>
+                                    </thead>                                                
+                                    <tbody>                                     
+                                        @foreach (var record in Model.TicketHistoryRecords) 
+                                        {
+                                            <tr>
+                                               <td>@record.Ticket.Title</td>                                        
+                                               <td>@record.Property</td>
+                                                @if (record.OldValue != null) {
+                                                    <td>@record.OldValue</td>
+                                                } else
+                                                {
+                                                    <td>Null</td>
+                                                }     
+                                                @if (record.NewValue != null) {
+                                                    <td>@record.NewValue</td>
+                                                } else
+                                                {
+                                                    <td>Null</td>
+                                                }                                                   
+                                                <td>@record.ModifiedAt</td>
+                                                <td>
+                                                    <a asp-controller="Ticket" asp-action="Details" asp-route-id="@record.TicketId" class="link-info">Details</a>
+                                                </td>
+                                            </tr>   
+                                        }                                                  
+                                    </tbody>
+                                </table>
+                            </div>                            
+                            <div>
+                                <p class="text-secondary" style="font-size: 14px">
+                                    Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
+                                    of @Model.TicketHistoryRecords.PageCount
+                                </p>                   
+                                @Html.PagedListPager(
+                                    Model.TicketHistoryRecords, 
+                                    page => Url.Action("Index", new { historyPage = page }),
+                                    new PagedListRenderOptions() 
                                     {
-                                        <tr>
-                                           <td>@record.Property</td>
-                                            @if (record.OldValue != null) {
-                                                <td>@record.OldValue</td>
-                                            } else
-                                            {
-                                                <td>Null</td>
-                                            }     
-                                            @if (record.NewValue != null) {
-                                                <td>@record.NewValue</td>
-                                            } else
-                                            {
-                                                <td>Null</td>
-                                            }   
-                                            <td>@record.Modifier.UserName</td>
-                                            <td>@record.ModifiedAt</td>
-                                        </tr>   
-                                    }                                                  
-                                </tbody>
-                            </table>
-                        </div>                            
-                        <div>
-                            <p class="text-secondary" style="font-size: 14px">
-                                Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
-                                of @Model.TicketHistoryRecords.PageCount
-                            </p>                   
-                            @Html.PagedListPager(
-                                Model.TicketHistoryRecords, 
-                                page => Url.Action("Index", new { historyPage = page }),
-                                new PagedListRenderOptions() 
-                                {
-                                    UlElementClasses = new string[] { "pagination", "mb-0" },
-                                    LiElementClasses = new string[] { "page-item" },
-                                    PageClasses = new string[] { "page-link" }
-                                })
-                        </div>                         
-                    }
-                </div>                      
+                                        UlElementClasses = new string[] { "pagination", "mb-0" },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        PageClasses = new string[] { "page-link" }
+                                    })
+                            </div>                         
+                        }
+                    </div>                      
+                </div>
             </div>
         </div>
-        <div class="col col-md-4 h-100">
-            <div class="card mb-4">
-                <header class="card-header">
-                    <h1 class="fs-4 mb-0">Quick Actions</h1>
-                </header>
-                <div class="card-body pb-0">                   
-                    <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">
-                        Create New Project
-                    </a>
-                    <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
-                        Create New Ticket
-                    </a>                                     
+        <div class="col col-xl-4 h-100">
+            <div class="row">
+                <div class="col col-xl-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="card mb-4">
+                        <header class="card-header">
+                            <h1 class="fs-4 mb-0">Quick Actions</h1>
+                        </header>
+                        <div class="card-body pb-0">                   
+                            <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">
+                                Create New Project
+                            </a>
+                            <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
+                                Create New Ticket
+                            </a>                                     
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="bg-light p-3 text-center">
-                <h2 class="fs-5 text-dark">Tickets by Type</h2>
-                <canvas id="ticketTypeChart"></canvas>            
-            </div>
+                <div class="col col-xl-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="bg-light p-3 text-center">
+                        <h2 class="fs-5 text-dark">Tickets by Type</h2>
+                        <canvas id="ticketTypeChart"></canvas>            
+                    </div>
+                </div>
+            </div>                       
         </div>
     </div>    
 </div>
