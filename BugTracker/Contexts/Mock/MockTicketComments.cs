@@ -12,16 +12,16 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc1",
                     TicketId = "t1",
-                    AuthorId = "4687e432-58fc-448a-b639-6288ee716fa0",
-                    Value = "I will have this fixed promptly",
+                    AuthorId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
+                    Value = "This will be looked at shortly",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
                 new TicketComment()
                 {
                     Id = "tc2",
                     TicketId = "t1",
-                    AuthorId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
-                    Value = "This will be looked at shortly",
+                    AuthorId = "4687e432-58fc-448a-b639-6288ee716fa0",
+                    Value = "I will have this fixed promptly",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
                 new TicketComment()
@@ -77,7 +77,7 @@ namespace BugTracker.Contexts.Mock
                     Id = "tc8",
                     TicketId = "t8",
                     AuthorId = "4687e432-58fc-448a-b639-6288ee716fa0",
-                    Value = "Will be finalized by Friday",
+                    Value = "This will be finalized by Friday",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
                 new TicketComment()

@@ -1,42 +1,21 @@
-﻿using BugTracker.Models;
+﻿using BugTracker.Contexts.Mock;
+using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Repositories.Mock
 {
     public class ProjectMockRepository : IProjectRepository
     {
-        public ProjectMockRepository()
-        {                      
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public ProjectMockRepository(UserManager<ApplicationUser> userManager)
+        {
+            this.userManager = userManager;
         }
 
-        private static readonly List<Project> projects = new()
-        {
-            new Project
-            {
-                Id = "p1",
-                Name = "Bug Tracker",
-                Description = "A Bug/Issue Tracker MVC project.",                
-            },
-            new Project
-            {
-                Id = "p2",
-                Name = "Technology Blog",
-                Description = "A programming tutorial blog built using .Net Web API and React.JS."
-            },
-            new Project
-            {
-                Id = "p3",
-                Name = "Demo Project 1",
-                Description = "This is a demo project."
-            },
-            new Project
-            {
-                Id = "p4",
-                Name = "Demo Project 2",
-                Description = "This is a demo project."
-            }
-        };       
+        private static readonly List<Project> projects = MockProjects.GetProjects();      
 
         public IEnumerable<Project> GetAllProjects()
         {            
@@ -46,7 +25,16 @@ namespace BugTracker.Repositories.Mock
         public Project GetProjectById(string id)
         {            
             Project? project = projects.Find(p => p.Id == id);
-            // project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id);
+            project.Tickets = MockTickets.GetTickets().Where(t => t.ProjectId == id).ToList();
+            var userIds = MockUserProjects.GetUserProjects().Where(up => up.ProjectId == id).Select(up => up.UserId);
+            project.Users = userIds.Select(uid => userManager.Users.First(u => u.Id == uid)).ToList();
+
+            /*project.Users = userManager.Users
+                .Where(u => MockUserProjects.GetUserProjects()
+                .Where(up => up.ProjectId == id)
+                .Select(up => up.UserId)
+                .Any(uid => uid == u.Id))
+                .ToList();*/
             return project;
         }
 

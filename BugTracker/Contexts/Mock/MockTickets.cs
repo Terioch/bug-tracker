@@ -31,7 +31,7 @@ namespace BugTracker.Contexts.Mock
                     Description = "Add a ticket comment section",
                     CreatedAt = DateTimeOffset.UtcNow,
                     Type = "Feature Requests",
-                    Status = "In Progress",
+                    Status = "Resolved",
                     Priority = "Medium",
                 },
                 new Ticket()
@@ -116,13 +116,13 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "t9",
                     ProjectId = "p2",
-                    SubmitterId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
+                    SubmitterId = "2ae32131-606d-495c-81cf-86f38875f9a7",
                     AssignedDeveloperId = "0de2c4ff-6923-4b30-8d8a-e7b90b5edcbf",
                     Title = "New theming",
                     Description = "Add a new journal-like theme that is clean and crisp",
                     CreatedAt = DateTimeOffset.UtcNow,
                     Type = "Feature Requests",
-                    Status = "Resolved",
+                    Status = "Under Review",
                     Priority = "Medium",
                 },
                 new Ticket()
@@ -180,9 +180,9 @@ namespace BugTracker.Contexts.Mock
                 new Ticket()
                 {
                     Id = "t14",
-                    ProjectId = "p4",
-                    SubmitterId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
-                    AssignedDeveloperId = null,
+                    ProjectId = "p3",
+                    SubmitterId = "2ae32131-606d-495c-81cf-86f38875f9a7",
+                    AssignedDeveloperId = "4687e432-58fc-448a-b639-6288ee716fa0",
                     Title = "Test Ticket 4",
                     Description = "This is a test ticket",
                     CreatedAt = DateTimeOffset.UtcNow,
@@ -195,13 +195,26 @@ namespace BugTracker.Contexts.Mock
                     Id = "t15",
                     ProjectId = "p4",
                     SubmitterId = "cd448813-e865-49e8-933a-dff582b72509",
-                    AssignedDeveloperId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
+                    AssignedDeveloperId = "0de2c4ff-6923-4b30-8d8a-e7b90b5edcbf",
                     Title = "Test Ticket 5",
                     Description = "This is a test ticket",
                     CreatedAt = DateTimeOffset.UtcNow,
                     Type = "Bugs/Errors",
                     Status = "In Progress",
                     Priority = "High",
+                },
+                new Ticket()
+                {
+                    Id = "t16",
+                    ProjectId = "p4",
+                    SubmitterId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
+                    AssignedDeveloperId = "4687e432-58fc-448a-b639-6288ee716fa0",
+                    Title = "Test Ticket 6",
+                    Description = "This is a test ticket",
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    Type = "Bugs/Errors",
+                    Status = "Resolved",
+                    Priority = "Medium",
                 }
             };
         }
