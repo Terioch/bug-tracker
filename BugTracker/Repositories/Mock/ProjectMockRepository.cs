@@ -25,22 +25,21 @@ namespace BugTracker.Repositories.Mock
         public Project GetProjectById(string id)
         {            
             Project? project = projects.Find(p => p.Id == id);
-            project.Tickets = MockTickets.GetTickets().Where(t => t.ProjectId == id).ToList();
+            List<Ticket> allTickets = MockTickets.GetTickets();
+            project.Tickets = allTickets.Where(t => t.ProjectId == id).ToList();
+            foreach (var t in project.Tickets)
+            {
+                t.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
+                t.Submitter = userManager.Users.First(u => u.Id == t.SubmitterId);
+            }
             var userIds = MockUserProjects.GetUserProjects().Where(up => up.ProjectId == id).Select(up => up.UserId);
-            project.Users = userIds.Select(uid => userManager.Users.First(u => u.Id == uid)).ToList();
-
-            /*project.Users = userManager.Users
-                .Where(u => MockUserProjects.GetUserProjects()
-                .Where(up => up.ProjectId == id)
-                .Select(up => up.UserId)
-                .Any(uid => uid == u.Id))
-                .ToList();*/
+            project.Users = userIds.Select(uid => userManager.Users.First(u => u.Id == uid)).ToList();                           
             return project;
         }
 
         public Project GetProjectByName(string name)
         {
-            return projects.First(p => p.Name == name);
+            return projects.First(p => p.Name == name);            
         }
 
         public Project Create(Project project)

@@ -37,7 +37,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> LoginWithDemoAccount(string role)
         {  
             Input.Password = config["DemoCredentials:Password"];
-            string returnUrl = "";
+            string returnUrl = "/";
 
             switch (role)
             {

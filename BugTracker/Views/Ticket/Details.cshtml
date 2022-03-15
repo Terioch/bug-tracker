@@ -29,7 +29,7 @@
             <div class="card-header">
                 <h1 class="fs-4">@Model.Title</h1> 
                 <div> 
-                    @if (await ticketHelper.IsOnlyAuthorizedToUpdateStatus(loggedInUser, Model.Id))
+                    @if (await ticketHelper.IsAssignedDeveloper(loggedInUser, Model.Id))
                     {
                         <Span><a href="" class="link-info" data-bs-toggle="modal" data-bs-target="#updateTicketStatusModal">Update Status</a> |</Span>
                     }    

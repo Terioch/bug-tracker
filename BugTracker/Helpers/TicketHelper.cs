@@ -75,7 +75,7 @@ namespace BugTracker.Helpers
             return false;
         }
 
-        public async Task<bool> IsOnlyAuthorizedToUpdateStatus(ApplicationUser user, string ticketId)
+        public async Task<bool> IsAssignedDeveloper(ApplicationUser user, string ticketId)
         {
             IList<string> roles = await userManager.GetRolesAsync(user);
             Ticket ticket = ticketRepo.GetTicketById(ticketId);

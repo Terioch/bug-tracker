@@ -11,6 +11,7 @@
 
 @{
     ViewData["Title"] = "Dashboard";
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
 <div>
@@ -127,13 +128,30 @@
                         <header class="card-header">
                             <h1 class="fs-4 mb-0">Quick Actions</h1>
                         </header>
-                        <div class="card-body pb-0">                   
-                            <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">
-                                Create New Project
-                            </a>
-                            <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
-                                Create New Ticket
-                            </a>                                     
+                        <div class="card-body pb-0">  
+                            @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                            {
+                                <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">
+                                    <span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>
+                                </a>   
+                            } else
+                            {
+                                <a class="btn btn-primary mb-3 disabled">
+                                    <span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>
+                                </a>
+                            }
+                            @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
+                                || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))
+                            {
+                                <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
+                                    <span style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>
+                                </a>    
+                            } else
+                            {
+                                <a class="btn btn-success mb-3 disabled">
+                                    <span style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>
+                                </a> 
+                            }                                                               
                         </div>
                     </div>
                 </div>
