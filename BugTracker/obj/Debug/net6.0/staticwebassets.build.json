@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TgYWTadr+0cQUV+grACh1Jd6L/MWQGl6dPhGuLPG2XU=",
+  "Hash": "Bb09ihwaUN7G6rS36KBBCLlSOvelfOLuynt6A87LnrY=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1069,6 +1069,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BugTracker.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\21d7d581-7df8-4f9a-98b1-561a1c99c4da_mountain.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "Attachments/21d7d581-7df8-4f9a-98b1-561a1c99c4da_mountain.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Attachments\\21d7d581-7df8-4f9a-98b1-561a1c99c4da_mountain.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\Attachments\\attachment2.jpg",
