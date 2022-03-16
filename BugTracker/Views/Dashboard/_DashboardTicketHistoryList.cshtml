@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@model IPagedList<TicketHistoryRecord>
+
+<div id="historyListContainer">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info fs-5 mt-3" role="alert">
+            There are no records matching that search term
+        </div>
+    } else
+    {        
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>          
+                        <th scope="col">Title</th>                                            
+                        <th scope="col">Property</th>
+                        <th scope="col">Old Value</th>
+                        <th scope="col">New Value</th>                                                                                
+                        <th scope="col">Date Changed</th>                     
+                        <th scope="col"></th>                     
+                    </tr>
+                </thead>                                                
+                <tbody>                                     
+                    @foreach (var record in Model) 
+                    {
+                        <tr>
+                            <td>@record.Ticket.Title</td>                                        
+                            <td>@record.Property</td>
+                            @if (record.OldValue != null) {
+                                <td>@record.OldValue</td>
+                            } else
+                            {
+                                <td>Null</td>
+                            }     
+                            @if (record.NewValue != null) {
+                                <td>@record.NewValue</td>
+                            } else
+                            {
+                                <td>Null</td>
+                            }                                                   
+                            <td>@record.ModifiedAt</td>
+                            <td>
+                                <a asp-controller="Ticket" asp-action="Details" asp-route-id="@record.TicketId" class="link-info">Details</a>
+                            </td>
+                        </tr>   
+                    }                                                  
+                </tbody>
+            </table>
+        </div>                            
+        <div>
+            <p class="text-secondary" style="font-size: 14px">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 
+                of @Model.PageCount
+            </p>                   
+            @Html.PagedListPager(
+                Model, 
+                page => Url.Action("Index", new { historyPage = page }),
+                new PagedListRenderOptions() 
+                {
+                    UlElementClasses = new string[] { "pagination", "mb-0" },
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new string[] { "page-link" }
+                })
+        </div>                         
+    }
+</div>

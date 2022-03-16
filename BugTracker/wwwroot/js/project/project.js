@@ -130,4 +130,4 @@ class Project {
     }*/
 }
 
-export default Project;
+const project = new Project();
