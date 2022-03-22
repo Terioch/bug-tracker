@@ -1,8 +1,19 @@
-﻿
+﻿/*Colours:
+Blue: #417FEF
+Grey: #ADB5BD
+Light Blue: #17A2B8
+Dark Grey: #343A40
+Green: #00B973
+Orange: #F0AD4E
+Red: #D9534F*/
+
 class ChartRenderer {
     constructor() {
         console.log("Initialized Chart");
-        console.log(new Chart());
+        // Add additional spacing between chart and legend labels
+        /*Chart.Legend.prototype.afterFit = function () {
+            this.height = this.height + 50;
+        };*/       
         this.renderPriorityChart();
         this.renderStatusChart();
         this.renderTypeChart();
@@ -31,6 +42,18 @@ class ChartRenderer {
             },
             options: {
                 responsive: true,
+                plugins: {
+                    legend: {
+                        position: "bottom",       
+                        textAlign: "left"
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    animationSteps: 100,
+                    animationEasing: 'easeOutBounce',
+                }
             }
         });
     }
@@ -63,6 +86,12 @@ class ChartRenderer {
                     legend: {
                         display: false
                     }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    animationSteps: 100,
+                    animationEasing: 'easeOutBounce',
                 }
             }
         });
@@ -89,6 +118,18 @@ class ChartRenderer {
             },
             options: {
                 responsive: true,
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        textAlign: "left"
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    animationSteps: 100,
+                    animationEasing: 'easeOutBounce',
+                }
             }
         });
     }

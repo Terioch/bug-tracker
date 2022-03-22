@@ -15,11 +15,11 @@ namespace BugTracker.Repositories.Mock
             this.userManager = userManager;
         }
 
-        private static readonly List<TicketAttachment> ticketAttachments = MockTicketAttachments.GetAttachments();
+        public static List<TicketAttachment> TicketAttachments { get; set; } = MockTicketAttachments.GetAttachments();
 
         public IEnumerable<TicketAttachment> GetAllAttachments()
         {
-            List<TicketAttachment> attachments = ticketAttachments;
+            List<TicketAttachment> attachments = TicketAttachments;
             attachments.ForEach(a =>
             {
                 a.Submitter = userManager.Users.First(u => u.Id == a.SubmitterId);
@@ -29,15 +29,15 @@ namespace BugTracker.Repositories.Mock
 
         public TicketAttachment GetAttachmentById(string id)
         {
-            var attachment = ticketAttachments.Find(a => a.Id == id);          
+            var attachment = TicketAttachments.Find(a => a.Id == id);          
             attachment.Submitter = userManager.Users.First(u => u.Id == attachment.SubmitterId);
             return attachment;
         }
 
         public IEnumerable<TicketAttachment> GetAttachmentsByTicketId(string ticketId)
         {
-            var attachments = ticketAttachments.Where(a => a.TicketId == ticketId);
-            ticketAttachments.ForEach(a =>
+            var attachments = TicketAttachments.Where(a => a.TicketId == ticketId);
+            TicketAttachments.ForEach(a =>
             {
                 a.Submitter = userManager.Users.First(u => u.Id == a.SubmitterId);
             });
@@ -46,28 +46,28 @@ namespace BugTracker.Repositories.Mock
 
         public TicketAttachment Create(TicketAttachment attachment)
         {
-            ticketAttachments.Add(attachment);           
+            TicketAttachments.Add(attachment);           
             return attachment;
         }
 
         public TicketAttachment Update(TicketAttachment attachment)
         {
-            int index = ticketAttachments.FindIndex(a => a.Id == attachment.Id);
-            ticketAttachments[index] = attachment;
+            int index = TicketAttachments.FindIndex(a => a.Id == attachment.Id);
+            TicketAttachments[index] = attachment;
             return attachment;
         }
 
         public TicketAttachment Delete(string id)
         {
-            TicketAttachment? attachment = ticketAttachments.Find(a => a.Id == id);
-            ticketAttachments.Remove(attachment);           
+            TicketAttachment? attachment = TicketAttachments.Find(a => a.Id == id);
+            TicketAttachments.Remove(attachment);           
             return attachment;
         }
 
         public IEnumerable<TicketAttachment> DeleteAttachmentsByTicketId(string ticketId)
         {
-            var attachments = ticketAttachments.Where(a => a.TicketId == ticketId);
-            ticketAttachments.RemoveAll(a => attachments.Contains(a));           
+            var attachments = TicketAttachments.Where(a => a.TicketId == ticketId);
+            TicketAttachments.RemoveAll(a => attachments.Contains(a));           
             return attachments;
         }        
     }

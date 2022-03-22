@@ -18,12 +18,12 @@
         border-radius: 0;       
     }
 
-    .create-ticket-input {
+    .edit-ticket-input {
         padding-left: 0;
         margin-left: 0;
     }
 
-    .create-ticket-input:focus {
+    .edit-ticket-input:focus {
         outline: none;
         box-shadow: none;
     }
@@ -43,16 +43,16 @@
             <input type="hidden" asp-for="Id" />                         
             <div class="row g-md-3">
                 <div class="col-md-4">
-                    <div class="form-control mb-4 border-0">                                
+                    <div class="form-control mb-4 border-0 ps-1">                                
                         <label asp-for="Title" class="control-label text-secondary"></label>
-                        <input asp-for="Title" class="create-ticket-input form-control border-0 border-bottom pb-0" />                                
+                        <input asp-for="Title" class="edit-ticket-input form-control border-0 border-bottom pb-0" />                                
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>    
                 </div>
                 <div class="col-md-4">
-                    <div class="form-control mb-4 border-0">               
+                    <div class="form-control mb-4 border-0 ps-1">               
                         <label asp-for="Description" class="control-label text-secondary"></label>
-                        <input asp-for="Description" class="create-ticket-input form-control border-0 border-bottom pb-0" />                
+                        <input asp-for="Description" class="edit-ticket-input form-control border-0 border-bottom pb-0" />                
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                 </div>

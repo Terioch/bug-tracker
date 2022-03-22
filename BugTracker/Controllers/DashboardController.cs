@@ -10,21 +10,11 @@ namespace BugTracker.Controllers
 {
     public class DashboardController : Controller
     {
-        private readonly ProjectHelper projectHelper;
-        private readonly ITicketRepository ticketRepo;
         private readonly TicketHistoryHelper ticketHistoryHelper;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly TicketHelper ticketHelper;        
-        private readonly ChartHelper chartHelper;
 
-        public DashboardController(ProjectHelper projectHelper, TicketHelper ticketHelper, TicketHistoryHelper ticketHistoryHelper, 
-            UserManager<ApplicationUser> userManager, ChartHelper chartHelper)
-        {
-            this.ticketHelper = ticketHelper;
-            this.projectHelper = projectHelper;           
+        public DashboardController(TicketHistoryHelper ticketHistoryHelper)
+        {          
             this.ticketHistoryHelper = ticketHistoryHelper;
-            this.userManager = userManager;
-            this.chartHelper = chartHelper;
         }
 
         public async Task<IActionResult> Index(int? historyPage)

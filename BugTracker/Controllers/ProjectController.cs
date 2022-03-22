@@ -119,49 +119,20 @@ namespace BugTracker.Controllers
             return PartialView("_ProjectList", filteredProjects.ToPagedList(1, 8));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult FilterTicketsReturnPartial(string id, string? searchTerm)
+        public IActionResult FilterUserProjectsByNameReturnPartial(string id, string? searchTerm)
         {
-            IEnumerable<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
-            TempData["ProjectId"] = id;
+            ApplicationUser user = userManager.Users.First(u => u.Id == id);
+            IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
 
             if (searchTerm == null)
-            {                
-                return PartialView("~/Views/Project/_ProjectTicketList.cshtml", tickets.ToPagedList(1, 5));
+            {
+                return PartialView("~/Views/User/_UserProjectList.cshtml", projects.ToPagedList(1, 5));
             }
 
-            var filteredTickets = tickets.Where(t =>
-            {
-                if (t.AssignedDeveloperId == null)
-                {
-                    t.AssignedDeveloper = new ApplicationUser() { UserName = "" };
-                }
-
-                return t.Title.ToLowerInvariant().Contains(searchTerm)
-                || t.Status.ToLowerInvariant().Contains(searchTerm)
-                || t.Priority.ToLowerInvariant().Contains(searchTerm)
-                || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
-                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm);
-            });
-
-            return PartialView("~/Views/Project/_ProjectTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
-        }
-
-        [HttpGet]
-        public IActionResult FilterUsersByNameReturnPartial(string id, string? searchTerm)
-        {
-            Project project = repo.GetProjectById(id);
-            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
-            TempData["ProjectId"] = id;
-            TempData["ProjectName"] = project.Name;
-
-            if (searchTerm == null)
-            {                
-                return PartialView("~/Views/Project/_ProjectUserList.cshtml", users.ToPagedList(1, 5));
-            }          
-
-            var filteredUsers = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
-            return PartialView("~/Views/Project/_ProjectUserList.cshtml", filteredUsers.ToPagedList(1, 5));
+            var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
+            return PartialView("~/Views/User/_UserProjectList.cshtml", filteredProjects.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin")]

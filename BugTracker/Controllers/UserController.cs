@@ -72,53 +72,24 @@ namespace BugTracker.Controllers
 
             var filteredUsers = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
             return PartialView("_UserList", filteredUsers.ToPagedList(1, 8));
-        }
+        }        
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult FilterProjectsByNameReturnPartial(string id, string? searchTerm)
+        public IActionResult FilterProjectUsersByNameReturnPartial(string id, string? searchTerm)
         {
-            ApplicationUser user = userManager.Users.First(u => u.Id == id);
-            IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);          
-
-            if (searchTerm == null)
-            {         
-                return PartialView("~/Views/User/_UserProjectList.cshtml", projects.ToPagedList(1, 5));
-            }
-
-            var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));  
-            return PartialView("~/Views/User/_UserProjectList.cshtml", filteredProjects.ToPagedList(1, 5));
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult FilterTicketsReturnPartial(string id, string? searchTerm)
-        {
-            IEnumerable<Ticket> tickets = ticketRepo.GetAllTickets()
-                .Where(t => t.AssignedDeveloperId == id || t.SubmitterId == id);
+            Project project = projectRepo.GetProjectById(id);
+            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
+            TempData["ProjectId"] = id;
+            TempData["ProjectName"] = project.Name;
 
             if (searchTerm == null)
             {
-                ViewBag.Id = id;
-                return PartialView("~/Views/User/_UserTicketList.cshtml", tickets.ToPagedList(1, 5));
+                return PartialView("~/Views/Project/_ProjectUserList.cshtml", users.ToPagedList(1, 5));
             }
 
-            var filteredTickets = tickets.Where(t => 
-            {
-                if (t.AssignedDeveloperId == null)
-                {
-                    t.AssignedDeveloper = new ApplicationUser() { UserName = "" };
-                }
-
-                return t.Title.ToLowerInvariant().Contains(searchTerm)
-                || t.Status.ToLowerInvariant().Contains(searchTerm)
-                || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
-                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm);
-            });             
-
-            ViewBag.Id = id;
-            return PartialView("~/Views/User/_UserTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
-        }
+            var filteredUsers = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
+            return PartialView("~/Views/Project/_ProjectUserList.cshtml", filteredUsers.ToPagedList(1, 5));
+        }        
 
         [Authorize(Roles = "Owner")]
         [HttpGet]

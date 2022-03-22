@@ -3,9 +3,9 @@
 namespace BugTracker.Contexts.Mock
 {
     public static class MockTickets
-    {
+    {             
         public static List<Ticket> GetTickets()
-        {
+        {       
             return new List<Ticket>()
             {
                 new Ticket()

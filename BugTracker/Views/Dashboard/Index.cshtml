@@ -14,8 +14,8 @@
     ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
-<div>
-    <div class="row g-4 mb-4">
+@*<div>
+    <div class="row g-4 mb-3">
         <div class="col col-xl-3 col-md-6">
             <div class="alert alert-info text-center" role="alert">
                 <h4 class="alert-heading">@await projectHelper.GetUserProjectCount()</h4>
@@ -31,18 +31,18 @@
             </div>
         </div>
         <div class="col col-xl-3 col-md-6">
-            <div class="bg-light p-3 h-100 text-center">
+            <div class="bg-light p-3 h-100 text-center rounded">
                 <h2 class="fs-5 text-dark mb-3">Tickets by Priority</h2>
                 <canvas id="ticketPriorityChart"></canvas>
             </div>            
         </div>
         <div class="col col-xl-6 col-lg-12">
-            <div class="bg-light p-3 h-100 text-center">
+            <div class="bg-light p-3 h-100 text-center rounded">
                 <h2 class="fs-5 text-dark mb-3">Tickets by Status</h2>
                 <canvas id="ticketStatusChart"></canvas>            
             </div>
         </div>
-    </div>
+    </div>    
     <div class="row g-4">
         <div class="col col-xl-8">
             <div class="card">
@@ -121,7 +121,7 @@
                 </div>
             </div>
         </div>
-        <div class="col col-xl-4 h-100">
+        <div class="col col-xl-4">
             <div class="row">
                 <div class="col col-xl-12 col-lg-6 col-md-6 col-sm-12">
                     <div class="card mb-4">
@@ -156,7 +156,7 @@
                     </div>
                 </div>
                 <div class="col col-xl-12 col-lg-6 col-md-6 col-sm-12">
-                    <div class="bg-light p-3 text-center h-100">
+                    <div class="bg-light p-3 text-center h-100 rounded">
                         <h2 class="fs-5 text-dark mb-3">Tickets by Type</h2>
                         <canvas id="ticketTypeChart"></canvas>            
                     </div>
@@ -164,201 +164,163 @@
             </div>                       
         </div>
     </div>    
+</div>*@
+
+<div class="px-2">
+    <div class="row g-4 mb-3">
+        <div class="col col-xl-3 col-md-6 col-sm-6">
+            <div class="alert alert-info text-center" role="alert">
+                <h4 class="alert-heading">@await projectHelper.GetUserProjectCount()</h4>
+                <p class="fw-bold">Active Projects</p>                
+            </div>
+        </div> 
+        <div class="col col-xl-3 col-md-6 col-sm-6">
+            <div class="alert alert-secondary text-center" role="alert">
+              <h4 class="alert-heading">@await ticketHelper.GetUserTicketCount()</h4>
+              <p class="fw-bold">Associated Tickets</p>                  
+            </div> 
+        </div>
+        <div class="col col-xl-3 col-md-6 col-sm-6">
+            <div class="alert alert-success text-center" role="alert">
+              <h4 class="alert-heading">@userManager.Users.Count()</h4>
+              <p class="fw-bold">Total Users</p>                  
+            </div>
+        </div> 
+        <div class="col col-xl-3 col-md-6 col-sm-6">
+            <div class="alert alert-light">
+                <h4 class="alert-heading mb-3">Quick Actions</h4>
+                @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                {
+                    <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">
+                        @*<span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>*@
+                        Create Project
+                    </a>   
+                } else
+                {
+                    <button class="btn btn-primary mb-3 disabled">
+                        @*<span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>*@
+                        Create Project
+                    </button>
+                }
+                @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
+                    || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))
+                {
+                    <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
+                        @*<span style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>*@
+                        Create Ticket
+                    </a>    
+                } else
+                {
+                    <button class="btn btn-success mb-3 disabled">
+                        @*<span style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>*@
+                        Create Ticket
+                    </button> 
+                }
+            </div>            
+        </div>
+    </div>
+    <div class="row g-4 mb-3">
+        <div class="col col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="bg-light p-3 h-100 text-center rounded">
+                <h2 class="fs-5 text-dark mb-3">Tickets by Priority</h2>
+                <canvas id="ticketPriorityChart"></canvas>
+            </div>            
+        </div>
+        <div class="col col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="bg-light p-3 text-center h-100 rounded">
+                <h2 class="fs-5 text-dark mb-3">Tickets by Type</h2>
+                <canvas id="ticketTypeChart"></canvas>            
+            </div>
+        </div>
+        <div class="col col-xl-6 col-lg-12">
+            <div class="bg-light p-3 h-100 text-center rounded">
+                <h2 class="fs-5 text-dark mb-3">Tickets by Status</h2>
+                <canvas id="ticketStatusChart"></canvas>            
+            </div>           
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h1 class="fs-3 mt-1">Ticket history</h1>
+                    <p class="text-secondary mb-0">Records of changes to all associated tickets</p>
+                </div>
+                <div class="card-body">
+                    <div class="input-group-sm">
+                        <input id="historyListSearchInput" class="form-control mb-3" placeholder="Search History..." style="max-width: 175px"  />
+                    </div>
+                    <div id="historyListContainer">
+                        @if (!Model.TicketHistoryRecords.Any())
+                        {
+                            <div class="alert alert-info fs-5 mt-3" role="alert">
+                                There is no available history for your tickets
+                            </div>
+                        } else
+                        {        
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>          
+                                            <th scope="col">Title</th>                                            
+                                            <th scope="col">Property</th>
+                                            <th scope="col">Old Value</th>
+                                            <th scope="col">New Value</th>                                                                                
+                                            <th scope="col">Date Changed</th>                     
+                                            <th scope="col"></th>                     
+                                        </tr>
+                                    </thead>                                                
+                                    <tbody>                                     
+                                        @foreach (var record in Model.TicketHistoryRecords) 
+                                        {
+                                            <tr>
+                                               <td>@record.Ticket.Title</td>                                        
+                                               <td>@record.Property</td>
+                                                @if (record.OldValue != null) {
+                                                    <td>@record.OldValue</td>
+                                                } else
+                                                {
+                                                    <td>Null</td>
+                                                }     
+                                                @if (record.NewValue != null) {
+                                                    <td>@record.NewValue</td>
+                                                } else
+                                                {
+                                                    <td>Null</td>
+                                                }                                                   
+                                                <td>@record.ModifiedAt</td>
+                                                <td>
+                                                    <a asp-controller="Ticket" asp-action="Details" asp-route-id="@record.TicketId" class="link-info">Details</a>
+                                                </td>
+                                            </tr>   
+                                        }                                                  
+                                    </tbody>
+                                </table>
+                            </div>                            
+                            <div>
+                                <p class="text-secondary" style="font-size: 14px">
+                                    Page @(Model.TicketHistoryRecords.PageCount < Model.TicketHistoryRecords.PageNumber ? 0 : Model.TicketHistoryRecords.PageNumber) 
+                                    of @Model.TicketHistoryRecords.PageCount
+                                </p>                   
+                                @Html.PagedListPager(
+                                    Model.TicketHistoryRecords, 
+                                    page => Url.Action("Index", new { historyPage = page }),
+                                    new PagedListRenderOptions() 
+                                    {
+                                        UlElementClasses = new string[] { "pagination", "mb-0" },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        PageClasses = new string[] { "page-link" }
+                                    })
+                            </div>                         
+                        }
+                    </div>                      
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-@section Scripts {
-    <script type="text/javascript" src="~/js/dashboard/dashboard.js">
-        // Colours: 
-        // Blue: #417FEF
-        // Grey: #ADB5BD
-        // Light Blue: #17A2B8
-        // Dark Grey: #343A40
-        // Green: #00B973
-        // Orange: #F0AD4E
-        // Red: #D9534F        
-        /*class ChartRenderer {
-            constructor() {
-                console.log("Initialized Chart");                                
-                this.renderPriorityChart();
-                this.renderStatusChart();                
-                this.renderTypeChart(); 
-            }
-
-            // Render view and then fetch data from the server
-            async renderTypeChart() {                
-                const context = document.getElementById("ticketTypeChart");  
-                const response = await fetch("chart/getTicketTypeData");
-                const data = await response.json();
-                
-                const ticketTypeChart = new Chart(context, {
-                    type: "doughnut",
-                    data: {
-                        labels: data.labels,
-                        datasets: [{
-                            label: "Tickets by Type",
-                            backgroundColor: [  
-                                '#D9534F',
-                                '#417FEF',
-                                '#00B973',                                                                
-                                '#F0AD4E',                                                              
-                            ],                    
-                            data: data.values,
-                        }],
-                    },                    
-                    options: {                           
-                        responsive: true,
-                    }
-                });
-            }
-
-            async renderStatusChart() {                
-                const context = document.getElementById("ticketStatusChart");  
-                const response = await fetch("chart/getTicketStatusData");
-                const data = await response.json();
-                
-                const ticketTypeChart = new Chart(context, {
-                    type: "bar",
-                    data: {
-                        labels: data.labels,
-                        datasets: [{
-                            label: "Tickets by Status",
-                            backgroundColor: [                                
-                                '#ADB5BD',
-                                '#F0AD4E',                                
-                                '#417FEF',
-                                '#17A2B8',                               
-                                '#00B973',
-                            ],                    
-                            data: data.values,
-                        }],
-                    },                    
-                    options: {                       
-                        responsive: true,
-                        indexAxis: "x",                        
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        }
-                    }                        
-                });
-            }
-
-            async renderPriorityChart() {                
-                const context = document.getElementById("ticketPriorityChart");  
-                const response = await fetch("chart/getTicketPriorityData");
-                const data = await response.json();
-                
-                const ticketPriorityChart = new Chart(context, {
-                    type: "pie",
-                    data: {
-                        labels: data.labels,
-                        datasets: [{
-                            label: "Tickets by Priority",
-                            backgroundColor: [   
-                                '#00B973',
-                                '#417FEF',                                                               
-                                '#D9534F',                                                            
-                            ],                    
-                            data: data.values,
-                        }],
-                    },                    
-                    options: {                       
-                        responsive: true,
-                    }                    
-                });
-            }
-
-            // Load data on the server and then serialize to json
-            @*renderTypeChart() {                
-                const context = document.getElementById("ticketTypeChart");                     
-                const ticketTypeChart = new Chart(context, {
-                    type: "doughnut",
-                    data: {
-                        labels: @Html.Raw(Json.Serialize(Model.TicketTypeData.Labels)),
-                        datasets: [{
-                            label: "Tickets by Type",
-                            backgroundColor: [                                
-                                'rgb(60,141,188)',
-                                'rgb(243,156,17)',
-                                'rgb(0,166,90)',
-                                'rgb(221,76,57)',
-                                'rgb(0, 192, 239)',                               
-                            ],
-                            data: @Html.Raw(Json.Serialize(Model.TicketTypeData.Values)),
-                        }],
-                    },                    
-                    options: {
-                        scales: {
-                            x: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            }
-
-            renderStatusChart() {                
-                const context = document.getElementById("ticketStatusChart");                     
-                const ticketStatusChart = new Chart(context, {
-                    type: "bar",
-                    data: {
-                        labels: @Html.Raw(Json.Serialize(Model.TicketStatusData.Labels)),
-                        datasets: [{
-                            label: "Tickets by Status",
-                            backgroundColor: [                                
-                                'rgb(60,141,188)',
-                                'rgb(243,156,17)',
-                                'rgb(0,166,90)',
-                                'rgb(221,76,57)',
-                                'rgb(0, 192, 239)',                               
-                            ],
-                            data: @Html.Raw(Json.Serialize(Model.TicketStatusData.Values)),
-                        }],
-                    },                    
-                    options: {
-                        title: {
-                            display: true,
-                            text: "Tickets by Status"
-                        },
-                        scales: {
-                            x: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            }
-
-            renderPriorityChart() {                
-                const context = document.getElementById("ticketPriorityChart");                     
-                const ticketPriorityChart = new Chart(context, {
-                    type: "pie",
-                    data: {
-                        labels: @Html.Raw(Json.Serialize(Model.TicketPriorityData.Labels)),
-                        datasets: [{
-                            label: "Tickets by Priority",
-                            backgroundColor: [                                
-                                'rgb(60,141,188)',
-                                'rgb(243,156,17)',
-                                'rgb(0,166,90)',
-                                'rgb(221,76,57)',
-                                'rgb(0, 192, 239)',                               
-                            ],                            
-                            data: @Html.Raw(Json.Serialize(Model.TicketPriorityData.Values)),
-                        }],
-                    },                    
-                    options: {                       
-                        title: {
-                            display: true,
-                            text: "Tickets by Priority"
-                        },                                                    
-                    }
-                });
-            }*@                        
-        }
-
-        const chartRenderer = new ChartRenderer();*/
-    </script>
-    <script type="text/javascript" src="~/js/chart/chart.js"></script>
+@section Scripts {        
+    <script src="~/js/chart/chart.js" asp-append-version="true"></script>
+    <script src="~/js/dashboard/dashboard.js" asp-append-version="true"></script>
 }

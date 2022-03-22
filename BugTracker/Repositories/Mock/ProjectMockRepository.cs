@@ -15,50 +15,50 @@ namespace BugTracker.Repositories.Mock
             this.userManager = userManager;
         }
 
-        private static readonly List<Project> projects = MockProjects.GetProjects();      
+        public static List<Project> Projects { get; set; } = MockProjects.GetProjects();      
 
         public IEnumerable<Project> GetAllProjects()
         {            
-            return projects;           
+            return Projects;           
         }       
 
         public Project GetProjectById(string id)
         {            
-            Project? project = projects.Find(p => p.Id == id);
-            List<Ticket> allTickets = MockTickets.GetTickets();
+            Project? project = Projects.Find(p => p.Id == id);
+            List<Ticket> allTickets = TicketMockRepository.Tickets;
             project.Tickets = allTickets.Where(t => t.ProjectId == id).ToList();
             foreach (var t in project.Tickets)
             {
                 t.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
                 t.Submitter = userManager.Users.First(u => u.Id == t.SubmitterId);
             }
-            var userIds = MockUserProjects.GetUserProjects().Where(up => up.ProjectId == id).Select(up => up.UserId);
+            var userIds = UserProjectMockRepository.UserProjects.Where(up => up.ProjectId == id).Select(up => up.UserId);
             project.Users = userIds.Select(uid => userManager.Users.First(u => u.Id == uid)).ToList();                           
             return project;
         }
 
         public Project GetProjectByName(string name)
         {
-            return projects.First(p => p.Name == name);            
+            return Projects.First(p => p.Name == name);            
         }
 
         public Project Create(Project project)
         {
-            projects.Add(project);
+            Projects.Add(project);
             return project;
         }
 
         public Project Update(Project project)
         {
-            int index = projects.FindIndex(p => p.Id == project.Id);
-            projects[index] = project;
+            int index = Projects.FindIndex(p => p.Id == project.Id);
+            Projects[index] = project;
             return project;
         }
 
         public Project Delete(string id)
         {
-            Project project = projects.First(p => p.Id == id);
-            projects.Remove(project);
+            Project project = Projects.First(p => p.Id == id);
+            Projects.Remove(project);
             return project;
         }
     }

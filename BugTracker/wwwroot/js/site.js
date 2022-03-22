@@ -1,7 +1,7 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-import RoleList from "./role/roleList.js";
+/*import RoleList from "./role/roleList.js";
 import ProjectList from "./project/projectList.js";
 import Project from "./project/project.js";
 import TicketList from "./ticket/ticketList.js";
@@ -18,4 +18,4 @@ class BugTracker {
     }
 }
 
-window.onload = () => new BugTracker();
+window.onload = () => new BugTracker();*/

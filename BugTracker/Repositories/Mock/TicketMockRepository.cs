@@ -23,22 +23,22 @@ namespace BugTracker.Repositories.Mock
             this.userManager = userManager;            
         }
 
-        public static readonly List<Ticket> tickets = MockTickets.GetTickets();
+        public static List<Ticket> Tickets { get; set; } = MockTickets.GetTickets();
 
         public IEnumerable<Ticket> GetAllTickets()
         {               
-            tickets.ForEach(t =>
+            Tickets.ForEach(t =>
             {
                 t.Project = projectRepo.GetProjectById(t.ProjectId);
                 t.Submitter = userManager.Users.First(u => u.Id == t.SubmitterId);
                 t.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
             });
-            return tickets;
+            return Tickets;
         }
 
         public Ticket GetTicketById(string id)
         {
-            Ticket ticket = tickets.First(t => t.Id == id);
+            Ticket ticket = Tickets.First(t => t.Id == id);
             ticket.Project = projectRepo.GetProjectById(ticket.ProjectId);
             ticket.Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId);
             ticket.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId);
@@ -50,7 +50,7 @@ namespace BugTracker.Repositories.Mock
 
         public IEnumerable<Ticket> GetTicketsByProjectId(string projectId)
         {
-            List<Ticket> tickets = TicketMockRepository.tickets.Where(t => t.ProjectId == projectId).ToList();
+            List<Ticket> tickets = Tickets.Where(t => t.ProjectId == projectId).ToList();
             tickets.ForEach(t =>
             {
                 t.Project = projectRepo.GetProjectById(t.ProjectId);
@@ -62,21 +62,21 @@ namespace BugTracker.Repositories.Mock
 
         public Ticket Create(Ticket ticket)
         {
-            tickets.Add(ticket);
+            Tickets.Add(ticket);
             return ticket;
         }
 
         public Ticket Update(Ticket ticket)
         {
-            int index = tickets.FindIndex(t => t.Id == ticket.Id);
-            tickets[index] = ticket;
+            int index = Tickets.FindIndex(t => t.Id == ticket.Id);
+            Tickets[index] = ticket;
             return ticket;
         }
 
         public Ticket Delete(string id)
         {
-            Ticket ticket = tickets.First(t => t.Id == id);
-            tickets.Remove(ticket);
+            Ticket ticket = Tickets.First(t => t.Id == id);
+            Tickets.Remove(ticket);
             return ticket;
         }
     }
