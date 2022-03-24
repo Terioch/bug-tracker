@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "x977M3u21MQfZmAq8j82xMH+eQY3Q3omVwqWR5LS8Wc=",
+  "Hash": "ijOhab/C6HtbD4nyM660ofABu88xg2IFLpBlf9HXcUs=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1343,12 +1343,12 @@
       "OriginalItemSpec": "wwwroot\\images\\lightning.jpg"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\mountains.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\mountain.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "images/mountains.jpg",
+      "RelativePath": "images/mountain.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1357,7 +1357,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\mountains.jpg"
+      "OriginalItemSpec": "wwwroot\\images\\mountain.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\mount-fuji.jpg",
@@ -1377,12 +1377,12 @@
       "OriginalItemSpec": "wwwroot\\images\\mount-fuji.jpg"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\new-york.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\seagulls.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "images/new-york.jpg",
+      "RelativePath": "images/seagulls.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1391,15 +1391,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\new-york.jpg"
+      "OriginalItemSpec": "wwwroot\\images\\seagulls.jpg"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\ocean.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\snow.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "images/ocean.jpg",
+      "RelativePath": "images/snow.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1408,7 +1408,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\ocean.jpg"
+      "OriginalItemSpec": "wwwroot\\images\\snow.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\tokyo-bridge.jpg",
@@ -1428,12 +1428,12 @@
       "OriginalItemSpec": "wwwroot\\images\\tokyo-bridge.jpg"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\wood.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\waterfall.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "images/wood.jpg",
+      "RelativePath": "images/waterfall.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1442,7 +1442,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\wood.jpg"
+      "OriginalItemSpec": "wwwroot\\images\\waterfall.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\js\\account\\account.js",
