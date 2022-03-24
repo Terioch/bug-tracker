@@ -1,4 +1,4 @@
-﻿using BugTracker.Data;
+﻿using BugTracker.Contexts;
 using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -16,22 +16,28 @@ namespace BugTracker.Repositories.Db
         }
 
         public IEnumerable<TicketComment> GetAllComments()
-        {
-            IEnumerable<TicketComment>? comments = context.TicketComments;
-            return comments.OrderByDescending(c => c.CreatedAt);
+        {          
+            return context.TicketComments
+                .Include(c => c.Ticket)
+                .Include(c => c.Author)
+                .OrderByDescending(c => c.CreatedAt);
         }
 
         public IEnumerable<TicketComment> GetCommentsByTicketId(string id)
         {
             return context.TicketComments
                 .Where(c => c.TicketId == id)
+                .Include(c => c.Ticket)
                 .Include(c => c.Author)
                 .OrderByDescending(c => c.CreatedAt);
         }
 
         public TicketComment GetComment(string id)
         {          
-            return context.TicketComments.Find(id) ?? new TicketComment();
+            return context.TicketComments
+                .Include(c => c.Ticket)
+                .Include(c => c.Author)
+                .First(c => c.Id == id) ?? new TicketComment();
         }
 
         public TicketComment Create(TicketComment comment)

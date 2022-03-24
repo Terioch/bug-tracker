@@ -1,5 +1,5 @@
 using BugTracker.Models;
-using BugTracker.Data;
+using BugTracker.Contexts;
 using BugTracker.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -51,7 +51,9 @@ builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
 builder.Services.AddScoped<TicketHelper, TicketHelper>();
 builder.Services.AddScoped<RoleHelper, RoleHelper>();
 builder.Services.AddScoped<TicketAttachmentHelper, TicketAttachmentHelper>();
+builder.Services.AddScoped<TicketHistoryHelper, TicketHistoryHelper>();
 builder.Services.AddScoped<AccountHelper, AccountHelper>();
+builder.Services.AddScoped<ChartHelper, ChartHelper>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;
@@ -92,7 +94,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Dashboard}/{id?}");
+    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

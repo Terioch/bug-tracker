@@ -18,7 +18,7 @@ class User {
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/user/filterProjectsByNameReturnPartial?id=${userId}&searchTerm=${searchTerm}`);
+            const res = await fetch(`/project/filterUserProjectsByNameReturnPartial?id=${userId}&searchTerm=${searchTerm}`);
             const projectListHTML = await res.text();
             document.getElementById("projectListContainer").innerHTML = projectListHTML;
         } catch (err) {
@@ -31,7 +31,7 @@ class User {
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/user/filterTicketsReturnPartial?id=${userId}&searchTerm=${searchTerm}`);
+            const res = await fetch(`/ticket/filterUserTicketsReturnPartial?id=${userId}&searchTerm=${searchTerm}`);
             const ticketListHTML = await res.text();
             document.getElementById("ticketListContainer").innerHTML = ticketListHTML;
         } catch (err) {

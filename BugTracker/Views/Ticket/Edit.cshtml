@@ -1,4 +1,5 @@
-﻿@using BugTracker.Helpers
+﻿@using BugTracker.Contexts
+@using BugTracker.Helpers
 @using Microsoft.AspNetCore.Identity
 @using BugTracker.Models
 
@@ -17,12 +18,12 @@
         border-radius: 0;       
     }
 
-    .create-ticket-input {
+    .edit-ticket-input {
         padding-left: 0;
         margin-left: 0;
     }
 
-    .create-ticket-input:focus {
+    .edit-ticket-input:focus {
         outline: none;
         box-shadow: none;
     }
@@ -42,16 +43,16 @@
             <input type="hidden" asp-for="Id" />                         
             <div class="row g-md-3">
                 <div class="col-md-4">
-                    <div class="form-control mb-4 border-0">                                
+                    <div class="form-control mb-4 border-0 ps-1">                                
                         <label asp-for="Title" class="control-label text-secondary"></label>
-                        <input asp-for="Title" class="create-ticket-input form-control border-0 border-bottom pb-0" />                                
+                        <input asp-for="Title" class="edit-ticket-input form-control border-0 border-bottom pb-0" />                                
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>    
                 </div>
                 <div class="col-md-4">
-                    <div class="form-control mb-4 border-0">               
+                    <div class="form-control mb-4 border-0 ps-1">               
                         <label asp-for="Description" class="control-label text-secondary"></label>
-                        <input asp-for="Description" class="create-ticket-input form-control border-0 border-bottom pb-0" />                
+                        <input asp-for="Description" class="edit-ticket-input form-control border-0 border-bottom pb-0" />                
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                 </div>
@@ -81,19 +82,19 @@
                 <div class="col-md-4">
                      <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Type</label>
                      <select asp-for="Type" class="form-select mb-4" aria-label="Ticket type">
-                        <option>Bugs/Errors</option>
-                        <option>Feature Requests</option>
-                        <option>Other Comments</option>
-                        <option>Training/Document Requests</option>
+                        @foreach (var type in TicketContext.Types)
+                        {
+                            <option>@type</option>
+                        }
                     </select>   
                 </div>
                 <div class="col-md-4">
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Priority</label>
                     <select asp-for="Priority" class="form-select mb-4" aria-label="Ticket priority">
-                        <option>Low</option>
-                        <option>Medium</option>
-                        <option>High</option>
-                        <option>None</option>
+                        @foreach (var priority in TicketContext.Priorities)
+                        {
+                            <option>@priority</option>
+                        }
                     </select>
                 </div>
             </div>
@@ -101,11 +102,10 @@
                 <div class="col-md-4">
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Status</label>
                     <select asp-for="Status" class="form-select mb-4" aria-label="Ticket status">
-                        <option selected>New</option>
-                        <option>Open</option>
-                        <option>In Progress</option>
-                        <option>Resolved</option>
-                        <option>Under Review</option>
+                        @foreach (var status in TicketContext.Statuses)
+                        {
+                            <option>@status</option>
+                        }
                     </select>
                 </div>    
             </div>             

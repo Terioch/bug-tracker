@@ -307,4 +307,4 @@ class RoleList {
     }
 }
 
-export default RoleList;
+const roleList = new RoleList();

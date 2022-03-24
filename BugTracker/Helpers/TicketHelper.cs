@@ -75,7 +75,7 @@ namespace BugTracker.Helpers
             return false;
         }
 
-        public async Task<bool> IsOnlyAuthorizedToUpdateStatus(ApplicationUser user, string ticketId)
+        public async Task<bool> IsAssignedDeveloper(ApplicationUser user, string ticketId)
         {
             IList<string> roles = await userManager.GetRolesAsync(user);
             Ticket ticket = ticketRepo.GetTicketById(ticketId);
@@ -109,6 +109,18 @@ namespace BugTracker.Helpers
                 return user.Id == ticket.SubmitterId;
             }           
             return false;
+        }
+
+        public async Task<int> GetUserTicketCount()
+        {
+            var tickets = await GetUserRoleTickets();
+            return tickets.Count();
+        }
+
+        public async Task<int> GetUserUnresolvedTicketCount()
+        {
+            var tickets = await GetUserRoleTickets();
+            return tickets.SkipWhile(t => t.Status == "Resolved").Count();
         }
     }
 }

@@ -26,4 +26,4 @@ class ProjectList {
     }
 }
 
-export default ProjectList;
+const projectList = new ProjectList();

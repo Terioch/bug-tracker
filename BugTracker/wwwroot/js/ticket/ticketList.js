@@ -26,4 +26,4 @@ class TicketList {
     }
 }
 
-export default TicketList;
+const ticketList = new TicketList();

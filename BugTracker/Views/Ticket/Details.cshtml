@@ -1,4 +1,5 @@
-﻿@using BugTracker.Helpers
+﻿@using BugTracker.Contexts
+@using BugTracker.Helpers
 @using Microsoft.AspNetCore.Identity
 @using X.PagedList
 @using X.PagedList.Mvc.Core
@@ -27,15 +28,15 @@
         <div class="col col-xl-4 col-lg-auto p-0">
             <div class="card-header">
                 <h1 class="fs-4">@Model.Title</h1> 
-                <div>                    
-                    @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
-                    {
-                        <span><a asp-action="Edit" asp-route-id="@Model.Id" class="link-info">Edit</a> |</span>                                                                      
-                    } 
-                    else if (await ticketHelper.IsOnlyAuthorizedToUpdateStatus(loggedInUser, Model.Id))
+                <div> 
+                    @if (await ticketHelper.IsAssignedDeveloper(loggedInUser, Model.Id))
                     {
                         <Span><a href="" class="link-info" data-bs-toggle="modal" data-bs-target="#updateTicketStatusModal">Update Status</a> |</Span>
-                    }                    
+                    }    
+                    else if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
+                    {
+                        <span><a asp-action="Edit" asp-route-id="@Model.Id" class="link-info">Edit</a> |</span>                                                                      
+                    }                                     
 
                     <a asp-action="ListTickets" class="link-primary">Back to List</a>
 
@@ -200,10 +201,14 @@
                     </div>   
                     @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id)) 
                     {
-                        <button type="submit" class="btn btn-success">Upload Attachment</button>
+                        <button type="submit" class="btn btn-success">
+                            <span class="me-2">Upload</span><i class="fa-solid fa-file-arrow-up fa-lg"></i>
+                        </button>
                     } else 
                     {
-                        <button type="submit" class="btn btn-success disabled">Upload Attachment</button>
+                        <button type="submit" class="btn btn-success disabled">
+                            <span class="me-2">Upload</span><i class="fa-solid fa-file-arrow-up fa-lg"></i>
+                        </button>
                     }
                 </form>  
             </div>                      
@@ -222,7 +227,7 @@
                         {                           
                             <div class="col-xl-6 col-md-12 col-sm-6">
                                 <div class="card h-100 w-100">                                    
-                                    <img src="~/Attachments/@attachment.FilePath" asp-append-version="true" class="card-img-top img-fluid h-100 w-100" alt="@attachment.FilePath" style="object-fit: cover" />                                    
+                                    <img src="~/attachments/@attachment.FilePath" asp-append-version="true" class="card-img-top img-fluid h-100 w-100" alt="@attachment.FilePath" style="object-fit: cover" />                                    
                                     <div class="card-footer">
                                         <div class="d-flex justify-content-between">
                                             <h5 class="card-subtitle mt-0 mb-1">@attachment.Name</h5>
@@ -267,11 +272,17 @@
         <div class="col">       
             <h1 class="fs-3 mb-3">Ticket Comments</h1>
             <div id="commentCreationValidationErrors" class="text-danger mb-3"></div>
-            <div class="input-group mb-3" style="max-width: 300px">
+            @*<div class="input-group mb-3" style="max-width: 300px">
                 <input id="commentDescriptionInput" type="text" class="form-control" placeholder="Comment..." aria-label="Comment" aria-describedby="ticket-comment">
+            </div>*@
+            <div class="form-floating mb-3">
+              <textarea class="form-control" placeholder="Leave a comment here" id="commentDescriptionInput" style="height: 100px"></textarea>
+              <label class="text-secondary" for="commentDescriptionInput">Leave a new comment</label>
             </div>
             <div class="pb-3 mb-3 border-bottom">
-                <button id="createCommentBtn" class="btn btn-secondary">Add comment</button>
+                <button id="createCommentBtn" class="btn btn-secondary">
+                    Add Comment
+                </button>
             </div>                    
             <div class="input-group-sm mb-3">
                 <input id="commentListSearchInput" class="form-control" type="text" placeholder="Search by Author..." style="max-width: 175px" />
@@ -342,11 +353,10 @@
                     <input asp-for="Id" type="hidden" />
                     <label class="create-ticket-select-label control-label mb-2 text-secondary">Ticket Status</label>                     
                     <select asp-for="Status" class="form-select mb-4" aria-label="Ticket project">                                                
-                        <option selected>New</option>
-                        <option>Open</option>
-                        <option>In Progress</option>
-                        <option>Closed</option>
-                        <option>Under Review</option>  
+                        @foreach (var status in TicketContext.Statuses)
+                        {
+                            <option>@status</option>
+                        }  
                     </select>           
                     <div asp-validation-summary="ModelOnly" class="text-danger mt-3"></div>
                 </div>
@@ -357,3 +367,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/ticket/ticket.js"></script>
+}

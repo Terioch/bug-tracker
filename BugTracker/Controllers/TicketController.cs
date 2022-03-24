@@ -54,6 +54,32 @@ namespace BugTracker.Controllers
             return View(tickets.ToPagedList(page ?? 1, 8));
         }
 
+        [HttpGet]
+        public IActionResult Details(string id, int? historyPage, int? attachmentsPage, int? commentsPage)
+        {
+            Ticket ticket = repo.GetTicketById(id);
+            TicketViewModel model = new()
+            {
+                Id = ticket.Id,
+                ProjectId = ticket.ProjectId,
+                SubmitterId = ticket.SubmitterId,
+                AssignedDeveloperId = ticket.AssignedDeveloperId,
+                Title = ticket.Title,
+                Description = ticket.Description,
+                SubmittedDate = ticket.CreatedAt,
+                Type = ticket.Type,
+                Status = ticket.Status,
+                Priority = ticket.Priority,
+                Project = ticket.Project,
+                Submitter = ticket.Submitter,
+                AssignedDeveloper = ticket.AssignedDeveloper,
+                TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(historyPage ?? 1, 5),
+                TicketAttachments = ticket.TicketAttachments.ToPagedList(attachmentsPage ?? 1, 6),
+                TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 8),
+            };
+            return View(model);
+        }
+
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]        
         public IActionResult Create()
@@ -100,33 +126,7 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Details", new { id = ticket.Id });
             }
             return View();
-        }        
-
-        [HttpGet]
-        public IActionResult Details(string id, int? historyPage, int? attachmentsPage, int? commentsPage)
-        {           
-            Ticket ticket = repo.GetTicketById(id);
-            TicketViewModel model = new()
-            {
-                Id = ticket.Id,
-                ProjectId = ticket.ProjectId,
-                SubmitterId = ticket.SubmitterId,
-                AssignedDeveloperId = ticket.AssignedDeveloperId,
-                Title = ticket.Title,
-                Description = ticket.Description,
-                SubmittedDate = ticket.CreatedAt,
-                Type = ticket.Type,
-                Status = ticket.Status,
-                Priority = ticket.Priority,
-                Project = ticket.Project,
-                Submitter = ticket.Submitter,
-                AssignedDeveloper = ticket.AssignedDeveloper,
-                TicketHistoryRecords = ticket.TicketHistoryRecords.ToPagedList(historyPage ?? 1, 5),
-                TicketAttachments = ticket.TicketAttachments.ToPagedList(attachmentsPage ?? 1, 6),
-                TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 8),
-            };
-            return View(model);                               
-        }
+        }                
 
         [HttpGet]
         public async Task<IActionResult> FilterTicketsReturnPartial(string? searchTerm)
@@ -153,6 +153,63 @@ namespace BugTracker.Controllers
             });
 
            return PartialView("_TicketList", filteredTickets.ToPagedList(1, 8));
+        }
+
+        [HttpGet]
+        public IActionResult FilterProjectTicketsReturnPartial(string id, string? searchTerm)
+        {
+            IEnumerable<Ticket> tickets = repo.GetTicketsByProjectId(id);
+            TempData["ProjectId"] = id;
+
+            if (searchTerm == null)
+            {
+                return PartialView("~/Views/Project/_ProjectTicketList.cshtml", tickets.ToPagedList(1, 5));
+            }
+
+            var filteredTickets = tickets.Where(t =>
+            {
+                if (t.AssignedDeveloperId == null)
+                {
+                    t.AssignedDeveloper = new ApplicationUser() { UserName = "" };
+                }
+
+                return t.Title.ToLowerInvariant().Contains(searchTerm)
+                || t.Status.ToLowerInvariant().Contains(searchTerm)
+                || t.Priority.ToLowerInvariant().Contains(searchTerm)
+                || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
+                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm);
+            });
+
+            return PartialView("~/Views/Project/_ProjectTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult FilterUserTicketsReturnPartial(string id, string? searchTerm)
+        {
+            var tickets = repo.GetAllTickets().Where(t => t.AssignedDeveloperId == id || t.SubmitterId == id);
+
+            if (searchTerm == null)
+            {
+                ViewBag.Id = id;
+                return PartialView("~/Views/User/_UserTicketList.cshtml", tickets.ToPagedList(1, 5));
+            }
+
+            var filteredTickets = tickets.Where(t =>
+            {
+                if (t.AssignedDeveloperId == null)
+                {
+                    t.AssignedDeveloper = new ApplicationUser() { UserName = "" };
+                }
+
+                return t.Title.ToLowerInvariant().Contains(searchTerm)
+                || t.Status.ToLowerInvariant().Contains(searchTerm)
+                || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
+                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm);
+            });
+
+            ViewBag.Id = id;
+            return PartialView("~/Views/User/_UserTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
@@ -197,7 +254,7 @@ namespace BugTracker.Controllers
 
                     if (ticketPropertyValue != propertyValue)
                     {                        
-                        TicketHistoryRecord record = new()
+                        TicketHistoryRecord ticketHistoryRecord = new()
                         {
                             Id = Guid.NewGuid().ToString(),
                             TicketId = ticket.Id,
@@ -207,11 +264,11 @@ namespace BugTracker.Controllers
                             NewValue = propertyValue,                           
                             ModifiedAt = DateTimeOffset.Now
                         };
-                        ticketHistoryRepo.Create(record);
+                        ticketHistoryRepo.Create(ticketHistoryRecord);
                         ticketProperty.SetValue(ticket, property.GetValue(model));
                     }                 
                 }                                
-            }
+            }            
 
             // Ensure that the assigned developer is assigned to the corresponding project
             if (ticket.AssignedDeveloperId != null)
