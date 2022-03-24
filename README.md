@@ -1,4 +1,4 @@
-# Bug Tracker
+# Bugtrace
 
 A bug/issue tracking web application built using C# .NET and MVC.
 

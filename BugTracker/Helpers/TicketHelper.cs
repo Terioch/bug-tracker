@@ -116,5 +116,11 @@ namespace BugTracker.Helpers
             var tickets = await GetUserRoleTickets();
             return tickets.Count();
         }
+
+        public async Task<int> GetUserUnresolvedTicketCount()
+        {
+            var tickets = await GetUserRoleTickets();
+            return tickets.SkipWhile(t => t.Status == "Resolved").Count();
+        }
     }
 }

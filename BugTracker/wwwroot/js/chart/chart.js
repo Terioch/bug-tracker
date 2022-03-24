@@ -9,11 +9,7 @@ Red: #D9534F*/
 
 class ChartRenderer {
     constructor() {
-        console.log("Initialized Chart");
-        // Add additional spacing between chart and legend labels
-        /*Chart.Legend.prototype.afterFit = function () {
-            this.height = this.height + 50;
-        };*/       
+        console.log("Initialized Chart");        
         this.renderPriorityChart();
         this.renderStatusChart();
         this.renderTypeChart();
@@ -25,16 +21,19 @@ class ChartRenderer {
         const response = await fetch("chart/getTicketTypeData");
         const data = await response.json();
 
-        const ticketTypeChart = new Chart(context, {
-            type: "doughnut",
+        new Chart(context, {
+            type: "pie",
+            plugins: [ChartDataLabels],
             data: {
-                labels: data.labels,
+                labels: [data.labels[0], [data.labels[1].split(" ")[0], data.labels[1].split(" ")[1]],
+                    [data.labels[2].split(" ")[0], data.labels[2].split(" ")[1]],
+                    [data.labels[3].split(" ")[0], data.labels[3].split(" ")[1]]],
                 datasets: [{
                     label: "Tickets by Type",
                     backgroundColor: [
                         '#D9534F',
-                        '#417FEF',
                         '#00B973',
+                        '#417FEF',                        
                         '#F0AD4E',
                     ],
                     data: data.values,
@@ -44,17 +43,33 @@ class ChartRenderer {
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: "bottom",       
+                        position: "none",       
                         textAlign: "left"
-                    }
-                },
+                    },
+                    datalabels: {
+                        formatter: (value, context) => {
+                            return context.chart.data.labels[
+                                context.dataIndex
+                            ];
+                        },
+                        color: '#FFF',
+                        align: "center",                        
+                        display: "auto",    
+                        align: "center",                    
+                        font: {
+                            weight: "bold"
+                        }
+                    },
+                },                           
                 animation: {
                     animateScale: true,
                     animateRotate: true,
                     animationSteps: 100,
                     animationEasing: 'easeOutBounce',
-                }
-            }
+                },
+                borderWidth: 0,
+                borderColor: "#F8F9FA"
+            }            
         });
     }
 
@@ -63,7 +78,7 @@ class ChartRenderer {
         const response = await fetch("chart/getTicketStatusData");
         const data = await response.json();
 
-        const ticketTypeChart = new Chart(context, {
+        new Chart(context, {
             type: "bar",
             data: {
                 labels: data.labels,
@@ -85,7 +100,7 @@ class ChartRenderer {
                 plugins: {
                     legend: {
                         display: false
-                    }
+                    },                    
                 },
                 animation: {
                     animateScale: true,
@@ -102,8 +117,9 @@ class ChartRenderer {
         const response = await fetch("chart/getTicketPriorityData");
         const data = await response.json();
 
-        const ticketPriorityChart = new Chart(context, {
+        new Chart(context, {
             type: "pie",
+            plugins: [ChartDataLabels],
             data: {
                 labels: data.labels,
                 datasets: [{
@@ -120,16 +136,30 @@ class ChartRenderer {
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: "bottom",
+                        position: "none",
                         textAlign: "left"
-                    }
+                    },
+                    datalabels: {
+                        formatter: (value, context) => {
+                            return context.chart.data.labels[
+                                context.dataIndex
+                            ];
+                        },
+                        color: '#FFF',
+                        display: "auto",
+                        font: {
+                            weight: "bold"
+                        }
+                    },
                 },
                 animation: {
                     animateScale: true,
                     animateRotate: true,
                     animationSteps: 100,
                     animationEasing: 'easeOutBounce',
-                }
+                },
+                borderWidth: 0,
+                borderColor: "#F8F9FA"
             }
         });
     }

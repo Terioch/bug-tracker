@@ -80,7 +80,7 @@ class Ticket {
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/ticketHistory/filterTicketHistoryReturnPartial?id=${ticketId}&searchTerm=${searchTerm}`);
+            const res = await fetch(`/ticketHistory/filterTicketHistoryReturnPartial?ticketId=${ticketId}&searchTerm=${searchTerm}`);
             const historyListHTML = await res.text();
             document.getElementById("historyListContainer").innerHTML = historyListHTML;
         } catch (err) {

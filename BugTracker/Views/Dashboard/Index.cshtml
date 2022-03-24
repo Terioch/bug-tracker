@@ -14,6 +14,7 @@
     ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
+<!--Layout 1 - Original-->
 @*<div>
     <div class="row g-4 mb-3">
         <div class="col col-xl-3 col-md-6">
@@ -131,26 +132,26 @@
                         <div class="card-body pb-0">  
                             @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
                             {
-                                <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">
-                                    <span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>
+                                <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">                        
+                                    Create New Project
                                 </a>   
                             } else
                             {
-                                <a class="btn btn-primary mb-3 disabled">
-                                    <span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>
-                                </a>
+                                <button class="btn btn-primary mb-3 disabled">                        
+                                    Create New Project
+                                </button>
                             }
                             @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
                                 || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))
                             {
-                                <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
-                                    <span style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>
+                                <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">                        
+                                    Create New Ticket
                                 </a>    
                             } else
                             {
-                                <a class="btn btn-success mb-3 disabled">
-                                    <span style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>
-                                </a> 
+                                <button class="btn btn-success mb-3 disabled">                        
+                                    Create New Ticket
+                                </button> 
                             }                                                               
                         </div>
                     </div>
@@ -166,70 +167,45 @@
     </div>    
 </div>*@
 
+<!--Layout 2 - Basic-->
 <div class="px-2">
-    <div class="row g-4 mb-3">
-        <div class="col col-xl-3 col-md-6 col-sm-6">
-            <div class="alert alert-info text-center" role="alert">
+    <div class="row g-3 mb-3">        
+        <div class="col col-12 col-xl-3 col-md-6 col-sm-6 h-100">
+            <div class="alert alert-info text-center mb-0" role="alert">
                 <h4 class="alert-heading">@await projectHelper.GetUserProjectCount()</h4>
-                <p class="fw-bold">Active Projects</p>                
+                <p class="fw-bold">Current Projects</p>                
             </div>
         </div> 
-        <div class="col col-xl-3 col-md-6 col-sm-6">
-            <div class="alert alert-secondary text-center" role="alert">
+        <div class="col col-12 col-xl-3 col-md-6 col-sm-6 h-100">
+            <div class="alert alert-secondary text-center mb-0" role="alert">
               <h4 class="alert-heading">@await ticketHelper.GetUserTicketCount()</h4>
               <p class="fw-bold">Associated Tickets</p>                  
             </div> 
-        </div>
-        <div class="col col-xl-3 col-md-6 col-sm-6">
-            <div class="alert alert-success text-center" role="alert">
-              <h4 class="alert-heading">@userManager.Users.Count()</h4>
-              <p class="fw-bold">Total Users</p>                  
+        </div>        
+        <div class="col col-12 col-xl-3 col-md-6 col-sm-6 h-100">
+            <div class="alert alert-success text-center mb-0" role="alert">
+              <h4 class="alert-heading">@await projectHelper.GetUsersInRolesCountOnUserRoleProjects()</h4>
+              <p class="fw-bold">Active Users</p>                  
             </div>
-        </div> 
-        <div class="col col-xl-3 col-md-6 col-sm-6">
-            <div class="alert alert-light">
-                <h4 class="alert-heading mb-3">Quick Actions</h4>
-                @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
-                {
-                    <a class="btn btn-primary mb-3" asp-controller="Project" asp-action="Create">
-                        @*<span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>*@
-                        Create Project
-                    </a>   
-                } else
-                {
-                    <button class="btn btn-primary mb-3 disabled">
-                        @*<span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>*@
-                        Create Project
-                    </button>
-                }
-                @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
-                    || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))
-                {
-                    <a class="btn btn-success mb-3" asp-controller="Ticket" asp-action="Create">
-                        @*<span style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>*@
-                        Create Ticket
-                    </a>    
-                } else
-                {
-                    <button class="btn btn-success mb-3 disabled">
-                        @*<span style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>*@
-                        Create Ticket
-                    </button> 
-                }
+        </div>
+        <div class="col col-12 col-xl-3 col-md-6 col-sm-6 h-100">
+            <div class="alert alert-dark text-center mb-0">
+                <h4 class="alert-heading">@await projectHelper.GetUsersInRolesCountOnUserRoleProjects(new string[] { "Developer" })</h4>
+                <p class="fw-bold">Total Developers</p>
             </div>            
         </div>
     </div>
-    <div class="row g-4 mb-3">
-        <div class="col col-xl-3 col-lg-6 col-md-6 col-sm-12">
-            <div class="bg-light p-3 h-100 text-center rounded">
-                <h2 class="fs-5 text-dark mb-3">Tickets by Priority</h2>
-                <canvas id="ticketPriorityChart"></canvas>
-            </div>            
-        </div>
-        <div class="col col-xl-3 col-lg-6 col-md-6 col-sm-12">
+    <div class="row g-3 mb-3">
+        <div class="col col-6 col-xl-3 col-sm-12 col-xs-12">
             <div class="bg-light p-3 text-center h-100 rounded">
                 <h2 class="fs-5 text-dark mb-3">Tickets by Type</h2>
                 <canvas id="ticketTypeChart"></canvas>            
+            </div>                        
+        </div>
+        <div class="col col-6 col-xl-3 col-sm-12 col-xs-12">
+            <div class="bg-light p-3 h-100 text-center rounded">
+                <h2 class="fs-5 text-dark mb-3">Tickets by Priority</h2>
+                <canvas id="ticketPriorityChart"></canvas>
             </div>
         </div>
         <div class="col col-xl-6 col-lg-12">
@@ -239,7 +215,7 @@
             </div>           
         </div>
     </div>
-    <div class="row g-4">
+    <div class="row g-3">
         <div class="col">
             <div class="card">
                 <div class="card-header bg-light">

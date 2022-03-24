@@ -161,7 +161,7 @@ namespace BugTracker.Contexts.Mock
                     Description = "This is a test ticket",
                     CreatedAt = DateTimeOffset.UtcNow,
                     Type = "Feature Requests",
-                    Status = "Under Review",
+                    Status = "In Progress",
                     Priority = "Low",
                 },
                 new Ticket()
@@ -215,6 +215,19 @@ namespace BugTracker.Contexts.Mock
                     Type = "Bugs/Errors",
                     Status = "Resolved",
                     Priority = "Medium",
+                },
+                new Ticket()
+                {
+                    Id = "t17",
+                    ProjectId = "p4",
+                    SubmitterId = "cd448813-e865-49e8-933a-dff582b72509",
+                    AssignedDeveloperId = "4687e432-58fc-448a-b639-6288ee716fa0",
+                    Title = "Test Ticket 7",
+                    Description = "This is a test ticket",
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    Type = "Feature Requests",
+                    Status = "New",
+                    Priority = "High",
                 }
             };
         }

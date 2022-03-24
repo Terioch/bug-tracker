@@ -23,7 +23,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult FilterTicketHistoryReturnPartial(string ticketId, string? searchTerm)
         {
-            IEnumerable<TicketHistoryRecord> records = repo.GetRecordsByTicketId(ticketId);
+            var records = repo.GetRecordsByTicketId(ticketId);
             dynamic dataObject = new ExpandoObject();
             dataObject.Id = ticketId;
             ViewBag.Data = dataObject;
@@ -43,7 +43,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterUserRoleTicketsHistoryReturnPartial(string? searchTerm)
         {
-            IEnumerable<TicketHistoryRecord> records = await helper.GetUserRoleRecords();           
+            var records = await helper.GetUserRoleRecords();           
 
             if (searchTerm == null)
             {
