@@ -37,7 +37,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> LoginWithDemoAccount(string role)
         {  
             Input.Password = config["DemoCredentials:Password"];
-            string returnUrl = "/Project/ListProjects";
+            string returnUrl = "/";
 
             switch (role)
             {
@@ -72,6 +72,6 @@ namespace BugTracker.Controllers
             }            
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return RedirectToAction("DisplayDemoLoginForm");                    
-        }
+        }     
     }
 }

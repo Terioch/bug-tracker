@@ -1,77 +1,64 @@
-﻿using BugTracker.Models;
+﻿using BugTracker.Contexts.Mock;
+using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Repositories.Mock
 {
     public class ProjectMockRepository : IProjectRepository
     {
-        public ProjectMockRepository()
-        {                      
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public ProjectMockRepository(UserManager<ApplicationUser> userManager)
+        {
+            this.userManager = userManager;
         }
 
-        private static readonly List<Project> projects = new()
-        {
-            new Project
-            {
-                Id = "p1",
-                Name = "Bug Tracker",
-                Description = "A Bug/Issue Tracker MVC project.",                
-            },
-            new Project
-            {
-                Id = "p2",
-                Name = "Technology Blog",
-                Description = "A programming tutorial blog built using .Net Web API and React.JS."
-            },
-            new Project
-            {
-                Id = "p3",
-                Name = "Demo Project 1",
-                Description = "This is a demo project."
-            },
-            new Project
-            {
-                Id = "p4",
-                Name = "Demo Project 2",
-                Description = "This is a demo project."
-            }
-        };       
+        public static List<Project> Projects { get; set; } = MockProjects.GetProjects();      
 
         public IEnumerable<Project> GetAllProjects()
         {            
-            return projects;           
+            return Projects;           
         }       
 
         public Project GetProjectById(string id)
         {            
-            Project? project = projects.Find(p => p.Id == id);
-            // project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id);
+            Project? project = Projects.Find(p => p.Id == id);
+            List<Ticket> allTickets = TicketMockRepository.Tickets;
+            project.Tickets = allTickets.Where(t => t.ProjectId == id).ToList();
+            foreach (var t in project.Tickets)
+            {
+                t.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
+                t.Submitter = userManager.Users.First(u => u.Id == t.SubmitterId);
+            }
+            var userIds = UserProjectMockRepository.UserProjects.Where(up => up.ProjectId == id).Select(up => up.UserId);
+            project.Users = userIds.Select(uid => userManager.Users.First(u => u.Id == uid)).ToList();                           
             return project;
         }
 
         public Project GetProjectByName(string name)
         {
-            return projects.First(p => p.Name == name);
+            return Projects.First(p => p.Name == name);            
         }
 
         public Project Create(Project project)
         {
-            projects.Add(project);
+            Projects.Add(project);
             return project;
         }
 
         public Project Update(Project project)
         {
-            int index = projects.FindIndex(p => p.Id == project.Id);
-            projects[index] = project;
+            int index = Projects.FindIndex(p => p.Id == project.Id);
+            Projects[index] = project;
             return project;
         }
 
         public Project Delete(string id)
         {
-            Project project = projects.First(p => p.Id == id);
-            projects.Remove(project);
+            Project project = Projects.First(p => p.Id == id);
+            Projects.Remove(project);
             return project;
         }
     }

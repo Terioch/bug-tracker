@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BugTracker.Data;
+namespace BugTracker.Contexts;
 
 public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
 {

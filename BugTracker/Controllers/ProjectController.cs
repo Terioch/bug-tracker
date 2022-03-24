@@ -19,17 +19,22 @@ namespace BugTracker.Controllers
         private readonly ITicketRepository ticketRepo;
         private readonly IUserProjectRepository userProjectRepo;
         private readonly ITicketHistoryRepository ticketHistoryRepo;
+        private readonly ITicketAttachmentRepository ticketAttachmentRepo;
+        private readonly ITicketCommentRepository ticketCommentRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ProjectHelper projectHelper;
         private readonly TicketHelper ticketHelper;        
 
         public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRepository ticketHistoryRepo, 
-            UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, TicketHelper ticketHelper)
+            ITicketAttachmentRepository ticketAttachmentRepo, ITicketCommentRepository ticketCommentRepo, UserManager<ApplicationUser> userManager, 
+            ProjectHelper projectHelper, TicketHelper ticketHelper)
         {
             this.repo = repo;
             this.ticketRepo = ticketRepo;
             this.userProjectRepo = userProjectRepo;
             this.ticketHistoryRepo = ticketHistoryRepo;
+            this.ticketAttachmentRepo = ticketAttachmentRepo;
+            this.ticketCommentRepo = ticketCommentRepo;
             this.userManager = userManager;
             this.projectHelper = projectHelper;
             this.ticketHelper = ticketHelper;                                
@@ -59,9 +64,22 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult Create(Project project)
+        public async Task<IActionResult> Create(Project project)
         {
-            project.Id = Guid.NewGuid().ToString();            
+            project.Id = Guid.NewGuid().ToString();
+
+            // Assign all administrators 
+            var admins = await userManager.GetUsersInRoleAsync("Admin");
+            foreach (var admin in admins)
+            {
+                UserProject userProject = new()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = admin.Id,
+                    ProjectId = project.Id
+                };
+                userProjectRepo.Create(userProject);
+            }               
             repo.Create(project);
             return RedirectToAction("ListProjects", "Project");
         }
@@ -101,49 +119,20 @@ namespace BugTracker.Controllers
             return PartialView("_ProjectList", filteredProjects.ToPagedList(1, 8));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult FilterTicketsReturnPartial(string id, string? searchTerm)
+        public IActionResult FilterUserProjectsByNameReturnPartial(string id, string? searchTerm)
         {
-            IEnumerable<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
-            TempData["ProjectId"] = id;
+            ApplicationUser user = userManager.Users.First(u => u.Id == id);
+            IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
 
             if (searchTerm == null)
-            {                
-                return PartialView("~/Views/Project/_ProjectTicketList.cshtml", tickets.ToPagedList(1, 5));
+            {
+                return PartialView("~/Views/User/_UserProjectList.cshtml", projects.ToPagedList(1, 5));
             }
 
-            var filteredTickets = tickets.Where(t =>
-            {
-                if (t.AssignedDeveloperId == null)
-                {
-                    t.AssignedDeveloper = new ApplicationUser() { UserName = "" };
-                }
-
-                return t.Title.ToLowerInvariant().Contains(searchTerm)
-                || t.Status.ToLowerInvariant().Contains(searchTerm)
-                || t.Priority.ToLowerInvariant().Contains(searchTerm)
-                || t.AssignedDeveloper.UserName.ToLowerInvariant().Contains(searchTerm)
-                || t.Submitter.UserName.ToLowerInvariant().Contains(searchTerm);
-            });
-
-            return PartialView("~/Views/Project/_ProjectTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
-        }
-
-        [HttpGet]
-        public IActionResult FilterUsersByNameReturnPartial(string id, string? searchTerm)
-        {
-            Project project = repo.GetProjectById(id);
-            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
-            TempData["ProjectId"] = id;
-            TempData["ProjectName"] = project.Name;
-
-            if (searchTerm == null)
-            {                
-                return PartialView("~/Views/Project/_ProjectUserList.cshtml", users.ToPagedList(1, 5));
-            }          
-
-            var filteredUsers = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
-            return PartialView("~/Views/Project/_ProjectUserList.cshtml", filteredUsers.ToPagedList(1, 5));
+            var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
+            return PartialView("~/Views/User/_UserProjectList.cshtml", filteredProjects.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin")]
@@ -175,6 +164,8 @@ namespace BugTracker.Controllers
             {
                 ticketRepo.Delete(ticket.Id);
                 ticketHistoryRepo.DeleteRecordsByTicketId(ticket.Id);
+                ticketAttachmentRepo.DeleteAttachmentsByTicketId(ticket.Id);
+                ticketCommentRepo.DeleteCommentsByTicketId(ticket.Id);
             }
 
             IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id); 

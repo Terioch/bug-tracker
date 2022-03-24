@@ -9,7 +9,7 @@
 
 @{
     ViewData["Title"] = "ListTickets";
-    var loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
 <div id="ticketListPageContainer" class="card">
@@ -24,10 +24,14 @@
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin") || await userManager.IsInRoleAsync(loggedInUser, "Project Manager") 
             || await userManager.IsInRoleAsync(loggedInUser, "Submitter"))
         {
-            <a class="btn btn-primary mb-3" asp-action="Create">Create New Ticket</a>       
+            <a class="btn btn-primary mb-3" asp-action="Create">
+                <span class="" style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>
+            </a>       
         } else
         {
-            <a class="btn btn-primary mb-3 disabled" asp-action="Create">Create New Ticket</a>
+            <a class="btn btn-primary mb-3 disabled" asp-action="Create">
+                <span class="" style="margin-right: 2px">Create Ticket</span> <i class="fa-solid fa-plus fa-lg"></i>
+            </a>
         }            
     </div>
     
@@ -96,3 +100,7 @@
     </div>                     
   </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/ticket/ticketList.js"></script>
+}

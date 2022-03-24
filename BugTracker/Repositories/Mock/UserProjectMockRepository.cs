@@ -1,4 +1,5 @@
-﻿using BugTracker.Models;
+﻿using BugTracker.Contexts.Mock;
+using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,55 +18,11 @@ namespace BugTracker.Repositories.Mock
             this.userManager = userManager;
         }
 
-        private static List<UserProject> userProjects = new()
-        {
-            new UserProject()
-            {
-                Id = "up1",
-                UserId = "cd448813-e865-49e8-933a-dff582b72509",
-                ProjectId = "p1"
-            },
-            new UserProject()
-            {
-                Id = "up2",
-                UserId = "2ae32131-606d-495c-81cf-86f38875f9a7",
-                ProjectId = "p1"
-            },
-            new UserProject()
-            {
-                Id = "up3",
-                UserId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
-                ProjectId = "p1"
-            },
-            new UserProject()
-            {
-                Id = "up4",
-                UserId = "4687e432-58fc-448a-b639-6288ee716fa0",
-                ProjectId = "p1"
-            },
-            new UserProject()
-            {
-                Id = "up5",
-                UserId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
-                ProjectId = "p2"
-            },
-            new UserProject()
-            {
-                Id = "up6",
-                UserId = "cd448813-e865-49e8-933a-dff582b72509",
-                ProjectId = "p2"
-            },
-            new UserProject()
-            {
-                Id = "up7",
-                UserId = "2ae32131-606d-495c-81cf-86f38875f9a7",
-                ProjectId = "p2"
-            },
-        };       
+        public static List<UserProject> UserProjects { get; set; } = MockUserProjects.GetUserProjects();
 
         public IEnumerable<Project> GetProjectsByUserId(string userId)
         {
-            IEnumerable<UserProject> filteredUserProjects = userProjects.Where(u => u.UserId == userId);
+            IEnumerable<UserProject> filteredUserProjects = UserProjects.Where(u => u.UserId == userId);
             var projectIds = filteredUserProjects.Select(u => u.ProjectId).ToList();
             List<Project> projects = new();
 
@@ -79,7 +36,7 @@ namespace BugTracker.Repositories.Mock
 
         public IEnumerable<ApplicationUser> GetUsersByProjectId(string projectId)
         {
-            IEnumerable<UserProject> filteredUserProjects = userProjects.Where(u => u.ProjectId == projectId);
+            IEnumerable<UserProject> filteredUserProjects = UserProjects.Where(u => u.ProjectId == projectId);
             var userIds = filteredUserProjects.Select(u => u.UserId).ToList();
             List<ApplicationUser> users = new();
             
@@ -93,21 +50,21 @@ namespace BugTracker.Repositories.Mock
 
         public UserProject Create(UserProject userProject)
         {
-            userProjects.Add(userProject);
+            UserProjects.Add(userProject);
             return userProject;
         }
 
         public UserProject Update(UserProject userProject)
         {
-            int index = userProjects.FindIndex(u => u.Id == userProject.Id);
-            userProjects[index] = userProject;
+            int index = UserProjects.FindIndex(u => u.Id == userProject.Id);
+            UserProjects[index] = userProject;
             return userProject;
         }
 
         public UserProject Delete(string userId, string projectId)
         {
-            UserProject? userProject = userProjects.Where(u => u.UserId == userId && u.ProjectId == projectId).FirstOrDefault();
-            userProjects.Remove(userProject);  
+            UserProject? userProject = UserProjects.Where(u => u.UserId == userId && u.ProjectId == projectId).FirstOrDefault();
+            UserProjects.Remove(userProject);  
             return userProject;
         }        
     }

@@ -18,21 +18,38 @@
     nav-item-pill {
         background-color: #4582EC !important;
         color: #FFF !important;
+    }     
+    /*.side-nav-dashboard-link {
+        color: #17A2B8 !important;          
+    }*/
+    .side-nav-link:hover, .side-nav-dashboard-link:hover {
+        background-color: #f7f7f7 !important;       
+        /*color: #343A40 !important;*/
     }
 </style>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BugTracker</title>
+    <meta property="og:title" content="Bugtrace" />
+	<meta
+		name="image"
+		property="og:image"
+		content="%PUBLIC_URL%/bug-tracker.png"
+	/>
+	<meta name="author" content="Rio Stockton" />
+	<meta property="og:description" content="A bug/issue tracking system" />
+	<meta property="og:url" content="https://dotnet-bug-tracker.herokuapp.com/" />
+    <title>Bugtrace</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/BugTracker.styles.css" asp-append-version="true" />
-    <script src="https://www.gstatic.com/charts/loader.js"></script>    
+    <link rel="stylesheet" href="~/BugTracker.styles.css" asp-append-version="true" />     
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 </head>
 <body>    
     <main class="container-fluid h-100">       
@@ -43,7 +60,7 @@
                     <!-- Top Nav -->            
                     <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light border-bottom box-shadow">
                         <div class="container-fluid">
-                            <a class="navbar-brand fs-4 text-secondary" asp-controller="Project" asp-action="ListProjects">Bug Tracker <i class="fas fa-bug text-dark"></i></a>                            
+                            <a class="navbar-brand fs-4 text-secondary" asp-controller="Project" asp-action="ListProjects">Bugtrace <i class="fas fa-route text-dark"></i></a>                            
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -61,8 +78,10 @@
                                         <li class="nav-item text-uppercase fw-bold" style="font-size: .9em">
                                             <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link">Profile</a>
                                         </li>  
-                                        <li class="nav-item text-uppercase fw-bold" style="font-size: .9em">                                                                                      
-                                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("ListProjects", "Project", new { area = "" })">Logout</a>                                           
+                                        <li class="nav-item" style="font-size: .9em">                                               
+                                            <form method="post" class="form-inline m-0 p-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Dashboard", new { area = "" })">
+                                                <button type="submit" class="nav-link text-uppercase fw-bold" style="background: transparent; border: transparent">Logout</button>
+                                            </form>                                                                                     
                                         </li>
                                     }
                                     else
@@ -108,30 +127,36 @@
                         <p class="p-0 m-0 fw-bold">@loggedInUser.FirstName</p>
                     </div>              
                     
-                    <div style="height: 1px; width: 100%; background-color: grey" />
+                    <div style="height: 1px; width: 100%; background-color: #DDDDDD" />
                     
                     <!-- Nav Items -->
-                    <ul class="nav nav-pills flex-column mb-sm-auto mt-2 mb-0 align-items-center align-items-md-start">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mt-2 mb-0 align-items-center align-items-md-start border-bottom-0">
                         <li class="nav-item mb-3">
-                            <a class="nav-link align-middle" asp-controller="Project" asp-action="ListProjects">                             
+                            <a class="side-nav-dashboard-link nav-link align-middle fw-bold" asp-controller="Dashboard" asp-action="Index">                             
+                                <span class="me-2 d-none d-md-inline">Dashboard</span>
+                                <i class="fs-5 fas fa-tachometer-alt-fast"></i> 
+                            </a>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <a class="side-nav-link nav-link align-middle fw-bold" asp-controller="Project" asp-action="ListProjects">                             
                                 <span class="me-2 d-none d-md-inline">My Projects</span>
                                 <i class="fs-5 fas fa-toolbox"></i> 
                             </a>
                         </li>
                         <li class="nav-item mb-3">
-                            <a class="nav-link align-middle" asp-controller="Ticket" asp-action="ListTickets">                                
+                            <a class="side-nav-link nav-link align-middle fw-bold" asp-controller="Ticket" asp-action="ListTickets">                                
                                 <span class="me-2 d-none d-md-inline">My Tickets</span>
                                 <i class="fs-5 fas fa-tasks"></i>
                             </a>
                         </li>                        
                         <li class="nav-item mb-3">
-                            <a class="nav-link align-middle" asp-controller="User" asp-action="ListUsers">
+                            <a class="side-nav-link nav-link align-middle fw-bold" asp-controller="User" asp-action="ListUsers">
                                 <span class="me-2 d-none d-md-inline">User Management</span>
                                 <i class="fs-5 fas fa-users"></i>                                 
                             </a>
                         </li>
                         <li class="nav-item mb-3">
-                            <a class="nav-link align-middle" asp-controller="Role" asp-action="ListRoles">                                
+                            <a class="side-nav-link nav-link align-middle fw-bold" asp-controller="Role" asp-action="ListRoles">                                
                                 <span class="me-2 d-none d-md-inline">Role Management</span>
                                 <i class="fs-5 fas fa-user-shield"></i> 
                             </a>
@@ -140,36 +165,11 @@
                 </div>
             </div>
         </div>                      
-    </main>
-
-        <!-- Old Nav -->
-        @*<nav class="d-flex flex-column bg-primary p-3 box-shadow" style="height: 95vh">                           
-            <a class="navbar-brand fs-2" asp-area="" asp-controller="Home" asp-action="Index">
-                <div class="d-flex-column text-center">
-                    <p class="p-0 m-0">Welcome,</p>
-                    <p class="p-0 m-0 fw-bold">Rio</p>
-                </div>
-            </a>                
-            <div class="mt-3" style="height: 1px; background-color: grey" />
-            <ul class="navbar-nav flex-column mt-3">
-                <li class="nav-item">
-                    <a class="nav-link text-white" asp-area="" asp-controller="Project" asp-action="Index">My Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" asp-area="" asp-controller="Project" asp-action="Index">My Tickets</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" asp-area="" asp-controller="Role" asp-action="ListRoles">Manage Role Assignment</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" asp-area="" asp-controller="Role" asp-action="ListRoles">Manage Project Users</a>
-                </li>
-            </ul>       
-        </nav>  *@                                                                                                                                         
+    </main>                                                                                                                                               
         
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true" type="module"></script>
+    @*<script src="~/js/site.js" asp-append-version="true" type="module"></script>*@ 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

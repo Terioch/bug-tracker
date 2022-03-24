@@ -9,7 +9,7 @@
 
 @{
     ViewData["Title"] = "Projects Page";
-    var loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
+    ApplicationUser loggedInUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
 <div id="projectListPageContainer" class="card">
@@ -23,10 +23,14 @@
         </div>        
         @if (await userManager.IsInRoleAsync(loggedInUser, "Admin"))
         {
-            <a class="btn btn-primary mb-3" asp-action="Create">Create New Project</a>
+            <a class="btn btn-primary mb-3" asp-action="Create">
+                <span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>
+            </a>
         } else
         {
-            <a class="btn btn-primary mb-3 disabled" asp-action="Create">Create New Project</a>
+            <a class="btn btn-primary mb-3 disabled" asp-action="Create">
+                <span style="margin-right: 2px">Create Project</span> <i class="fa-solid fa-plus fa-lg"></i>
+            </a>
         }            
     </div>
     <div id="projectListContainer">
@@ -82,3 +86,7 @@
     </div>                     
   </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/project/projectList.js" asp-append-version="true" type="module"></script>
+}

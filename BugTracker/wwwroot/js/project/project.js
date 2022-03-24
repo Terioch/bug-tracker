@@ -24,7 +24,7 @@ class Project {
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/project/filterTicketsReturnPartial?id=${projectId}&searchTerm=${searchTerm}`);
+            const res = await fetch(`/ticket/filterProjectTicketsReturnPartial?id=${projectId}&searchTerm=${searchTerm}`);
             const ticketListHTML = await res.text();
             document.getElementById("ticketListContainer").innerHTML = ticketListHTML;
         } catch (err) {
@@ -37,7 +37,7 @@ class Project {
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/project/filterUsersByNameReturnPartial?id=${projectId}&searchTerm=${searchTerm}`);
+            const res = await fetch(`/user/filterProjectUsersByNameReturnPartial?id=${projectId}&searchTerm=${searchTerm}`);
             const userListHTML = await res.text();
             document.getElementById("userListContainer").innerHTML = userListHTML;
         } catch (err) {
@@ -130,4 +130,4 @@ class Project {
     }*/
 }
 
-export default Project;
+const project = new Project();

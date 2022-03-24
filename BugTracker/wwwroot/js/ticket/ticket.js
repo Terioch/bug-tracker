@@ -1,16 +1,14 @@
 ﻿
 class Ticket {
-    constructor() {
-        if (document.getElementById("ticketContainer")) {
-            console.log("Initialized Ticket");
-            this.ticketContainer = document.getElementById("ticketContainer");
-            // this.commentListClickHandler = this.commentListClickHandler.bind(this);
-            this.handleCommentCreation = this.handleCommentCreation.bind(this);           
-            // this.handleCommentDeletion = this.handleCommentDeletion.bind(this);
-            this.filterCommentList = this.filterCommentList.bind(this);
-            this.filterHistoryList = this.filterHistoryList.bind(this);
-            this.events();
-        }
+    constructor() {     
+        console.log("Initialized Ticket");
+        this.ticketContainer = document.getElementById("ticketContainer");
+        // this.commentListClickHandler = this.commentListClickHandler.bind(this);
+        this.handleCommentCreation = this.handleCommentCreation.bind(this);           
+        // this.handleCommentDeletion = this.handleCommentDeletion.bind(this);
+        this.filterCommentList = this.filterCommentList.bind(this);
+        this.filterHistoryList = this.filterHistoryList.bind(this);
+        this.events();
     }
 
     events() {
@@ -69,7 +67,7 @@ class Ticket {
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/ticketComment/filterCommentsByAuthorReturnPartial?id=${ticketId}&searchTerm=${searchTerm}`);
+            const res = await fetch(`/ticketComment/filterCommentsByAuthorReturnPartial?ticketId=${ticketId}&searchTerm=${searchTerm}`);
             const commentListHTML = await res.text();
             document.getElementById("commentListContainer").innerHTML = commentListHTML;
         } catch (err) {
@@ -82,13 +80,13 @@ class Ticket {
         const searchTerm = e.target.value.toLowerCase();
 
         try {
-            const res = await fetch(`/ticketHistory/filterHistoryReturnPartial?id=${ticketId}&searchTerm=${searchTerm}`);
+            const res = await fetch(`/ticketHistory/filterTicketHistoryReturnPartial?ticketId=${ticketId}&searchTerm=${searchTerm}`);
             const historyListHTML = await res.text();
             document.getElementById("historyListContainer").innerHTML = historyListHTML;
         } catch (err) {
             console.error(err);
         }
-    }
+    }    
 
     /*async handleCommentDeletion(commentId) {
         const commentsContainer = document.getElementById("commentListContainer");                 
@@ -110,4 +108,4 @@ class Ticket {
     }*/
 }
 
-export default Ticket;
+const ticket = new Ticket();
