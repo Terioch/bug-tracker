@@ -12,7 +12,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc1",
                     TicketId = "t1",
-                    AuthorId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
+                    AuthorId = "cad3865d-5fb5-4e88-9c98-775fbc4610ca",
                     Value = "This will be looked at shortly",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
@@ -20,7 +20,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc2",
                     TicketId = "t1",
-                    AuthorId = "4687e432-58fc-448a-b639-6288ee716fa0",
+                    AuthorId = "338986f3-f9b5-4f0a-8f55-4fdb7ebec83e",
                     Value = "I will have this fixed promptly",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
@@ -28,7 +28,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc3",
                     TicketId = "t1",
-                    AuthorId = "4687e432-58fc-448a-b639-6288ee716fa0",
+                    AuthorId = "338986f3-f9b5-4f0a-8f55-4fdb7ebec83e",
                     Value = "Almost fixed",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
@@ -36,7 +36,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc4",
                     TicketId = "t2",
-                    AuthorId = "4687e432-58fc-448a-b639-6288ee716fa0",
+                    AuthorId = "338986f3-f9b5-4f0a-8f55-4fdb7ebec83e",
                     Value = "This feature is almost complete",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
@@ -44,7 +44,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc5",
                     TicketId = "t3",
-                    AuthorId = "cd448813-e865-49e8-933a-dff582b72509",
+                    AuthorId = "04f5c01b-602a-484f-a89d-6fa57db31687",
                     Value = "This is a pressing issue",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
@@ -52,7 +52,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc6",
                     TicketId = "t5",
-                    AuthorId = "2ae32131-606d-495c-81cf-86f38875f9a7",
+                    AuthorId = "421553e8-65cc-4416-8596-3d1277c99338",
                     Value = "Not yet functioning correctly",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
@@ -60,7 +60,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc6",
                     TicketId = "t5",
-                    AuthorId = "2ae32131-606d-495c-81cf-86f38875f9a7",
+                    AuthorId = "421553e8-65cc-4416-8596-3d1277c99338",
                     Value = "Need another developer here promptly",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
@@ -68,7 +68,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc7",
                     TicketId = "t6",
-                    AuthorId = "ccd193a8-b38b-4414-a318-f4da79c046ae",
+                    AuthorId = "cad3865d-5fb5-4e88-9c98-775fbc4610ca",
                     Value = "Currently preparing documentation requirements",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
@@ -76,7 +76,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc8",
                     TicketId = "t8",
-                    AuthorId = "4687e432-58fc-448a-b639-6288ee716fa0",
+                    AuthorId = "338986f3-f9b5-4f0a-8f55-4fdb7ebec83e",
                     Value = "This will be finalized by Friday",
                     CreatedAt = DateTimeOffset.UtcNow
                 },
@@ -84,7 +84,7 @@ namespace BugTracker.Contexts.Mock
                 {
                     Id = "tc9",
                     TicketId = "t10",
-                    AuthorId = "fb37911c-7ceb-42ff-afc3-24b3bd189d9c",
+                    AuthorId = "a111cc04-b2e6-4a2e-9a4f-b74059b1a953",
                     Value = "How is this issue progressing?",
                     CreatedAt = DateTimeOffset.UtcNow
                 },

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BugTracker.PgsqlMigrations.Migrations
 {
     [DbContext(typeof(BugTrackerDbContext))]
-    [Migration("20220128130434_init")]
-    partial class init
+    [Migration("20220324175033_initialize")]
+    partial class initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,6 +140,7 @@ namespace BugTracker.PgsqlMigrations.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ProjectId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Status")
@@ -147,6 +148,7 @@ namespace BugTracker.PgsqlMigrations.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("SubmitterId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Title")
@@ -240,8 +242,7 @@ namespace BugTracker.PgsqlMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Modifier")
-                        .IsRequired()
+                    b.Property<string>("ModifierId")
                         .HasColumnType("text");
 
                     b.Property<string>("NewValue")
@@ -258,6 +259,8 @@ namespace BugTracker.PgsqlMigrations.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ModifierId");
 
                     b.HasIndex("TicketId");
 
@@ -437,11 +440,15 @@ namespace BugTracker.PgsqlMigrations.Migrations
 
                     b.HasOne("BugTracker.Models.Project", "Project")
                         .WithMany("Tickets")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugTracker.Models.ApplicationUser", "Submitter")
                         .WithMany()
-                        .HasForeignKey("SubmitterId");
+                        .HasForeignKey("SubmitterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AssignedDeveloper");
 
@@ -482,9 +489,15 @@ namespace BugTracker.PgsqlMigrations.Migrations
 
             modelBuilder.Entity("BugTracker.Models.TicketHistoryRecord", b =>
                 {
+                    b.HasOne("BugTracker.Models.ApplicationUser", "Modifier")
+                        .WithMany()
+                        .HasForeignKey("ModifierId");
+
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
                         .WithMany("TicketHistoryRecords")
                         .HasForeignKey("TicketId");
+
+                    b.Navigation("Modifier");
 
                     b.Navigation("Ticket");
                 });

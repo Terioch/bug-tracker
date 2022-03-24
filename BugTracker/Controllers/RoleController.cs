@@ -53,16 +53,53 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetCurrentRoleReturnPartial(int id)
+        {
+            IQueryable<IdentityRole> roles = roleManager.Roles;
+            RoleViewModel newRole = new();
+            int roleIndex = id;
+            int pointerIndex = 0;
+
+            // Check that index is within a valid range
+            if (roleIndex < 0) roleIndex = roles.Count() - 1;
+            else if (roleIndex >= roles.Count()) roleIndex = 0;
+
+            foreach (var role in roles)
+            {
+                if (pointerIndex == roleIndex)
+                {
+                    newRole = new()
+                    {
+                        Id = role.Id,
+                        Name = role.Name,
+                    };
+
+                    foreach (var user in userManager.Users)
+                    {
+                        bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
+
+                        if (isInRole)
+                        {
+                            newRole.Users.Add(user.UserName);
+                        }
+                    }
+                }
+                pointerIndex++;
+            }
+            return PartialView("_roleCard", newRole);
+        }
+
         [Authorize(Roles = "Owner")]
         [HttpGet]
-        public IActionResult CreateRole()
+        public IActionResult Create()
         {            
             return View();
         }
 
         [Authorize(Roles = "Owner")]
         [HttpPost]
-        public async Task<IActionResult> CreateRole(CreateRoleViewModel role)
+        public async Task<IActionResult> Create(CreateRoleViewModel role)
         {
             if (ModelState.IsValid)
             {
@@ -84,44 +121,7 @@ namespace BugTracker.Controllers
                 }
             }
             return View(role);
-        }        
-        
-        [HttpGet]
-        public async Task<IActionResult> GetCurrentRoleReturnPartial(int id)
-        {               
-            IQueryable<IdentityRole> roles = roleManager.Roles;
-            RoleViewModel newRole = new();
-            int roleIndex = id;
-            int pointerIndex = 0;           
-
-            // Check that index is within a valid range
-            if (roleIndex < 0) roleIndex = roles.Count() - 1;
-            else if (roleIndex >= roles.Count()) roleIndex = 0;            
-            
-            foreach (var role in roles)
-            {
-                if (pointerIndex == roleIndex)
-                {                    
-                    newRole = new() 
-                    { 
-                        Id = role.Id,
-                        Name = role.Name,          
-                    };
-
-                    foreach (var user in userManager.Users)
-                    {
-                        bool isInRole = await userManager.IsInRoleAsync(user, role.Name);
-
-                        if (isInRole)
-                        {
-                            newRole.Users.Add(user.UserName);
-                        }
-                    }
-                }
-                pointerIndex++;
-            }
-            return PartialView("_roleCard", newRole);
-        }
+        }                       
 
         [Authorize(Roles = "Owner")]
         [HttpGet]

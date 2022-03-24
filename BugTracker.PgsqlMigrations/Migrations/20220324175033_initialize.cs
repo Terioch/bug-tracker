@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BugTracker.PgsqlMigrations.Migrations
 {
-    public partial class init : Migration
+    public partial class initialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -181,8 +181,8 @@ namespace BugTracker.PgsqlMigrations.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    ProjectId = table.Column<string>(type: "text", nullable: true),
-                    SubmitterId = table.Column<string>(type: "text", nullable: true),
+                    ProjectId = table.Column<string>(type: "text", nullable: false),
+                    SubmitterId = table.Column<string>(type: "text", nullable: false),
                     AssignedDeveloperId = table.Column<string>(type: "text", nullable: true),
                     Title = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
@@ -203,12 +203,14 @@ namespace BugTracker.PgsqlMigrations.Migrations
                         name: "FK_Tickets_AspNetUsers_SubmitterId",
                         column: x => x.SubmitterId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tickets_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -293,15 +295,20 @@ namespace BugTracker.PgsqlMigrations.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     TicketId = table.Column<string>(type: "text", nullable: true),
+                    ModifierId = table.Column<string>(type: "text", nullable: true),
                     Property = table.Column<string>(type: "text", nullable: false),
                     OldValue = table.Column<string>(type: "text", nullable: true),
                     NewValue = table.Column<string>(type: "text", nullable: true),
-                    Modifier = table.Column<string>(type: "text", nullable: false),
                     ModifiedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TicketHistoryRecords", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TicketHistoryRecords_AspNetUsers_ModifierId",
+                        column: x => x.ModifierId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TicketHistoryRecords_Tickets_TicketId",
                         column: x => x.TicketId,
@@ -370,6 +377,11 @@ namespace BugTracker.PgsqlMigrations.Migrations
                 name: "IX_TicketComments_TicketId",
                 table: "TicketComments",
                 column: "TicketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TicketHistoryRecords_ModifierId",
+                table: "TicketHistoryRecords",
+                column: "ModifierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TicketHistoryRecords_TicketId",
