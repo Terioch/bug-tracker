@@ -42,24 +42,24 @@ namespace BugTracker.Controllers
             };
                       
             repo.Create(comment);
-            IEnumerable<TicketComment> comments = repo.GetCommentsByTicketId(id);
+            var comments = repo.GetCommentsByTicketId(id);
             ViewBag.Id = id;
             return PartialView("_TicketCommentList", comments.ToPagedList(1, 8));            
         }
 
         [HttpGet]
-        public IActionResult FilterCommentsByAuthorReturnPartial(string id, string? searchTerm)
+        public IActionResult FilterCommentsByAuthorReturnPartial(string ticketId, string? searchTerm)
         {
-            IEnumerable<TicketComment> comments = repo.GetCommentsByTicketId(id);
+            var comments = repo.GetCommentsByTicketId(ticketId);
 
             if (searchTerm == null)
             {
-                ViewBag.Id = id;
+                ViewBag.Id = ticketId;
                 return PartialView("_TicketCommentList", comments.ToPagedList(1, 8));
             }
 
             var filteredComments = comments.Where(c => c.Author.UserName.ToLowerInvariant().Contains(searchTerm));
-            ViewBag.Id = id;
+            ViewBag.Id = ticketId;
             return PartialView("_TicketCommentList", filteredComments.ToPagedList(1, 8));
         }
 

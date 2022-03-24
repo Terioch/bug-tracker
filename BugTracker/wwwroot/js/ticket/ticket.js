@@ -62,7 +62,6 @@ class Ticket {
     }        
 
     async filterCommentList(e) {
-        console.log(e.target.value);
         const ticketId = this.ticketContainer.getAttribute("data-id");
         const searchTerm = e.target.value.toLowerCase();
 
