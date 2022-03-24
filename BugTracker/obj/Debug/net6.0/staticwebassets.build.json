@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ijOhab/C6HtbD4nyM660ofABu88xg2IFLpBlf9HXcUs=",
+  "Hash": "yM9lLzNcj/da1pKjQmPfUxDRoIT5TixoR0K5wNKv1tU=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1069,6 +1069,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BugTracker.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\4f0abdbd-83f8-4779-ab5f-1ce262fbb1ff_milk-honey-book.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "attachments/4f0abdbd-83f8-4779-ab5f-1ce262fbb1ff_milk-honey-book.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\attachments\\4f0abdbd-83f8-4779-ab5f-1ce262fbb1ff_milk-honey-book.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\attachment1.jpg",

@@ -41,7 +41,7 @@ namespace BugTracker.Controllers
                 }
 
                 ApplicationUser submitter = await GetCurrentUserAsync();              
-                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Attachments");
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "attachments");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
                 string completeFilePath = Path.Combine(uploadsFolder, uniqueFileName);
                 
