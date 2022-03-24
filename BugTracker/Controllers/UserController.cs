@@ -58,8 +58,7 @@ namespace BugTracker.Controllers
             };
             return View(model);
         }
-
-        [Authorize(Roles = "Admin")]
+        
         [HttpGet]
         public IActionResult FilterUsersByNameReturnPartial(string? searchTerm)
         {

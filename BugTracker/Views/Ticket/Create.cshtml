@@ -42,14 +42,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
             <div class="row g-md-3">
                 <div class="col-md-4">
-                    <div class="form-control mb-4 border-0">                                
+                    <div class="form-control mb-4 border-0 ps-1">                                
                         <label asp-for="Title" class="control-label text-secondary"></label>
                         <input asp-for="Title" class="create-ticket-input form-control border-0 border-bottom pb-0" />                                
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>    
                 </div>
                 <div class="col-md-4">
-                    <div class="form-control mb-4 border-0">               
+                    <div class="form-control mb-4 border-0 ps-1">               
                         <label asp-for="Description" class="control-label text-secondary"></label>
                         <input asp-for="Description" class="create-ticket-input form-control border-0 border-bottom pb-0" />                
                         <span asp-validation-for="Description" class="text-danger"></span>
@@ -100,7 +100,7 @@
 
         <div class="card-footer d-flex align-items-end">
             <input type="submit" value="Submit" class="btn btn-success me-3" />
-            <a asp-action="ListTickets" class="link-primary">View Ticket List</a>
+            <a asp-action="ListTickets" class="link-primary">Back to List</a>
         </div>
     </form>
 </section>
