@@ -19,7 +19,7 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> Index(int? historyPage)
         {
-            IEnumerable<TicketHistoryRecord> historyRecords = await ticketHistoryHelper.GetUserRoleRecords();
+            IEnumerable<TicketHistoryRecord> historyRecords = await ticketHistoryHelper.GetUserRoleRecords();            
             DashboardViewModel model = new()
             {                               
                 TicketHistoryRecords = historyRecords.ToPagedList(historyPage ?? 1, 6),

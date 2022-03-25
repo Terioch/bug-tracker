@@ -29,8 +29,9 @@ namespace BugTracker.Helpers
         public async Task<IEnumerable<Ticket>> GetUserRoleTickets(ApplicationUser? user = null)
         {                   
             user ??= await userManager.GetUserAsync(claimUser);
-            IList<string> roles = await userManager.GetRolesAsync(user);
-            IEnumerable<Project> assignedProjects = userProjectRepo.GetProjectsByUserId(user.Id);
+            var roles = await userManager.GetRolesAsync(user);
+            var assignedProjects = userProjectRepo.GetProjectsByUserId(user.Id);
+            IEnumerable<Ticket> tickets;
 
             if (roles.Contains("Admin"))
             {
@@ -38,13 +39,14 @@ namespace BugTracker.Helpers
             }
             else if (roles.Contains("Project Manager"))
             {               
-                return assignedProjects.SelectMany(p => p.Tickets ?? new List<Ticket>());               
+                tickets = assignedProjects.SelectMany(p => p.Tickets ?? new List<Ticket>());               
             }
             else if (roles.Contains("Developer"))
             {
-                return assignedProjects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id));                   
+                tickets = assignedProjects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id));                   
             }
-            return assignedProjects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id));                
+            tickets = assignedProjects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id));
+            return tickets.OrderByDescending(t => t.CreatedAt);
         }
 
         public async Task<bool> IsAuthorizedToEdit(ApplicationUser user, string ticketId)

@@ -25,7 +25,7 @@ namespace BugTracker.Helpers
                 var records = historyRepo.GetRecordsByTicketId(ticket.Id);
                 userRoleRecords.AddRange(records);
             }
-            return userRoleRecords;
+            return userRoleRecords.OrderByDescending(r => r.ModifiedAt);
         }
     }
 }
