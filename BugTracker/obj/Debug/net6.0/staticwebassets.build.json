@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "yM9lLzNcj/da1pKjQmPfUxDRoIT5TixoR0K5wNKv1tU=",
+  "Hash": "NwgmZ5HH3y7pXFwnp1LQxWWuWN/DMgWMSYtiHPZUCks=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1071,23 +1071,6 @@
       "OriginalItemSpec": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BugTracker.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\4f0abdbd-83f8-4779-ab5f-1ce262fbb1ff_milk-honey-book.jpg",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "attachments/4f0abdbd-83f8-4779-ab5f-1ce262fbb1ff_milk-honey-book.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\attachments\\4f0abdbd-83f8-4779-ab5f-1ce262fbb1ff_milk-honey-book.jpg"
-    },
-    {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\attachment1.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
@@ -1292,12 +1275,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\balloons.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\bug-tracker.png",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "images/balloons.jpg",
+      "RelativePath": "images/bug-tracker.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1306,7 +1289,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\balloons.jpg"
+      "OriginalItemSpec": "wwwroot\\images\\bug-tracker.png"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\clouds.jpg",
@@ -1326,57 +1309,6 @@
       "OriginalItemSpec": "wwwroot\\images\\clouds.jpg"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\forest.jpg",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "images/forest.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\forest.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\lightning.jpg",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "images/lightning.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\lightning.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\mountain.jpg",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "images/mountain.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\mountain.jpg"
-    },
-    {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\mount-fuji.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
@@ -1394,23 +1326,6 @@
       "OriginalItemSpec": "wwwroot\\images\\mount-fuji.jpg"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\seagulls.jpg",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "images/seagulls.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\seagulls.jpg"
-    },
-    {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\snow.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
@@ -1426,23 +1341,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\snow.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\tokyo-bridge.jpg",
-      "SourceId": "BugTracker",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
-      "BasePath": "_content/BugTracker",
-      "RelativePath": "images/tokyo-bridge.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\tokyo-bridge.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\waterfall.jpg",
