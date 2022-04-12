@@ -5,6 +5,6 @@
         Bugs,
         FeatureRequests,
         OtherComments,
-        TrainingRequests
+        DocumentRequests
     }
 }

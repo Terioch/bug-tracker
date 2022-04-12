@@ -1,7 +1,9 @@
 ﻿namespace BugTracker.Enumerations
 {
-    public class TicketPriority
+    public enum TicketPriority
     {
-        public Dictionary<string, string>? Priorities { get; set; }
+        Low,
+        Medium,
+        High
     }
 }
