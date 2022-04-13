@@ -1,69 +1,70 @@
 ﻿@model BugTracker.Areas.Identity.Pages.Account.LoginModel
 
 
-
-<div class="container-fluid row g-5" style="max-width: 1000px">     
-    <div class="col col-12 col-md-6 border rounded p-3">        
-        <div class="d-flex flex-column justify-content-center align-items-center mb-2">
-            @*<i class="fas fa-bug text-dark mb-3" style="font-size: 2.2em"></i>*@ 
-            <h1 class="fs-3 text-secondary">Select a demo account</h1>
-        </div>  
-        <div class="row row-cols-2 row-cols-sm-2 g-3 mb-3">
-            <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Admin" class="col col-xs-12 border-0 text-decoration-none text-dark">
-                <!--Demo Admin Card-->
-                <div class="card h-100 d-flex flex-column justify-content-center align-items-center border-0 bg-light"> 
-                    @*<img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid brightness" /> *@                    
-                    <div class="card-body">
-                        <i class="fa fa-user-tie fa-5x"></i>                        
-                    </div>
-                    <div class="card-footer bg-light">
-                        <p class="card-text fs-5 text-decoration-none text-center">Admin</p>
-                    </div>
-                </div>        
+<div class="container" style="max-width: 1000px">
+    <div class="row g-5 mx-0">     
+        <div class="col col-12 col-md-6 border rounded p-3">        
+            <div class="d-flex flex-column justify-content-center align-items-center mb-2">
+                @*<i class="fas fa-bug text-dark mb-3" style="font-size: 2.2em"></i>*@ 
+                <h1 class="fs-3 text-secondary">Select a demo account</h1>
+            </div>  
+            <div class="row row-cols-2 row-cols-sm-2 g-3 mb-3">
+                <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Admin" class="col col-xs-12 border-0 text-decoration-none text-dark">
+                    <!--Demo Admin Card-->
+                    <div class="card h-100 d-flex flex-column justify-content-center align-items-center border-0 bg-light"> 
+                        @*<img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid brightness" /> *@                    
+                        <div class="card-body">
+                            <i class="fa fa-user-tie fa-5x"></i>                        
+                        </div>
+                        <div class="card-footer bg-light">
+                            <p class="card-text fs-5 text-decoration-none text-center">Admin</p>
+                        </div>
+                    </div>        
+                </a>
+                <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Project Manager" class="col border-0 text-decoration-none text-dark">
+                    <!--Demo Project Manager Card-->
+                    <div class="card h-100 d-flex flex-column justify-content-center align-items-center border-0 bg-light">                        
+                        @*<img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" />*@
+                        <div class="card-body">
+                            <i class="fa fa-user-tie fa-5x text-danger"></i>                        
+                        </div>
+                        <div class="card-footer bg-light">
+                            <p class="card-text fs-5 text-decoration-none text-center">Project Manager</p>
+                        </div>
+                    </div>        
+                </a>
+                <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Developer" class="col border-0 text-decoration-none text-dark">
+                    <!--Demo Developer Card-->
+                    <div class="card h-100 d-flex flex-column justify-content-center align-items-center border-0 bg-light">                       
+                        @*<img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" />*@
+                        <div class="card-body">
+                            <i class="fa fa-user-tie fa-5x text-primary"></i>                        
+                        </div>
+                        <div class="card-footer bg-light">
+                            <p class="card-text fs-5 text-decoration-none text-center">Developer</p>
+                        </div>
+                    </div>        
+                </a>
+                <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Submitter" class="col border-0 text-decoration-none text-dark">
+                    <!--Demo Submitter Card-->
+                    <div class="card h-100 d-flex flex-column justify-content-center align-items-center border-0 bg-light">
+                        @*<img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" />*@
+                        <div class="card-body">
+                            <i class="fa fa-user-tie fa-5x text-success"></i>                        
+                        </div>
+                        <div class="card-footer bg-light">
+                            <p class="card-text fs-5 text-decoration-none text-center">Submitter</p>
+                        </div>
+                    </div>        
+                </a>                
+            </div>
+            <a class="link-secondary text-decoration-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("ListProjects", "Project", new { area = "" })">
+                Have an account? <span class="text-decoration-underline">Login Here</span>   
             </a>
-            <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Project Manager" class="col border-0 text-decoration-none text-dark">
-                <!--Demo Project Manager Card-->
-                <div class="card h-100 d-flex flex-column justify-content-center align-items-center border-0 bg-light">                        
-                    @*<img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" />*@
-                    <div class="card-body">
-                        <i class="fa fa-user-tie fa-5x text-danger"></i>                        
-                    </div>
-                    <div class="card-footer bg-light">
-                        <p class="card-text fs-5 text-decoration-none text-center">Project Manager</p>
-                    </div>
-                </div>        
-            </a>
-            <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Developer" class="col border-0 text-decoration-none text-dark">
-                <!--Demo Developer Card-->
-                <div class="card h-100 d-flex flex-column justify-content-center align-items-center border-0 bg-light">                       
-                    @*<img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" />*@
-                    <div class="card-body">
-                        <i class="fa fa-user-tie fa-5x text-primary"></i>                        
-                    </div>
-                    <div class="card-footer bg-light">
-                        <p class="card-text fs-5 text-decoration-none text-center">Developer</p>
-                    </div>
-                </div>        
-            </a>
-            <a asp-action="LoginWithDemoAccount" asp-controller="Account" asp-route-role="Submitter" class="col border-0 text-decoration-none text-dark">
-                <!--Demo Submitter Card-->
-                <div class="card h-100 d-flex flex-column justify-content-center align-items-center border-0 bg-light">
-                    @*<img src="~/Images/default-user-icon.jpg" alt="default-user-icon.jpg" class="card-img-top img-fluid" />*@
-                    <div class="card-body">
-                        <i class="fa fa-user-tie fa-5x text-success"></i>                        
-                    </div>
-                    <div class="card-footer bg-light">
-                        <p class="card-text fs-5 text-decoration-none text-center">Submitter</p>
-                    </div>
-                </div>        
-            </a>                
         </div>
-        <a class="link-secondary text-decoration-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("ListProjects", "Project", new { area = "" })">
-            Have an account? <span class="text-decoration-underline">Login Here</span>   
-        </a>
-    </div>
-    <div class="col col-12 col-md-6">
-        <img src="~/images/demo.webp" class="w-100" alt="Login Image">
+        <div class="col col-12 col-md-6">
+            <img src="~/images/demo.webp" class="w-100" alt="Login Image">
+        </div>
     </div>
 </div>
 
