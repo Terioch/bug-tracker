@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8lEM/rdpMdvHbFxXv2/eLuSh0At38FHvc8ar+a1CbP8=",
+  "Hash": "snVU1rsFJvzBYq3SWJX7bNN2Odjp38NYJzHm3ZxpFSc=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1326,6 +1326,23 @@
       "OriginalItemSpec": "wwwroot\\images\\clouds.jpg"
     },
     {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\demo.webp",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "images/demo.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\demo.webp"
+    },
+    {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\login.webp",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
@@ -1358,6 +1375,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\mount-fuji.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\register.webp",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "images/register.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\register.webp"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\snow.jpg",

@@ -12,11 +12,9 @@
     }   
 }
 
-<style>
-    html body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
+<style>  
+    html, body {
+        height: 100%;        
     }
     /*body {
         background-image: url("/images/snow.jpg");
@@ -47,24 +45,22 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BugTracker.styles.css" asp-append-version="true" />
 </head>
-<body>    
-    <main class="container-fluid d-flex flex-column min-vh-100">  
+<body class="h-100 m-0 p-0">    
+    <main class="h-100">  
         <!-- Top Nav -->
         @*<nav class="navbar navbar-light">
 
         </nav>*@
         <!-- Main Content -->              
-        <div class="p-3 h-100">
+        <div class="d-flex justify-content-center align-items-center py-3 min-vh-100">
             @RenderBody()
-        </div>                                
-        <div class="row mt-auto">
-            <!-- Footer -->
-            <footer class="footer border-top text-muted bg-light p-3">
-                <div class="container">
-                    <p class="text-center">Copyright &copy; 2022 - Bugtrace</p>
-                </div>
-            </footer>    
-        </div>                               
+        </div>
+        <!-- Footer -->
+        <footer class="border-top text-muted bg-light p-3 mt-auto">
+            <div class="container">
+                <p class="text-center mb-0">Copyright &copy; 2022 - Bugtrace</p>
+            </div>
+        </footer>                            
     </main>                                                                                                                                         
         
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
