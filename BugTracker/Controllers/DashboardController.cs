@@ -22,7 +22,7 @@ namespace BugTracker.Controllers
             IEnumerable<TicketHistoryRecord> historyRecords = await ticketHistoryHelper.GetUserRoleRecords();            
             DashboardViewModel model = new()
             {                               
-                TicketHistoryRecords = historyRecords.ToPagedList(historyPage ?? 1, 6),
+                TicketHistoryRecords = historyRecords.Take(50).ToPagedList(historyPage ?? 1, 6),
             };
             return View(model);
         }
