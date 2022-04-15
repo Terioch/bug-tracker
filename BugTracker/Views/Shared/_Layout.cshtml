@@ -49,13 +49,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BugTracker.styles.css" asp-append-version="true" />     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-    <script>
-        window.addEventListener("load", () => {
-                const loader = document.querySelector(".loader-container");              
-                loader.classList.add("loaded");
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>    
 </head>
 <body class="m-0 p-0">  
     @await Html.PartialAsync("_LoaderPartial")    
