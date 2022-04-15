@@ -178,7 +178,8 @@ svg {
     }
 }
 
-/*.loaded {
+.loaded {
     display: none;
+    /*visibility: hidden;*/
     transition: all .3s 1s ease-out;
-}*/
+}
