@@ -43,9 +43,8 @@ The project has been configured for demonstration purposes and can be freely acc
 
 ## Launch 
 
-This application is hosted with Heroku and can be found [here](https://bugtrace.herokuapp.com/)
+This application is hosted with Heroku and can be found [here](https://bugtrace.herokuapp.com/).
 
 ## Contact Information
 
-Email: riostockton@gmail.com 
-[Portfolio](https://terioch.github.io/portfolio-site/)
+[Email](riostockton@gmail.com) | [Portfolio](https://terioch.github.io/portfolio-site/)
