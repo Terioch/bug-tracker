@@ -41,7 +41,11 @@ The project has been configured for demonstration purposes and can be freely acc
 * Identity Framework (authentication + authorization)
 * Bootstrap (UI)
 
-
 ## Launch 
 
-This application is hosted with Heroku at https://bugtrace.herokuapp.com/
+This application is hosted with Heroku and can be found [here](https://bugtrace.herokuapp.com/)
+
+## Contact Information
+
+Email: riostockton@gmail.com 
+[Portfolio](https://terioch.github.io/portfolio-site/)
