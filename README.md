@@ -2,7 +2,7 @@
 
 A bug/issue tracking web application built with C# .NET MVC.
 
-![alt text](https://github.com/[Terioch]/[bug-tracker]/blob/[main]/bugtrace.png?raw=true)
+![alt text](https://github.com/Terioch/bug-tracker/blob/main/BugTracker/wwwroot/images/bugtrace.png?raw=true)
 
 ## General Information
 
@@ -44,4 +44,4 @@ The project has been configured for demonstration purposes and can be freely acc
 
 ## Launch 
 
-This application is hosted with Heroku at https://dotnet-bug-tracker.herokuapp.com/
+This application is hosted with Heroku at https://bugtrace.herokuapp.com/
