@@ -74,7 +74,14 @@
                         {
                             <option value="@user.Id">@user.UserName</option>                            
                         }
-                        <option value="@null">None</option>
+
+                        @if (Model.AssignedDeveloperId is null)
+                        {
+                            <option selected value="@null">None</option>
+                        } else
+                        {                                                    
+                            <option value="@null">None</option>
+                        }
                     </select>          
                 </div>
             </div>

@@ -1,10 +1,12 @@
 # Bugtrace
 
-A bug/issue tracking web application built using C# .NET and MVC.
+A bug/issue tracking web application built with C# .NET MVC.
+
+![alt text](https://github.com/[Terioch]/[bug-tracker]/blob/[main]/bugtrace.png?raw=true)
 
 ## General Information
 
-This project enables the storing and maintenance of issues/defects in the form of tickets for a collection of projects. 
+This application enables the storing and maintenance of issues in the form of tickets for a collection of software projects. 
 Each ticket is represented by the following properties:
 
 * Title
@@ -20,8 +22,7 @@ Each ticket is represented by the following properties:
 * Image Attachments
 * Ticket Comments
 
-Authentication and role-based authorization were implemented with Identity, whilst data-access was configured using Entity Framework. 
-Each authenticated user can be assigned one of the following roles which restricts their access level:
+Furthermore, authenticated users can be assigned one of the following roles which restricts their access level:
 
 * Owner (Full unrestricted access)
 * Admin (Full access but cannot control role management)
@@ -29,8 +30,18 @@ Each authenticated user can be assigned one of the following roles which restric
 * Developer (Can add comments, attachments and update the status of a ticket they're assigned to)
 * Submitter (Can submit tickets for projects they're assigned to)
 
-The project has been configured for demonstration purposes and can be freely accessed with demo accounts assigned to the above roles excluding Owner.
+The project has been configured for demonstration purposes and can be freely accessed with demo accounts assigned to the above roles excluding the Owner role.
+
+## Technologies
+
+* C#
+* .NET
+* MVC (architecture)
+* Entity Framework (data-access)
+* Identity Framework (authentication + authorization)
+* Bootstrap (UI)
+
 
 ## Launch 
 
-This application is hosted on Heroku at https://dotnet-bug-tracker.herokuapp.com/
+This application is hosted with Heroku at https://dotnet-bug-tracker.herokuapp.com/

@@ -273,7 +273,7 @@ namespace BugTracker.Controllers
             // Ensure that the assigned developer is assigned to the corresponding project
             if (ticket.AssignedDeveloperId != null)
             {                
-                IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
+                var assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
                 bool isDeveloperAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.AssignedDeveloperId);
 
                 if (!isDeveloperAssigned)

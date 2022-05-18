@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8LoUYGwMEFCUM//2JErtOZ8W051SNZ9jBqbAQEw6xpg=",
+  "Hash": "+EXunIGgcQQHYkaJf1AzrpZcE2IP5WhH13QOICWvwlE=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1292,12 +1292,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\bug-tracker.png",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\bugtrace.png",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "images/bug-tracker.png",
+      "RelativePath": "images/bugtrace.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1306,7 +1306,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\bug-tracker.png"
+      "OriginalItemSpec": "wwwroot\\images\\bugtrace.png"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\images\\clouds.jpg",
