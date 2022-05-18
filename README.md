@@ -47,4 +47,4 @@ This application is hosted with Heroku and can be found [here](https://bugtrace.
 
 ## Contact Information
 
-riostockton@gmail.com | [Portfolio](https://terioch.github.io/portfolio-site/)
+riostockton@gmail.com | [portfolio](https://terioch.github.io/portfolio-site/)
