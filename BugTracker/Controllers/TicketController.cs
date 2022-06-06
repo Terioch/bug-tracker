@@ -109,7 +109,7 @@ namespace BugTracker.Controllers
                 };
                 
                 // Ensure that the submitter is assigned to the corresponding project
-                IEnumerable<ApplicationUser> assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
+                var assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
                 bool isSubmitterAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.SubmitterId);
 
                 if (!isSubmitterAssigned)
@@ -120,11 +120,15 @@ namespace BugTracker.Controllers
                         UserId = ticket.SubmitterId,
                         ProjectId = ticket.ProjectId,
                     };
+
                     userProjectRepo.Create(userProject);
-                }               
+                }
+                
                 ticket = repo.Create(ticket);
+
                 return RedirectToAction("Details", new { id = ticket.Id });
             }
+
             return View();
         }                
 
@@ -264,6 +268,7 @@ namespace BugTracker.Controllers
                             NewValue = propertyValue,                           
                             ModifiedAt = DateTimeOffset.Now
                         };
+
                         ticketHistoryRepo.Create(ticketHistoryRecord);
                         ticketProperty.SetValue(ticket, property.GetValue(model));
                     }                 
@@ -287,7 +292,9 @@ namespace BugTracker.Controllers
                     userProjectRepo.Create(userProject);
                 }
             }            
+
             repo.Update(ticket);
+
             return RedirectToAction("Details", new { id = ticket.Id });
         }
 
