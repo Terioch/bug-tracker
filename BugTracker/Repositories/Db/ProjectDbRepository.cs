@@ -5,76 +5,44 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Db
 {
-    public class ProjectDbRepository : IProjectRepository
+    public class ProjectDbRepository : DbRepository<Project>, IRepository<Project>
     {
-        private readonly BugTrackerDbContext context;
+        private readonly BugTrackerDbContext _db;
 
-        public ProjectDbRepository(BugTrackerDbContext context)
+        public ProjectDbRepository(BugTrackerDbContext db) : base(db)
         {
-            this.context = context;
+            _db = db;
         }
 
-        public IEnumerable<Project> GetAllProjects()
+        public override IEnumerable<Project> GetAll()
         {
-            return context.Projects
+            return _db.Projects
                 .Include(p => p.Tickets)
-                .Include(p => p.Users)
-                .ToList() ?? new List<Project>();
-            // return context.Projects.ToList() ?? new List<Project>();
+                .Include(p => p.Users);
         }
 
-        public Project GetProjectById(string id)
+        public override async Task<Project> Get(string id)
         {
-            return context.Projects               
+            return await _db.Projects               
                 .Include(p => p.Tickets)
                     .ThenInclude(t => t.Submitter)
                 .Include(p => p.Tickets)
                     .ThenInclude(t => t.AssignedDeveloper)
                  .Include(p => p.Users)
-                .First(p => p.Id == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
-
-        public Project GetProjectByName(string name)
+        
+        public override IEnumerable<Project> Find(Expression<Func<Project, bool>> predicate)
         {
-            return context.Projects        
-                .Include(p => p.Tickets)
+            return _db.Projects.Where(predicate).Include(p => p.Tickets)
                     .ThenInclude(t => t.Submitter)
                 .Include(p => p.Tickets)
                     .ThenInclude(t => t.AssignedDeveloper)
-                .Include(p => p.Users)
-                .First(p => p.Name == name);
-        }
-
-        public Project Create(Project project)
-        {
-            context.Projects.Add(project);
-            context.SaveChanges();
-            return project;
-        }
-
-        public Project Delete(string id)
-        {
-            Project? project = context.Projects.Find(id);
-
-            if (project == null)
-            {
-                throw new NullReferenceException("Project Not Found");
-            }         
-
-            context.Projects.Remove(project);
-            context.SaveChanges();
-            return project;
-        }        
-
-        public Project Update(Project project)
-        {
-            EntityEntry<Project>? attachedProject = context.Projects.Attach(project);
-            attachedProject.State = EntityState.Modified;
-            context.SaveChanges();
-            return project;
+                 .Include(p => p.Users);
         }
     }
 }

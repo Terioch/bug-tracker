@@ -50,7 +50,7 @@ namespace BugTracker.Controllers
             IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();
             foreach (var project in projects)
             {
-                project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id).ToList();
+                project.Tickets = ticketRepo.GetByProjectId(project.Id).ToList();
             }
             return View(projects.ToPagedList(page ?? 1, 8));
         } 
@@ -78,7 +78,7 @@ namespace BugTracker.Controllers
                     UserId = admin.Id,
                     ProjectId = project.Id
                 };
-                userProjectRepo.Create(userProject);
+                userProjectRepo.Add(userProject);
             }               
             repo.Create(project);
             return RedirectToAction("ListProjects", "Project");
@@ -87,7 +87,7 @@ namespace BugTracker.Controllers
         [HttpGet] 
         public async Task<IActionResult> Details(string id, int? usersPage, int? ticketsPage)
         {                        
-            Project project = repo.GetProjectById(id);         
+            Project project = repo.Get(id);         
             var userRoleTickets = await ticketHelper.GetUserRoleTickets(); 
             project.Tickets = userRoleTickets.Where(t => t.ProjectId == id).ToList();
             project.Users = userProjectRepo.GetUsersByProjectId(id).ToList();            
@@ -158,13 +158,13 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin")]    
         public IActionResult Delete(string id)
         {            
-            IEnumerable<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
+            IEnumerable<Ticket> tickets = ticketRepo.GetByProjectId(id);
 
             foreach (var ticket in tickets)
             {
                 ticketRepo.Delete(ticket.Id);
-                ticketHistoryRepo.DeleteRecordsByTicketId(ticket.Id);
-                ticketAttachmentRepo.DeleteAttachmentsByTicketId(ticket.Id);
+                ticketHistoryRepo.DeleteByTicketId(ticket.Id);
+                ticketAttachmentRepo.DeleteByTicketId(ticket.Id);
                 ticketCommentRepo.DeleteCommentsByTicketId(ticket.Id);
             }
 
@@ -200,7 +200,7 @@ namespace BugTracker.Controllers
                 ProjectId = id,
             };
 
-            userProjectRepo.Create(userProject);
+            userProjectRepo.Add(userProject);
             return RedirectToAction("Details", new { id });     
         }
 

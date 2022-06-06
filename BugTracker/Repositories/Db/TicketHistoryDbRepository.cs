@@ -2,69 +2,42 @@
 using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Db
 {
-    public class TicketHistoryDbRepository : ITicketHistoryRepository
+    public class TicketHistoryDbRepository : DbRepository<TicketHistoryRecord>, IRepository<TicketHistoryRecord>
     {
-        private readonly BugTrackerDbContext context;
+        private readonly BugTrackerDbContext _db;
 
-        public TicketHistoryDbRepository(BugTrackerDbContext context)
+        public TicketHistoryDbRepository(BugTrackerDbContext db) : base(db)
         {
-            this.context = context;
+            _db = db;
         }
 
-        public IEnumerable<TicketHistoryRecord> GetAllRecords()
+        public override IEnumerable<TicketHistoryRecord> GetAll()   
         {
-            return context.TicketHistoryRecords
+            return _db.TicketHistoryRecords
                 .Include(t => t.Ticket)
                 .Include(t => t.Modifier)
                 .OrderByDescending(t => t.ModifiedAt);
         }        
 
-        public TicketHistoryRecord GetRecordById(string id)
+        public override async Task<TicketHistoryRecord> Get(string id)
         {
-            return context.TicketHistoryRecords
+            return await _db.TicketHistoryRecords
                 .Include(t => t.Ticket)
                 .Include(t => t.Modifier)
-                .First(t => t.Id == id);
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public IEnumerable<TicketHistoryRecord> GetRecordsByTicketId(string id)
+        public override IEnumerable<TicketHistoryRecord> Find(Expression<Func<TicketHistoryRecord, bool>> predicate)
         {
-            return context.TicketHistoryRecords
-                .Where(t => t.TicketId == id)
+            return _db.TicketHistoryRecords
+                .Where(predicate)
                 .Include(t => t.Ticket)
                 .Include(t => t.Modifier)
                 .OrderByDescending(t => t.ModifiedAt);
-        }
-
-        public TicketHistoryRecord Create(TicketHistoryRecord record)
-        {
-            context.TicketHistoryRecords.Add(record);
-            context.SaveChanges();
-            return record;
-        }
-
-        public TicketHistoryRecord Update(TicketHistoryRecord record)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TicketHistoryRecord Delete(string id)
-        {
-            TicketHistoryRecord? record = context.TicketHistoryRecords.Find(id);            
-            context.TicketHistoryRecords.Remove(record);
-            context.SaveChanges();
-            return record;
-        }
-
-        public IEnumerable<TicketHistoryRecord> DeleteRecordsByTicketId(string ticketId)
-        {
-            var records = context.TicketHistoryRecords.Where(r => r.TicketId == ticketId);
-            context.TicketHistoryRecords.RemoveRange(records);
-            context.SaveChanges();
-            return records;
-        }        
+        }                     
     }
 }

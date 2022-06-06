@@ -2,10 +2,11 @@
 using BugTracker.Repositories.Interfaces;
 using BugTracker.Contexts.Mock;
 using Microsoft.AspNetCore.Identity;
+using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Mock
 {
-    public class TicketMockRepository : ITicketRepository
+    public class TicketMockRepository : IRepository<Ticket>
     {
         private readonly IProjectRepository projectRepo;  
         private readonly ITicketCommentRepository ticketCommentRepo;
@@ -25,7 +26,7 @@ namespace BugTracker.Repositories.Mock
 
         public static List<Ticket> Tickets { get; set; } = MockTickets.GetTickets();
 
-        public IEnumerable<Ticket> GetAllTickets()
+        public IEnumerable<Ticket> GetAll()
         {               
             Tickets.ForEach(t =>
             {
@@ -36,48 +37,40 @@ namespace BugTracker.Repositories.Mock
             return Tickets;
         }
 
-        public Ticket GetTicketById(string id)
+        public Task<Ticket> Get(string id)
         {
             Ticket ticket = Tickets.First(t => t.Id == id);
             ticket.Project = projectRepo.GetProjectById(ticket.ProjectId);
             ticket.Submitter = userManager.Users.First(u => u.Id == ticket.SubmitterId);
             ticket.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId);
             ticket.TicketHistoryRecords = ticketHistoryRepo.GetRecordsByTicketId(id).ToList();
-            ticket.TicketAttachments = ticketAttachmentRepo.GetAttachmentsByTicketId(id).ToList();
+            ticket.TicketAttachments = ticketAttachmentRepo.GetByTicketId(id).ToList();
             ticket.TicketComments = ticketCommentRepo.GetCommentsByTicketId(id).ToList();
-            return ticket;
+            return Task.FromResult(ticket);
         }
 
-        public IEnumerable<Ticket> GetTicketsByProjectId(string projectId)
+        public IEnumerable<Ticket> Find(Expression<Func<Ticket, bool>> predicate)
         {
-            List<Ticket> tickets = Tickets.Where(t => t.ProjectId == projectId).ToList();
+            var tickets = Tickets.AsQueryable().Where(predicate).ToList();
+
             tickets.ForEach(t =>
             {
                 t.Project = projectRepo.GetProjectById(t.ProjectId);
                 t.Submitter = userManager.Users.First(u => u.Id == t.SubmitterId);
                 t.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
             });
+
             return tickets;
         }        
 
-        public Ticket Create(Ticket ticket)
+        public void Add(Ticket ticket)
         {
-            Tickets.Add(ticket);
-            return ticket;
-        }
+            Tickets.Add(ticket);            
+        }       
 
-        public Ticket Update(Ticket ticket)
+        public void Delete(Ticket ticket)
         {
-            int index = Tickets.FindIndex(t => t.Id == ticket.Id);
-            Tickets[index] = ticket;
-            return ticket;
-        }
-
-        public Ticket Delete(string id)
-        {
-            Ticket ticket = Tickets.First(t => t.Id == id);
             Tickets.Remove(ticket);
-            return ticket;
         }
     }
 }

@@ -48,7 +48,7 @@ namespace BugTracker.Repositories.Db
             return users;
         }
 
-        public UserProject Create(UserProject userProject)
+        public UserProject Add(UserProject userProject)
         {
             context.UserProjects.Add(userProject);
             context.SaveChanges();

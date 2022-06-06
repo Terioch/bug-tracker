@@ -2,11 +2,12 @@
 using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Mock
 {
-    public class ProjectMockRepository : IProjectRepository
+    public class ProjectMockRepository : IRepository<Project>
     {
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -15,51 +16,44 @@ namespace BugTracker.Repositories.Mock
             this.userManager = userManager;
         }
 
-        public static List<Project> Projects { get; set; } = MockProjects.GetProjects();      
+        internal static List<Project> Projects { get; set; } = MockProjects.GetProjects();      
 
-        public IEnumerable<Project> GetAllProjects()
-        {            
-            return Projects;           
-        }       
+        public IEnumerable<Project> GetAll()
+        {
+            return Projects;
+        }
 
-        public Project GetProjectById(string id)
-        {            
-            Project? project = Projects.Find(p => p.Id == id);
-            List<Ticket> allTickets = TicketMockRepository.Tickets;
+        public Task<Project> Get(string id)
+        {
+            var project = Projects.FirstOrDefault(p => p.Id == id);
+            var allTickets = TicketMockRepository.Tickets;
             project.Tickets = allTickets.Where(t => t.ProjectId == id).ToList();
+
             foreach (var t in project.Tickets)
             {
                 t.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
                 t.Submitter = userManager.Users.First(u => u.Id == t.SubmitterId);
             }
+
             var userIds = UserProjectMockRepository.UserProjects.Where(up => up.ProjectId == id).Select(up => up.UserId);
-            project.Users = userIds.Select(uid => userManager.Users.First(u => u.Id == uid)).ToList();                           
-            return project;
+            project.Users = userIds.Select(uid => userManager.Users.First(u => u.Id == uid)).ToList();
+
+            return Task.FromResult(project);
         }
 
-        public Project GetProjectByName(string name)
-        {
-            return Projects.First(p => p.Name == name);            
-        }
+        public IEnumerable<Project> Find(Expression<Func<Project, bool>> predicate)
+        {           
+            return Projects.AsQueryable().Where(predicate);
+        }              
 
-        public Project Create(Project project)
+        public void Add(Project project)
         {
             Projects.Add(project);
-            return project;
-        }
+        }      
 
-        public Project Update(Project project)
-        {
-            int index = Projects.FindIndex(p => p.Id == project.Id);
-            Projects[index] = project;
-            return project;
-        }
-
-        public Project Delete(string id)
-        {
-            Project project = Projects.First(p => p.Id == id);
+        public void Delete(Project project)
+        {           
             Projects.Remove(project);
-            return project;
         }
     }
 }

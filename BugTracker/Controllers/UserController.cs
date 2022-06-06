@@ -40,7 +40,7 @@ namespace BugTracker.Controllers
         {
             ApplicationUser? user = await userManager.FindByIdAsync(id);
             IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
-            IEnumerable<Ticket> tickets = ticketRepo.GetAllTickets().Where(t => t.SubmitterId == id || t.AssignedDeveloperId == id);
+            IEnumerable<Ticket> tickets = ticketRepo.GetAll().Where(t => t.SubmitterId == id || t.AssignedDeveloperId == id);
 
             List<Project> unassignedProjects = projectRepo.GetAllProjects().ToList();
             projects.ToList().ForEach(p => unassignedProjects.Remove(p));
@@ -158,7 +158,7 @@ namespace BugTracker.Controllers
                 UserId = id,
                 ProjectId = model.ToBeAssignedProjectId,
             };
-            userProjectRepo.Create(userProject);
+            userProjectRepo.Add(userProject);
             return RedirectToAction("Details", new { id });
         }
 

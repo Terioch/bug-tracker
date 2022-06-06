@@ -3,72 +3,50 @@ using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Db
 {
-    public class TicketDbRepository : ITicketRepository
+    public class TicketDbRepository : DbRepository<Ticket>, IRepository<Ticket>
     {
-        private readonly BugTrackerDbContext context;        
+        private readonly BugTrackerDbContext _db;        
 
-        public TicketDbRepository(BugTrackerDbContext context)
+        public TicketDbRepository(BugTrackerDbContext db) : base(db)
         {
-            this.context = context;
+            _db = db;
         }
 
-        public IEnumerable<Ticket> GetAllTickets()
+        public override IEnumerable<Ticket> GetAll()
         {            
-             return context.Tickets
+             return _db.Tickets
                 .Include(t => t.Project)
                 .Include(t => t.Submitter)
                 .Include(t => t.AssignedDeveloper)
                 .OrderByDescending(t => t.CreatedAt);            
         }
 
-        public IEnumerable<Ticket> GetTicketsByProjectId(string id)
+        public override async Task<Ticket> Get(string id)
         {
-            return context.Tickets
-                .Where(t => t.ProjectId == id)
+            return await _db.Tickets
                 .Include(t => t.Project)
                 .Include(t => t.Submitter)
                 .Include(t => t.AssignedDeveloper)
-                .OrderByDescending(t => t.CreatedAt);
-        }
-
-        public Ticket GetTicketById(string id)
-        {
-            return context.Tickets
-                .Include(t => t.Project)
-                .Include(t => t.Submitter)
-                .Include(t => t.AssignedDeveloper)
-                .Include(t => t.TicketHistoryRecords) 
+                .Include(t => t.TicketHistoryRecords)
                     .ThenInclude(t => t.Modifier)
                 .Include(t => t.TicketAttachments)
                 .Include(t => t.TicketComments)
                     .ThenInclude(c => c.Author)
-                .First(t => t.Id == id);            
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public Ticket Create(Ticket ticket)
+        public override IEnumerable<Ticket> Find(Expression<Func<Ticket, bool>> predicate)
         {
-            context.Tickets.Add(ticket);
-            context.SaveChanges();
-            return ticket;
-        }
-
-        public Ticket Update(Ticket ticket)
-        {
-            EntityEntry<Ticket> attachedTicket = context.Tickets.Attach(ticket);
-            attachedTicket.State = EntityState.Modified;
-            context.SaveChanges();
-            return ticket;
-        }
-
-        public Ticket Delete(string id)
-        {
-            Ticket? ticket = context.Tickets.Find(id);            
-            context.Tickets.Remove(ticket);
-            context.SaveChanges();
-            return ticket;
-        }                
+            return _db.Tickets
+                .Where(predicate)
+                .Include(t => t.Project)
+                .Include(t => t.Submitter)
+                .Include(t => t.AssignedDeveloper)
+                .OrderByDescending(t => t.CreatedAt);
+        }               
     }
 }

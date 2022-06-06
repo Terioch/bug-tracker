@@ -3,72 +3,42 @@ using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Db
 {
-    public class TicketCommentDbRepository : ITicketCommentRepository
+    public class TicketCommentDbRepository : DbRepository<TicketComment>, IRepository<TicketComment>
     {
-        private readonly BugTrackerDbContext context;
+        private readonly BugTrackerDbContext _db;
 
-        public TicketCommentDbRepository(BugTrackerDbContext context)
+        public TicketCommentDbRepository(BugTrackerDbContext db) : base(db)
         {
-            this.context = context;
+            _db = db;
         }
 
-        public IEnumerable<TicketComment> GetAllComments()
+        public override IEnumerable<TicketComment> GetAll()
         {          
-            return context.TicketComments
+            return _db.TicketComments
                 .Include(c => c.Ticket)
                 .Include(c => c.Author)
                 .OrderByDescending(c => c.CreatedAt);
         }
 
-        public IEnumerable<TicketComment> GetCommentsByTicketId(string id)
+        public override async Task<TicketComment> Get(string id)
         {
-            return context.TicketComments
-                .Where(c => c.TicketId == id)
+            return await _db.TicketComments
+                .Include(c => c.Ticket)
+                .Include(c => c.Author)
+                .FirstOrDefaultAsync(c => c.Id == id) ?? new TicketComment();
+        }
+
+        public override IEnumerable<TicketComment> Find(Expression<Func<TicketComment, bool>> predicate)
+        {
+            return _db.TicketComments
+                .Where(predicate)
                 .Include(c => c.Ticket)
                 .Include(c => c.Author)
                 .OrderByDescending(c => c.CreatedAt);
-        }
-
-        public TicketComment GetComment(string id)
-        {          
-            return context.TicketComments
-                .Include(c => c.Ticket)
-                .Include(c => c.Author)
-                .First(c => c.Id == id) ?? new TicketComment();
-        }
-
-        public TicketComment Create(TicketComment comment)
-        {
-            context.TicketComments.Add(comment);
-            context.SaveChanges();
-            return comment;
-        }
-
-        public TicketComment Update(TicketComment comment)
-        {
-            EntityEntry<TicketComment> attachedComment = context.TicketComments.Attach(comment);
-            attachedComment.State = EntityState.Modified;
-            context.SaveChanges();
-            return comment;
-        }
-
-        public TicketComment Delete(string id)
-        {
-            TicketComment? comment = context.TicketComments.Find(id);            
-            context.TicketComments.Remove(comment);
-            context.SaveChanges();
-            return comment;
-        }
-
-        public IEnumerable<TicketComment> DeleteCommentsByTicketId(string ticketId)
-        {
-            var comments = context.TicketComments.Where(c => c.TicketId == ticketId);
-            context.TicketComments.RemoveRange(comments);
-            context.SaveChanges();
-            return comments;
-        }        
+        }                           
     }
 }

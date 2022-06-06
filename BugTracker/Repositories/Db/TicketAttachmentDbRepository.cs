@@ -3,72 +3,42 @@ using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Db
 {
-    public class TicketAttachmentDbRepository : ITicketAttachmentRepository
+    public class TicketAttachmentDbRepository : DbRepository<TicketAttachment>, IRepository<TicketAttachment>
     {
-        private readonly BugTrackerDbContext context;
+        private readonly BugTrackerDbContext _db;
 
-        public TicketAttachmentDbRepository(BugTrackerDbContext context)
+        public TicketAttachmentDbRepository(BugTrackerDbContext db) : base(db)
         {
-            this.context = context;
+            _db = db;
         }
 
-        public IEnumerable<TicketAttachment> GetAllAttachments()
+        public override IEnumerable<TicketAttachment> GetAll()
         {
-            return context.TicketAttachments
+            return _db.TicketAttachments
                 .Include(a => a.Ticket)
                 .Include(a => a.Submitter)
                 .OrderByDescending(a => a.CreatedAt);
         }
 
-        public TicketAttachment GetAttachmentById(string id)
+        public override async Task<TicketAttachment> Get(string id)
         {
-            return context.TicketAttachments
+            return await _db.TicketAttachments
                 .Include(a => a.Ticket)
                 .Include(a => a.Submitter)
-                .First(a => a.Id == id);
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public IEnumerable<TicketAttachment> GetAttachmentsByTicketId(string ticketId)
+        public override IEnumerable<TicketAttachment> Find(Expression<Func<TicketAttachment, bool>> predicate)
         {
-            return context.TicketAttachments
-                .Where(a => a.TicketId == ticketId)
+            return _db.TicketAttachments
+                .Where(predicate)
                 .Include(a => a.Ticket)
                 .Include(a => a.Submitter)                
                 .OrderByDescending(a => a.CreatedAt);
-        }
-
-        public TicketAttachment Create(TicketAttachment attachment)
-        {
-            context.TicketAttachments.Add(attachment);
-            context.SaveChanges();
-            return attachment;
-        }
-
-        public TicketAttachment Update(TicketAttachment attachment)
-        {
-            EntityEntry<TicketAttachment> attachedAttachment = context.TicketAttachments.Attach(attachment);
-            attachedAttachment.State = EntityState.Modified;
-            context.SaveChanges();
-            return attachment;
-        }
-
-        public TicketAttachment Delete(string id)
-        {
-            TicketAttachment? attachment = context.TicketAttachments.Find(id);            
-            context.TicketAttachments.Remove(attachment);
-            context.SaveChanges();
-            return attachment;
-        }
-
-        public IEnumerable<TicketAttachment> DeleteAttachmentsByTicketId(string ticketId) 
-        {
-            var attachments = context.TicketAttachments.Where(a => a.TicketId == ticketId);
-            context.TicketAttachments.RemoveRange(attachments);
-            context.SaveChanges();
-            return attachments;
-        }        
+        }       
     }
 }

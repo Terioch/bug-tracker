@@ -4,6 +4,7 @@ using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Mock
 {
@@ -18,7 +19,7 @@ namespace BugTracker.Repositories.Mock
             this.userManager = userManager;
         }
 
-        public static List<UserProject> UserProjects { get; set; } = MockUserProjects.GetUserProjects();
+        internal static List<UserProject> UserProjects { get; set; } = MockUserProjects.GetUserProjects();
 
         public IEnumerable<Project> GetProjectsByUserId(string userId)
         {
@@ -34,38 +35,29 @@ namespace BugTracker.Repositories.Mock
             return projects;
         }
 
-        public IEnumerable<ApplicationUser> GetUsersByProjectId(string projectId)
+        public IEnumerable<ApplicationUser> Find(Expression<Func<UserProject, bool>> predicate)
         {
-            IEnumerable<UserProject> filteredUserProjects = UserProjects.Where(u => u.ProjectId == projectId);
+            var filteredUserProjects = UserProjects.AsQueryable().Where(predicate);
             var userIds = filteredUserProjects.Select(u => u.UserId).ToList();
-            List<ApplicationUser> users = new();
+            var users = new List<ApplicationUser>();
             
             for (int i = 0; i < userIds.Count; i++)
             {
                 ApplicationUser user = userManager.Users.First(u => u.Id == userIds[i]);
                 users.Add(user);
             }
+
             return users;
         }
 
-        public UserProject Create(UserProject userProject)
+        public void Add(UserProject userProject)
         {
             UserProjects.Add(userProject);
-            return userProject;
-        }
+        }      
 
-        public UserProject Update(UserProject userProject)
-        {
-            int index = UserProjects.FindIndex(u => u.Id == userProject.Id);
-            UserProjects[index] = userProject;
-            return userProject;
-        }
-
-        public UserProject Delete(string userId, string projectId)
-        {
-            UserProject? userProject = UserProjects.Where(u => u.UserId == userId && u.ProjectId == projectId).FirstOrDefault();
+        public void Delete(UserProject userProject)
+        {           
             UserProjects.Remove(userProject);  
-            return userProject;
         }        
     }
 }

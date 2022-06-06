@@ -2,10 +2,11 @@
 using BugTracker.Contexts.Mock;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Mock
 {
-    public class TicketCommentMockRepository : ITicketCommentRepository
+    public class TicketCommentMockRepository : IRepository<TicketComment>
     {
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -16,55 +17,47 @@ namespace BugTracker.Repositories.Mock
 
         public static List<TicketComment> TicketComments { get; set; } = MockTicketComments.GetComments();        
 
-        public IEnumerable<TicketComment> GetAllComments()
+        public IEnumerable<TicketComment> GetAll()
         {
             TicketComments.ForEach(c =>
             {
                 c.Author = userManager.Users.First(u => u.Id == c.AuthorId);
             });
+
             return TicketComments;
         }
 
-        public IEnumerable<TicketComment> GetCommentsByTicketId(string id)
+        public Task<TicketComment> Get(string id)
         {
-            List<TicketComment> comments = TicketComments.Where(c => c.TicketId == id).ToList();
+            return Task.FromResult(TicketComments.Find(c => c.Id == id));
+        }
+
+        public IEnumerable<TicketComment> Find(Expression<Func<TicketComment, bool>> predicate)
+        {
+            var comments = TicketComments.AsQueryable().Where(predicate).ToList();
+
             comments.ForEach(c =>
             {
                 c.Author = userManager.Users.First(u => u.Id == c.AuthorId);
             });
+
             return comments;
-        }
+        }      
 
-        public TicketComment GetComment(string id)
-        {
-            return TicketComments.Find(c => c.Id == id) ?? new TicketComment();
-        }
-
-        public TicketComment Create(TicketComment comment)
+        public void Add(TicketComment comment)
         {
             TicketComments.Add(comment);            
-            return comment;
+        }      
+
+        public void Delete(TicketComment comment)
+        {           
+            TicketComments.Remove(comment);                        
         }
 
-        public TicketComment Update(TicketComment comment)
+        public void DeleteRange(IEnumerable<TicketComment> comments)
         {
-            int index = TicketComments.FindIndex(t => t.Id == comment.Id);
-            TicketComments[index] = comment;
-            return comment;
-        }
-
-        public TicketComment Delete(string id)
-        {
-            TicketComment? comment = TicketComments.Find(c => c.Id == id);            
-            TicketComments.Remove(comment);            
-            return comment;
-        }
-
-        public IEnumerable<TicketComment> DeleteCommentsByTicketId(string ticketId)
-        {
-            var comments = TicketComments.Where(c => c.TicketId == ticketId);            
-            TicketComments.RemoveAll(c => comments.Contains(c));
-            return comments;
+            int index = TicketComments.IndexOf(comments.First());
+            TicketComments.RemoveRange(index, comments.Count());
         }
     }
 }

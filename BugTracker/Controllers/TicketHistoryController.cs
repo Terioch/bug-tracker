@@ -52,7 +52,7 @@ namespace BugTracker.Controllers
 
             var filteredRecords = records.Where(r =>
             {
-                Ticket ticket = ticketRepo.GetTicketById(r.TicketId);
+                Ticket ticket = ticketRepo.Get(r.TicketId);
                 return ticket.Title.ToLowerInvariant().Contains(searchTerm)
                 || r.Property.ToLowerInvariant().Contains(searchTerm);
             });            

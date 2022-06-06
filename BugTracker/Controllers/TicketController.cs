@@ -57,7 +57,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult Details(string id, int? historyPage, int? attachmentsPage, int? commentsPage)
         {
-            Ticket ticket = repo.GetTicketById(id);
+            Ticket ticket = repo.Get(id);
             TicketViewModel model = new()
             {
                 Id = ticket.Id,
@@ -121,7 +121,7 @@ namespace BugTracker.Controllers
                         ProjectId = ticket.ProjectId,
                     };
 
-                    userProjectRepo.Create(userProject);
+                    userProjectRepo.Add(userProject);
                 }
                 
                 ticket = repo.Create(ticket);
@@ -162,7 +162,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult FilterProjectTicketsReturnPartial(string id, string? searchTerm)
         {
-            IEnumerable<Ticket> tickets = repo.GetTicketsByProjectId(id);
+            IEnumerable<Ticket> tickets = repo.GetByProjectId(id);
             TempData["ProjectId"] = id;
 
             if (searchTerm == null)
@@ -191,7 +191,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult FilterUserTicketsReturnPartial(string id, string? searchTerm)
         {
-            var tickets = repo.GetAllTickets().Where(t => t.AssignedDeveloperId == id || t.SubmitterId == id);
+            var tickets = repo.GetAll().Where(t => t.AssignedDeveloperId == id || t.SubmitterId == id);
 
             if (searchTerm == null)
             {
@@ -220,7 +220,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {            
-            Ticket ticket = repo.GetTicketById(id);
+            Ticket ticket = repo.Get(id);
 
             EditTicketViewModel model = new()
             {
@@ -241,7 +241,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditTicketViewModel model)
         {            
-            Ticket ticket = repo.GetTicketById(model.Id);            
+            Ticket ticket = repo.Get(model.Id);            
 
             // Update property and property history if new value differs from original
             PropertyInfo[] modelProperties = model.GetType().GetProperties();
@@ -269,7 +269,7 @@ namespace BugTracker.Controllers
                             ModifiedAt = DateTimeOffset.Now
                         };
 
-                        ticketHistoryRepo.Create(ticketHistoryRecord);
+                        ticketHistoryRepo.Add(ticketHistoryRecord);
                         ticketProperty.SetValue(ticket, property.GetValue(model));
                     }                 
                 }                                
@@ -289,7 +289,7 @@ namespace BugTracker.Controllers
                         UserId = ticket.AssignedDeveloperId,
                         ProjectId = ticket.ProjectId,
                     };
-                    userProjectRepo.Create(userProject);
+                    userProjectRepo.Add(userProject);
                 }
             }            
 
@@ -302,7 +302,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task <IActionResult> EditStatus(TicketViewModel model)
         {
-            Ticket ticket = repo.GetTicketById(model.Id);
+            Ticket ticket = repo.Get(model.Id);
             ApplicationUser modifier = await GetCurrentUserAsync();
 
             if (ticket.Status != model.Status)
@@ -318,7 +318,7 @@ namespace BugTracker.Controllers
                     ModifiedAt = DateTimeOffset.Now,
                 };
 
-                ticketHistoryRepo.Create(record);
+                ticketHistoryRepo.Add(record);
                 ticket.Status = model.Status;
                 repo.Update(ticket);
             }                        
@@ -328,12 +328,12 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         public IActionResult Delete(string id)
         {                      
-            ticketHistoryRepo.DeleteRecordsByTicketId(id);
+            ticketHistoryRepo.DeleteByTicketId(id);
             /*foreach (var attachment in ticketAttachmentRepo.GetAttachmentsByTicketId(id))
             {
                 attachmentHelper.RemoveUploadedFileAttachment(attachment);
             }*/
-            ticketAttachmentRepo.DeleteAttachmentsByTicketId(id);            
+            ticketAttachmentRepo.DeleteByTicketId(id);            
             ticketCommentRepo.DeleteCommentsByTicketId(id);
             repo.Delete(id);
             return RedirectToAction("ListTickets");

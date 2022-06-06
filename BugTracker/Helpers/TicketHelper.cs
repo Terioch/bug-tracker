@@ -34,7 +34,7 @@ namespace BugTracker.Helpers
 
             if (roles.Contains("Admin"))
             {
-                return ticketRepo.GetAllTickets().OrderByDescending(t => t.CreatedAt);
+                return ticketRepo.GetAll().OrderByDescending(t => t.CreatedAt);
             }
             else if (roles.Contains("Project Manager"))
             {               
@@ -50,7 +50,7 @@ namespace BugTracker.Helpers
         public async Task<bool> IsAuthorizedToEdit(ApplicationUser user, string ticketId)
         {
             IList<string> roles = await userManager.GetRolesAsync(user);
-            Ticket ticket = ticketRepo.GetTicketById(ticketId);
+            Ticket ticket = ticketRepo.Get(ticketId);
 
             if (roles.Contains("Admin"))
             {
@@ -78,7 +78,7 @@ namespace BugTracker.Helpers
         public async Task<bool> IsAssignedDeveloper(ApplicationUser user, string ticketId)
         {
             IList<string> roles = await userManager.GetRolesAsync(user);
-            Ticket ticket = ticketRepo.GetTicketById(ticketId);
+            Ticket ticket = ticketRepo.Get(ticketId);
 
             if (roles.Contains("Developer"))
             {
@@ -90,7 +90,7 @@ namespace BugTracker.Helpers
         public async Task<bool> IsAuthorizedToDelete(ApplicationUser user, string ticketId)
         {
             IList<string> roles = await userManager.GetRolesAsync(user);
-            Ticket ticket = ticketRepo.GetTicketById(ticketId);
+            Ticket ticket = ticketRepo.Get(ticketId);
 
             if (roles.Contains("Admin"))
             {
