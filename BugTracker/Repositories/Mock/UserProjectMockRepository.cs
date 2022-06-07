@@ -8,9 +8,9 @@ using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Mock
 {
-    public class UserProjectMockRepository : IUserProjectRepository
+    public class UserProjectMockRepository
     {
-        private readonly IProjectRepository projectRepo;
+        /*private readonly IProjectRepository projectRepo;
         private readonly UserManager<ApplicationUser> userManager;
 
         public UserProjectMockRepository(IProjectRepository projectRepo, UserManager<ApplicationUser> userManager)
@@ -35,7 +35,7 @@ namespace BugTracker.Repositories.Mock
             return projects;
         }
 
-        public IEnumerable<ApplicationUser> Find(Expression<Func<UserProject, bool>> predicate)
+        public IEnumerable<ApplicationUser> GetUsersByProjectId(Expression<Func<UserProject, bool>> predicate)
         {
             var filteredUserProjects = UserProjects.AsQueryable().Where(predicate);
             var userIds = filteredUserProjects.Select(u => u.UserId).ToList();
@@ -58,6 +58,6 @@ namespace BugTracker.Repositories.Mock
         public void Delete(UserProject userProject)
         {           
             UserProjects.Remove(userProject);  
-        }        
+        }*/   
     }
 }

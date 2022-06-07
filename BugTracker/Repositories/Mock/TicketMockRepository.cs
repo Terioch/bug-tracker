@@ -34,6 +34,7 @@ namespace BugTracker.Repositories.Mock
                 t.Submitter = userManager.Users.First(u => u.Id == t.SubmitterId);
                 t.AssignedDeveloper = userManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
             });
+
             return Tickets;
         }
 
@@ -71,6 +72,11 @@ namespace BugTracker.Repositories.Mock
         public void Delete(Ticket ticket)
         {
             Tickets.Remove(ticket);
+        }
+
+        public void DeleteRange(IEnumerable<Ticket> entities)
+        {
+            throw new NotImplementedException();
         }
     }
 }

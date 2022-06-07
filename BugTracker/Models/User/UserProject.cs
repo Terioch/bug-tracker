@@ -8,13 +8,15 @@ namespace BugTracker.Models
         public string? Id { get; set; }
       
         [Required]
+        [ForeignKey(nameof(User))]
         public string? UserId { get; set; }
 
         [Required]
-        public string? ProjectId { get; set; }
-
-        public virtual Project? Project { get; set; }
+        [ForeignKey(nameof(Project))]
+        public string? ProjectId { get; set; }     
 
         public virtual ApplicationUser? User { get; set; }
+
+        public virtual Project? Project { get; set; }
     }
 }

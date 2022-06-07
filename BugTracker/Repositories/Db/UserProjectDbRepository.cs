@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace BugTracker.Repositories.Db
 {
-    public class UserProjectDbRepository : IUserProjectRepository
+    public class UserProjectDbRepository
     {
-        private readonly BugTrackerDbContext context;
+        /*private readonly BugTrackerDbContext context;
         private readonly IProjectRepository projectRepo;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -75,6 +75,6 @@ namespace BugTracker.Repositories.Db
             context.UserProjects.Remove(userProject);
             context.SaveChanges();
             return userProject;
-        }                     
+        }*/               
     }
 }

@@ -55,5 +55,10 @@ namespace BugTracker.Repositories.Mock
         {           
             Projects.Remove(project);
         }
+
+        public void DeleteRange(IEnumerable<Project> entities)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

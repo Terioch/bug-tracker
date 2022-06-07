@@ -16,7 +16,7 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Ticket>? Tickets { get; set; }
 
-    public DbSet<UserProject>? UserProjects { get; set; }
+    // public DbSet<UserProject>? UserProjects { get; set; }
 
     public DbSet<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
 
@@ -29,6 +29,6 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
         base.OnModelCreating(builder);
         // Customize the ASP.NET Identity model and override the defaults if needed.
         // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
+        // Add your customizations after calling base.OnModelCreating(builder);                    
     }
 }

@@ -1,13 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTracker.Models
 {
     public class TicketAttachment
     {
+        [Key]
         public string? Id { get; set; }
 
+        [ForeignKey(nameof(Ticket))]
         public string? TicketId { get; set; }
 
+        [ForeignKey(nameof(Submitter))]
         public string? SubmitterId { get; set; }
 
         [Required]
