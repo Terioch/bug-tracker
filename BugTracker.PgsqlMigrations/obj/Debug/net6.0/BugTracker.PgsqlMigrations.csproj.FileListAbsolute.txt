@@ -23,7 +23,6 @@ C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.sta
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.exe
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.PgsqlMigrations.deps.json
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.PgsqlMigrations.dll
-C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\ref\BugTracker.PgsqlMigrations.dll
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.PgsqlMigrations.pdb
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.csproj.AssemblyReference.cache
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.GeneratedMSBuildEditorConfig.editorconfig
@@ -34,3 +33,4 @@ C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.dll
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\ref\BugTracker.PgsqlMigrations.dll
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.pdb
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\refint\BugTracker.PgsqlMigrations.dll

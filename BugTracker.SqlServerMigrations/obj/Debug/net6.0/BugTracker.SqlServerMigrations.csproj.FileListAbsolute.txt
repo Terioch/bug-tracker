@@ -67,7 +67,6 @@ C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.sta
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.exe
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.SqlServerMigrations.deps.json
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.SqlServerMigrations.dll
-C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\ref\BugTracker.SqlServerMigrations.dll
 C:\Users\User\source\repos\BugTracker\BugTracker\bin\Debug\net6.0\BugTracker.SqlServerMigrations.pdb
 C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\BugTracker.SqlServerMigrations.csproj.AssemblyReference.cache
 C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\BugTracker.SqlServerMigrations.GeneratedMSBuildEditorConfig.editorconfig
@@ -78,3 +77,4 @@ C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\n
 C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\BugTracker.SqlServerMigrations.dll
 C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\ref\BugTracker.SqlServerMigrations.dll
 C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\BugTracker.SqlServerMigrations.pdb
+C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\refint\BugTracker.SqlServerMigrations.dll

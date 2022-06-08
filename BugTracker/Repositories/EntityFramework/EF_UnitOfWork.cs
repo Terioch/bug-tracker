@@ -22,7 +22,7 @@ namespace BugTracker.Repositories.EntityFramework
             RoleManager = roleManager;
         }
 
-        public IRepository<Project> Projects { get; private set; }
+        public IProjectRepository Projects { get; private set; }
 
         public IRepository<Ticket> Tickets { get; private set; }
 

@@ -22,7 +22,7 @@ string GetPgsqlConnectionString()
 // Add services to the container.
 if (isDev)
 {
-    var connectionString = builder.Configuration.GetConnectionString("LocalSQLServerConnection");
+    var connectionString = builder.Configuration.GetConnectionString("LocalSqlServerConnection");
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseSqlServer(connectionString, x => x.MigrationsAssembly("BugTracker.SqlServerMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();

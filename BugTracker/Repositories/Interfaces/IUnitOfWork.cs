@@ -5,7 +5,7 @@ namespace BugTracker.Repositories.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<Project> Projects { get; }
+        IProjectRepository Projects { get; }
 
         IRepository<Ticket> Tickets { get;  }
 
