@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BugTracker.Repositories.Mock;
 using BugTracker.Repositories.Interfaces;
-using BugTracker.Repositories.Db;
+using BugTracker.Repositories.EF;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
@@ -20,18 +20,17 @@ string GetPgsqlConnectionString()
 }
 
 // Add services to the container.
-if (isDev && !isDev)
+if (isDev)
 {
-    var connectionString = builder.Configuration.GetConnectionString("BugTrackerDbContextConnection");
+    var connectionString = builder.Configuration.GetConnectionString("LocalSQLServerConnection");
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseSqlServer(connectionString, x => x.MigrationsAssembly("BugTracker.SqlServerMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     builder.Services.AddScoped<IProjectRepository, EF_ProjectRepository>();
-    builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
-    builder.Services.AddScoped<ITicketRepository, EF_TicketRepository>();
-    builder.Services.AddScoped<ITicketHistoryRepository, EF_TicketHistoryRepository>();
-    builder.Services.AddScoped<ITicketAttachmentRepository, EF_TicketAttachmentRepository>();
-    builder.Services.AddScoped<ITicketCommentRepository, EF_TicketCommentRepository>();
+    builder.Services.AddScoped<IRepository<Ticket>, EF_TicketRepository>();
+    builder.Services.AddScoped<IRepository<TicketHistoryRecord>, EF_TicketHistoryRepository>();
+    builder.Services.AddScoped<IRepository<TicketAttachment>, EF_TicketAttachmentRepository>();
+    builder.Services.AddScoped<IRepository<TicketComment>, EF_TicketCommentRepository>();
 }
 else
 {
@@ -40,20 +39,11 @@ else
     options.UseNpgsql(connectionString, x => x.MigrationsAssembly("BugTracker.PgsqlMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     builder.Services.AddScoped<IProjectRepository, Mock_ProjectRepository>();
-    builder.Services.AddScoped<IUserProjectRepository, UserProjectMockRepository>();
-    builder.Services.AddScoped<ITicketRepository, Mock_TicketRepository>();
-    builder.Services.AddScoped<ITicketHistoryRepository, Mock_TicketHistoryRepository>();
-    builder.Services.AddScoped<ITicketAttachmentRepository, Mock_TicketAttachmentRepository>();
-    builder.Services.AddScoped<ITicketCommentRepository, Mock_TicketCommentRepository>();
+    builder.Services.AddScoped<IRepository<Ticket>, Mock_TicketRepository>();
+    builder.Services.AddScoped<IRepository<TicketHistoryRecord>, Mock_TicketHistoryRepository>();
+    builder.Services.AddScoped<IRepository<TicketAttachment>, Mock_TicketAttachmentRepository>();
+    builder.Services.AddScoped<IRepository<TicketComment>, Mock_TicketCommentRepository>();
 }
-
-builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
-builder.Services.AddScoped<TicketHelper, TicketHelper>();
-builder.Services.AddScoped<RoleHelper, RoleHelper>();
-builder.Services.AddScoped<TicketAttachmentHelper, TicketAttachmentHelper>();
-builder.Services.AddScoped<TicketHistoryHelper, TicketHistoryHelper>();
-builder.Services.AddScoped<AccountHelper, AccountHelper>();
-builder.Services.AddScoped<ChartHelper, ChartHelper>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;

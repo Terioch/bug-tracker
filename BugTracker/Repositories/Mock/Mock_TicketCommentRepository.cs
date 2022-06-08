@@ -8,37 +8,35 @@ namespace BugTracker.Repositories.Mock
 {
     public class Mock_TicketCommentRepository : IRepository<TicketComment>
     {
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public Mock_TicketCommentRepository(UserManager<ApplicationUser> userManager)
+        public Mock_TicketCommentRepository(IUnitOfWork unitOfWork)
         {
-            this.userManager = userManager;
-        }
-
-        public static List<TicketComment> TicketComments { get; set; } = MockTicketComments.GetComments();        
+            _unitOfWork = unitOfWork;
+        }      
 
         public IEnumerable<TicketComment> GetAll()
         {
-            TicketComments.ForEach(c =>
+            MockBugTrackerDbContext.TicketComments.ForEach(c =>
             {
-                c.Author = userManager.Users.First(u => u.Id == c.AuthorId);
+                c.Author = _unitOfWork.UserManager.Users.First(u => u.Id == c.AuthorId);
             });
 
-            return TicketComments;
+            return MockBugTrackerDbContext.TicketComments;
         }
 
         public Task<TicketComment> Get(string id)
         {
-            return Task.FromResult(TicketComments.Find(c => c.Id == id));
+            return Task.FromResult(MockBugTrackerDbContext.TicketComments.Find(c => c.Id == id));
         }
 
         public IEnumerable<TicketComment> Find(Expression<Func<TicketComment, bool>> predicate)
         {
-            var comments = TicketComments.AsQueryable().Where(predicate).ToList();
+            var comments = MockBugTrackerDbContext.TicketComments.AsQueryable().Where(predicate).ToList();
 
             comments.ForEach(c =>
             {
-                c.Author = userManager.Users.First(u => u.Id == c.AuthorId);
+                c.Author = _unitOfWork.UserManager.Users.First(u => u.Id == c.AuthorId);
             });
 
             return comments;
@@ -46,18 +44,18 @@ namespace BugTracker.Repositories.Mock
 
         public void Add(TicketComment comment)
         {
-            TicketComments.Add(comment);            
+            MockBugTrackerDbContext.TicketComments.Add(comment);            
         }      
 
         public void Delete(TicketComment comment)
         {           
-            TicketComments.Remove(comment);                        
+            MockBugTrackerDbContext.TicketComments.Remove(comment);                        
         }
 
         public void DeleteRange(IEnumerable<TicketComment> comments)
         {
-            int index = TicketComments.IndexOf(comments.First());
-            TicketComments.RemoveRange(index, comments.Count());
+            int index = MockBugTrackerDbContext.TicketComments.IndexOf(comments.First());
+            MockBugTrackerDbContext.TicketComments.RemoveRange(index, comments.Count());
         }
     }
 }

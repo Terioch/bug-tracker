@@ -51,6 +51,8 @@ namespace BugTracker.Repositories.Mock
         public void AddUser(ApplicationUser user, string projectId)
         {
             var project = MockBugTrackerDbContext.Projects.Find(p => p.Id == projectId);
+            var userProject = new UserProject { Id = Guid.NewGuid().ToString(), UserId = user.Id, ProjectId = projectId };
+            MockBugTrackerDbContext.UserProjects.Add(userProject);
             project.Users.Add(user);
         }        
 
@@ -62,6 +64,8 @@ namespace BugTracker.Repositories.Mock
         public void DeleteUser(ApplicationUser user, string projectId)
         {
             var project = MockBugTrackerDbContext.Projects.Find(p => p.Id == projectId);
+            var userProject = new UserProject { Id = Guid.NewGuid().ToString(), UserId = user.Id, ProjectId = projectId };
+            MockBugTrackerDbContext.UserProjects.Remove(userProject);
             project.Users.Remove(user);
         }
 

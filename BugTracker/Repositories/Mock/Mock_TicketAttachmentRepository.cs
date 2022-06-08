@@ -9,22 +9,20 @@ namespace BugTracker.Repositories.Mock
 {
     public class Mock_TicketAttachmentRepository : IRepository<TicketAttachment>
     {
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public Mock_TicketAttachmentRepository(UserManager<ApplicationUser> userManager)
+        public Mock_TicketAttachmentRepository(IUnitOfWork unitOfWork)
         {
-            this.userManager = userManager;
-        }
-
-        public static List<TicketAttachment> TicketAttachments { get; set; } = MockTicketAttachments.GetAttachments();
+            _unitOfWork = unitOfWork;
+        }       
 
         public IEnumerable<TicketAttachment> GetAll()
         {
-            List<TicketAttachment> attachments = TicketAttachments;
+            List<TicketAttachment> attachments = MockBugTrackerDbContext.TicketAttachments;
 
             attachments.ForEach(a =>
             {
-                a.Submitter = userManager.Users.First(u => u.Id == a.SubmitterId);
+                a.Submitter = _unitOfWork.UserManager.Users.First(u => u.Id == a.SubmitterId);
             });
 
             return attachments.OrderByDescending(a => a.CreatedAt);
@@ -32,18 +30,18 @@ namespace BugTracker.Repositories.Mock
 
         public Task<TicketAttachment> Get(string id)
         {
-            var attachment = TicketAttachments.Find(a => a.Id == id);          
-            attachment.Submitter = userManager.Users.First(u => u.Id == attachment.SubmitterId);
+            var attachment = MockBugTrackerDbContext.TicketAttachments.Find(a => a.Id == id);          
+            attachment.Submitter = _unitOfWork.UserManager.Users.First(u => u.Id == attachment.SubmitterId);
             return Task.FromResult(attachment);
         }
 
         public IEnumerable<TicketAttachment> Find(Expression<Func<TicketAttachment, bool>> predicate)
         {
-            var attachments = TicketAttachments.AsQueryable().Where(predicate);
+            var attachments = MockBugTrackerDbContext.TicketAttachments.AsQueryable().Where(predicate);
 
-            TicketAttachments.ForEach(a =>
+            MockBugTrackerDbContext.TicketAttachments.ForEach(a =>
             {
-                a.Submitter = userManager.Users.First(u => u.Id == a.SubmitterId);
+                a.Submitter = _unitOfWork.UserManager.Users.First(u => u.Id == a.SubmitterId);
             });
 
             return attachments.OrderByDescending(a => a.CreatedAt);
@@ -51,18 +49,18 @@ namespace BugTracker.Repositories.Mock
 
         public void Add(TicketAttachment attachment)
         {
-            TicketAttachments.Add(attachment);                       
+            MockBugTrackerDbContext.TicketAttachments.Add(attachment);                       
         }       
 
         public void Delete(TicketAttachment attachment)
-        {     
-            TicketAttachments.Remove(attachment);           
+        {
+            MockBugTrackerDbContext.TicketAttachments.Remove(attachment);           
         }
 
         public void DeleteRange(IEnumerable<TicketAttachment> attachments)
         {
-            int index = TicketAttachments.IndexOf(attachments.First());
-            TicketAttachments.RemoveRange(index, attachments.Count());
+            int index = MockBugTrackerDbContext.TicketAttachments.IndexOf(attachments.First());
+            MockBugTrackerDbContext.TicketAttachments.RemoveRange(index, attachments.Count());
         }
     }
 }

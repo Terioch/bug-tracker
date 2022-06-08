@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace BugTracker.Repositories.Db
+namespace BugTracker.Repositories.EF
 {
     public class UserProjectDbRepository
     {

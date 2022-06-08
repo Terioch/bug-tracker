@@ -5,14 +5,17 @@ using Microsoft.AspNetCore.Identity;
 namespace BugTracker.Repositories.Mock
 {
     public class Mock_UnitOfWork : IUnitOfWork
-    {        
-        private readonly IUnitOfWork _unitOfWork;
-
-        public Mock_UnitOfWork(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
+    {       
+        public Mock_UnitOfWork(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        {        
             Projects = new Mock_ProjectRepository(unitOfWork);
-        }     
+            Tickets = new Mock_TicketRepository(unitOfWork);
+            TicketHistoryRecords = new Mock_TicketHistoryRepository(unitOfWork);
+            TicketAttachments = new Mock_TicketAttachmentRepository(unitOfWork);
+            TicketComments = new Mock_TicketCommentRepository(unitOfWork);
+            UserManager = userManager;
+            RoleManager = roleManager;
+        }
 
         public IRepository<Project> Projects { get; private set; }
 
@@ -28,10 +31,15 @@ namespace BugTracker.Repositories.Mock
 
         public RoleManager<IdentityRole> RoleManager { get; private set; }
 
-        public int Complete()
+        public Task<int> Complete()
         {
             Console.WriteLine("Simulating database operations...");
-            return 0;
+            return Task.FromResult(0);
+        }
+
+        public void Dispose()
+        {            
+            Console.WriteLine("Simulating the disposing of unmanaged resources...");
         }
     }
 }

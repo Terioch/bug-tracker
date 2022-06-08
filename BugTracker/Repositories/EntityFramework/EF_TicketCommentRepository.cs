@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
-namespace BugTracker.Repositories.Db
+namespace BugTracker.Repositories.EF
 {
     public class EF_TicketCommentRepository : EF_Repository<TicketComment>, IRepository<TicketComment>
     {

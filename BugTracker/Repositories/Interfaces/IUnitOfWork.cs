@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Repositories.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IRepository<Project> Projects { get; }
 
@@ -19,6 +19,6 @@ namespace BugTracker.Repositories.Interfaces
 
         RoleManager<IdentityRole> RoleManager { get; }
 
-        int Complete();
+        Task<int> Complete();
     }
 }

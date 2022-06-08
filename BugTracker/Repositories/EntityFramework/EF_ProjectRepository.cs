@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace BugTracker.Repositories.Db
+namespace BugTracker.Repositories.EF
 {
-    public class EF_ProjectRepository : EF_Repository<Project>, IRepository<Project>
+    public class EF_ProjectRepository : EF_Repository<Project>, IProjectRepository
     {
         private readonly BugTrackerDbContext _db;
 
@@ -43,6 +43,18 @@ namespace BugTracker.Repositories.Db
                 .Include(p => p.Tickets)
                     .ThenInclude(t => t.AssignedDeveloper)
                  .Include(p => p.Users);
+        }
+
+        public void AddUser(ApplicationUser user, string projectId)
+        {
+            var project = _db.Projects.Find(projectId);
+            project.Users.Add(user);
+        }
+
+        public void DeleteUser(ApplicationUser user, string projectId)
+        {
+            var project = _db.Projects.Find(projectId);
+            project.Users.Remove(user);
         }
     }
 }

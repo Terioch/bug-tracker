@@ -3,7 +3,7 @@ using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace BugTracker.Repositories.Db
+namespace BugTracker.Repositories.EF
 {
     public class EF_Repository<T> : IRepository<T> where T : class, new()
     {
