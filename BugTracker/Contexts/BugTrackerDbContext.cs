@@ -16,8 +16,6 @@ public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Ticket>? Tickets { get; set; }
 
-    // public DbSet<UserProject>? UserProjects { get; set; }
-
     public DbSet<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
 
     public DbSet<TicketAttachment>? TicketAttachments { get; set; }

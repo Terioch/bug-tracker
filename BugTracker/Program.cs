@@ -26,12 +26,12 @@ if (isDev && !isDev)
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseSqlServer(connectionString, x => x.MigrationsAssembly("BugTracker.SqlServerMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
+    builder.Services.AddScoped<IProjectRepository, EF_ProjectRepository>();
     builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
-    builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
-    builder.Services.AddScoped<ITicketHistoryRepository, TicketHistoryDbRepository>();
-    builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentDbRepository>();
-    builder.Services.AddScoped<ITicketCommentRepository, TicketCommentDbRepository>();
+    builder.Services.AddScoped<ITicketRepository, EF_TicketRepository>();
+    builder.Services.AddScoped<ITicketHistoryRepository, EF_TicketHistoryRepository>();
+    builder.Services.AddScoped<ITicketAttachmentRepository, EF_TicketAttachmentRepository>();
+    builder.Services.AddScoped<ITicketCommentRepository, EF_TicketCommentRepository>();
 }
 else
 {
@@ -39,12 +39,12 @@ else
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseNpgsql(connectionString, x => x.MigrationsAssembly("BugTracker.PgsqlMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    builder.Services.AddScoped<IProjectRepository, ProjectMockRepository>();
+    builder.Services.AddScoped<IProjectRepository, Mock_ProjectRepository>();
     builder.Services.AddScoped<IUserProjectRepository, UserProjectMockRepository>();
-    builder.Services.AddScoped<ITicketRepository, TicketMockRepository>();
-    builder.Services.AddScoped<ITicketHistoryRepository, TicketHistoryMockRepository>();
-    builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentMockRepository>();
-    builder.Services.AddScoped<ITicketCommentRepository, TicketCommentMockRepository>();
+    builder.Services.AddScoped<ITicketRepository, Mock_TicketRepository>();
+    builder.Services.AddScoped<ITicketHistoryRepository, Mock_TicketHistoryRepository>();
+    builder.Services.AddScoped<ITicketAttachmentRepository, Mock_TicketAttachmentRepository>();
+    builder.Services.AddScoped<ITicketCommentRepository, Mock_TicketCommentRepository>();
 }
 
 builder.Services.AddScoped<ProjectHelper, ProjectHelper>();

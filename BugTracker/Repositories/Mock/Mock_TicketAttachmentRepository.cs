@@ -7,11 +7,11 @@ using System.Text;
 
 namespace BugTracker.Repositories.Mock
 {
-    public class TicketAttachmentMockRepository : IRepository<TicketAttachment>
+    public class Mock_TicketAttachmentRepository : IRepository<TicketAttachment>
     {
         private readonly UserManager<ApplicationUser> userManager;
 
-        public TicketAttachmentMockRepository(UserManager<ApplicationUser> userManager)
+        public Mock_TicketAttachmentRepository(UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
         }

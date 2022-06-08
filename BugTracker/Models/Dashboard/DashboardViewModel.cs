@@ -9,8 +9,7 @@ namespace BugTracker.Models
         public ChartData? TicketStatusData { get; set; }
 
         public ChartData? TicketPriorityData { get; set; }
-
-        // Add property for recent activity
+       
         public IPagedList<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
 
         public ICollection<Project> Projects { get; set; } = new HashSet<Project>();

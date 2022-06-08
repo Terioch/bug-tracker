@@ -6,11 +6,11 @@ using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Mock
 {
-    public class TicketCommentMockRepository : IRepository<TicketComment>
+    public class Mock_TicketCommentRepository : IRepository<TicketComment>
     {
         private readonly UserManager<ApplicationUser> userManager;
 
-        public TicketCommentMockRepository(UserManager<ApplicationUser> userManager)
+        public Mock_TicketCommentRepository(UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
         }

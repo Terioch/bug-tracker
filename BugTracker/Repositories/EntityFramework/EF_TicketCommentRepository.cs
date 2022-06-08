@@ -7,11 +7,11 @@ using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Db
 {
-    public class TicketCommentDbRepository : DbRepository<TicketComment>, IRepository<TicketComment>
+    public class EF_TicketCommentRepository : EF_Repository<TicketComment>, IRepository<TicketComment>
     {
         private readonly BugTrackerDbContext _db;
 
-        public TicketCommentDbRepository(BugTrackerDbContext db) : base(db)
+        public EF_TicketCommentRepository(BugTrackerDbContext db) : base(db)
         {
             _db = db;
         }

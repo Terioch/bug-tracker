@@ -9,11 +9,11 @@ using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Db
 {
-    public class ProjectDbRepository : DbRepository<Project>, IRepository<Project>
+    public class EF_ProjectRepository : EF_Repository<Project>, IRepository<Project>
     {
         private readonly BugTrackerDbContext _db;
 
-        public ProjectDbRepository(BugTrackerDbContext db) : base(db)
+        public EF_ProjectRepository(BugTrackerDbContext db) : base(db)
         {
             _db = db;
         }

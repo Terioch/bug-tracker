@@ -6,13 +6,13 @@ using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Mock
 {
-    public class TicketHistoryMockRepository : IRepository<TicketHistoryRecord>
+    public class Mock_TicketHistoryRepository : IRepository<TicketHistoryRecord>
     {
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TicketHistoryMockRepository(UserManager<ApplicationUser> userManager)
+        public Mock_TicketHistoryRepository(IUnitOfWork unitOfWork)
         {
-            this.userManager = userManager;
+            _unitOfWork = unitOfWork;
         }
 
         public static List<TicketHistoryRecord> TicketHistoryRecords { get; set; } = MockTicketHistoryRecords.GetRecords();
@@ -21,8 +21,8 @@ namespace BugTracker.Repositories.Mock
         {
             TicketHistoryRecords.ForEach(r =>
             {
-                r.Ticket = TicketMockRepository.Tickets.Find(t => t.Id == r.TicketId);
-                r.Modifier = userManager.Users.First(u => u.Id == r.ModifierId);
+                r.Ticket = MockBugTrackerDbContext.Tickets.Find(t => t.Id == r.TicketId);
+                r.Modifier = _unitOfWork.UserManager.Users.First(u => u.Id == r.ModifierId);
             });
 
             return TicketHistoryRecords.OrderByDescending(r => r.ModifiedAt);
@@ -31,8 +31,8 @@ namespace BugTracker.Repositories.Mock
         public Task<TicketHistoryRecord> Get(string id)
         {
             var record = TicketHistoryRecords.Find(r => r.Id == id);            
-            record.Ticket = TicketMockRepository.Tickets.Find(t => t.Id == record.TicketId);
-            record.Modifier = userManager.Users.First(u => u.Id == record.ModifierId);
+            record.Ticket = MockBugTrackerDbContext.Tickets.Find(t => t.Id == record.TicketId);
+            record.Modifier = _unitOfWork.UserManager.Users.First(u => u.Id == record.ModifierId);
             return Task.FromResult(record);
         }
 
@@ -42,8 +42,8 @@ namespace BugTracker.Repositories.Mock
 
             records.ForEach(r =>
             {
-                r.Ticket = TicketMockRepository.Tickets.Find(t => t.Id == r.TicketId);
-                r.Modifier = userManager.Users.First(u => u.Id == r.ModifierId);
+                r.Ticket = MockBugTrackerDbContext.Tickets.Find(t => t.Id == r.TicketId);
+                r.Modifier = _unitOfWork.UserManager.Users.First(u => u.Id == r.ModifierId);
             });
 
             return records.OrderByDescending(r => r.ModifiedAt);

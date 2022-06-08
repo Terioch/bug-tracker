@@ -5,11 +5,11 @@ using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.Db
 {
-    public class DbRepository<T> : IRepository<T> where T : class, new()
+    public class EF_Repository<T> : IRepository<T> where T : class, new()
     {
         private readonly BugTrackerDbContext _db;
 
-        public DbRepository(BugTrackerDbContext db)
+        public EF_Repository(BugTrackerDbContext db)
         {
             _db = db;
         }
