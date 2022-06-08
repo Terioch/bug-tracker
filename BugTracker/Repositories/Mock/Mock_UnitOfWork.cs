@@ -14,7 +14,7 @@ namespace BugTracker.Repositories.Mock
             TicketAttachments = new Mock_TicketAttachmentRepository(unitOfWork);
             TicketComments = new Mock_TicketCommentRepository(unitOfWork);
             UserManager = userManager;
-            RoleManager = roleManager;
+            Roles = roleManager;
         }
 
         public IRepository<Project> Projects { get; private set; }
@@ -29,7 +29,7 @@ namespace BugTracker.Repositories.Mock
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
-        public RoleManager<IdentityRole> RoleManager { get; private set; }
+        public RoleManager<IdentityRole> Roles { get; private set; }
 
         public Task<int> Complete()
         {

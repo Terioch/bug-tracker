@@ -2,9 +2,6 @@
 using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.EF
@@ -19,7 +16,7 @@ namespace BugTracker.Repositories.EF
         }
 
         public override IEnumerable<Project> GetAll()
-        {
+        {            
             return _db.Projects
                 .Include(p => p.Tickets)
                 .Include(p => p.Users);
@@ -45,15 +42,13 @@ namespace BugTracker.Repositories.EF
                  .Include(p => p.Users);
         }
 
-        public void AddUser(ApplicationUser user, string projectId)
-        {
-            var project = _db.Projects.Find(projectId);
+        public void AddUser(ApplicationUser user, Project project)
+        {            
             project.Users.Add(user);
         }
 
-        public void DeleteUser(ApplicationUser user, string projectId)
-        {
-            var project = _db.Projects.Find(projectId);
+        public void DeleteUser(ApplicationUser user, Project project)
+        {            
             project.Users.Remove(user);
         }
     }

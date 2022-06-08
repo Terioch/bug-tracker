@@ -18,6 +18,7 @@ namespace BugTracker.Repositories.EntityFramework
             TicketHistoryRecords = new EF_TicketHistoryRepository(db);
             TicketAttachments = new EF_TicketAttachmentRepository(db);
             TicketComments = new EF_TicketCommentRepository(db);
+            Users = new EF_UserRepository(db);
             UserManager = userManager;
             RoleManager = roleManager;
         }
@@ -32,6 +33,8 @@ namespace BugTracker.Repositories.EntityFramework
 
         public IRepository<TicketComment> TicketComments { get; private set; }
 
+        public IUserRepository Users { get; private set; }
+
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
         public RoleManager<IdentityRole> RoleManager { get; private set; }
@@ -43,6 +46,7 @@ namespace BugTracker.Repositories.EntityFramework
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             _db.Dispose();
         }       
     }

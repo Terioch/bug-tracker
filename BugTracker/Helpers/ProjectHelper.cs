@@ -55,7 +55,7 @@ namespace BugTracker.Helpers
 
         public async Task<IEnumerable<ApplicationUser>> GetUsersInRolesOnProject(string projectId, string[]? roles = null)
         {
-            roles ??= _unitOfWork.RoleManager.Roles.Select(r => r.Name).ToArray();
+            roles ??= _unitOfWork.Roles.Roles.Select(r => r.Name).ToArray();
             var project = await _unitOfWork.Projects.Get(projectId);
             var users = new List<ApplicationUser>();
 

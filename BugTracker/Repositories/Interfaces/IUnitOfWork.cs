@@ -15,6 +15,8 @@ namespace BugTracker.Repositories.Interfaces
 
         IRepository<TicketComment> TicketComments { get; }
 
+        IUserRepository Users { get; }
+
         UserManager<ApplicationUser> UserManager { get; }
 
         RoleManager<IdentityRole> RoleManager { get; }
