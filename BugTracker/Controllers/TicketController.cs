@@ -234,6 +234,7 @@ namespace BugTracker.Controllers
                 Priority = ticket.Priority,                 
                 AssignableUsers = await projectHelper.GetUsersInRolesOnProject(ticket.ProjectId, new string[] { "Admin", "Developer" }),
             };
+
             return View(model);
         }
 

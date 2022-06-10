@@ -25,7 +25,7 @@ namespace BugTracker.Repositories.EF
                 .OrderByDescending(t => t.CreatedAt);            
         }
 
-        public override async Task<Ticket> Get(string id)
+        public override async Task<Ticket> GetAsync(string id)
         {
             return await _db.Tickets
                 .Include(t => t.Project)

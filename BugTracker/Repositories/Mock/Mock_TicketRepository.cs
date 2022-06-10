@@ -19,7 +19,7 @@ namespace BugTracker.Repositories.Mock
         {               
             MockBugTrackerDbContext.Tickets.ForEach(async t =>
             {
-                t.Project = await _unitOfWork.Projects.Get(t.ProjectId);
+                t.Project = await _unitOfWork.Projects.GetAsync(t.ProjectId);
                 t.Submitter = _unitOfWork.UserManager.Users.First(u => u.Id == t.SubmitterId);
                 t.AssignedDeveloper = _unitOfWork.UserManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
             });
@@ -27,11 +27,11 @@ namespace BugTracker.Repositories.Mock
             return MockBugTrackerDbContext.Tickets;
         }
 
-        public async Task<Ticket> Get(string id)
+        public async Task<Ticket> GetAsync(string id)
         {
             var ticket = MockBugTrackerDbContext.Tickets.FirstOrDefault(t => t.Id == id);
 
-            ticket.Project = await _unitOfWork.Projects.Get(ticket.ProjectId);
+            ticket.Project = await _unitOfWork.Projects.GetAsync(ticket.ProjectId);
             ticket.Submitter = _unitOfWork.UserManager.Users.First(u => u.Id == ticket.SubmitterId);
             ticket.AssignedDeveloper = _unitOfWork.UserManager.Users.FirstOrDefault(u => u.Id == ticket.AssignedDeveloperId);
             ticket.TicketHistoryRecords = _unitOfWork.TicketHistoryRecords.Find(r => r.TicketId == ticket.Id).ToList();
@@ -47,7 +47,7 @@ namespace BugTracker.Repositories.Mock
 
             tickets.ForEach(async t =>
             {
-                t.Project = await _unitOfWork.Projects.Get(t.ProjectId);
+                t.Project = await _unitOfWork.Projects.GetAsync(t.ProjectId);
                 t.Submitter = _unitOfWork.UserManager.Users.First(u => u.Id == t.SubmitterId);
                 t.AssignedDeveloper = _unitOfWork.UserManager.Users.FirstOrDefault(u => u.Id == t.AssignedDeveloperId);
             });

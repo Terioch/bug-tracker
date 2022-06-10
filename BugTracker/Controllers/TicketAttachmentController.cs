@@ -72,14 +72,14 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult Edit(string id)
         {
-            TicketAttachment attachment = repo.Get(id);
+            TicketAttachment attachment = repo.GetAsync(id);
             return View(attachment);
         }
         
         [HttpPost]
         public async Task<IActionResult> Edit(TicketAttachment model, IFormFile fileAttachment)
         {
-            TicketAttachment attachment = repo.Get(model.Id);             
+            TicketAttachment attachment = repo.GetAsync(model.Id);             
             
             if (ModelState.IsValid)
             {

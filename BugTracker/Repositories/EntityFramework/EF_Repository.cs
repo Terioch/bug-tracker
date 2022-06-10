@@ -19,7 +19,7 @@ namespace BugTracker.Repositories.EF
             return _db.Set<T>();
         }
 
-        public virtual async Task<T> Get(string id)
+        public virtual async Task<T> GetAsync(string id)
         {
             return await _db.Set<T>().FindAsync(id);
         }

@@ -21,7 +21,7 @@ namespace BugTracker.Repositories.Mock
             return MockBugTrackerDbContext.Projects;
         }
 
-        public Task<Project> Get(string id)
+        public Task<Project> GetAsync(string id)
         {
             var project = MockBugTrackerDbContext.Projects.FirstOrDefault(p => p.Id == id);
             project.Tickets = MockBugTrackerDbContext.Tickets.Where(t => t.ProjectId == id).ToList();

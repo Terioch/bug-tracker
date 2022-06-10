@@ -158,7 +158,9 @@ namespace BugTracker.Controllers
                 UserId = id,
                 ProjectId = model.ToBeAssignedProjectId,
             };
+
             userProjectRepo.Add(userProject);
+
             return RedirectToAction("Details", new { id });
         }
 

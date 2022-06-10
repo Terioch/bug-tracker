@@ -39,7 +39,7 @@ namespace BugTracker.Repositories.EntityFramework
 
         public RoleManager<IdentityRole> RoleManager { get; private set; }
 
-        public async Task<int> Complete()
+        public async Task<int> CompleteAsync()
         {
             return await _db.SaveChangesAsync();
         }

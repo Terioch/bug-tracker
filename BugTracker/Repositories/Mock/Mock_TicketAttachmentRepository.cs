@@ -28,7 +28,7 @@ namespace BugTracker.Repositories.Mock
             return attachments.OrderByDescending(a => a.CreatedAt);
         }
 
-        public Task<TicketAttachment> Get(string id)
+        public Task<TicketAttachment> GetAsync(string id)
         {
             var attachment = MockBugTrackerDbContext.TicketAttachments.Find(a => a.Id == id);          
             attachment.Submitter = _unitOfWork.UserManager.Users.First(u => u.Id == attachment.SubmitterId);

@@ -28,7 +28,7 @@ namespace BugTracker.Repositories.Mock
             return TicketHistoryRecords.OrderByDescending(r => r.ModifiedAt);
         }
 
-        public Task<TicketHistoryRecord> Get(string id)
+        public Task<TicketHistoryRecord> GetAsync(string id)
         {
             var record = TicketHistoryRecords.Find(r => r.Id == id);            
             record.Ticket = MockBugTrackerDbContext.Tickets.Find(t => t.Id == record.TicketId);

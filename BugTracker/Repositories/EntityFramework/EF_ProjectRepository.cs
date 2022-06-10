@@ -22,7 +22,7 @@ namespace BugTracker.Repositories.EF
                 .Include(p => p.Users);
         }
 
-        public override async Task<Project> Get(string id)
+        public override async Task<Project> GetAsync(string id)
         {
             return await _db.Projects               
                 .Include(p => p.Tickets)

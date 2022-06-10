@@ -19,7 +19,7 @@ namespace BugTracker.Helpers
 
         public async Task<bool> IsUserInProject(string userId, string projectId)
         {
-            var project = await _unitOfWork.Projects.Get(projectId);
+            var project = await _unitOfWork.Projects.GetAsync(projectId);
             return project.Users.Any(u => u.Id == userId);
         }
 
@@ -33,7 +33,7 @@ namespace BugTracker.Helpers
             }
             else if (roles.Contains("Project Manager"))
             {               
-                var project = await _unitOfWork.Projects.Get(projectId);
+                var project = await _unitOfWork.Projects.GetAsync(projectId);
                 return project.Users.Any(u => u.Id == user.Id);
             }
 
@@ -56,7 +56,7 @@ namespace BugTracker.Helpers
         public async Task<IEnumerable<ApplicationUser>> GetUsersInRolesOnProject(string projectId, string[]? roles = null)
         {
             roles ??= _unitOfWork.Roles.Roles.Select(r => r.Name).ToArray();
-            var project = await _unitOfWork.Projects.Get(projectId);
+            var project = await _unitOfWork.Projects.GetAsync(projectId);
             var users = new List<ApplicationUser>();
 
             foreach (var user in project.Users)
