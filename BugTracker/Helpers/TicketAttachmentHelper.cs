@@ -20,6 +20,7 @@ namespace BugTracker.Helpers
             {
                 isValid = true;
             }
+
             return isValid;
         }
 
@@ -27,7 +28,7 @@ namespace BugTracker.Helpers
         {
             string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Attachments");
             string completeFilePath = Path.Combine(uploadsFolder, attachment.FilePath);
-            FileInfo fileInfo = new(completeFilePath);
+            var fileInfo = new FileInfo(completeFilePath);
             File.Delete(completeFilePath);
             fileInfo.Delete();
         }
@@ -39,9 +40,9 @@ namespace BugTracker.Helpers
             {
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Attachments");
                 string completeFilePath = Path.Combine(uploadsFolder, filePath);
-                // FileStream stream = new(completeFilePath, FileMode.Create);
+                // var stream = new FileStream(completeFilePath, FileMode.Create);
                 // await fileAttachment.CopyToAsync(stream);
-                FileInfo fileInfo = new(completeFilePath);
+                var fileInfo = new FileInfo(completeFilePath);
                 fileInfo.CopyTo(completeFilePath); 
                 // stream.Close();
             }            

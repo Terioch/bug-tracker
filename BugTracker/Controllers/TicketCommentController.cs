@@ -9,48 +9,52 @@ namespace BugTracker.Controllers
 {
     public class TicketCommentController : Controller
     {
-        private readonly ITicketCommentRepository repo;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TicketCommentController(ITicketCommentRepository repo, UserManager<ApplicationUser> userManager)
+        public TicketCommentController(IUnitOfWork unitOfWork)
         {
-            this.repo = repo;
-            this.userManager = userManager;
+            _unitOfWork = unitOfWork;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
-            return userManager.GetUserAsync(HttpContext.User);
+            return _unitOfWork.UserManager.GetUserAsync(HttpContext.User);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TicketComment model, string id)
+        public async Task<IActionResult> Create([FromBody] TicketComment model, string ticketId)
         {
             if (model.Value.Length < 1 || model.Value.Length > 200)
             {
                 return new BadRequestObjectResult("Comment must be between 1 and 200 characters");
             }
 
-            ApplicationUser user = await GetCurrentUserAsync();
-            TicketComment comment = new()
+            var user = await GetCurrentUserAsync();
+
+            var comment = new TicketComment()
             {
                 Id = Guid.NewGuid().ToString(),
-                TicketId = id,
+                TicketId = ticketId,
                 AuthorId = user.Id,
                 Value = model.Value,
                 CreatedAt = DateTimeOffset.Now,
             };
                       
-            repo.Create(comment);
-            var comments = repo.GetCommentsByTicketId(id);
-            ViewBag.Id = id;
+            _unitOfWork.TicketComments.Add(comment);                        
+
+            await _unitOfWork.CompleteAsync();
+
+            var comments = _unitOfWork.TicketComments.Find(c => c.TicketId == ticketId);
+
+            ViewBag.Id = ticketId;
+
             return PartialView("_TicketCommentList", comments.ToPagedList(1, 8));            
         }
 
         [HttpGet]
         public IActionResult FilterCommentsByAuthorReturnPartial(string ticketId, string? searchTerm)
         {
-            var comments = repo.GetCommentsByTicketId(ticketId);
+            var comments = _unitOfWork.TicketComments.Find(c => c.TicketId == ticketId);
 
             if (searchTerm == null)
             {
@@ -59,13 +63,23 @@ namespace BugTracker.Controllers
             }
 
             var filteredComments = comments.Where(c => c.Author.UserName.ToLowerInvariant().Contains(searchTerm));
+
             ViewBag.Id = ticketId;
+
             return PartialView("_TicketCommentList", filteredComments.ToPagedList(1, 8));
         }
 
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            TicketComment comment = repo.Delete(id);            
+            var comment = await _unitOfWork.TicketComments.GetAsync(id);
+
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.TicketComments.Delete(comment);            
+
             return RedirectToAction("Details", "Ticket", new { id = comment.TicketId });
         }
     }

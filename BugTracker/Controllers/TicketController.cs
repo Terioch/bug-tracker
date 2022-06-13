@@ -45,6 +45,11 @@ namespace BugTracker.Controllers
         {
             var ticket = await _unitOfWork.Tickets.GetAsync(id);
 
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
             var model = new TicketViewModel()
             {
                 Id = ticket.Id,
@@ -208,6 +213,11 @@ namespace BugTracker.Controllers
         {
             var ticket = await _unitOfWork.Tickets.GetAsync(id);
 
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
             var model = new EditTicketViewModel()
             {
                 Id = id,
@@ -229,6 +239,11 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> Edit(EditTicketViewModel model)
         {
             var ticket = await _unitOfWork.Tickets.GetAsync(model.Id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
 
             // Update property and property history if new value differs from original
             var modelProperties = model.GetType().GetProperties();
@@ -287,6 +302,12 @@ namespace BugTracker.Controllers
         public async Task <IActionResult> EditStatus(TicketViewModel model)
         {
             var ticket = await _unitOfWork.Tickets.GetAsync(model.Id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
             var modifier = await GetCurrentUserAsync();
 
             if (ticket.Status != model.Status)
@@ -304,8 +325,11 @@ namespace BugTracker.Controllers
 
                 _unitOfWork.TicketHistoryRecords.Add(record);
 
-                ticket.Status = model.Status;                
-            }                        
+                ticket.Status = model.Status;
+
+                await _unitOfWork.CompleteAsync();
+            }          
+            
             return RedirectToAction("Details", new { id = ticket.Id });
         }
 
@@ -320,7 +344,16 @@ namespace BugTracker.Controllers
             //ticketAttachmentRepo.DeleteByTicketId(id);            
             //ticketCommentRepo.DeleteCommentsByTicketId(id);
             var ticket = await _unitOfWork.Tickets.GetAsync(id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
             _unitOfWork.Tickets.Delete(ticket);
+
+            await _unitOfWork.CompleteAsync();
+
             return RedirectToAction("ListTickets");
         }
     }

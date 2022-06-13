@@ -11,22 +11,20 @@ namespace BugTracker.Controllers
     [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
     public class TicketAttachmentController : Controller
     {
-        private readonly ITicketAttachmentRepository repo;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IWebHostEnvironment hostingEnvironment;
-        private readonly TicketAttachmentHelper attachmentHelper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly TicketAttachmentHelper _attachmentHelper;
 
-        public TicketAttachmentController(ITicketAttachmentRepository repo, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostingEnvironment, TicketAttachmentHelper attachmentHelper)
+        public TicketAttachmentController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment, TicketAttachmentHelper attachmentHelper)
         {
-            this.repo = repo;
-            this.userManager = userManager;
-            this.hostingEnvironment = hostingEnvironment;
-            this.attachmentHelper = attachmentHelper;
+            _unitOfWork = unitOfWork;
+            _hostingEnvironment = hostingEnvironment;
+            _attachmentHelper = attachmentHelper;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
-            return userManager.GetUserAsync(HttpContext.User);
+            return _unitOfWork.UserManager.GetUserAsync(HttpContext.User);
         }
         
         [HttpPost]
@@ -34,23 +32,23 @@ namespace BugTracker.Controllers
         {            
             if (ModelState.IsValid)
             {
-                if (!attachmentHelper.IsValidAttachment(fileAttachment.FileName))
+                if (!_attachmentHelper.IsValidAttachment(fileAttachment.FileName))
                 {
                     TempData["Error"] = "The attachment you attempted to upload is invalid";
                     return RedirectToAction("Details", "Ticket", new { id = ticketId });
                 }
 
-                ApplicationUser submitter = await GetCurrentUserAsync();              
-                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "attachments");
+                var submitter = await GetCurrentUserAsync();              
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "attachments");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
                 string completeFilePath = Path.Combine(uploadsFolder, uniqueFileName);
                 
                 // Open file stream and upload attachment
-                FileStream stream = new(completeFilePath, FileMode.Create);
+                var stream = new FileStream(completeFilePath, FileMode.Create);
                 await fileAttachment.CopyToAsync(stream);
                 stream.Close();
 
-                TicketAttachment attachment = new()
+                var attachment = new TicketAttachment()
                 {
                     Id = Guid.NewGuid().ToString(),
                     TicketId = ticketId,
@@ -59,59 +57,90 @@ namespace BugTracker.Controllers
                     FilePath = uniqueFileName,
                     CreatedAt = DateTimeOffset.Now,
                 };
-                repo.Create(attachment);
+
+                _unitOfWork.TicketAttachments.Add(attachment);
+
+                await _unitOfWork.CompleteAsync();
+
                 return RedirectToAction("Details", "Ticket", new { id = ticketId });
             }           
 
             TempData["Error"] = string.Join(" ", ModelState.Values
                 .SelectMany(v => v.Errors)
                 .Select(e => e.ErrorMessage));
+
             return RedirectToAction("Details", "Ticket", new { id = ticketId });
         }
         
         [HttpGet]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            TicketAttachment attachment = repo.GetAsync(id);
+            var attachment = await _unitOfWork.TicketAttachments.GetAsync(id);
+
+            if (attachment == null)
+            {
+                return NotFound();
+            }
+
             return View(attachment);
         }
         
         [HttpPost]
         public async Task<IActionResult> Edit(TicketAttachment model, IFormFile fileAttachment)
         {
-            TicketAttachment attachment = repo.GetAsync(model.Id);             
-            
+            var attachment = await _unitOfWork.TicketAttachments.GetAsync(model.Id);
+
+            if (attachment == null)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                if (!attachmentHelper.IsValidAttachment(fileAttachment.FileName))
+                if (!_attachmentHelper.IsValidAttachment(fileAttachment.FileName))
                 {
                     TempData["Error"] = "The attachment you attempted to upload is invalid";
                     return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
                 }
 
-                // Remove currently uploaded attachment                
-                // attachmentHelper.RemoveUploadedFileAttachment(attachment);
+                // Remove current attachment from uploads
+                _attachmentHelper.RemoveUploadedFileAttachment(attachment);
 
                 // Update attachment with new values
                 attachment.Name = model.Name;
                 attachment.FilePath = Guid.NewGuid().ToString() + "_" + fileAttachment.FileName;
 
                 // Upload and save new attachment
-                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "Attachments");
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "Attachments");
                 string updatedCompleteFilePath = Path.Combine(uploadsFolder, attachment.FilePath);
-                FileStream stream = new(updatedCompleteFilePath, FileMode.Create);
+                var stream = new FileStream(updatedCompleteFilePath, FileMode.Create);
+
                 await fileAttachment.CopyToAsync(stream);
                 stream.Close();
-                repo.Update(attachment);                                                               
+
+                await _unitOfWork.CompleteAsync();
+                                                                             
                 return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
             }
+
             return View(attachment);
         }
         
-        public IActionResult Delete(string id) 
-        {                               
-            TicketAttachment attachment = repo.Delete(id);
-            // attachmentHelper.RemoveUploadedFileAttachment(attachment);
+        public async Task<IActionResult> Delete(string id) 
+        {
+            var attachment = await _unitOfWork.TicketAttachments.GetAsync(id);
+
+            if (attachment == null)
+            {
+                return NotFound();
+            }
+            
+            _attachmentHelper.RemoveUploadedFileAttachment(attachment);
+
+            _unitOfWork.TicketAttachments.Delete(attachment);
+
+            await _unitOfWork.CompleteAsync();
+
             return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
         }
     }
