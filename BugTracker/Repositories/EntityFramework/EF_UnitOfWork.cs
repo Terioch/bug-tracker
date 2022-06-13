@@ -4,7 +4,7 @@ using BugTracker.Repositories.EF;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace BugTracker.Repositories.EntityFramework
+namespace BugTracker.Repositories.EF
 {
     public class EF_UnitOfWork : IUnitOfWork
     {

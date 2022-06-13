@@ -19,18 +19,18 @@ string GetPgsqlConnectionString()
     return $"host={uri.Host};username={uri.UserInfo.Split(':')[0]};password={uri.UserInfo.Split(':')[1]};database={uri.LocalPath.Substring(1)};pooling=true;";
 }
 
-// Add services to the container.
+// Add services to the DI container.
 if (isDev)
 {
     var connectionString = builder.Configuration.GetConnectionString("LocalSqlServerConnection");
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseSqlServer(connectionString, x => x.MigrationsAssembly("BugTracker.SqlServerMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    builder.Services.AddScoped<IProjectRepository, EF_ProjectRepository>();
+    /*builder.Services.AddScoped<IProjectRepository, EF_ProjectRepository>();
     builder.Services.AddScoped<IRepository<Ticket>, EF_TicketRepository>();
     builder.Services.AddScoped<IRepository<TicketHistoryRecord>, EF_TicketHistoryRepository>();
     builder.Services.AddScoped<IRepository<TicketAttachment>, EF_TicketAttachmentRepository>();
-    builder.Services.AddScoped<IRepository<TicketComment>, EF_TicketCommentRepository>();
+    builder.Services.AddScoped<IRepository<TicketComment>, EF_TicketCommentRepository>();*/
 }
 else
 {
@@ -38,12 +38,14 @@ else
     builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     options.UseNpgsql(connectionString, x => x.MigrationsAssembly("BugTracker.PgsqlMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    builder.Services.AddScoped<IProjectRepository, Mock_ProjectRepository>();
+    /*builder.Services.AddScoped<IProjectRepository, Mock_ProjectRepository>();
     builder.Services.AddScoped<IRepository<Ticket>, Mock_TicketRepository>();
     builder.Services.AddScoped<IRepository<TicketHistoryRecord>, Mock_TicketHistoryRepository>();
     builder.Services.AddScoped<IRepository<TicketAttachment>, Mock_TicketAttachmentRepository>();
-    builder.Services.AddScoped<IRepository<TicketComment>, Mock_TicketCommentRepository>();
+    builder.Services.AddScoped<IRepository<TicketComment>, Mock_TicketCommentRepository>();*/
 }
+
+builder.Services.AddScoped<IUnitOfWork, EF_UnitOfWork>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;

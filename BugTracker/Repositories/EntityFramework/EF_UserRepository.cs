@@ -3,7 +3,7 @@ using BugTracker.Models;
 using BugTracker.Repositories.EF;
 using BugTracker.Repositories.Interfaces;
 
-namespace BugTracker.Repositories.EntityFramework
+namespace BugTracker.Repositories.EF
 {
     public class EF_UserRepository : EF_Repository<ApplicationUser>, IUserRepository
     {
