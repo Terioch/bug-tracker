@@ -126,6 +126,12 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var project = await _unitOfWork.Projects.GetAsync(id);
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
             return View(project);
         }
 
@@ -136,7 +142,15 @@ namespace BugTracker.Controllers
             if (ModelState.IsValid)
             {
                 var project = await _unitOfWork.Projects.GetAsync(model.Id);
-                project = model;
+
+                if (project == null)
+                {
+                    return NotFound();
+                }
+
+                project.Name = model.Name;
+                project.Description = model.Description;               
+
                 return RedirectToAction("Details", new { id = project.Id });
             }
 
@@ -148,13 +162,13 @@ namespace BugTracker.Controllers
         {
             var tickets = _unitOfWork.Tickets.Find(t => t.ProjectId == id);
 
-            foreach (var ticket in tickets)
+            /*foreach (var ticket in tickets)
             {
                 _unitOfWork.Tickets.Delete(ticket);
                 _unitOfWork.TicketHistoryRecords.DeleteRange(_unitOfWork.TicketHistoryRecords.Find(r => r.TicketId == ticket.Id));
                 _unitOfWork.TicketAttachments.DeleteRange(_unitOfWork.TicketAttachments.Find(a => a.TicketId == ticket.Id));
                 _unitOfWork.TicketComments.DeleteRange(_unitOfWork.TicketComments.Find(c => c.TicketId == ticket.Id));
-            }
+            }*/
             
             var project = await _unitOfWork.Projects.GetAsync(id);
 
@@ -182,7 +196,7 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Details", new { id });
             }
 
-            project.Users.Add(user);
+            project.Users.Add(user);            
 
             return RedirectToAction("Details", new { id });     
         }
@@ -208,6 +222,8 @@ namespace BugTracker.Controllers
             }
 
             project.Users.Remove(user);
+
+            await _unitOfWork.CompleteAsync();
 
             return RedirectToAction("Details", new { id });
         }

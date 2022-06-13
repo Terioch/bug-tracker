@@ -7,50 +7,41 @@ namespace BugTracker.Helpers
 {
     public class TicketHelper
     {
-        private readonly IProjectRepository projectRepo;
-        private readonly IUserProjectRepository userProjectRepo;
-        private readonly ITicketRepository ticketRepo;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleHelper roleHelper;
-        private readonly ClaimsPrincipal? claimUser;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly RoleHelper _roleHelper;
+        private readonly IHttpContextAccessor? _httpContextAccessor;
 
-        public TicketHelper(IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, 
-            ITicketRepository ticketRepo, UserManager<ApplicationUser> userManager, 
-            RoleHelper roleHelper, IHttpContextAccessor httpContextAccessor)
+        public TicketHelper(IUnitOfWork unitOfWork, RoleHelper roleHelper, IHttpContextAccessor httpContextAccessor)
         {
-            this.projectRepo = projectRepo;
-            this.userProjectRepo = userProjectRepo;
-            this.ticketRepo = ticketRepo;
-            this.userManager = userManager;
-            this.roleHelper = roleHelper;
-            claimUser = httpContextAccessor.HttpContext.User;
+            _unitOfWork = unitOfWork;            
+            _roleHelper = roleHelper;
+            _httpContextAccessor = httpContextAccessor;            
         }
 
         public async Task<IEnumerable<Ticket>> GetUserRoleTickets(ApplicationUser? user = null)
-        {                   
-            user ??= await userManager.GetUserAsync(claimUser);
-            var roles = await userManager.GetRolesAsync(user);
-            var assignedProjects = userProjectRepo.GetProjectsByUserId(user.Id);        
+        {
+            user ??= await _unitOfWork.UserManager.GetUserAsync(_httpContextAccessor.HttpContext.User);            
+            var roles = await _unitOfWork.UserManager.GetRolesAsync(user);                       
 
             if (roles.Contains("Admin"))
             {
-                return ticketRepo.GetAll().OrderByDescending(t => t.CreatedAt);
+                return _unitOfWork.Tickets.GetAll();
             }
             else if (roles.Contains("Project Manager"))
             {               
-                return assignedProjects.SelectMany(p => p.Tickets ?? new List<Ticket>()).OrderByDescending(t => t.CreatedAt);               
+                return user.Projects.SelectMany(p => p.Tickets ?? new List<Ticket>()).OrderByDescending(t => t.CreatedAt);               
             }
             else if (roles.Contains("Developer"))
             {
-                return assignedProjects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id)).OrderByDescending(t => t.CreatedAt);                  
+                return user.Projects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id)).OrderByDescending(t => t.CreatedAt);                  
             }
-            return assignedProjects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id)).OrderByDescending(t => t.CreatedAt);          
+            return user.Projects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id)).OrderByDescending(t => t.CreatedAt);          
         }
 
         public async Task<bool> IsAuthorizedToEdit(ApplicationUser user, string ticketId)
         {
-            IList<string> roles = await userManager.GetRolesAsync(user);
-            Ticket ticket = ticketRepo.Get(ticketId);
+            var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
+            var ticket = await _unitOfWork.Tickets.GetAsync(ticketId);
 
             if (roles.Contains("Admin"))
             {
@@ -58,9 +49,8 @@ namespace BugTracker.Helpers
             }   
             else if (roles.Contains("Project Manager"))
             {
-                return userProjectRepo
-                    .GetProjectsByUserId(user.Id)
-                    .SelectMany(p => p.Tickets ?? new List<Ticket>())
+                return user.Projects
+                    .SelectMany(p => p.Tickets)
                     .Select(t => t.Id)
                     .Contains(ticketId);
             }
@@ -72,25 +62,27 @@ namespace BugTracker.Helpers
             {
                 return user.Id == ticket.AssignedDeveloperId;
             }
+
             return false;
         }
 
         public async Task<bool> IsAssignedDeveloper(ApplicationUser user, string ticketId)
         {
-            IList<string> roles = await userManager.GetRolesAsync(user);
-            Ticket ticket = ticketRepo.Get(ticketId);
+            var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
+            var ticket = await _unitOfWork.Tickets.GetAsync(ticketId);
 
             if (roles.Contains("Developer"))
             {
                 return user.Id == ticket.AssignedDeveloperId;
             }
+
             return false;
         }
 
         public async Task<bool> IsAuthorizedToDelete(ApplicationUser user, string ticketId)
         {
-            IList<string> roles = await userManager.GetRolesAsync(user);
-            Ticket ticket = ticketRepo.Get(ticketId);
+            var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
+            var ticket = await _unitOfWork.Tickets.GetAsync(ticketId);
 
             if (roles.Contains("Admin"))
             {
@@ -98,16 +90,16 @@ namespace BugTracker.Helpers
             }
             else if (roles.Contains("Project Manager"))
             {
-                return userProjectRepo
-                    .GetProjectsByUserId(user.Id)
-                    .SelectMany(p => p.Tickets ?? new List<Ticket>())
+                return user.Projects
+                    .SelectMany(p => p.Tickets)
                     .Select(t => t.Id)
                     .Contains(ticketId);
             }
             else if (roles.Contains("Submitter"))
             {
                 return user.Id == ticket.SubmitterId;
-            }           
+            }         
+            
             return false;
         }
 

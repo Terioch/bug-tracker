@@ -16,8 +16,11 @@ namespace BugTracker.Models
         public string? Name { get; set; }
 
         [Required]
-        [StringLength(200)]
-        public string? Description { get; set; }       
+        [StringLength(150)]
+        public string? Description { get; set; }
+
+        [Required]
+        public DateTimeOffset CreatedAt { get; set; }
 
         public virtual ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();
         

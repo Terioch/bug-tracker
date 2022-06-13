@@ -8,16 +8,16 @@ namespace BugTracker.Helpers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly RoleHelper _roleHelper;
-        private readonly string? _userName;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public ProjectHelper(IUnitOfWork unitofWork, RoleHelper roleHelper, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitofWork;
             _roleHelper = roleHelper;
-            _userName = httpContextAccessor.HttpContext.User.Identity.Name;
+            _httpContextAccessor = httpContextAccessor;
         }        
 
-        public async Task<bool> IsUserInProject(string userId, string projectId)
+        public async Task<bool> IsUserInProjectAsync(string userId, string projectId)
         {
             var project = await _unitOfWork.Projects.GetAsync(projectId);
             return project.Users.Any(u => u.Id == userId);
@@ -41,8 +41,8 @@ namespace BugTracker.Helpers
         }
 
         public async Task<IEnumerable<Project>> GetUserRoleProjects(ApplicationUser? user = null)
-        {                 
-            user ??= _unitOfWork.UserManager.Users.First(u => u.UserName == _userName);
+        {
+            user ??= await _unitOfWork.UserManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
             var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
 
             if (roles.Contains("Admin"))
@@ -55,7 +55,7 @@ namespace BugTracker.Helpers
 
         public async Task<IEnumerable<ApplicationUser>> GetUsersInRolesOnProject(string projectId, string[]? roles = null)
         {
-            roles ??= _unitOfWork.Roles.Roles.Select(r => r.Name).ToArray();
+            roles ??= _unitOfWork.RoleManager.Roles.Select(r => r.Name).ToArray();
             var project = await _unitOfWork.Projects.GetAsync(projectId);
             var users = new List<ApplicationUser>();
 
@@ -69,6 +69,7 @@ namespace BugTracker.Helpers
                     }
                 }
             }
+
             return users;
         }        
 
