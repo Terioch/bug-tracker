@@ -26,7 +26,7 @@ if (!isDev)
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, x => x.MigrationsAssembly("BugTracker.SqlServerMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    /*builder.Services.AddScoped<IProjectRepository, EF_ProjectRepository>();
+    /*builder.Services.AddScoped<IProjectRepository, EF_ProjectRepository>();   
     builder.Services.AddScoped<IRepository<Ticket>, EF_TicketRepository>();
     builder.Services.AddScoped<IRepository<TicketHistoryRecord>, EF_TicketHistoryRepository>();
     builder.Services.AddScoped<IRepository<TicketAttachment>, EF_TicketAttachmentRepository>();

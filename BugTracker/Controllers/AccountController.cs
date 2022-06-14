@@ -56,21 +56,27 @@ namespace BugTracker.Controllers
             }
 
             ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             var result = await signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {             
                 return LocalRedirect(returnUrl);
             }
+
             if (result.RequiresTwoFactor)
             {
                 return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = false });
             }
+
             if (result.IsLockedOut)
             {              
                 return RedirectToPage("./Lockout");
-            }            
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }       
+            
+            //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            TempData["Error"] = "Invalid login attempt";
+
             return RedirectToAction("DisplayDemoLoginForm");                    
         }     
     }

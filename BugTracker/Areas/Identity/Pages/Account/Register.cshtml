@@ -11,7 +11,7 @@
             <img src="~/images/register.webp" class="w-100" alt="Login Image">
         </div>
         <div class="col col-12 col-md-6 card">
-            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <form id="registerForm" asp-route-returnUrl="@Url.Action("Index", "Dashboard", new { area = "" })" method="post">
                 <div class="d-flex flex-column justify-content-center align-items-center mt-3 mb-2">                
                     <i class="fas fa-route text-dark mb-3" style="font-size: 2.2em"></i>                
                     <h1 class="fs-3 text-secondary">Create a New Account</h1>
