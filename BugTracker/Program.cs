@@ -20,7 +20,7 @@ string GetPgsqlConnectionString()
 }
 
 // Add services to the DI container.
-if (isDev)
+if (!isDev)
 {
     var connectionString = builder.Configuration.GetConnectionString("LocalSqlServerConnection");
     builder.Services.AddDbContext<ApplicationDbContext>(options =>

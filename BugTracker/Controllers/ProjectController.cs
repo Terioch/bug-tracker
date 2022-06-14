@@ -115,7 +115,7 @@ namespace BugTracker.Controllers
             {
                 return PartialView("~/Views/User/_UserProjectList.cshtml", user.Projects.ToPagedList(1, 5));
             }
-
+  
             var filteredProjects = user.Projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
 
             return PartialView("~/Views/User/_UserProjectList.cshtml", filteredProjects.ToPagedList(1, 5));
