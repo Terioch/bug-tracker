@@ -7,9 +7,9 @@ namespace BugTracker.Repositories.EF
 {
     public class EF_UserRepository : EF_Repository<ApplicationUser>, IUserRepository
     {
-        private readonly BugTrackerDbContext _db;
+        private readonly ApplicationDbContext _db;
 
-        public EF_UserRepository(BugTrackerDbContext db) : base(db)
+        public EF_UserRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }

@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BugTracker.PgsqlMigrations.Migrations
 {
-    [DbContext(typeof(BugTrackerDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class BugTrackerDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -17,11 +17,11 @@ namespace BugTracker.Models
         [Required]
         public string? ProjectId { get; set; }
 
-        [ForeignKey(nameof(Project))]
+        [ForeignKey(nameof(Submitter))]
         [Required]
         public string? SubmitterId { get; set; }
 
-        [ForeignKey(nameof(Project))]
+        [ForeignKey(nameof(AssignedDeveloper))]
         public string? AssignedDeveloperId { get; set; }
 
         [Required]

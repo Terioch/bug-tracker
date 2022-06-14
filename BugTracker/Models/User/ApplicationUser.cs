@@ -15,9 +15,7 @@ namespace BugTracker.Models
         [Column(TypeName = "varchar(100)")]
         public string? LastName { get; set; }
 
-        public virtual ICollection<Project> Projects { get; set; } = new HashSet<Project>();
-
-        public virtual ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();
+        public virtual ICollection<Project> Projects { get; set; } = new HashSet<Project>();   
 
         public virtual ICollection<TicketHistoryRecord> TicketHistoryRecords { get; set; } = new HashSet<TicketHistoryRecord>();
 

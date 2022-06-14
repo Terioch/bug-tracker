@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BugTracker.PgsqlMigrations.Migrations
 {
-    [DbContext(typeof(BugTrackerDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20220324175033_initialize")]
     partial class initialize
     {

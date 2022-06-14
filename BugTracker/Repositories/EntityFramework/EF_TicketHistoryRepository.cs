@@ -8,9 +8,9 @@ namespace BugTracker.Repositories.EF
 {
     public class EF_TicketHistoryRepository : EF_Repository<TicketHistoryRecord>, IRepository<TicketHistoryRecord>
     {
-        private readonly BugTrackerDbContext _db;
+        private readonly ApplicationDbContext _db;
 
-        public EF_TicketHistoryRepository(BugTrackerDbContext db) : base(db)
+        public EF_TicketHistoryRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lJflxMnJVlIzDVHpcPSJ5GyeOxVdie2YPK59IAtsF4Hkwh8xIOxImWMuYIuC9W1+cef+7DYa8GYxGmiTYDePcA==",
+  "dgSpecHash": "1aUEEmGOvtza+9JXLVH51szEpI8f6f7zAoWj+8x4hh2nPSqqEs6jJY6otdlqY6LrvPOjU2O057aL4ERwWLH3EA==",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker.PgsqlMigrations\\BugTracker.PgsqlMigrations.csproj",
   "expectedPackageFiles": [

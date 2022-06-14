@@ -3269,6 +3269,7 @@
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.1",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.1",
           "Microsoft.AspNetCore.Identity.UI": "6.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.2",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "6.0.2",
@@ -10099,7 +10100,8 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "BugTracker >= 1.0.0"
+      "BugTracker >= 1.0.0",
+      "Microsoft.EntityFrameworkCore >= 6.0.1"
     ]
   },
   "packageFolders": {
@@ -10144,6 +10146,12 @@
     "frameworks": {
       "net6.0": {
         "targetAlias": "net6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[6.0.1, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

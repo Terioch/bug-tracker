@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TyKff0mEY/8hGWFniFHdEBGz5qIKSVcZASeJph4is39xTlpK0D5ur0mS28gHQvVf1cWtjMJKQH5z4dQxY8jjdg==",
+  "dgSpecHash": "rIq0HAZl/JyBs0cufwsqYxrNw8lEwb4Ghb66LcvFlPxIexk6PNvdJVfNaAaRmyonFIXQ8Wa8Ik/sOLetbYQ99Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\BugTracker.SqlServerMigrations.csproj",
   "expectedPackageFiles": [

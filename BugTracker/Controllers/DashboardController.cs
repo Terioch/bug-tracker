@@ -10,16 +10,16 @@ namespace BugTracker.Controllers
 {
     public class DashboardController : Controller
     {
-        private readonly TicketHistoryHelper ticketHistoryHelper;
+        private readonly TicketHistoryHelper _ticketHistoryHelper;
 
         public DashboardController(TicketHistoryHelper ticketHistoryHelper)
         {          
-            this.ticketHistoryHelper = ticketHistoryHelper;
+            _ticketHistoryHelper = ticketHistoryHelper;
         }
 
         public async Task<IActionResult> Index(int? historyPage)
         {
-            IEnumerable<TicketHistoryRecord> historyRecords = await ticketHistoryHelper.GetUserRoleRecords();            
+            IEnumerable<TicketHistoryRecord> historyRecords = await _ticketHistoryHelper.GetUserRoleRecords();            
             DashboardViewModel model = new()
             {                               
                 TicketHistoryRecords = historyRecords.Take(50).ToPagedList(historyPage ?? 1, 6),

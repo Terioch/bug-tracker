@@ -23,7 +23,7 @@ string GetPgsqlConnectionString()
 if (isDev)
 {
     var connectionString = builder.Configuration.GetConnectionString("LocalSqlServerConnection");
-    builder.Services.AddDbContext<BugTrackerDbContext>(options =>
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, x => x.MigrationsAssembly("BugTracker.SqlServerMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     /*builder.Services.AddScoped<IProjectRepository, EF_ProjectRepository>();
@@ -35,9 +35,8 @@ if (isDev)
 else
 {
     var connectionString = GetPgsqlConnectionString();
-    builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-    options.UseNpgsql(connectionString, x => x.MigrationsAssembly("BugTracker.PgsqlMigrations")));
-    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(connectionString, x => x.MigrationsAssembly("BugTracker.PgsqlMigrations")));    
     /*builder.Services.AddScoped<IProjectRepository, Mock_ProjectRepository>();
     builder.Services.AddScoped<IRepository<Ticket>, Mock_TicketRepository>();
     builder.Services.AddScoped<IRepository<TicketHistoryRecord>, Mock_TicketHistoryRepository>();
@@ -47,12 +46,20 @@ else
 
 builder.Services.AddScoped<IUnitOfWork, EF_UnitOfWork>();
 
+builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
+builder.Services.AddScoped<TicketHelper, TicketHelper>();
+builder.Services.AddScoped<RoleHelper, RoleHelper>();
+builder.Services.AddScoped<TicketAttachmentHelper, TicketAttachmentHelper>();
+builder.Services.AddScoped<TicketHistoryHelper, TicketHistoryHelper>();
+builder.Services.AddScoped<AccountHelper, AccountHelper>();
+builder.Services.AddScoped<ChartHelper, ChartHelper>();
+
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;
         options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
     })
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<BugTrackerDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc(options =>

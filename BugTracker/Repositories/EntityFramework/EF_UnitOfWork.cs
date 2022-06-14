@@ -8,9 +8,9 @@ namespace BugTracker.Repositories.EF
 {
     public class EF_UnitOfWork : IUnitOfWork
     {
-        private readonly BugTrackerDbContext _db;
+        private readonly ApplicationDbContext _db;
 
-        public EF_UnitOfWork(BugTrackerDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public EF_UnitOfWork(ApplicationDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _db = db;
             Projects = new EF_ProjectRepository(db);

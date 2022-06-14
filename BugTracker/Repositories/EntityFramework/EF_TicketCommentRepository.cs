@@ -9,9 +9,9 @@ namespace BugTracker.Repositories.EF
 {
     public class EF_TicketCommentRepository : EF_Repository<TicketComment>, IRepository<TicketComment>
     {
-        private readonly BugTrackerDbContext _db;
+        private readonly ApplicationDbContext _db;
 
-        public EF_TicketCommentRepository(BugTrackerDbContext db) : base(db)
+        public EF_TicketCommentRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }

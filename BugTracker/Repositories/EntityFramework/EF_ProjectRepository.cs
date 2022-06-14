@@ -8,9 +8,9 @@ namespace BugTracker.Repositories.EF
 {
     public class EF_ProjectRepository : EF_Repository<Project>, IProjectRepository
     {
-        private readonly BugTrackerDbContext _db;
+        private readonly ApplicationDbContext _db;
 
-        public EF_ProjectRepository(BugTrackerDbContext db) : base(db)
+        public EF_ProjectRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }

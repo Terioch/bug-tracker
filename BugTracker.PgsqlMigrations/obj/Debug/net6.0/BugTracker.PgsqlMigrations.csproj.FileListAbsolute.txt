@@ -31,6 +31,6 @@ C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.csproj.CopyComplete
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.dll
-C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\ref\BugTracker.PgsqlMigrations.dll
-C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.pdb
 C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\refint\BugTracker.PgsqlMigrations.dll
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\BugTracker.PgsqlMigrations.pdb
+C:\Users\User\source\repos\BugTracker\BugTracker.PgsqlMigrations\obj\Debug\net6.0\ref\BugTracker.PgsqlMigrations.dll

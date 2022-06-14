@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "BugTracker.PgsqlMigrations/1.0.0": {
         "dependencies": {
-          "BugTracker": "1.0.0"
+          "BugTracker": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.1"
         },
         "runtime": {
           "BugTracker.PgsqlMigrations.dll": {}
@@ -2379,6 +2380,7 @@
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.1",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.1",
           "Microsoft.AspNetCore.Identity.UI": "6.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.2",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "6.0.2",

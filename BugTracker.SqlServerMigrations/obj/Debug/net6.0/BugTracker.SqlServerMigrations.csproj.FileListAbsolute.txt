@@ -75,6 +75,6 @@ C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\n
 C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\BugTracker.SqlServerMigrations.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\BugTracker.SqlServerMigrations.csproj.CopyComplete
 C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\BugTracker.SqlServerMigrations.dll
-C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\ref\BugTracker.SqlServerMigrations.dll
-C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\BugTracker.SqlServerMigrations.pdb
 C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\refint\BugTracker.SqlServerMigrations.dll
+C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\BugTracker.SqlServerMigrations.pdb
+C:\Users\User\source\repos\BugTracker\BugTracker.SqlServerMigrations\obj\Debug\net6.0\ref\BugTracker.SqlServerMigrations.dll

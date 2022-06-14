@@ -13,11 +13,12 @@ namespace BugTracker.Repositories.Mock
             TicketHistoryRecords = new Mock_TicketHistoryRepository(unitOfWork);
             TicketAttachments = new Mock_TicketAttachmentRepository(unitOfWork);
             TicketComments = new Mock_TicketCommentRepository(unitOfWork);
+            Users = new Mock_UserRepository(unitOfWork);
             UserManager = userManager;
-            Roles = roleManager;
+            RoleManager = roleManager;
         }
 
-        public IRepository<Project> Projects { get; private set; }
+        public IProjectRepository Projects { get; private set; }
 
         public IRepository<Ticket> Tickets { get; private set; }
 
@@ -27,9 +28,11 @@ namespace BugTracker.Repositories.Mock
 
         public IRepository<TicketComment> TicketComments { get; private set; }
 
+        public IUserRepository Users { get; private set; }
+
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
-        public RoleManager<IdentityRole> Roles { get; private set; }
+        public RoleManager<IdentityRole> RoleManager { get; private set; }        
 
         public Task<int> CompleteAsync()
         {

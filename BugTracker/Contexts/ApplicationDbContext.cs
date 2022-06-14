@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Contexts;
 
-public class BugTrackerDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
-    public BugTrackerDbContext(DbContextOptions<BugTrackerDbContext> options) 
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : base(options)
     {               
     }
