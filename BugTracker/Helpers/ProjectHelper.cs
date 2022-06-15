@@ -53,20 +53,21 @@ namespace BugTracker.Helpers
             return _unitOfWork.UserManager.Users.First(u => u.Id == user.Id).Projects; // May not load project nav properties
         }
 
-        public async Task<IEnumerable<ApplicationUser>> GetUsersInRolesOnProject(string projectId, string[]? roles)
+        public async Task<IEnumerable<ApplicationUser>> GetUsersInRolesOnProject(string projectId, string[]? roles = null)
         {
             roles ??= _unitOfWork.RoleManager.Roles.Select(r => r.Name).ToArray();   
             //roles ??= new string[] { "Owner", "Admin", "Project Manager", "Developer", "Submitter" };
             var project = await _unitOfWork.Projects.Get(projectId);
+            var projectUsers = project.Users.ToList();
             var users = new List<ApplicationUser>();
 
-            foreach (var user in project.Users)
+            for (int i = 0; i < project.Users.Count; i++)
             {
-                foreach (string role in roles)
+                for (int j = 0; j < roles.Length; j++)
                 {
-                    if (await _unitOfWork.UserManager.IsInRoleAsync(user, role))
+                    if (await _unitOfWork.UserManager.IsInRoleAsync(projectUsers[i], roles[j]))
                     {
-                        users.Add(user);
+                        users.Add(projectUsers[i]);
                     }
                 }
             }
@@ -78,10 +79,11 @@ namespace BugTracker.Helpers
         {           
             var projects = await GetUserRoleProjects();
             var distinctUsers = new List<ApplicationUser>();
+            var projectList = projects.ToList();
 
-            foreach (var project in projects)
+            for (int i = 0; i < projectList.Count; i++)
             {
-                var users = await GetUsersInRolesOnProject(project.Id, roles);
+                var users = await GetUsersInRolesOnProject(projectList[i].Id, roles);
 
                 foreach (var user in users)
                 {

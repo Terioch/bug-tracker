@@ -25,7 +25,7 @@ namespace BugTracker.Controllers
         {
             var historyRecords = await _ticketHistoryHelper.GetUserRoleRecords();
             var userRoleProjects = await _projectHelper.GetUserRoleProjects();
-            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();
+            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();                   
 
             var model = new DashboardViewModel()
             {                               
