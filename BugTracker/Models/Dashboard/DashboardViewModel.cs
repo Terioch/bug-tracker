@@ -3,19 +3,15 @@
 namespace BugTracker.Models
 {
     public class DashboardViewModel
-    {
-        public ChartData? TicketTypeData { get; set; }
+    {                     
+        public int UserRoleProjectCount { get; set; }
 
-        public ChartData? TicketStatusData { get; set; }
+        public int UserRoleTicketCount { get; set; }
 
-        public ChartData? TicketPriorityData { get; set; }
-       
-        public IPagedList<TicketHistoryRecord>? TicketHistoryRecords { get; set; }
+        public int UserCountOnUserRoleProjects { get; set; }
 
-        public ICollection<Project> Projects { get; set; } = new HashSet<Project>();
+        public int DeveloperCountOnUserRoleProjects { get; set; }
 
-        public ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();
-
-        public ICollection<ApplicationUser> Users { get; set; } = new HashSet<ApplicationUser>();     
+        public IPagedList<TicketHistoryRecord>? TicketHistoryRecords { get; set; }         
     }    
 }

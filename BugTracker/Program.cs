@@ -25,33 +25,23 @@ if (!isDev)
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, x => x.MigrationsAssembly("BugTracker.SqlServerMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    /*builder.Services.AddScoped<IProjectRepository, EF_ProjectRepository>();   
-    builder.Services.AddScoped<IRepository<Ticket>, EF_TicketRepository>();
-    builder.Services.AddScoped<IRepository<TicketHistoryRecord>, EF_TicketHistoryRepository>();
-    builder.Services.AddScoped<IRepository<TicketAttachment>, EF_TicketAttachmentRepository>();
-    builder.Services.AddScoped<IRepository<TicketComment>, EF_TicketCommentRepository>();*/
 }
 else
 {
     var connectionString = GetPgsqlConnectionString();
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString, x => x.MigrationsAssembly("BugTracker.PgsqlMigrations")));    
-    /*builder.Services.AddScoped<IProjectRepository, Mock_ProjectRepository>();
-    builder.Services.AddScoped<IRepository<Ticket>, Mock_TicketRepository>();
-    builder.Services.AddScoped<IRepository<TicketHistoryRecord>, Mock_TicketHistoryRepository>();
-    builder.Services.AddScoped<IRepository<TicketAttachment>, Mock_TicketAttachmentRepository>();
-    builder.Services.AddScoped<IRepository<TicketComment>, Mock_TicketCommentRepository>();*/
 }
 
-builder.Services.AddScoped<IUnitOfWork, EF_UnitOfWork>();
+builder.Services.AddTransient<IUnitOfWork, EF_UnitOfWork>();
 
-builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
-builder.Services.AddScoped<TicketHelper, TicketHelper>();
-builder.Services.AddScoped<RoleHelper, RoleHelper>();
-builder.Services.AddScoped<TicketAttachmentHelper, TicketAttachmentHelper>();
-builder.Services.AddScoped<TicketHistoryHelper, TicketHistoryHelper>();
-builder.Services.AddScoped<AccountHelper, AccountHelper>();
-builder.Services.AddScoped<ChartHelper, ChartHelper>();
+builder.Services.AddTransient<ProjectHelper, ProjectHelper>();
+builder.Services.AddTransient<TicketHelper, TicketHelper>();
+builder.Services.AddTransient<RoleHelper, RoleHelper>();
+builder.Services.AddTransient<TicketAttachmentHelper, TicketAttachmentHelper>();
+builder.Services.AddTransient<TicketHistoryHelper, TicketHistoryHelper>();
+builder.Services.AddTransient<AccountHelper, AccountHelper>();
+builder.Services.AddTransient<ChartHelper, ChartHelper>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;

@@ -75,7 +75,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var attachment = await _unitOfWork.TicketAttachments.GetAsync(id);
+            var attachment = await _unitOfWork.TicketAttachments.Get(id);
 
             if (attachment == null)
             {
@@ -88,7 +88,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(TicketAttachment model, IFormFile fileAttachment)
         {
-            var attachment = await _unitOfWork.TicketAttachments.GetAsync(model.Id);
+            var attachment = await _unitOfWork.TicketAttachments.Get(model.Id);
 
             if (attachment == null)
             {
@@ -128,7 +128,7 @@ namespace BugTracker.Controllers
         
         public async Task<IActionResult> Delete(string id) 
         {
-            var attachment = await _unitOfWork.TicketAttachments.GetAsync(id);
+            var attachment = await _unitOfWork.TicketAttachments.Get(id);
 
             if (attachment == null)
             {

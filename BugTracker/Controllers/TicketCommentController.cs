@@ -71,7 +71,7 @@ namespace BugTracker.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            var comment = await _unitOfWork.TicketComments.GetAsync(id);
+            var comment = await _unitOfWork.TicketComments.Get(id);
 
             if (comment == null)
             {

@@ -43,7 +43,7 @@ namespace BugTracker.Repositories.Mock
             throw new NotImplementedException();
         }
 
-        public Task<ApplicationUser> GetAsync(string id)
+        public Task<ApplicationUser> Get(string id)
         {
             throw new NotImplementedException();
         }

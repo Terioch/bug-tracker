@@ -15,11 +15,11 @@ namespace BugTracker.Helpers
             _unitOfWork = unitofWork;
             _roleHelper = roleHelper;
             _httpContextAccessor = httpContextAccessor;
-        }        
+        }
 
-        public async Task<bool> IsUserInProjectAsync(string userId, string projectId)
+        public async Task<bool> IsUserOnProject(string userId, string projectId)
         {
-            var project = await _unitOfWork.Projects.GetAsync(projectId);
+            var project = await _unitOfWork.Projects.Get(projectId);
             return project.Users.Any(u => u.Id == userId);
         }
 
@@ -33,7 +33,7 @@ namespace BugTracker.Helpers
             }
             else if (roles.Contains("Project Manager"))
             {               
-                var project = await _unitOfWork.Projects.GetAsync(projectId);
+                var project = await _unitOfWork.Projects.Get(projectId);
                 return project.Users.Any(u => u.Id == user.Id);
             }
 
@@ -53,10 +53,11 @@ namespace BugTracker.Helpers
             return _unitOfWork.UserManager.Users.First(u => u.Id == user.Id).Projects; // May not load project nav properties
         }
 
-        public async Task<IEnumerable<ApplicationUser>> GetUsersInRolesOnProject(string projectId, string[]? roles = null)
+        public async Task<IEnumerable<ApplicationUser>> GetUsersInRolesOnProject(string projectId, string[]? roles)
         {
-            roles ??= _unitOfWork.RoleManager.Roles.Select(r => r.Name).ToArray();
-            var project = await _unitOfWork.Projects.GetAsync(projectId);
+            roles ??= _unitOfWork.RoleManager.Roles.Select(r => r.Name).ToArray();   
+            //roles ??= new string[] { "Owner", "Admin", "Project Manager", "Developer", "Submitter" };
+            var project = await _unitOfWork.Projects.Get(projectId);
             var users = new List<ApplicationUser>();
 
             foreach (var user in project.Users)
@@ -71,18 +72,12 @@ namespace BugTracker.Helpers
             }
 
             return users;
-        }        
-
-        public async Task<int> GetUserProjectCount()
-        {
-            var projects = await GetUserRoleProjects();
-            return projects.Count();
-        }    
+        }                
 
         public async Task<int> GetUsersInRolesCountOnUserRoleProjects(string[]? roles = null)
         {           
             var projects = await GetUserRoleProjects();
-            var distinctUsers = new HashSet<ApplicationUser>();
+            var distinctUsers = new List<ApplicationUser>();
 
             foreach (var project in projects)
             {

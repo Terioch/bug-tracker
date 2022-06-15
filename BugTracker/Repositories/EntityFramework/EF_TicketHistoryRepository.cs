@@ -23,7 +23,7 @@ namespace BugTracker.Repositories.EF
                 .OrderByDescending(t => t.ModifiedAt);
         }        
 
-        public override async Task<TicketHistoryRecord> GetAsync(string id)
+        public override async Task<TicketHistoryRecord> Get(string id)
         {
             return await _db.TicketHistoryRecords
                 .Include(t => t.Ticket)

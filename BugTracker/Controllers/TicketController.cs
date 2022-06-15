@@ -43,7 +43,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string id, int? historyPage, int? attachmentsPage, int? commentsPage)
         {
-            var ticket = await _unitOfWork.Tickets.GetAsync(id);
+            var ticket = await _unitOfWork.Tickets.Get(id);
 
             if (ticket == null)
             {
@@ -102,12 +102,12 @@ namespace BugTracker.Controllers
                 };
 
                 // Ensure that the submitter is assigned to the corresponding project               
-                bool isSubmitterAssigned = await _projectHelper.IsUserInProjectAsync(ticket.SubmitterId, ticket.ProjectId);
+                bool isSubmitterAssigned = await _projectHelper.IsUserOnProject(ticket.SubmitterId, ticket.ProjectId);
 
                 if (!isSubmitterAssigned)
                 {                   
-                    var user = await _unitOfWork.Users.GetAsync(ticket.SubmitterId);
-                    var project = await _unitOfWork.Projects.GetAsync(ticket.ProjectId);
+                    var user = await _unitOfWork.Users.Get(ticket.SubmitterId);
+                    var project = await _unitOfWork.Projects.Get(ticket.ProjectId);
                     project.Users.Add(user);
                 }
                 
@@ -211,7 +211,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var ticket = await _unitOfWork.Tickets.GetAsync(id);
+            var ticket = await _unitOfWork.Tickets.Get(id);
 
             if (ticket == null)
             {
@@ -238,7 +238,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditTicketViewModel model)
         {
-            var ticket = await _unitOfWork.Tickets.GetAsync(model.Id);
+            var ticket = await _unitOfWork.Tickets.Get(model.Id);
 
             if (ticket == null)
             {
@@ -281,13 +281,13 @@ namespace BugTracker.Controllers
             // Ensure that the assigned developer is assigned to the corresponding project
             if (ticket.AssignedDeveloperId != null)
             {               
-                var project = await _unitOfWork.Projects.GetAsync(ticket.ProjectId);
+                var project = await _unitOfWork.Projects.Get(ticket.ProjectId);
 
                 bool isDeveloperAssigned = project.Users.Select(u => u.Id).Contains(ticket.AssignedDeveloperId);
 
                 if (!isDeveloperAssigned)
                 {                    
-                    var user = await _unitOfWork.Users.GetAsync(ticket.AssignedDeveloperId);
+                    var user = await _unitOfWork.Users.Get(ticket.AssignedDeveloperId);
                     project.Users.Add(user);
                 }
             }
@@ -301,7 +301,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task <IActionResult> EditStatus(TicketViewModel model)
         {
-            var ticket = await _unitOfWork.Tickets.GetAsync(model.Id);
+            var ticket = await _unitOfWork.Tickets.Get(model.Id);
 
             if (ticket == null)
             {
@@ -343,7 +343,7 @@ namespace BugTracker.Controllers
             }*/
             //ticketAttachmentRepo.DeleteByTicketId(id);            
             //ticketCommentRepo.DeleteCommentsByTicketId(id);
-            var ticket = await _unitOfWork.Tickets.GetAsync(id);
+            var ticket = await _unitOfWork.Tickets.Get(id);
 
             if (ticket == null)
             {

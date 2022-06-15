@@ -6,7 +6,7 @@ namespace BugTracker.Repositories.Interfaces
     {
         IEnumerable<T> GetAll();
 
-        Task<T> GetAsync(string id);
+        Task<T> Get(string id);
 
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
 

@@ -69,7 +69,7 @@ namespace BugTracker.Controllers
         [HttpGet] 
         public async Task<IActionResult> Details(string id, int? usersPage, int? ticketsPage)
         {                        
-            var project = await _unitOfWork.Projects.GetAsync(id);         
+            var project = await _unitOfWork.Projects.Get(id);         
             var userRoleTickets = await _ticketHelper.GetUserRoleTickets();                         
             var unassignedUsers = _unitOfWork.UserManager.Users.Where(u => !project.Users.Contains(u));
 
@@ -125,7 +125,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var project = await _unitOfWork.Projects.GetAsync(id);
+            var project = await _unitOfWork.Projects.Get(id);
 
             if (project == null)
             {
@@ -141,7 +141,7 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                var project = await _unitOfWork.Projects.GetAsync(model.Id);
+                var project = await _unitOfWork.Projects.Get(model.Id);
 
                 if (project == null)
                 {
@@ -172,7 +172,7 @@ namespace BugTracker.Controllers
                 _unitOfWork.TicketComments.DeleteRange(_unitOfWork.TicketComments.Find(c => c.TicketId == ticket.Id));
             }*/
             
-            var project = await _unitOfWork.Projects.GetAsync(id);
+            var project = await _unitOfWork.Projects.Get(id);
 
             /*foreach (var user in project.Users)
             {
@@ -190,7 +190,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> AddUser(string id, ProjectViewModel model)
         {
             var user = await _unitOfWork.UserManager.FindByIdAsync(model.ToBeAssignedUserId);          
-            var project = await _unitOfWork.Projects.GetAsync(id);
+            var project = await _unitOfWork.Projects.Get(id);
 
             if (project.Users.Any(u => u.Id == user.Id))
             {
@@ -206,7 +206,7 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, Project Manager")]
         public async Task<IActionResult> RemoveUser(string id, string userId)
         {
-            var project = await _unitOfWork.Projects.GetAsync(id);
+            var project = await _unitOfWork.Projects.Get(id);
             var user = await _unitOfWork.UserManager.FindByIdAsync(userId);        
 
             if (!project.Users.Any(u => u.Id == user.Id))

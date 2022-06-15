@@ -53,7 +53,7 @@ namespace BugTracker.Controllers
 
             foreach (var record in records)
             {
-                var ticket = await _unitOfWork.Tickets.GetAsync(record.TicketId);
+                var ticket = await _unitOfWork.Tickets.Get(record.TicketId);
 
                 if (ticket.Title.ToLowerInvariant().Contains(searchTerm) || record.Property.ToLowerInvariant().Contains(searchTerm))
                 {

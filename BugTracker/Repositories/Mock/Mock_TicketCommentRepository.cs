@@ -25,7 +25,7 @@ namespace BugTracker.Repositories.Mock
             return MockBugTrackerDbContext.TicketComments;
         }
 
-        public Task<TicketComment> GetAsync(string id)
+        public Task<TicketComment> Get(string id)
         {
             return Task.FromResult(MockBugTrackerDbContext.TicketComments.Find(c => c.Id == id));
         }

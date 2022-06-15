@@ -35,13 +35,14 @@ namespace BugTracker.Helpers
             {
                 return user.Projects.SelectMany(p => p.Tickets.Where(t => t.AssignedDeveloperId == user.Id)).OrderByDescending(t => t.CreatedAt);                  
             }
+
             return user.Projects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id)).OrderByDescending(t => t.CreatedAt);          
         }
 
         public async Task<bool> IsAuthorizedToEdit(ApplicationUser user, string ticketId)
         {
             var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
-            var ticket = await _unitOfWork.Tickets.GetAsync(ticketId);
+            var ticket = await _unitOfWork.Tickets.Get(ticketId);
 
             if (roles.Contains("Admin"))
             {
@@ -69,7 +70,7 @@ namespace BugTracker.Helpers
         public async Task<bool> IsAssignedDeveloper(ApplicationUser user, string ticketId)
         {
             var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
-            var ticket = await _unitOfWork.Tickets.GetAsync(ticketId);
+            var ticket = await _unitOfWork.Tickets.Get(ticketId);
 
             if (roles.Contains("Developer"))
             {
@@ -82,7 +83,7 @@ namespace BugTracker.Helpers
         public async Task<bool> IsAuthorizedToDelete(ApplicationUser user, string ticketId)
         {
             var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
-            var ticket = await _unitOfWork.Tickets.GetAsync(ticketId);
+            var ticket = await _unitOfWork.Tickets.Get(ticketId);
 
             if (roles.Contains("Admin"))
             {
@@ -101,13 +102,7 @@ namespace BugTracker.Helpers
             }         
             
             return false;
-        }
-
-        public async Task<int> GetUserTicketCount()
-        {
-            var tickets = await GetUserRoleTickets();
-            return tickets.Count();
-        }
+        }        
 
         public async Task<int> GetUserUnresolvedTicketCount()
         {

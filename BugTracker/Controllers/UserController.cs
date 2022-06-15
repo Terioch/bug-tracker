@@ -75,7 +75,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterProjectUsersByNameReturnPartial(string id, string? searchTerm)
         {
-            var project = await _unitOfWork.Projects.GetAsync(id);
+            var project = await _unitOfWork.Projects.Get(id);
             
             TempData["ProjectId"] = id;
             TempData["ProjectName"] = project.Name;
@@ -157,7 +157,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProject(string id, UserViewModel model)
         {       
-            var user = await _unitOfWork.Users.GetAsync(id);
+            var user = await _unitOfWork.Users.Get(id);
 
             if (user == null)
             {
@@ -171,7 +171,7 @@ namespace BugTracker.Controllers
                 TempData["Error"] = "The project you're attempting to add is already assigned to this user";
             }
 
-            var project = await _unitOfWork.Projects.GetAsync(model.ToBeAssignedProjectId);
+            var project = await _unitOfWork.Projects.Get(model.ToBeAssignedProjectId);
 
             user.Projects.Add(project);
 
@@ -183,14 +183,14 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RemoveProject(string id, string projectId)
         {
-            var user = await _unitOfWork.Users.GetAsync(id);
+            var user = await _unitOfWork.Users.Get(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            var project = await _unitOfWork.Projects.GetAsync(projectId);
+            var project = await _unitOfWork.Projects.Get(projectId);
             bool isInProject = _unitOfWork.Projects.GetAll().Select(p => p.Id).Contains(projectId);
 
             if (!isInProject)
