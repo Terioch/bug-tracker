@@ -149,7 +149,9 @@ namespace BugTracker.Controllers
                 }
 
                 project.Name = model.Name;
-                project.Description = model.Description;               
+                project.Description = model.Description;
+
+                await _unitOfWork.CompleteAsync();
 
                 return RedirectToAction("Details", new { id = project.Id });
             }

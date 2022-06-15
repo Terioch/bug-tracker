@@ -3,7 +3,6 @@ using BugTracker.Contexts;
 using BugTracker.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using BugTracker.Repositories.Mock;
 using BugTracker.Repositories.Interfaces;
 using BugTracker.Repositories.EF;
 using Microsoft.AspNetCore.Authorization;
