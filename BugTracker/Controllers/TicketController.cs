@@ -95,7 +95,7 @@ namespace BugTracker.Controllers
                     SubmitterId = submitter.Id,
                     Title = model.Title,
                     Description = model.Description,
-                    CreatedAt = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.UtcNow,
                     Type = model.Type,
                     Status = model.Status,
                     Priority = model.Priority,
@@ -268,7 +268,7 @@ namespace BugTracker.Controllers
                             Property = property.Name,
                             OldValue = ticketPropertyValue,
                             NewValue = propertyValue,                           
-                            ModifiedAt = DateTimeOffset.Now
+                            ModifiedAt = DateTimeOffset.UtcNow
                         };
 
                         _unitOfWork.TicketHistoryRecords.Add(ticketHistoryRecord);
@@ -320,7 +320,7 @@ namespace BugTracker.Controllers
                     Property = "Status",
                     OldValue = ticket.Status,
                     NewValue = model.Status,                    
-                    ModifiedAt = DateTimeOffset.Now,
+                    ModifiedAt = DateTimeOffset.UtcNow,
                 };
 
                 _unitOfWork.TicketHistoryRecords.Add(record);
