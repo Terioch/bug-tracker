@@ -37,7 +37,7 @@ namespace BugTracker.Controllers
                 TicketId = ticketId,
                 AuthorId = user.Id,
                 Value = model.Value,
-                CreatedAt = DateTimeOffset.Now,
+                CreatedAt = DateTimeOffset.UtcNow,
             };
                       
             _unitOfWork.TicketComments.Add(comment);                        

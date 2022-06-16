@@ -198,7 +198,9 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Details", new { id });
             }
 
-            project.Users.Add(user);            
+            project.Users.Add(user);
+
+            await _unitOfWork.CompleteAsync();
 
             return RedirectToAction("Details", new { id });     
         }

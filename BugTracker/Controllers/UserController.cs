@@ -11,14 +11,12 @@ namespace BugTracker.Controllers
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;        
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;        
         private readonly TicketHelper _ticketHelper;
 
-        public UserController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, TicketHelper ticketHelper)
+        public UserController(IUnitOfWork unitOfWork, SignInManager<ApplicationUser> signInManager, TicketHelper ticketHelper)
         {
             _unitOfWork = unitOfWork;
-            _userManager = userManager;
             _signInManager = signInManager;
             _ticketHelper = ticketHelper;
         }
@@ -26,7 +24,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult ListUsers(int? page)
         {
-            var users = _userManager.Users.ToPagedList(page ?? 1, 8);
+            var users = _unitOfWork.UserManager.Users.ToPagedList(page ?? 1, 8);
             return View(users);
         }
 
@@ -34,15 +32,15 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string id, int? projectsPage, int? ticketsPage)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _unitOfWork.Users.Get(id);
 
             if (user == null)
             {
                 return NotFound();
             }
-           
-            var unassignedProjects = _unitOfWork.Projects.GetAll().Where(p => !p.Users.Contains(user));
+
             var tickets = _unitOfWork.Tickets.Find(t => t.SubmitterId == id || t.AssignedDeveloperId == id);
+            var unassignedProjects = _unitOfWork.Projects.GetAll().Where(p => !p.Users.Contains(user));            
 
             var model = new UserViewModel()
             {
@@ -64,10 +62,10 @@ namespace BugTracker.Controllers
         {          
             if (searchTerm == null)
             {          
-                return PartialView("_UserList", _userManager.Users.ToPagedList(1, 8));
+                return PartialView("_UserList", _unitOfWork.UserManager.Users.ToPagedList(1, 8));
             }
 
-            var filteredUsers = _userManager.Users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
+            var filteredUsers = _unitOfWork.UserManager.Users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
 
             return PartialView("_UserList", filteredUsers.ToPagedList(1, 8));
         }        
@@ -94,7 +92,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _unitOfWork.UserManager.FindByIdAsync(id);
 
             if (user == null)
             {
@@ -108,7 +106,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ApplicationUser model)
         {
-            var user = await _userManager.FindByIdAsync(model.Id);
+            var user = await _unitOfWork.UserManager.FindByIdAsync(model.Id);
 
             if (user == null)
             {
@@ -119,7 +117,7 @@ namespace BugTracker.Controllers
             {                
                 if (model.UserName != user.UserName)
                 {
-                    var result = await _userManager.SetUserNameAsync(user, model.UserName);
+                    var result = await _unitOfWork.UserManager.SetUserNameAsync(user, model.UserName);
 
                     if (!result.Succeeded)
                     {
@@ -134,7 +132,7 @@ namespace BugTracker.Controllers
 
                 if (model.Email != user.Email)
                 {
-                    var result = await _userManager.SetEmailAsync(user, model.Email);
+                    var result = await _unitOfWork.UserManager.SetEmailAsync(user, model.Email);
 
                     if (!result.Succeeded)
                     {

@@ -17,16 +17,10 @@ namespace BugTracker.Helpers
 
         public async Task<IEnumerable<TicketHistoryRecord>> GetUserRoleRecords()
         {
-            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();    
-            var userRoleRecords = new List<TicketHistoryRecord>();
-
-            foreach (var ticket in userRoleTickets)
-            {          
-                var records = _unitOfWork.TicketHistoryRecords.Find(r => r.TicketId == ticket.Id);
-                userRoleRecords.AddRange(records);
-            }
-
-            return userRoleRecords.OrderByDescending(r => r.ModifiedAt);
+            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();
+            return userRoleTickets
+                .SelectMany(t => t.TicketHistoryRecords ?? new List<TicketHistoryRecord>())
+                .OrderByDescending(r => r.ModifiedAt);
         }
     }
 }

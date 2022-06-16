@@ -22,10 +22,10 @@ namespace BugTracker.Controllers
         }
 
         public async Task<IActionResult> Index(int? historyPage)
-        {
-            var historyRecords = await _ticketHistoryHelper.GetUserRoleRecords();
+        {            
             var userRoleProjects = await _projectHelper.GetUserRoleProjects();
-            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();                   
+            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();
+            var historyRecords = await _ticketHistoryHelper.GetUserRoleRecords();
 
             var model = new DashboardViewModel()
             {                               

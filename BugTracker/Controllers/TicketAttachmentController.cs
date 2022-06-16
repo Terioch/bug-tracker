@@ -55,7 +55,7 @@ namespace BugTracker.Controllers
                     SubmitterId = submitter.Id,
                     Name = attachmentName,
                     FilePath = uniqueFileName,
-                    CreatedAt = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.UtcNow,
                 };
 
                 _unitOfWork.TicketAttachments.Add(attachment);

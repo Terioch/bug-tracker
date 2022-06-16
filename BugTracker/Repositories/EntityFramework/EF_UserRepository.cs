@@ -2,6 +2,7 @@
 using BugTracker.Models;
 using BugTracker.Repositories.EF;
 using BugTracker.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Repositories.EF
 {
@@ -12,6 +13,16 @@ namespace BugTracker.Repositories.EF
         public EF_UserRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
+        }
+
+        public override async Task<ApplicationUser> Get(string id)
+        {
+            return await _db.Users
+                .Include(u => u.Projects)
+                .Include(u => u.TicketHistoryRecords)
+                .Include(u => u.TicketAttachments)
+                .Include(u => u.TicketComments)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public void AddProject(Project project, ApplicationUser user)

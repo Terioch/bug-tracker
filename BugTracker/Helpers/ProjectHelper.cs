@@ -1,6 +1,8 @@
 ﻿using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BugTracker.Helpers
 {
@@ -42,15 +44,16 @@ namespace BugTracker.Helpers
 
         public async Task<IEnumerable<Project>> GetUserRoleProjects(ApplicationUser? user = null)
         {
-            user ??= await _unitOfWork.UserManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            //var currentUser = await _unitOfWork.UserManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            user ??= await _unitOfWork.Users.Get(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
 
             if (roles.Contains("Admin"))
             {
                 return _unitOfWork.Projects.GetAll();
             }
-
-            return _unitOfWork.UserManager.Users.First(u => u.Id == user.Id).Projects; // May not load project nav properties
+            
+            return user.Projects;            
         }
 
         public async Task<IEnumerable<ApplicationUser>> GetUsersInRolesOnProject(string projectId, string[]? roles = null)
@@ -60,7 +63,7 @@ namespace BugTracker.Helpers
             var projectUsers = project.Users.ToList();
             var users = new List<ApplicationUser>();
 
-            for (int i = 0; i < project.Users.Count; i++)
+            for (int i = 0; i < projectUsers.Count; i++)
             {
                 for (int j = 0; j < roles.Length; j++)
                 {
@@ -77,7 +80,7 @@ namespace BugTracker.Helpers
         public async Task<int> GetUsersInRolesCountOnUserRoleProjects(string[]? roles = null)
         {           
             var projects = await GetUserRoleProjects();
-            var distinctUsers = new List<ApplicationUser>();
+            var distinctUsers = new HashSet<ApplicationUser>();
             var projectList = projects.ToList();
 
             for (int i = 0; i < projectList.Count; i++)
@@ -85,7 +88,7 @@ namespace BugTracker.Helpers
                 var users = await GetUsersInRolesOnProject(projectList[i].Id, roles);
 
                 foreach (var user in users)
-                {
+                {                   
                     distinctUsers.Add(user);
                 }                
             }
