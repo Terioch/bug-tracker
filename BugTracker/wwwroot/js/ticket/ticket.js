@@ -51,7 +51,11 @@ class Ticket {
             });            
             
             const commentListHTML = await res.text();            
-            if (res.status == 400) throw commentListHTML; // Throw initial error                
+
+            if (res.status == 400) {
+                throw commentListHTML;
+            }
+
             commentsContainer.innerHTML = commentListHTML;
             document.getElementById("commentListGroup").addEventListener("click", this.commentListClickHandler); // Attach event listener to replacement list
             commentDescriptionInput.value = "";

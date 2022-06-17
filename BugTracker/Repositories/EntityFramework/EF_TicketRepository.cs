@@ -22,6 +22,7 @@ namespace BugTracker.Repositories.EF
                 .Include(t => t.Project)
                 .Include(t => t.Submitter)
                 .Include(t => t.AssignedDeveloper)
+                .Include(t => t.TicketHistoryRecords)
                 .OrderByDescending(t => t.CreatedAt);            
         }
 
