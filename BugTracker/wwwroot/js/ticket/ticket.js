@@ -35,12 +35,12 @@ class Ticket {
     }*/
 
     async handleCommentCreation() {
-        const id = this.ticketContainer.getAttribute("data-id");
+        const id = this.ticketContainer.getAttribute("data-id");        
         const commentsContainer = document.getElementById("commentListContainer"); 
         const commentDescriptionInput = document.getElementById("commentDescriptionInput");
 
         try {
-            const res = await fetch(`/ticketComment/create/${id}`, {
+            const res = await fetch(`/ticketComment/create?ticketId=${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "Application/Json",
@@ -48,7 +48,7 @@ class Ticket {
                 body: JSON.stringify({
                     value: commentDescriptionInput.value,
                 })
-            });
+            });            
             
             const commentListHTML = await res.text();            
             if (res.status == 400) throw commentListHTML; // Throw initial error                

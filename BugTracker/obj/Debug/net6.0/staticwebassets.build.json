@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qYtcAe+i+nldpcvQDJM2VxNJ5psVYGQir6ydY4nNrls=",
+  "Hash": "0B2Tab3P6S3+Cg4/bz0i2qCo4YnxMwr9x0/Dfz//vek=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1290,6 +1290,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\attachments\\cf66f941-3625-431a-a59a-baab58968f8d_attachment3.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\db8d7002-5ac6-4b03-b38f-bd826d4c990f_attachment4.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "attachments/db8d7002-5ac6-4b03-b38f-bd826d4c990f_attachment4.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\attachments\\db8d7002-5ac6-4b03-b38f-bd826d4c990f_attachment4.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\css\\site.css",

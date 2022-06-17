@@ -23,7 +23,7 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TicketComment model, string ticketId)
-        {
+        {           
             if (model.Value.Length < 1 || model.Value.Length > 200)
             {
                 return new BadRequestObjectResult("Comment must be between 1 and 200 characters");
@@ -78,7 +78,9 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            _unitOfWork.TicketComments.Delete(comment);            
+            _unitOfWork.TicketComments.Delete(comment);
+
+            await _unitOfWork.CompleteAsync();
 
             return RedirectToAction("Details", "Ticket", new { id = comment.TicketId });
         }
