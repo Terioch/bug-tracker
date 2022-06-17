@@ -20,7 +20,8 @@ namespace BugTracker.Helpers
 
         public async Task<IEnumerable<Ticket>> GetUserRoleTickets(ApplicationUser? user = null)
         {
-            user ??= await _unitOfWork.UserManager.GetUserAsync(_httpContextAccessor.HttpContext.User);            
+            //user ??= await _unitOfWork.UserManager.GetUserAsync(_httpContextAccessor.HttpContext.User);            
+            user ??= await _unitOfWork.Users.Get(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var roles = await _unitOfWork.UserManager.GetRolesAsync(user);                       
 
             if (roles.Contains("Admin"))

@@ -43,13 +43,13 @@ namespace BugTracker.Repositories.EF
         }
 
         public void AddUser(ApplicationUser user, Project project)
-        {            
-            project.Users.Add(user);
+        {
+            throw new NotImplementedException();
         }
 
         public void DeleteUser(ApplicationUser user, Project project)
-        {            
-            project.Users.Remove(user);
+        {
+            throw new NotImplementedException();
         }
     }
 }
