@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ozToX/rnYVKGFrnX69uuds094KaNN6xHAUk1RxHE1m0=",
+  "Hash": "O2u7EB9yVT7LQvCOdTyO6nDjA4t34xeZIKR06tWxRhU=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1071,12 +1071,12 @@
       "OriginalItemSpec": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BugTracker.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\54c871c1-b8a3-4a56-b9f2-914e3afac762_attachment11.jpg",
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\12df9275-1ed1-41a2-9d9b-5922a96f1bd2_attachment9.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
       "BasePath": "_content/BugTracker",
-      "RelativePath": "attachments/54c871c1-b8a3-4a56-b9f2-914e3afac762_attachment11.jpg",
+      "RelativePath": "attachments/12df9275-1ed1-41a2-9d9b-5922a96f1bd2_attachment9.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1085,7 +1085,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\attachments\\54c871c1-b8a3-4a56-b9f2-914e3afac762_attachment11.jpg"
+      "OriginalItemSpec": "wwwroot\\attachments\\12df9275-1ed1-41a2-9d9b-5922a96f1bd2_attachment9.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\88216ee1-c12f-4394-a96d-c3c43bd08a50_attachment3.jpg",

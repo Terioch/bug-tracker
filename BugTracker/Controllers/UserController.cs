@@ -65,7 +65,7 @@ namespace BugTracker.Controllers
                 return PartialView("_UserList", _unitOfWork.UserManager.Users.ToPagedList(1, 8));
             }
 
-            var filteredUsers = _unitOfWork.UserManager.Users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
+            var filteredUsers = _unitOfWork.UserManager.Users.ToList().Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
 
             return PartialView("_UserList", filteredUsers.ToPagedList(1, 8));
         }        
