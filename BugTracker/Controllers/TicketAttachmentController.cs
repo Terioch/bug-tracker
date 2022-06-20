@@ -60,7 +60,7 @@ namespace BugTracker.Controllers
 
                 _unitOfWork.TicketAttachments.Add(attachment);
 
-                await _unitOfWork.CompleteAsync();
+                await _unitOfWork.Complete();
 
                 return RedirectToAction("Details", "Ticket", new { id = ticketId });
             }           
@@ -118,7 +118,7 @@ namespace BugTracker.Controllers
                 await fileAttachment.CopyToAsync(stream);
                 stream.Close();
 
-                await _unitOfWork.CompleteAsync();
+                await _unitOfWork.Complete();
                                                                              
                 return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
             }
@@ -139,7 +139,7 @@ namespace BugTracker.Controllers
 
             _unitOfWork.TicketAttachments.Delete(attachment);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("Details", "Ticket", new { id = attachment.TicketId });
         }

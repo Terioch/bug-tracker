@@ -21,6 +21,6 @@ namespace BugTracker.Repositories.Interfaces
 
         RoleManager<IdentityRole> RoleManager { get; }
 
-        Task<int> CompleteAsync();
+        Task<int> Complete();
     }
 }

@@ -113,7 +113,7 @@ namespace BugTracker.Controllers
                 
                 _unitOfWork.Tickets.Add(ticket);
 
-                await _unitOfWork.CompleteAsync();
+                await _unitOfWork.Complete();
 
                 return RedirectToAction("Details", new { id = ticket.Id });
             }
@@ -292,7 +292,7 @@ namespace BugTracker.Controllers
                 }
             }
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("Details", new { id = ticket.Id });
         }
@@ -327,7 +327,7 @@ namespace BugTracker.Controllers
 
                 ticket.Status = model.Status;
 
-                await _unitOfWork.CompleteAsync();
+                await _unitOfWork.Complete();
             }          
             
             return RedirectToAction("Details", new { id = ticket.Id });
@@ -352,7 +352,7 @@ namespace BugTracker.Controllers
 
             _unitOfWork.Tickets.Delete(ticket);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("ListTickets");
         }

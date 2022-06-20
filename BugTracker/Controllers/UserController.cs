@@ -173,7 +173,7 @@ namespace BugTracker.Controllers
 
             user.Projects.Add(project);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("Details", new { id });
         }
@@ -206,7 +206,7 @@ namespace BugTracker.Controllers
 
             user.Projects.Remove(project);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("Details", new { id });
         }

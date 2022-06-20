@@ -1,16 +1,23 @@
 ﻿using BugTracker.Contexts;
 using BugTracker.Models;
-using BugTracker.Repositories.EF;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace BugTracker.Repositories.EF
 {
     public class EF_UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
+        private readonly IConfiguration _config;
+        private readonly IHttpContextAccessor? _httpContextAccessor;
 
-        public EF_UnitOfWork(ApplicationDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public EF_UnitOfWork(
+            ApplicationDbContext db, 
+            UserManager<ApplicationUser> userManager, 
+            RoleManager<IdentityRole> roleManager, 
+            IConfiguration config, 
+            IHttpContextAccessor? httpContextAccessor)
         {
             _db = db;
             Projects = new EF_ProjectRepository(db);
@@ -21,6 +28,8 @@ namespace BugTracker.Repositories.EF
             Users = new EF_UserRepository(db);
             UserManager = userManager;
             RoleManager = roleManager;
+            _config = config;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IProjectRepository Projects { get; private set; }
@@ -39,8 +48,16 @@ namespace BugTracker.Repositories.EF
 
         public RoleManager<IdentityRole> RoleManager { get; private set; }
 
-        public async Task<int> CompleteAsync()
+        public async Task<int> Complete()
         {
+            var loggedInUser = await Users.Get(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (loggedInUser.Email == _config["OwnerCredentials:Email"])
+            {
+                return await _db.SaveChangesAsync();
+            }
+
+            //return await Task.FromResult(1);
             return await _db.SaveChangesAsync();
         }
 

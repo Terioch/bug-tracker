@@ -34,7 +34,7 @@ namespace BugTracker.Repositories.Mock
 
         public RoleManager<IdentityRole> RoleManager { get; private set; }        
 
-        public Task<int> CompleteAsync()
+        public Task<int> Complete()
         {
             Console.WriteLine("Simulating database operations...");
             return Task.FromResult(0);

@@ -42,7 +42,7 @@ namespace BugTracker.Controllers
                       
             _unitOfWork.TicketComments.Add(comment);                        
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             var comments = _unitOfWork.TicketComments.Find(c => c.TicketId == ticketId);
 
@@ -80,7 +80,7 @@ namespace BugTracker.Controllers
 
             _unitOfWork.TicketComments.Delete(comment);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("Details", "Ticket", new { id = comment.TicketId });
         }

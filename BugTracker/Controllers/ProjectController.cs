@@ -61,7 +61,7 @@ namespace BugTracker.Controllers
 
             _unitOfWork.Projects.Add(project);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("ListProjects", "Project");
         }
@@ -151,7 +151,7 @@ namespace BugTracker.Controllers
                 project.Name = model.Name;
                 project.Description = model.Description;
 
-                await _unitOfWork.CompleteAsync();
+                await _unitOfWork.Complete();
 
                 return RedirectToAction("Details", new { id = project.Id });
             }
@@ -200,7 +200,7 @@ namespace BugTracker.Controllers
 
             project.Users.Add(user);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("Details", new { id });     
         }
@@ -227,7 +227,7 @@ namespace BugTracker.Controllers
 
             project.Users.Remove(user);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("Details", new { id });
         }
