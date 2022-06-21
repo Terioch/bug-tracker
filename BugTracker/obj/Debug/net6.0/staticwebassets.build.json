@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "O2u7EB9yVT7LQvCOdTyO6nDjA4t34xeZIKR06tWxRhU=",
+  "Hash": "w9Xqj+HGyDb4/ljnWiU3yJUwqOBinbHDRs3ibqE3uek=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1088,6 +1088,40 @@
       "OriginalItemSpec": "wwwroot\\attachments\\12df9275-1ed1-41a2-9d9b-5922a96f1bd2_attachment9.jpg"
     },
     {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\1d9498b3-4ba6-4944-b27a-44f50e0cb743_attachment6.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "attachments/1d9498b3-4ba6-4944-b27a-44f50e0cb743_attachment6.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\attachments\\1d9498b3-4ba6-4944-b27a-44f50e0cb743_attachment6.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\6e122267-9361-466a-b708-bec9d26358ea_attachment4.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "attachments/6e122267-9361-466a-b708-bec9d26358ea_attachment4.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\attachments\\6e122267-9361-466a-b708-bec9d26358ea_attachment4.jpg"
+    },
+    {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\88216ee1-c12f-4394-a96d-c3c43bd08a50_attachment3.jpg",
       "SourceId": "BugTracker",
       "SourceType": "Discovered",
@@ -1324,6 +1358,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\attachments\\db8d7002-5ac6-4b03-b38f-bd826d4c990f_attachment4.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\attachments\\ec791441-d1d5-4a2a-b679-21b9f33f3cea_attachment8.jpg",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "attachments/ec791441-d1d5-4a2a-b679-21b9f33f3cea_attachment8.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\attachments\\ec791441-d1d5-4a2a-b679-21b9f33f3cea_attachment8.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\wwwroot\\css\\site.css",

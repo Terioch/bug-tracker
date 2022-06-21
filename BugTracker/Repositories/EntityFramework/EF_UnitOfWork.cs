@@ -52,13 +52,17 @@ namespace BugTracker.Repositories.EF
         {
             var loggedInUser = await Users.Get(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                return await _db.SaveChangesAsync();
+            }
+
             if (loggedInUser.Email == _config["OwnerCredentials:Email"])
             {
                 return await _db.SaveChangesAsync();
             }
 
-            //return await Task.FromResult(1);
-            return await _db.SaveChangesAsync();
+            return await Task.FromResult(1);    
         }
 
         public void Dispose()

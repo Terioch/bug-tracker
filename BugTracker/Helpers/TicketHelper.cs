@@ -40,8 +40,9 @@ namespace BugTracker.Helpers
             return user.Projects.SelectMany(p => p.Tickets.Where(t => t.SubmitterId == user.Id)).OrderByDescending(t => t.CreatedAt);          
         }
 
-        public async Task<bool> IsAuthorizedToEdit(ApplicationUser user, string ticketId)
+        public async Task<bool> IsAuthorizedToEdit(string ticketId, ApplicationUser? user = null)
         {
+            user ??= await _unitOfWork.Users.Get(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
             var ticket = await _unitOfWork.Tickets.Get(ticketId);
 
@@ -68,8 +69,9 @@ namespace BugTracker.Helpers
             return false;
         }
 
-        public async Task<bool> IsAssignedDeveloper(ApplicationUser user, string ticketId)
+        public async Task<bool> IsAssignedDeveloper(string ticketId, ApplicationUser? user = null)
         {
+            user ??= await _unitOfWork.Users.Get(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
             var ticket = await _unitOfWork.Tickets.Get(ticketId);
 
@@ -81,8 +83,9 @@ namespace BugTracker.Helpers
             return false;
         }
 
-        public async Task<bool> IsAuthorizedToDelete(ApplicationUser user, string ticketId)
+        public async Task<bool> IsAuthorizedToDelete(string ticketId, ApplicationUser? user = null)
         {
+            user ??= await _unitOfWork.Users.Get(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
             var ticket = await _unitOfWork.Tickets.Get(ticketId);
 

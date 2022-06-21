@@ -89,7 +89,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterProjectsByNameReturnPartial(string? searchTerm)
         {
-            IEnumerable<Project> projects = await _projectHelper.GetUserRoleProjects();
+            var projects = await _projectHelper.GetUserRoleProjects();
             
             if (searchTerm == null)
             {
@@ -102,13 +102,13 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult FilterUserProjectsByNameReturnPartial(string id, string? searchTerm)
-        {
-            var user = _unitOfWork.Users.Find(u => u.Id == id).FirstOrDefault();
+        public async Task<IActionResult> FilterUserProjectsByNameReturnPartial(string id, string? searchTerm)
+        {         
+            var user = await _unitOfWork.Users.Get(id);
 
             if (user == null)
             {
-                return NotFound();
+                return NotFound();                
             }
 
             if (searchTerm == null)
