@@ -104,6 +104,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> Create(Project project)
         {
             project.Id = Guid.NewGuid().ToString();
+            project.CreatedAt = DateTimeOffset.UtcNow;
 
             // Assign all administrators 
             var admins = await _unitOfWork.UserManager.GetUsersInRoleAsync("Admin");
