@@ -1,5 +1,6 @@
 ﻿using BugTracker.Helpers;
 using BugTracker.Models;
+using BugTracker.Repositories.EF;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,12 +17,12 @@ namespace BugTracker.Controllers
         private readonly TicketHelper _ticketHelper;
         private readonly TicketAttachmentHelper _attachmentHelper;
 
-        public TicketController(IUnitOfWork unitOfWork, ProjectHelper projectHelper, TicketHelper ticketHelper, TicketAttachmentHelper attachmentHelper)
+        public TicketController(IServiceProvider serviceProvider)
         {
-            _unitOfWork = unitOfWork;
-            _projectHelper = projectHelper;
-            _ticketHelper = ticketHelper;
-            _attachmentHelper = attachmentHelper;
+            _unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork>();
+            _projectHelper = serviceProvider.GetRequiredService<ProjectHelper>();
+            _ticketHelper = serviceProvider.GetRequiredService<TicketHelper>();
+            _attachmentHelper = serviceProvider.GetRequiredService<TicketAttachmentHelper>();
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()

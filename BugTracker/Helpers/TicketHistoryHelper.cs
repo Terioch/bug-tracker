@@ -1,6 +1,5 @@
 ﻿using BugTracker.Models;
 using BugTracker.Repositories.Interfaces;
-using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Helpers
 {
@@ -17,10 +16,7 @@ namespace BugTracker.Helpers
 
         public async Task<IEnumerable<TicketHistoryRecord>> GetUserRoleRecords()
         {
-            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();
-            return userRoleTickets
-                .SelectMany(t => t.TicketHistoryRecords ?? new List<TicketHistoryRecord>())
-                .OrderByDescending(r => r.ModifiedAt);
+            throw new NotImplementedException();
         }
     }
 }

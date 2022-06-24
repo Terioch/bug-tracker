@@ -18,7 +18,7 @@ namespace BugTracker.Repositories.Mock
             RoleManager = roleManager;
         }
 
-        public IProjectRepository Projects { get; private set; }
+        public IRepository<Project> Projects { get; private set; }
 
         public IRepository<Ticket> Tickets { get; private set; }
 
@@ -28,7 +28,7 @@ namespace BugTracker.Repositories.Mock
 
         public IRepository<TicketComment> TicketComments { get; private set; }
 
-        public IUserRepository Users { get; private set; }
+        public IRepository<ApplicationUser> Users { get; private set; }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
 

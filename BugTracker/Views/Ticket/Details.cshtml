@@ -7,6 +7,7 @@
 
 @inject UserManager<ApplicationUser> userManager
 @inject TicketHelper ticketHelper
+@inject TicketAttachmentHelper attachmentHelper
 
 @model TicketViewModel
 
@@ -228,7 +229,7 @@
                                         <div class="d-flex justify-content-between">
                                             <h5 class="card-subtitle mt-0 mb-1">@attachment.Name</h5>
                                             <div>
-                                                @if (attachment.Submitter == loggedInUser || await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                                                @if (await attachmentHelper.IsAuthorizedToManage(attachment.Id))
                                                 {
                                                     <a asp-action="Edit" asp-controller="TicketAttachment" asp-route-id="@attachment.Id" class="link-info">Edit</a>
                                                     <a asp-controller="TicketAttachment" asp-action="Delete" asp-route-id="@attachment.Id" class="link-danger" 

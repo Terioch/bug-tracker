@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Repositories.EF
 {
-    public class EF_UserRepository : EF_Repository<ApplicationUser>, IUserRepository
+    public class EF_UserRepository : EF_Repository<ApplicationUser>, IRepository<ApplicationUser>
     {
         private readonly ApplicationDbContext _db;
 
@@ -16,28 +16,18 @@ namespace BugTracker.Repositories.EF
         }        
 
         public override async Task<ApplicationUser> Get(string id)
-        {
+        {           
             return await _db.Users
                 .Include(u => u.Projects)
                     .ThenInclude(p => p.Tickets)
-                    .ThenInclude(t => t.Submitter)
-                 .Include(u => u.Projects)
+                    .ThenInclude(t => t.Submitter)                    
+                .Include(u => u.Projects)
                     .ThenInclude(p => p.Tickets)
                     .ThenInclude(t => t.AssignedDeveloper)
-                .Include(u => u.TicketHistoryRecords)
-                .Include(u => u.TicketAttachments)
-                .Include(u => u.TicketComments)
+                .Include(u => u.Projects)
+                    .ThenInclude(p => p.Tickets)
+                    .ThenInclude(t => t.TicketHistoryRecords)
                 .FirstOrDefaultAsync(u => u.Id == id);
-        }
-
-        public void AddProject(Project project, ApplicationUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveProject(Project project, ApplicationUser user)
-        {
-            throw new NotImplementedException();
-        }
+        }   
     }
 }

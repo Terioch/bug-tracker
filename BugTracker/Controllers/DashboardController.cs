@@ -25,11 +25,11 @@ namespace BugTracker.Controllers
         {            
             var userRoleProjects = await _projectHelper.GetUserRoleProjects();
             var userRoleTickets = await _ticketHelper.GetUserRoleTickets();
-            var historyRecords = await _ticketHistoryHelper.GetUserRoleRecords();
+            var userRoleRecords = userRoleTickets.SelectMany(t => t.TicketHistoryRecords ?? new List<TicketHistoryRecord>());
 
             var model = new DashboardViewModel()
             {                               
-                TicketHistoryRecords = historyRecords.Take(50).ToPagedList(historyPage ?? 1, 6),    
+                TicketHistoryRecords = userRoleRecords.Take(50).ToPagedList(historyPage ?? 1, 6),    
                 UserRoleProjectCount = userRoleProjects.Count(),
                 UserRoleTicketCount = userRoleTickets.Count(),
                 UserCountOnUserRoleProjects = await _projectHelper.GetUsersInRolesCountOnUserRoleProjects(),

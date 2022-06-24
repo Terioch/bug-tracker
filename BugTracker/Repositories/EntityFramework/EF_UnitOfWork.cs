@@ -32,7 +32,7 @@ namespace BugTracker.Repositories.EF
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public IProjectRepository Projects { get; private set; }
+        public IRepository<Project> Projects { get; private set; }
 
         public IRepository<Ticket> Tickets { get; private set; }
 
@@ -42,7 +42,7 @@ namespace BugTracker.Repositories.EF
 
         public IRepository<TicketComment> TicketComments { get; private set; }
 
-        public IUserRepository Users { get; private set; }
+        public IRepository<ApplicationUser> Users { get; private set; }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
@@ -51,16 +51,12 @@ namespace BugTracker.Repositories.EF
         public async Task<int> Complete()
         {
             var loggedInUser = await Users.Get(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            if (isDev || loggedInUser.Email == _config["OwnerCredentials:Email"])
             {
                 return await _db.SaveChangesAsync();
-            }
-
-            if (loggedInUser.Email == _config["OwnerCredentials:Email"])
-            {
-                return await _db.SaveChangesAsync();
-            }
+            }           
 
             return await Task.FromResult(1);    
         }

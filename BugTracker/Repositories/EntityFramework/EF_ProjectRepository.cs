@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace BugTracker.Repositories.EF
 {
-    public class EF_ProjectRepository : EF_Repository<Project>, IProjectRepository
+    public class EF_ProjectRepository : EF_Repository<Project>, IRepository<Project>
     {
         private readonly ApplicationDbContext _db;
 
@@ -40,16 +40,6 @@ namespace BugTracker.Repositories.EF
                 .Include(p => p.Tickets)
                     .ThenInclude(t => t.AssignedDeveloper)
                  .Include(p => p.Users);
-        }
-
-        public void AddUser(ApplicationUser user, Project project)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteUser(ApplicationUser user, Project project)
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }

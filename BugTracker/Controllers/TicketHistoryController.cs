@@ -10,12 +10,12 @@ namespace BugTracker.Controllers
     public class TicketHistoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly TicketHistoryHelper _historyHelper;
+        private readonly TicketHelper _ticketHelper;
 
-        public TicketHistoryController(IUnitOfWork unitOfWork, TicketHistoryHelper helper)
+        public TicketHistoryController(IUnitOfWork unitOfWork, TicketHelper ticketHelper)
         {
             _unitOfWork = unitOfWork;
-            _historyHelper = helper;
+            _ticketHelper = ticketHelper;
         }
 
         [HttpGet]
@@ -42,16 +42,17 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterUserRoleTicketsHistoryReturnPartial(string? searchTerm)
         {
-            var records = await _historyHelper.GetUserRoleRecords();           
+            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();
+            var userRoleRecords = userRoleTickets.SelectMany(t => t.TicketHistoryRecords ?? new List<TicketHistoryRecord>());
 
             if (searchTerm == null)
             {
-                return PartialView("~/Views/Dashboard/_DashboardTicketHistoryList.cshtml", records.ToPagedList(1, 6));
+                return PartialView("~/Views/Dashboard/_DashboardTicketHistoryList.cshtml", userRoleRecords.ToPagedList(1, 6));
             }
 
             var filteredRecords = new List<TicketHistoryRecord>();
 
-            foreach (var record in records)
+            foreach (var record in userRoleRecords)
             {
                 var ticket = await _unitOfWork.Tickets.Get(record.TicketId);
 
