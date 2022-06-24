@@ -22,10 +22,8 @@ namespace BugTracker.Controllers
         public IActionResult FilterTicketHistoryReturnPartial(string ticketId, string? searchTerm)
         {       
             var records = _unitOfWork.TicketHistoryRecords.Find(r => r.TicketId == ticketId);
-            dynamic dataObject = new ExpandoObject();
-
-            dataObject.Id = ticketId;
-            ViewBag.Data = dataObject;
+            
+            TempData["TicketId"] = ticketId;
 
             if (searchTerm == null)
             {
@@ -43,7 +41,7 @@ namespace BugTracker.Controllers
         public async Task<IActionResult> FilterUserRoleTicketsHistoryReturnPartial(string? searchTerm)
         {
             var userRoleTickets = await _ticketHelper.GetUserRoleTickets();
-            var userRoleRecords = userRoleTickets.SelectMany(t => t.TicketHistoryRecords ?? new List<TicketHistoryRecord>());
+            var userRoleRecords = userRoleTickets.SelectMany(t => t.TicketHistoryRecords ?? new List<TicketHistoryRecord>()).ToList();
 
             if (searchTerm == null)
             {
@@ -52,13 +50,13 @@ namespace BugTracker.Controllers
 
             var filteredRecords = new List<TicketHistoryRecord>();
 
-            foreach (var record in userRoleRecords)
+            for (int i = 0; i < userRoleRecords.Count; i++)
             {
-                var ticket = await _unitOfWork.Tickets.Get(record.TicketId);
+                var ticket = await _unitOfWork.Tickets.Get(userRoleRecords[i].TicketId);
 
-                if (ticket.Title.ToLowerInvariant().Contains(searchTerm) || record.Property.ToLowerInvariant().Contains(searchTerm))
+                if (ticket.Title.ToLowerInvariant().Contains(searchTerm) || userRoleRecords[i].Property.ToLowerInvariant().Contains(searchTerm))
                 {
-                    filteredRecords.Add(record);
+                    filteredRecords.Add(userRoleRecords[i]);
                 }
             }                       
 
