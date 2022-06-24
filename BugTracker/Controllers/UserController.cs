@@ -77,14 +77,14 @@ namespace BugTracker.Controllers
             
             TempData["ProjectId"] = id;
             TempData["ProjectName"] = project.Name;
-
+            
             if (searchTerm == null)
-            {
+            {                
                 return PartialView("~/Views/Project/_ProjectUserList.cshtml", project.Users.ToPagedList(1, 5));
             }
 
             var filteredUsers = project.Users.Where(u => u.UserName.ToLowerInvariant().Contains(searchTerm));
-
+           
             return PartialView("~/Views/Project/_ProjectUserList.cshtml", filteredUsers.ToPagedList(1, 5));
         }        
 

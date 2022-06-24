@@ -35,36 +35,7 @@ namespace BugTracker.Controllers
         {   
             IEnumerable<Project> projects = await _projectHelper.GetUserRoleProjects();            
             return View(projects.ToPagedList(page ?? 1, 8));
-        } 
-        
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> Create(Project project)
-        {
-            project.Id = Guid.NewGuid().ToString();
-
-            // Assign all administrators 
-            var admins = await _unitOfWork.UserManager.GetUsersInRoleAsync("Admin");
-
-            foreach (var admin in admins)
-            {
-                project.Users.Add(admin); // May not add user correctly
-                //_unitOfWork.Projects.AddUser(admin, project);
-            }
-
-            _unitOfWork.Projects.Add(project);
-
-            await _unitOfWork.Complete();
-
-            return RedirectToAction("ListProjects", "Project");
-        }
+        }                
 
         [HttpGet] 
         public async Task<IActionResult> Details(string id, int? usersPage, int? ticketsPage)
@@ -119,6 +90,34 @@ namespace BugTracker.Controllers
             var filteredProjects = user.Projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
 
             return PartialView("~/Views/User/_UserProjectList.cshtml", filteredProjects.ToPagedList(1, 5));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Create(Project project)
+        {
+            project.Id = Guid.NewGuid().ToString();
+
+            // Assign all administrators 
+            var admins = await _unitOfWork.UserManager.GetUsersInRoleAsync("Admin");
+
+            foreach (var admin in admins)
+            {
+                project.Users.Add(admin);
+            }
+
+            _unitOfWork.Projects.Add(project);
+
+            await _unitOfWork.Complete();
+
+            return RedirectToAction("ListProjects", "Project");
         }
 
         [Authorize(Roles = "Admin")]
