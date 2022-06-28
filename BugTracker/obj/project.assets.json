@@ -10278,11 +10278,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\BugTracker.csproj",
+      "projectUniqueName": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker\\BugTracker.csproj",
       "projectName": "BugTracker",
-      "projectPath": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\BugTracker.csproj",
+      "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker\\BugTracker.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\obj\\",
+      "outputPath": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",

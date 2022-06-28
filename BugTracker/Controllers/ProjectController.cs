@@ -182,6 +182,8 @@ namespace BugTracker.Controllers
 
             _unitOfWork.Projects.Delete(project);
 
+            await _unitOfWork.Complete();
+
             return RedirectToAction("ListProjects");
         }
 
