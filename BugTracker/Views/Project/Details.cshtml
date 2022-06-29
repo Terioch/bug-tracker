@@ -65,7 +65,7 @@
                             <div class="input-group-sm">
                                 <input id="userListSearchInput" class="form-control mb-3" placeholder="Search Users..." style="max-width: 175px" />
                             </div>
-                                @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, Model.Id))
+                                @if (await projectHelper.IsAuthorizedToManageUsers(loggedInUser, Model.Id))
                                 {
                                     <button id="manageUsersBtn" class="btn btn-dark mb-3" data-bs-toggle="modal" data-bs-target="#projectUsersAssignmentModal">
                                         Assign New User
@@ -81,7 +81,7 @@
                         <div id="userListContainer">
                             @if (!Model.Users.Any())
                             {
-                                <div class="alert alert-info">
+                                <div class="alert alert-primary">
                                     There are no users associated with this project.
                                 </div>
                             } else
@@ -111,7 +111,7 @@
                                                 }       
                                                 <td class="d-flex flex-column">                                            
                                                     <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id" class="link-success">Details</a>
-                                                    @if (await projectHelper.IsUserAuthorizedToManageUsers(loggedInUser, Model.Id))
+                                                    @if (await projectHelper.IsAuthorizedToManageUsers(loggedInUser, Model.Id))
                                                     {
                                                         <a asp-controller="Project" asp-action="RemoveUser" asp-route-id="@Model.Id" asp-route-userId="@user.Id" class="link-danger"
                                                             onclick="return confirm('Are you sure you want to remove the user @user.UserName from the project @Model.Name?')">
@@ -173,7 +173,7 @@
                     <div id="ticketListContainer">
                         @if (!Model.Tickets.Any())
                         {                            
-                            <div class="alert alert-info">
+                            <div class="alert alert-primary">
                                 There are no tickets associated with this project.
                             </div>
                         } else

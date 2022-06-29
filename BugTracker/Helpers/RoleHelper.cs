@@ -5,28 +5,29 @@ namespace BugTracker.Helpers
 {
     public class RoleHelper
     {
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public RoleHelper(UserManager<ApplicationUser> userManager)
         {
-            this.userManager = userManager;
+            _userManager = userManager;
         }
 
         public async Task<bool> IsUserInRole(string userName, string role)
         {
-            var user = userManager.Users.FirstOrDefault(u => u.UserName == userName);           
-            return await userManager.IsInRoleAsync(user, role);
+            var user = await _userManager.FindByNameAsync(userName);
+            return await _userManager.IsInRoleAsync(user, role);
         }
 
         public async Task<List<string>> GetRoleNamesOfUser(string userName)
         {
-            var user = await userManager.FindByNameAsync(userName);
-            return (List<string>)await userManager.GetRolesAsync(user);
+            var user = await _userManager.FindByNameAsync(userName);
+            return (List<string>)await _userManager.GetRolesAsync(user);
         }
 
         public string SelectHighestLevelRole(List<string> roles)
         {
-            List<string> systemRoles = new() { "Admin", "Project Manager", "Developer", "Submitter" };
+            string[] systemRoles = new string[] { "Admin", "Project Manager", "Developer", "Submitter" };
+
             foreach (var role in systemRoles)
             {
                 if (roles.Contains(role))
@@ -34,6 +35,7 @@ namespace BugTracker.Helpers
                     return role;
                 }
             }
+
             return "";
         }
     }

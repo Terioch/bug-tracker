@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Models
-{
-    // Add profile data for application users by adding properties to the ApplicationUser class
+{    
     public class ApplicationUser : IdentityUser
     {
         [Column(TypeName = "varchar(100)")]
@@ -16,8 +15,12 @@ namespace BugTracker.Models
         [Column(TypeName = "varchar(100)")]
         public string? LastName { get; set; }
 
-        // public virtual ICollection<Project>? Projects { get; set; } = new HashSet<Project>();
+        public virtual ICollection<Project> Projects { get; set; } = new HashSet<Project>();   
 
-        // public virtual ICollection<Ticket>? Tickets { get; set; } = new HashSet<Ticket>();
+        public virtual ICollection<TicketHistoryRecord> TicketHistoryRecords { get; set; } = new HashSet<TicketHistoryRecord>();
+
+        public virtual ICollection<TicketAttachment> TicketAttachments { get; set; } = new HashSet<TicketAttachment>();
+
+        public virtual ICollection<TicketComment> TicketComments { get; set; } = new HashSet<TicketComment>();
     }
 }

@@ -7,6 +7,7 @@
 
 @inject UserManager<ApplicationUser> userManager
 @inject TicketHelper ticketHelper
+@inject TicketAttachmentHelper attachmentHelper
 
 @model TicketViewModel
 
@@ -29,18 +30,18 @@
             <div class="card-header">
                 <h1 class="fs-4">@Model.Title</h1> 
                 <div> 
-                    @if (await ticketHelper.IsAssignedDeveloper(loggedInUser, Model.Id))
+                    @if (await ticketHelper.IsAssignedDeveloper(Model.Id))
                     {
                         <Span><a href="" class="link-info" data-bs-toggle="modal" data-bs-target="#updateTicketStatusModal">Update Status</a> |</Span>
                     }    
-                    else if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id))
+                    else if (await ticketHelper.IsAuthorizedToEdit(Model.Id))
                     {
                         <span><a asp-action="Edit" asp-route-id="@Model.Id" class="link-info">Edit</a> |</span>                                                                      
                     }                                     
 
                     <a asp-action="ListTickets" class="link-primary">Back to List</a>
 
-                    @if (await ticketHelper.IsAuthorizedToDelete(loggedInUser, Model.Id))
+                    @if (await ticketHelper.IsAuthorizedToDelete(Model.Id))
                     {
                         <span>
                             | <a asp-action="Delete" asp-route-id="@Model.Id" class="text-danger" 
@@ -113,7 +114,7 @@
                     <div id="historyListContainer">
                         @if (!Model.TicketHistoryRecords.Any())
                         {
-                            <div class="alert alert-info fs-5 mt-3" role="alert">
+                            <div class="alert alert-primary fs-5 mt-3" role="alert">
                               There is no available history for this ticket.
                             </div>
                         } else
@@ -195,7 +196,7 @@
                             <input type="file" name="FileAttachment" class="form-control" style="max-width: 300px">                      
                         </div>
                     </div>   
-                    @if (await ticketHelper.IsAuthorizedToEdit(loggedInUser, Model.Id)) 
+                    @if (await ticketHelper.IsAuthorizedToEdit(Model.Id)) 
                     {
                         <button type="submit" class="btn btn-primary">
                             <span class="me-2">Upload</span><i class="fa-solid fa-file-arrow-up fa-lg"></i>
@@ -213,7 +214,7 @@
             <div class="">                 
                 @if (!Model.TicketAttachments.Any())
                 {
-                    <div class="alert alert-info fs-5 mt-3" role="alert">
+                    <div class="alert alert-primary fs-5 mt-3" role="alert">
                         There are no available attachments to display.
                     </div>
                 } else
@@ -228,7 +229,7 @@
                                         <div class="d-flex justify-content-between">
                                             <h5 class="card-subtitle mt-0 mb-1">@attachment.Name</h5>
                                             <div>
-                                                @if (attachment.Submitter == loggedInUser || await userManager.IsInRoleAsync(loggedInUser, "Admin"))
+                                                @if (await attachmentHelper.IsAuthorizedToManage(attachment.Id))
                                                 {
                                                     <a asp-action="Edit" asp-controller="TicketAttachment" asp-route-id="@attachment.Id" class="link-info">Edit</a>
                                                     <a asp-controller="TicketAttachment" asp-action="Delete" asp-route-id="@attachment.Id" class="link-danger" 
@@ -287,7 +288,7 @@
             <div id="commentListContainer">
                 @if (!Model.TicketComments.Any())
                 {
-                    <div id="commentListGroup" class="alert alert-info fs-5 mt-3" role="alert">
+                    <div id="commentListGroup" class="alert alert-primary fs-5 mt-3" role="alert">
                         No one has commented on this ticket.
                     </div>
                 } else

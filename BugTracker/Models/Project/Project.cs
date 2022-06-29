@@ -9,18 +9,21 @@ namespace BugTracker.Models
 {
     public class Project
     {
+        [Key]
         public string? Id { get; set; }
 
         [Required]        
         public string? Name { get; set; }
 
         [Required]
-        [StringLength(200)]
-        public string? Description { get; set; }       
+        [StringLength(150)]
+        public string? Description { get; set; }
 
-        // Navigation properties
-        public virtual ICollection<Ticket>? Tickets { get; set; } = new HashSet<Ticket>();
+        [Required]
+        public DateTimeOffset CreatedAt { get; set; }
+
+        public virtual ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();
         
-        public virtual ICollection<ApplicationUser>? Users { get; set; } = new HashSet<ApplicationUser>();
+        public virtual ICollection<ApplicationUser> Users { get; set; } = new HashSet<ApplicationUser>();
     }
 }

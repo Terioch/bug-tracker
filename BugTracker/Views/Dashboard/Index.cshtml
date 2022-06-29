@@ -3,8 +3,6 @@
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
 
-@inject ProjectHelper projectHelper
-@inject TicketHelper ticketHelper
 @inject UserManager<ApplicationUser> userManager
 
 @model DashboardViewModel
@@ -15,29 +13,34 @@
 }
 
 <!--Layout 2 - Basic-->
+<div class="alert alert-warning alert-dismissible">
+    This application is currently available for demonstration purposes only and any changes made will not be saved to the system.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div class="px-2">
     <div class="row g-3 mb-3">        
         <div class="col col-12 col-xl-3 col-md-6 col-sm-6 h-100">
             <div class="alert alert-info text-center mb-0" role="alert">
-                <h4 class="alert-heading">@await projectHelper.GetUserProjectCount()</h4>
+                <h4 class="alert-heading">@Model.UserRoleProjectCount</h4>
                 <p class="fw-bold">Current Projects</p>                
             </div>
         </div> 
         <div class="col col-12 col-xl-3 col-md-6 col-sm-6 h-100">
             <div class="alert alert-secondary text-center mb-0" role="alert">
-              <h4 class="alert-heading">@await ticketHelper.GetUserTicketCount()</h4>
+              <h4 class="alert-heading">@Model.UserRoleTicketCount</h4>
               <p class="fw-bold">Associated Tickets</p>                  
             </div> 
         </div>        
         <div class="col col-12 col-xl-3 col-md-6 col-sm-6 h-100">
             <div class="alert alert-success text-center mb-0" role="alert">
-              <h4 class="alert-heading">@await projectHelper.GetUsersInRolesCountOnUserRoleProjects()</h4>
+              <h4 class="alert-heading">@Model.UserCountOnUserRoleProjects</h4>
               <p class="fw-bold">Active Users</p>                  
             </div>
         </div>
         <div class="col col-12 col-xl-3 col-md-6 col-sm-6 h-100">
             <div class="alert alert-dark text-center mb-0">
-                <h4 class="alert-heading">@await projectHelper.GetUsersInRolesCountOnUserRoleProjects(new string[] { "Developer" })</h4>
+                <h4 class="alert-heading">@Model.DeveloperCountOnUserRoleProjects</h4>
                 <p class="fw-bold">Total Developers</p>
             </div>            
         </div>
@@ -76,8 +79,8 @@
                     <div id="historyListContainer">
                         @if (!Model.TicketHistoryRecords.Any())
                         {
-                            <div class="alert alert-info fs-5 mt-3" role="alert">
-                                There is no available history for your tickets
+                            <div class="alert alert-primary fs-5 mt-3" role="alert">
+                                There is no associated ticket history
                             </div>
                         } else
                         {        

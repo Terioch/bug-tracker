@@ -10,20 +10,32 @@ namespace BugTracker.Controllers
 {
     public class DashboardController : Controller
     {
-        private readonly TicketHistoryHelper ticketHistoryHelper;
+        private readonly ProjectHelper _projectHelper;
+        private readonly TicketHelper _ticketHelper;
+        private readonly TicketHistoryHelper _ticketHistoryHelper;        
 
-        public DashboardController(TicketHistoryHelper ticketHistoryHelper)
-        {          
-            this.ticketHistoryHelper = ticketHistoryHelper;
+        public DashboardController(ProjectHelper projectHelper, TicketHelper ticketHelper, TicketHistoryHelper ticketHistoryHelper)
+        {
+            _projectHelper = projectHelper;
+            _ticketHelper = ticketHelper;
+            _ticketHistoryHelper = ticketHistoryHelper;
         }
 
         public async Task<IActionResult> Index(int? historyPage)
-        {
-            IEnumerable<TicketHistoryRecord> historyRecords = await ticketHistoryHelper.GetUserRoleRecords();            
-            DashboardViewModel model = new()
+        {            
+            var userRoleProjects = await _projectHelper.GetUserRoleProjects();
+            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();
+            var userRoleRecords = userRoleTickets.SelectMany(t => t.TicketHistoryRecords ?? new List<TicketHistoryRecord>());
+
+            var model = new DashboardViewModel()
             {                               
-                TicketHistoryRecords = historyRecords.Take(50).ToPagedList(historyPage ?? 1, 6),
+                TicketHistoryRecords = userRoleRecords.Take(50).ToPagedList(historyPage ?? 1, 6),    
+                UserRoleProjectCount = userRoleProjects.Count(),
+                UserRoleTicketCount = userRoleTickets.Count(),
+                UserCountOnUserRoleProjects = await _projectHelper.GetUsersInRolesCountOnUserRoleProjects(),
+                DeveloperCountOnUserRoleProjects = await _projectHelper.GetUsersInRolesCountOnUserRoleProjects(new string[] { "Developer" })
             };
+
             return View(model);
         }
 

@@ -9,24 +9,21 @@ namespace BugTracker.Controllers
 {
     public class TicketHistoryController : Controller
     {
-        private readonly ITicketHistoryRepository repo;
-        private readonly ITicketRepository ticketRepo;
-        private readonly TicketHistoryHelper helper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly TicketHelper _ticketHelper;
 
-        public TicketHistoryController(ITicketHistoryRepository repo, ITicketRepository ticketRepo, TicketHistoryHelper helper)
+        public TicketHistoryController(IUnitOfWork unitOfWork, TicketHelper ticketHelper)
         {
-            this.repo = repo;
-            this.ticketRepo = ticketRepo;
-            this.helper = helper;
+            _unitOfWork = unitOfWork;
+            _ticketHelper = ticketHelper;
         }
 
         [HttpGet]
         public IActionResult FilterTicketHistoryReturnPartial(string ticketId, string? searchTerm)
-        {
-            var records = repo.GetRecordsByTicketId(ticketId);
-            dynamic dataObject = new ExpandoObject();
-            dataObject.Id = ticketId;
-            ViewBag.Data = dataObject;
+        {       
+            var records = _unitOfWork.TicketHistoryRecords.Find(r => r.TicketId == ticketId);
+            
+            TempData["TicketId"] = ticketId;
 
             if (searchTerm == null)
             {
@@ -43,19 +40,25 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterUserRoleTicketsHistoryReturnPartial(string? searchTerm)
         {
-            var records = await helper.GetUserRoleRecords();           
+            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();
+            var userRoleRecords = userRoleTickets.SelectMany(t => t.TicketHistoryRecords ?? new List<TicketHistoryRecord>()).ToList();
 
             if (searchTerm == null)
             {
-                return PartialView("~/Views/Dashboard/_DashboardTicketHistoryList.cshtml", records.ToPagedList(1, 6));
+                return PartialView("~/Views/Dashboard/_DashboardTicketHistoryList.cshtml", userRoleRecords.ToPagedList(1, 6));
             }
 
-            var filteredRecords = records.Where(r =>
+            var filteredRecords = new List<TicketHistoryRecord>();
+
+            for (int i = 0; i < userRoleRecords.Count; i++)
             {
-                Ticket ticket = ticketRepo.GetTicketById(r.TicketId);
-                return ticket.Title.ToLowerInvariant().Contains(searchTerm)
-                || r.Property.ToLowerInvariant().Contains(searchTerm);
-            });            
+                var ticket = await _unitOfWork.Tickets.Get(userRoleRecords[i].TicketId);
+
+                if (ticket.Title.ToLowerInvariant().Contains(searchTerm) || userRoleRecords[i].Property.ToLowerInvariant().Contains(searchTerm))
+                {
+                    filteredRecords.Add(userRoleRecords[i]);
+                }
+            }                       
 
             return PartialView("~/Views/Dashboard/_DashboardTicketHistoryList.cshtml", filteredRecords.ToPagedList(1, 6));
         }

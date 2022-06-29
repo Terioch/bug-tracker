@@ -8,341 +8,341 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BugTracker
 build_property.RootNamespace = BugTracker
-build_property.ProjectDir = C:\Users\User\source\repos\BugTracker\BugTracker\
+build_property.ProjectDir = C:\Users\User\OneDrive\Desktop\repos\BugTracker\BugTracker\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\User\source\repos\BugTracker\BugTracker
+build_property.MSBuildProjectDirectory = C:\Users\User\OneDrive\Desktop\repos\BugTracker\BugTracker
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/AccessDenied.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxDb25maXJtRW1haWxDaGFuZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ExternalLogin.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ExternalLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxFeHRlcm5hbExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZENvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Lockout.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Lockout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2Nrb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Login.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/LoginWith2fa.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/LoginWith2fa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbldpdGgyZmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbldpdGhSZWNvdmVyeUNvZGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Logout.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcQ2hhbmdlUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRGVsZXRlUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRGlzYWJsZTJmYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRG93bmxvYWRQZXJzb25hbERhdGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/Email.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/Email.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW5hYmxlQXV0aGVudGljYXRvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRXh0ZXJuYWxMb2dpbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcR2VuZXJhdGVSZWNvdmVyeUNvZGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/Index.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUmVzZXRBdXRoZW50aWNhdG9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2V0UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2hvd1JlY292ZXJ5Q29kZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcVHdvRmFjdG9yQXV0aGVudGljYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/Username.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/Username.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcVXNlcm5hbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX01hbmFnZU5hdi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1N0YXR1c01lc3NhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Register.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3RlckNvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNlbmRFbWFpbENvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ResetPassword.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkQ29uZmlybWF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/_StatusMessage.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/_StatusMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfU3RhdHVzTWVzc2FnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Account/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/Error.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/_ViewImports.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Account/DemoLoginForm.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Account/DemoLoginForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxEZW1vTG9naW5Gb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Account/_DemoLoginForm.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Account/_DemoLoginForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxfRGVtb0xvZ2luRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Account/_LoginForm.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Account/_LoginForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxfTG9naW5Gb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Dashboard/Index.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Dashboard/Privacy.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Dashboard/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFByaXZhY3kuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Dashboard/_DashboardTicketHistoryList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Dashboard/_DashboardTicketHistoryList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXF9EYXNoYm9hcmRUaWNrZXRIaXN0b3J5TGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Project/Create.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Project/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Project/Details.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Project/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Project/Edit.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Project/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Project/ListProjects.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Project/ListProjects.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxMaXN0UHJvamVjdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Project/_ProjectList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Project/_ProjectList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxfUHJvamVjdExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Project/_ProjectTicketList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Project/_ProjectTicketList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxfUHJvamVjdFRpY2tldExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Project/_ProjectUserList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Project/_ProjectUserList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxfUHJvamVjdFVzZXJMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Role/Create.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Role/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Role/Edit.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Role/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Role/ListRoles.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Role/ListRoles.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxMaXN0Um9sZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Role/_RoleCard.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Role/_RoleCard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxfUm9sZUNhcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Role/_RoleUserList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Role/_RoleUserList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxfUm9sZVVzZXJMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Shared/Error.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Shared/NotFound.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Shared/NotFound.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXE5vdEZvdW5kLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Shared/_AccountLayout.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Shared/_AccountLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BY2NvdW50TGF5b3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Shared/_LoaderPartial.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Shared/_LoaderPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2FkZXJQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/TicketAttachment/Edit.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/TicketAttachment/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0QXR0YWNobWVudFxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/TicketComment/_TicketCommentList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/TicketComment/_TicketCommentList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0Q29tbWVudFxfVGlja2V0Q29tbWVudExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/TicketHistory/_TicketHistoryList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/TicketHistory/_TicketHistoryList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0SGlzdG9yeVxfVGlja2V0SGlzdG9yeUxpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Ticket/Create.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Ticket/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Ticket/CreateForProject.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Ticket/CreateForProject.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XENyZWF0ZUZvclByb2plY3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Ticket/Details.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Ticket/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Ticket/Edit.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Ticket/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Ticket/ListTickets.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Ticket/ListTickets.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XExpc3RUaWNrZXRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Ticket/_TicketList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Ticket/_TicketList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XF9UaWNrZXRMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/User/Details.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/User/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/User/Edit.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/User/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/User/ListUsers.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/User/ListUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMaXN0VXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/User/_UserList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/User/_UserList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxfVXNlckxpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/User/_UserProjectList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/User/_UserProjectList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxfVXNlclByb2plY3RMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/User/_UserTicketList.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/User/_UserTicketList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxfVXNlclRpY2tldExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/_ViewImports.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/_ViewStart.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/BugTracker/BugTracker/Views/Shared/_Layout.cshtml]
+[C:/Users/User/OneDrive/Desktop/repos/BugTracker/BugTracker/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-cl261elwq8

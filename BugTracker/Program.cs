@@ -3,9 +3,8 @@ using BugTracker.Contexts;
 using BugTracker.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using BugTracker.Repositories.Mock;
 using BugTracker.Repositories.Interfaces;
-using BugTracker.Repositories.Db;
+using BugTracker.Repositories.EF;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
@@ -19,48 +18,37 @@ string GetPgsqlConnectionString()
     return $"host={uri.Host};username={uri.UserInfo.Split(':')[0]};password={uri.UserInfo.Split(':')[1]};database={uri.LocalPath.Substring(1)};pooling=true;";
 }
 
-// Add services to the container.
+// Add services to the DI container.
 if (isDev && !isDev)
 {
-    var connectionString = builder.Configuration.GetConnectionString("BugTrackerDbContextConnection");
-    builder.Services.AddDbContext<BugTrackerDbContext>(options =>
+    var connectionString = builder.Configuration.GetConnectionString("LocalSqlServerConnection");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, x => x.MigrationsAssembly("BugTracker.SqlServerMigrations")));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    builder.Services.AddScoped<IProjectRepository, ProjectDbRepository>();
-    builder.Services.AddScoped<IUserProjectRepository, UserProjectDbRepository>();
-    builder.Services.AddScoped<ITicketRepository, TicketDbRepository>();
-    builder.Services.AddScoped<ITicketHistoryRepository, TicketHistoryDbRepository>();
-    builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentDbRepository>();
-    builder.Services.AddScoped<ITicketCommentRepository, TicketCommentDbRepository>();
 }
 else
 {
     var connectionString = GetPgsqlConnectionString();
-    builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-    options.UseNpgsql(connectionString, x => x.MigrationsAssembly("BugTracker.PgsqlMigrations")));
-    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-    builder.Services.AddScoped<IProjectRepository, ProjectMockRepository>();
-    builder.Services.AddScoped<IUserProjectRepository, UserProjectMockRepository>();
-    builder.Services.AddScoped<ITicketRepository, TicketMockRepository>();
-    builder.Services.AddScoped<ITicketHistoryRepository, TicketHistoryMockRepository>();
-    builder.Services.AddScoped<ITicketAttachmentRepository, TicketAttachmentMockRepository>();
-    builder.Services.AddScoped<ITicketCommentRepository, TicketCommentMockRepository>();
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(connectionString, x => x.MigrationsAssembly("BugTracker.PgsqlMigrations")));    
 }
 
-builder.Services.AddScoped<ProjectHelper, ProjectHelper>();
-builder.Services.AddScoped<TicketHelper, TicketHelper>();
-builder.Services.AddScoped<RoleHelper, RoleHelper>();
-builder.Services.AddScoped<TicketAttachmentHelper, TicketAttachmentHelper>();
-builder.Services.AddScoped<TicketHistoryHelper, TicketHistoryHelper>();
-builder.Services.AddScoped<AccountHelper, AccountHelper>();
-builder.Services.AddScoped<ChartHelper, ChartHelper>();
+builder.Services.AddTransient<IUnitOfWork, EF_UnitOfWork>();
+
+builder.Services.AddTransient<ProjectHelper, ProjectHelper>();
+builder.Services.AddTransient<TicketHelper, TicketHelper>();
+builder.Services.AddTransient<RoleHelper, RoleHelper>();
+builder.Services.AddTransient<TicketAttachmentHelper, TicketAttachmentHelper>();
+builder.Services.AddTransient<TicketHistoryHelper, TicketHistoryHelper>();
+builder.Services.AddTransient<AccountHelper, AccountHelper>();
+builder.Services.AddTransient<ChartHelper, ChartHelper>();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
         options.SignIn.RequireConfirmedAccount = false;
         options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
     })
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<BugTrackerDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc(options =>

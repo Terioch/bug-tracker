@@ -1,9 +1,10 @@
 ﻿using BugTracker.Models;
+using BugTracker.Repositories.Interfaces;
 
 namespace BugTracker.Contexts.Mock
 {
     public static class MockTickets
-    {             
+    {        
         public static List<Ticket> GetTickets()
         {       
             return new List<Ticket>()

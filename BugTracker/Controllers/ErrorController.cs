@@ -19,6 +19,7 @@ namespace BugTracker.Controllers
                     ViewBag.QS = statusCodeResult.OriginalQueryString;
                     break;
             }
+
             return View("NotFound");
         }
 

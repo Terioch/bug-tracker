@@ -27,7 +27,7 @@
 <div id="userContainer" data-id="@Model.Id" class="card">
   <div class="card-header bg-light">
     <h1 class="fs-3 mt-2">@Model.UserName</h1>     
-    @if (Model.Id == loggedInUser.Id || await userManager.IsInRoleAsync(loggedInUser, "Super Admin"))
+    @if (Model.Id == loggedInUser.Id || await userManager.IsInRoleAsync(loggedInUser, "Owner"))
     {
         <span><a asp-action="Edit" asp-route-id="@Model.Id" class="link-info">Edit</a> |</span>
     }
@@ -86,7 +86,7 @@
                 <div id="projectListContainer">
                     @if (!Model.Projects.Any()) 
                     {
-                        <div class="alert alert-info fs-5">
+                        <div class="alert alert-primary fs-5">
                             There are no projects associated with this user
                         </div>
                     } else 
@@ -162,7 +162,7 @@
                 <div id="ticketListContainer">
                     @if (!Model.Tickets.Any()) 
                     {
-                        <div class="alert alert-info fs-5">
+                        <div class="alert alert-primary fs-5">
                             There are no tickets associated with this user
                         </div>
                     } else 

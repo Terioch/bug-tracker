@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
@@ -9,14 +10,18 @@ namespace BugTracker.Models
 {
     public class Ticket
     {
+        [Key]
         public string? Id { get; set; }
 
+        [ForeignKey(nameof(Project))]
         [Required]
-        public string? ProjectId { get; set; }
+        public string? ProjectId { get; set; }       
 
+        [ForeignKey(nameof(Submitter))]
         [Required]
         public string? SubmitterId { get; set; }
 
+        [ForeignKey(nameof(AssignedDeveloper))]
         public string? AssignedDeveloperId { get; set; }
 
         [Required]

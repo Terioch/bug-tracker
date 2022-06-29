@@ -6,10 +6,13 @@ namespace BugTracker.Models
 {
     public class TicketHistoryRecord
     {
+        [Key]
         public string? Id { get; set; }        
        
+        [ForeignKey(nameof(Ticket))]
         public string? TicketId { get; set; }
-                
+
+        [ForeignKey(nameof(Modifier))]
         public string? ModifierId { get; set; }
 
         [Required]

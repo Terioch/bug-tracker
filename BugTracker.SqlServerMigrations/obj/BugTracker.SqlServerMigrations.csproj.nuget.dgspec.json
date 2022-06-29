@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\BugTracker.SqlServerMigrations.csproj": {}
+    "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\BugTracker.SqlServerMigrations.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\BugTracker.SqlServerMigrations.csproj": {
+    "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\BugTracker.SqlServerMigrations.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\BugTracker.SqlServerMigrations.csproj",
+        "projectUniqueName": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\BugTracker.SqlServerMigrations.csproj",
         "projectName": "BugTracker.SqlServerMigrations",
-        "projectPath": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\BugTracker.SqlServerMigrations.csproj",
+        "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\BugTracker.SqlServerMigrations.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\obj\\",
+        "outputPath": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker.SqlServerMigrations\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\BugTracker.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\BugTracker.csproj"
+              "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker\\BugTracker.csproj": {
+                "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker\\BugTracker.csproj"
               }
             }
           }
@@ -43,6 +43,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -62,14 +68,14 @@
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\BugTracker.csproj": {
+    "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker\\BugTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\BugTracker.csproj",
+        "projectUniqueName": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker\\BugTracker.csproj",
         "projectName": "BugTracker",
-        "projectPath": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\BugTracker.csproj",
+        "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker\\BugTracker.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\BugTracker\\BugTracker\\obj\\",
+        "outputPath": "C:\\Users\\User\\OneDrive\\Desktop\\repos\\BugTracker\\BugTracker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -109,6 +115,10 @@
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

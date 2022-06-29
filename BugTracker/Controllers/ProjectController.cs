@@ -15,85 +15,36 @@ namespace BugTracker.Controllers
 {
     public class ProjectController : Controller
     {
-        private readonly IProjectRepository repo;
-        private readonly ITicketRepository ticketRepo;
-        private readonly IUserProjectRepository userProjectRepo;
-        private readonly ITicketHistoryRepository ticketHistoryRepo;
-        private readonly ITicketAttachmentRepository ticketAttachmentRepo;
-        private readonly ITicketCommentRepository ticketCommentRepo;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly ProjectHelper projectHelper;
-        private readonly TicketHelper ticketHelper;        
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ProjectHelper _projectHelper;
+        private readonly TicketHelper _ticketHelper;
 
-        public ProjectController(IProjectRepository repo, ITicketRepository ticketRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRepository ticketHistoryRepo, 
-            ITicketAttachmentRepository ticketAttachmentRepo, ITicketCommentRepository ticketCommentRepo, UserManager<ApplicationUser> userManager, 
-            ProjectHelper projectHelper, TicketHelper ticketHelper)
+        public ProjectController(IUnitOfWork unitOfWork, ProjectHelper projectHelper, TicketHelper ticketHelper)
         {
-            this.repo = repo;
-            this.ticketRepo = ticketRepo;
-            this.userProjectRepo = userProjectRepo;
-            this.ticketHistoryRepo = ticketHistoryRepo;
-            this.ticketAttachmentRepo = ticketAttachmentRepo;
-            this.ticketCommentRepo = ticketCommentRepo;
-            this.userManager = userManager;
-            this.projectHelper = projectHelper;
-            this.ticketHelper = ticketHelper;                                
-        }    
-        
+            _unitOfWork = unitOfWork;
+            _projectHelper = projectHelper;
+            _ticketHelper = ticketHelper;            
+        }
+
         private Task<ApplicationUser> GetCurrentUserAsync()
         {   
-            return userManager.GetUserAsync(HttpContext.User);
+            return _unitOfWork.UserManager.GetUserAsync(HttpContext.User);
         }
 
         public async Task<IActionResult> ListProjects(int? page)
         {   
-            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();
-            foreach (var project in projects)
-            {
-                project.Tickets = ticketRepo.GetTicketsByProjectId(project.Id).ToList();
-            }
+            IEnumerable<Project> projects = await _projectHelper.GetUserRoleProjects();            
             return View(projects.ToPagedList(page ?? 1, 8));
-        } 
-        
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> Create(Project project)
-        {
-            project.Id = Guid.NewGuid().ToString();
-
-            // Assign all administrators 
-            var admins = await userManager.GetUsersInRoleAsync("Admin");
-            foreach (var admin in admins)
-            {
-                UserProject userProject = new()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    UserId = admin.Id,
-                    ProjectId = project.Id
-                };
-                userProjectRepo.Create(userProject);
-            }               
-            repo.Create(project);
-            return RedirectToAction("ListProjects", "Project");
-        }
+        }                
 
         [HttpGet] 
         public async Task<IActionResult> Details(string id, int? usersPage, int? ticketsPage)
         {                        
-            Project project = repo.GetProjectById(id);         
-            var userRoleTickets = await ticketHelper.GetUserRoleTickets(); 
-            project.Tickets = userRoleTickets.Where(t => t.ProjectId == id).ToList();
-            project.Users = userProjectRepo.GetUsersByProjectId(id).ToList();            
-            var unassignedUsers = userManager.Users.Where(u => !project.Users.Contains(u));
+            var project = await _unitOfWork.Projects.Get(id);         
+            var userRoleTickets = await _ticketHelper.GetUserRoleTickets();                         
+            var unassignedUsers = _unitOfWork.UserManager.Users.Where(u => !project.Users.Contains(u));
 
-            ProjectViewModel model = new()
+            var model = new ProjectViewModel()
             {
                 Id = project.Id,
                 Name = project.Name,
@@ -102,13 +53,14 @@ namespace BugTracker.Controllers
                 Users = project.Users.ToPagedList(usersPage ?? 1, 5),
                 Tickets = project.Tickets.ToPagedList(ticketsPage ?? 1, 5),
             };            
+
             return View(model);
         }
       
         [HttpGet]
         public async Task<IActionResult> FilterProjectsByNameReturnPartial(string? searchTerm)
         {
-            IEnumerable<Project> projects = await projectHelper.GetUserRoleProjects();
+            var projects = await _projectHelper.GetUserRoleProjects();
             
             if (searchTerm == null)
             {
@@ -121,61 +73,117 @@ namespace BugTracker.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult FilterUserProjectsByNameReturnPartial(string id, string? searchTerm)
-        {
-            ApplicationUser user = userManager.Users.First(u => u.Id == id);
-            IEnumerable<Project> projects = userProjectRepo.GetProjectsByUserId(id);
+        public async Task<IActionResult> FilterUserProjectsByNameReturnPartial(string id, string? searchTerm)
+        {         
+            var user = await _unitOfWork.Users.Get(id);
+
+            if (user == null)
+            {
+                return NotFound();                
+            }
 
             if (searchTerm == null)
             {
-                return PartialView("~/Views/User/_UserProjectList.cshtml", projects.ToPagedList(1, 5));
+                return PartialView("~/Views/User/_UserProjectList.cshtml", user.Projects.ToPagedList(1, 5));
             }
+  
+            var filteredProjects = user.Projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
 
-            var filteredProjects = projects.Where(p => p.Name.ToLowerInvariant().Contains(searchTerm));
             return PartialView("~/Views/User/_UserProjectList.cshtml", filteredProjects.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult Edit(string id)
+        public IActionResult Create()
         {
-            Project project = repo.GetProjectById(id);
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Create(Project project)
+        {
+            project.Id = Guid.NewGuid().ToString();
+            project.CreatedAt = DateTimeOffset.UtcNow;
+
+            // Assign all administrators 
+            var admins = await _unitOfWork.UserManager.GetUsersInRoleAsync("Admin");
+
+            foreach (var admin in admins)
+            {
+                project.Users.Add(admin);
+            }
+
+            _unitOfWork.Projects.Add(project);
+
+            await _unitOfWork.Complete();
+
+            return RedirectToAction("ListProjects", "Project");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var project = await _unitOfWork.Projects.Get(id);
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
             return View(project);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult Edit(Project project)
+        public async Task<IActionResult> Edit(Project model)
         {
             if (ModelState.IsValid)
             {
-                repo.Update(project);
+                var project = await _unitOfWork.Projects.Get(model.Id);
+
+                if (project == null)
+                {
+                    return NotFound();
+                }
+
+                project.Name = model.Name;
+                project.Description = model.Description;
+
+                await _unitOfWork.Complete();
+
                 return RedirectToAction("Details", new { id = project.Id });
             }
-            return View(project);
+
+            return View(model);
         }
 
         [Authorize(Roles = "Admin")]    
-        public IActionResult Delete(string id)
-        {            
-            IEnumerable<Ticket> tickets = ticketRepo.GetTicketsByProjectId(id);
+        public async Task<IActionResult> Delete(string id)
+        {
+            var tickets = _unitOfWork.Tickets.Find(t => t.ProjectId == id);
 
-            foreach (var ticket in tickets)
+            /*foreach (var ticket in tickets)
             {
-                ticketRepo.Delete(ticket.Id);
-                ticketHistoryRepo.DeleteRecordsByTicketId(ticket.Id);
-                ticketAttachmentRepo.DeleteAttachmentsByTicketId(ticket.Id);
-                ticketCommentRepo.DeleteCommentsByTicketId(ticket.Id);
-            }
+                _unitOfWork.Tickets.Delete(ticket);
+                _unitOfWork.TicketHistoryRecords.DeleteRange(_unitOfWork.TicketHistoryRecords.Find(r => r.TicketId == ticket.Id));
+                _unitOfWork.TicketAttachments.DeleteRange(_unitOfWork.TicketAttachments.Find(a => a.TicketId == ticket.Id));
+                _unitOfWork.TicketComments.DeleteRange(_unitOfWork.TicketComments.Find(c => c.TicketId == ticket.Id));
+            }*/
+            
+            var project = await _unitOfWork.Projects.Get(id);
 
-            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id); 
-
-            foreach (var user in users)
+            /*foreach (var user in project.Users)
             {
+                project.Users.Remove(user);
                 userProjectRepo.Delete(user.Id, id);
-            }
+            }*/
 
-            repo.Delete(id);
+            _unitOfWork.Projects.Delete(project);
+
+            await _unitOfWork.Complete();
+
             return RedirectToAction("ListProjects");
         }
 
@@ -183,35 +191,29 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(string id, ProjectViewModel model)
         {
-            ApplicationUser? user = await userManager.FindByIdAsync(model.ToBeAssignedUserId);
+            var user = await _unitOfWork.UserManager.FindByIdAsync(model.ToBeAssignedUserId);          
+            var project = await _unitOfWork.Projects.Get(id);
 
-            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
-
-            if (users.Contains(user))
+            if (project.Users.Any(u => u.Id == user.Id))
             {
                 TempData["Error"] = "The user you're attempting to add is already assigned to this project";
                 return RedirectToAction("Details", new { id });
             }
 
-            UserProject userProject = new()
-            {   
-                Id = Guid.NewGuid().ToString(),
-                UserId = user.Id,
-                ProjectId = id,
-            };
+            project.Users.Add(user);
 
-            userProjectRepo.Create(userProject);
+            await _unitOfWork.Complete();
+
             return RedirectToAction("Details", new { id });     
         }
 
         [Authorize(Roles = "Admin, Project Manager")]
         public async Task<IActionResult> RemoveUser(string id, string userId)
         {
-            Project project = repo.GetProjectById(id);
-            ApplicationUser? user = await userManager.FindByIdAsync(userId);
-            IEnumerable<ApplicationUser> users = userProjectRepo.GetUsersByProjectId(id);
+            var project = await _unitOfWork.Projects.Get(id);
+            var user = await _unitOfWork.UserManager.FindByIdAsync(userId);        
 
-            if (!users.Contains(user))
+            if (!project.Users.Any(u => u.Id == user.Id))
             {
                 TempData["Error"] = "The user you're attempting to remove is not assigned to this project";
                 return RedirectToAction("Details", new { id });
@@ -225,7 +227,10 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Details", new { id });
             }
 
-            UserProject userProject = userProjectRepo.Delete(userId, id);
+            project.Users.Remove(user);
+
+            await _unitOfWork.Complete();
+
             return RedirectToAction("Details", new { id });
         }
     }

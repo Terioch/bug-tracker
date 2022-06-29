@@ -36,7 +36,7 @@
     <div id="projectListContainer">
         @if (!Model.Any() || Model == null) 
         {              
-            <div class="alert alert-info fs-5 mt-3" role="alert">
+            <div class="alert alert-primary fs-5 mt-3" role="alert">
               There are currently no projects associated with your account.
             </div>    
         } 
@@ -59,8 +59,8 @@
                                 <td>@project.Name</td>
                                 <td>@project.Tickets.ToList().Count</td>                                                                                            
                                 <td>@project?.Description</td>
-                                <td class="d-flex flex-column">                                   
-                                    <a asp-action="Details" asp-route-id="@project?.Id" class="link-success">Details</a>                            
+                                <td class="">                                   
+                                    <a asp-action="Details" asp-route-id="@project?.Id" class="link-success w-100">Details</a>                            
                                 </td>
                             </tr>                                        
                         }     

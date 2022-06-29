@@ -9,13 +9,13 @@ namespace BugTracker.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly IConfiguration config;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IConfiguration _config;
 
         public AccountController(SignInManager<ApplicationUser> signInManager, IConfiguration config)
         {
-            this.signInManager = signInManager;
-            this.config = config;
+            _signInManager = signInManager;
+            _config = config;
         }       
 
         public IList<AuthenticationScheme>? ExternalLogins { get; set; }
@@ -36,7 +36,7 @@ namespace BugTracker.Controllers
         
         public async Task<IActionResult> LoginWithDemoAccount(string role)
         {  
-            Input.Password = config["DemoCredentials:Password"];
+            Input.Password = _config["DemoCredentials:Password"];
             string returnUrl = "/";
 
             switch (role)
@@ -55,22 +55,27 @@ namespace BugTracker.Controllers
                     break;
             }
 
-            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            var result = await signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {             
                 return LocalRedirect(returnUrl);
             }
+
             if (result.RequiresTwoFactor)
             {
                 return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = false });
             }
+
             if (result.IsLockedOut)
             {              
                 return RedirectToPage("./Lockout");
-            }            
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }       
+                       
+            TempData["Error"] = "Invalid login attempt";
+
             return RedirectToAction("DisplayDemoLoginForm");                    
         }     
     }

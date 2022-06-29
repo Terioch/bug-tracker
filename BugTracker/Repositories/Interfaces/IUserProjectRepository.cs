@@ -6,7 +6,7 @@ namespace BugTracker.Repositories.Interfaces
     {
         public IEnumerable<Project> GetProjectsByUserId(string userId);
         public IEnumerable<ApplicationUser> GetUsersByProjectId(string projectId);
-        public UserProject Create(UserProject userProject);
+        public UserProject Add(UserProject userProject);
         public UserProject Update(UserProject userProject);
         public UserProject Delete(string userId, string projectId);
     }

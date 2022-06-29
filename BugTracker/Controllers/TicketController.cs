@@ -1,5 +1,6 @@
 ﻿using BugTracker.Helpers;
 using BugTracker.Models;
+using BugTracker.Repositories.EF;
 using BugTracker.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,54 +12,46 @@ namespace BugTracker.Controllers
 {
     public class TicketController : Controller
     {
-        private readonly ITicketRepository repo;
-        private readonly IProjectRepository projectRepo;
-        private readonly IUserProjectRepository userProjectRepo;
-        private readonly ITicketHistoryRepository ticketHistoryRepo;
-        private readonly ITicketCommentRepository ticketCommentRepo;
-        private readonly ITicketAttachmentRepository ticketAttachmentRepo;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly ProjectHelper projectHelper;
-        private readonly TicketHelper ticketHelper;
-        private readonly TicketAttachmentHelper attachmentHelper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ProjectHelper _projectHelper;
+        private readonly TicketHelper _ticketHelper;
+        private readonly TicketAttachmentHelper _attachmentHelper;
 
-        public TicketController(ITicketRepository repo, IProjectRepository projectRepo, IUserProjectRepository userProjectRepo, ITicketHistoryRepository ticketHistoryRepo,
-            ITicketCommentRepository ticketCommentRepo, ITicketAttachmentRepository ticketAttachmentRepo, UserManager<ApplicationUser> userManager, ProjectHelper projectHelper, 
-            TicketHelper ticketHelper, TicketAttachmentHelper attachmentHelper)
+        public TicketController(IServiceProvider serviceProvider)
         {
-            this.repo = repo;
-            this.projectRepo = projectRepo;
-            this.userProjectRepo = userProjectRepo;
-            this.ticketHistoryRepo = ticketHistoryRepo;
-            this.ticketCommentRepo = ticketCommentRepo;
-            this.ticketAttachmentRepo = ticketAttachmentRepo;
-            this.userManager = userManager;
-            this.projectHelper = projectHelper;
-            this.ticketHelper = ticketHelper;
-            this.attachmentHelper = attachmentHelper;
+            _unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork>();
+            _projectHelper = serviceProvider.GetRequiredService<ProjectHelper>();
+            _ticketHelper = serviceProvider.GetRequiredService<TicketHelper>();
+            _attachmentHelper = serviceProvider.GetRequiredService<TicketAttachmentHelper>();
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
-            return userManager.GetUserAsync(HttpContext.User);
+            return _unitOfWork.UserManager.GetUserAsync(HttpContext.User);
         }
 
         private Task<ApplicationUser> FindUserByNameAsync(string name)
         {
-            return userManager.FindByNameAsync(name);
+            return _unitOfWork.UserManager.FindByNameAsync(name);
         }
 
         public async Task<IActionResult> ListTickets(int? page)
         {
-            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();           
+            var tickets = await _ticketHelper.GetUserRoleTickets();           
             return View(tickets.ToPagedList(page ?? 1, 8));
         }
 
         [HttpGet]
-        public IActionResult Details(string id, int? historyPage, int? attachmentsPage, int? commentsPage)
+        public async Task<IActionResult> Details(string id, int? historyPage, int? attachmentsPage, int? commentsPage)
         {
-            Ticket ticket = repo.GetTicketById(id);
-            TicketViewModel model = new()
+            var ticket = await _unitOfWork.Tickets.Get(id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            var model = new TicketViewModel()
             {
                 Id = ticket.Id,
                 ProjectId = ticket.ProjectId,
@@ -77,6 +70,7 @@ namespace BugTracker.Controllers
                 TicketAttachments = ticket.TicketAttachments.ToPagedList(attachmentsPage ?? 1, 6),
                 TicketComments = ticket.TicketComments.ToPagedList(commentsPage ?? 1, 8),
             };
+
             return View(model);
         }
 
@@ -95,36 +89,32 @@ namespace BugTracker.Controllers
             {
                 ApplicationUser submitter = await GetCurrentUserAsync();
 
-                Ticket ticket = new()
+                var ticket = new Ticket()
                 {
                     Id = Guid.NewGuid().ToString(),
                     ProjectId = model.ProjectId,
                     SubmitterId = submitter.Id,
                     Title = model.Title,
                     Description = model.Description,
-                    CreatedAt = DateTimeOffset.Now,
+                    CreatedAt = DateTimeOffset.UtcNow,
                     Type = model.Type,
                     Status = model.Status,
                     Priority = model.Priority,
                 };
-                
-                // Ensure that the submitter is assigned to the corresponding project
-                var assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
-                bool isSubmitterAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.SubmitterId);
+
+                // Ensure that the submitter is assigned to the corresponding project               
+                bool isSubmitterAssigned = await _projectHelper.IsUserOnProject(ticket.SubmitterId, ticket.ProjectId);
 
                 if (!isSubmitterAssigned)
-                {
-                    UserProject userProject = new()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        UserId = ticket.SubmitterId,
-                        ProjectId = ticket.ProjectId,
-                    };
-
-                    userProjectRepo.Create(userProject);
+                {                   
+                    var user = await _unitOfWork.Users.Get(ticket.SubmitterId);
+                    var project = await _unitOfWork.Projects.Get(ticket.ProjectId);
+                    project.Users.Add(user);
                 }
                 
-                ticket = repo.Create(ticket);
+                _unitOfWork.Tickets.Add(ticket);
+
+                await _unitOfWork.Complete();
 
                 return RedirectToAction("Details", new { id = ticket.Id });
             }
@@ -135,7 +125,7 @@ namespace BugTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterTicketsReturnPartial(string? searchTerm)
         {
-            IEnumerable<Ticket> tickets = await ticketHelper.GetUserRoleTickets();
+            var tickets = await _ticketHelper.GetUserRoleTickets();
 
             if (searchTerm == null)
             {
@@ -162,7 +152,8 @@ namespace BugTracker.Controllers
         [HttpGet]
         public IActionResult FilterProjectTicketsReturnPartial(string id, string? searchTerm)
         {
-            IEnumerable<Ticket> tickets = repo.GetTicketsByProjectId(id);
+            var tickets = _unitOfWork.Tickets.Find(t => t.ProjectId == id);
+
             TempData["ProjectId"] = id;
 
             if (searchTerm == null)
@@ -190,8 +181,8 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult FilterUserTicketsReturnPartial(string id, string? searchTerm)
-        {
-            var tickets = repo.GetAllTickets().Where(t => t.AssignedDeveloperId == id || t.SubmitterId == id);
+        {            
+            var tickets = _unitOfWork.Tickets.Find(t => t.AssignedDeveloperId == id || t.SubmitterId == id);
 
             if (searchTerm == null)
             {
@@ -213,16 +204,22 @@ namespace BugTracker.Controllers
             });
 
             ViewBag.Id = id;
+
             return PartialView("~/Views/User/_UserTicketList.cshtml", filteredTickets.ToPagedList(1, 5));
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
-        {            
-            Ticket ticket = repo.GetTicketById(id);
+        {
+            var ticket = await _unitOfWork.Tickets.Get(id);
 
-            EditTicketViewModel model = new()
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            var model = new EditTicketViewModel()
             {
                 Id = id,
                 Title = ticket.Title,
@@ -232,20 +229,26 @@ namespace BugTracker.Controllers
                 Type = ticket.Type,
                 Status = ticket.Status,
                 Priority = ticket.Priority,                 
-                AssignableUsers = await projectHelper.GetUsersInRolesOnProject(ticket.ProjectId, new string[] { "Admin", "Developer" }),
+                AssignableUsers = await _projectHelper.GetUsersInRolesOnProject(ticket.ProjectId, new string[] { "Admin", "Developer" }),
             };
+
             return View(model);
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
         [HttpPost]
         public async Task<IActionResult> Edit(EditTicketViewModel model)
-        {            
-            Ticket ticket = repo.GetTicketById(model.Id);            
+        {
+            var ticket = await _unitOfWork.Tickets.Get(model.Id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
 
             // Update property and property history if new value differs from original
-            PropertyInfo[] modelProperties = model.GetType().GetProperties();
-            ApplicationUser modifier = await GetCurrentUserAsync();            
+            var modelProperties = model.GetType().GetProperties();
+            var modifier = await GetCurrentUserAsync();            
             
             foreach (var property in modelProperties) 
             {          
@@ -258,7 +261,7 @@ namespace BugTracker.Controllers
 
                     if (ticketPropertyValue != propertyValue)
                     {                        
-                        TicketHistoryRecord ticketHistoryRecord = new()
+                        var ticketHistoryRecord = new TicketHistoryRecord()
                         {
                             Id = Guid.NewGuid().ToString(),
                             TicketId = ticket.Id,
@@ -266,10 +269,11 @@ namespace BugTracker.Controllers
                             Property = property.Name,
                             OldValue = ticketPropertyValue,
                             NewValue = propertyValue,                           
-                            ModifiedAt = DateTimeOffset.Now
+                            ModifiedAt = DateTimeOffset.UtcNow
                         };
 
-                        ticketHistoryRepo.Create(ticketHistoryRecord);
+                        _unitOfWork.TicketHistoryRecords.Add(ticketHistoryRecord);
+
                         ticketProperty.SetValue(ticket, property.GetValue(model));
                     }                 
                 }                                
@@ -277,23 +281,19 @@ namespace BugTracker.Controllers
 
             // Ensure that the assigned developer is assigned to the corresponding project
             if (ticket.AssignedDeveloperId != null)
-            {                
-                var assignedUsers = userProjectRepo.GetUsersByProjectId(ticket.ProjectId);
-                bool isDeveloperAssigned = assignedUsers.Select(u => u.Id).Contains(ticket.AssignedDeveloperId);
+            {               
+                var project = await _unitOfWork.Projects.Get(ticket.ProjectId);
+
+                bool isDeveloperAssigned = project.Users.Select(u => u.Id).Contains(ticket.AssignedDeveloperId);
 
                 if (!isDeveloperAssigned)
-                {
-                    UserProject userProject = new()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        UserId = ticket.AssignedDeveloperId,
-                        ProjectId = ticket.ProjectId,
-                    };
-                    userProjectRepo.Create(userProject);
+                {                    
+                    var user = await _unitOfWork.Users.Get(ticket.AssignedDeveloperId);
+                    project.Users.Add(user);
                 }
-            }            
+            }
 
-            repo.Update(ticket);
+            await _unitOfWork.Complete();
 
             return RedirectToAction("Details", new { id = ticket.Id });
         }
@@ -302,12 +302,18 @@ namespace BugTracker.Controllers
         [HttpPost]
         public async Task <IActionResult> EditStatus(TicketViewModel model)
         {
-            Ticket ticket = repo.GetTicketById(model.Id);
-            ApplicationUser modifier = await GetCurrentUserAsync();
+            var ticket = await _unitOfWork.Tickets.Get(model.Id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            var modifier = await GetCurrentUserAsync();
 
             if (ticket.Status != model.Status)
             {
-                TicketHistoryRecord record = new()
+                var record = new TicketHistoryRecord()
                 {
                     Id = Guid.NewGuid().ToString(),
                     TicketId = ticket.Id,
@@ -315,27 +321,40 @@ namespace BugTracker.Controllers
                     Property = "Status",
                     OldValue = ticket.Status,
                     NewValue = model.Status,                    
-                    ModifiedAt = DateTimeOffset.Now,
+                    ModifiedAt = DateTimeOffset.UtcNow,
                 };
 
-                ticketHistoryRepo.Create(record);
+                _unitOfWork.TicketHistoryRecords.Add(record);
+
                 ticket.Status = model.Status;
-                repo.Update(ticket);
-            }                        
+
+                await _unitOfWork.Complete();
+            }          
+            
             return RedirectToAction("Details", new { id = ticket.Id });
         }
 
         [Authorize(Roles = "Admin, Project Manager, Submitter")]
-        public IActionResult Delete(string id)
-        {                      
-            ticketHistoryRepo.DeleteRecordsByTicketId(id);
+        public async Task<IActionResult> Delete(string id)
+        {
+            //ticketHistoryRepo.DeleteByTicketId(id)          
             /*foreach (var attachment in ticketAttachmentRepo.GetAttachmentsByTicketId(id))
             {
                 attachmentHelper.RemoveUploadedFileAttachment(attachment);
             }*/
-            ticketAttachmentRepo.DeleteAttachmentsByTicketId(id);            
-            ticketCommentRepo.DeleteCommentsByTicketId(id);
-            repo.Delete(id);
+            //ticketAttachmentRepo.DeleteByTicketId(id);            
+            //ticketCommentRepo.DeleteCommentsByTicketId(id);
+            var ticket = await _unitOfWork.Tickets.Get(id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.Tickets.Delete(ticket);
+
+            await _unitOfWork.Complete();
+
             return RedirectToAction("ListTickets");
         }
     }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BugTracker.SqlServerMigrations.Migrations
 {
-    [DbContext(typeof(BugTrackerDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class BugTrackerDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -21,6 +21,21 @@ namespace BugTracker.SqlServerMigrations.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ApplicationUserProject", b =>
+                {
+                    b.Property<string>("ProjectsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ProjectsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("ApplicationUserProject");
+                });
 
             modelBuilder.Entity("BugTracker.Models.ApplicationUser", b =>
                 {
@@ -70,9 +85,6 @@ namespace BugTracker.SqlServerMigrations.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -93,8 +105,6 @@ namespace BugTracker.SqlServerMigrations.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("ProjectId");
-
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
@@ -103,10 +113,13 @@ namespace BugTracker.SqlServerMigrations.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -266,28 +279,6 @@ namespace BugTracker.SqlServerMigrations.Migrations
                     b.ToTable("TicketHistoryRecords");
                 });
 
-            modelBuilder.Entity("BugTracker.Models.UserProject", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserProjects");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -425,11 +416,19 @@ namespace BugTracker.SqlServerMigrations.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BugTracker.Models.ApplicationUser", b =>
+            modelBuilder.Entity("ApplicationUserProject", b =>
                 {
                     b.HasOne("BugTracker.Models.Project", null)
-                        .WithMany("Users")
-                        .HasForeignKey("ProjectId");
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BugTracker.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BugTracker.Models.Ticket", b =>
@@ -460,7 +459,7 @@ namespace BugTracker.SqlServerMigrations.Migrations
             modelBuilder.Entity("BugTracker.Models.TicketAttachment", b =>
                 {
                     b.HasOne("BugTracker.Models.ApplicationUser", "Submitter")
-                        .WithMany()
+                        .WithMany("TicketAttachments")
                         .HasForeignKey("SubmitterId");
 
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
@@ -475,7 +474,7 @@ namespace BugTracker.SqlServerMigrations.Migrations
             modelBuilder.Entity("BugTracker.Models.TicketComment", b =>
                 {
                     b.HasOne("BugTracker.Models.ApplicationUser", "Author")
-                        .WithMany()
+                        .WithMany("TicketComments")
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
@@ -490,7 +489,7 @@ namespace BugTracker.SqlServerMigrations.Migrations
             modelBuilder.Entity("BugTracker.Models.TicketHistoryRecord", b =>
                 {
                     b.HasOne("BugTracker.Models.ApplicationUser", "Modifier")
-                        .WithMany()
+                        .WithMany("TicketHistoryRecords")
                         .HasForeignKey("ModifierId");
 
                     b.HasOne("BugTracker.Models.Ticket", "Ticket")
@@ -500,25 +499,6 @@ namespace BugTracker.SqlServerMigrations.Migrations
                     b.Navigation("Modifier");
 
                     b.Navigation("Ticket");
-                });
-
-            modelBuilder.Entity("BugTracker.Models.UserProject", b =>
-                {
-                    b.HasOne("BugTracker.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BugTracker.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -572,11 +552,18 @@ namespace BugTracker.SqlServerMigrations.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BugTracker.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("TicketAttachments");
+
+                    b.Navigation("TicketComments");
+
+                    b.Navigation("TicketHistoryRecords");
+                });
+
             modelBuilder.Entity("BugTracker.Models.Project", b =>
                 {
                     b.Navigation("Tickets");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Ticket", b =>

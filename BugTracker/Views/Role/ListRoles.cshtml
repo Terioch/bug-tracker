@@ -37,8 +37,8 @@
 
     @if (!Model.Roles.Any())
     {
-        <div>
-            <div class="alert alert-info">
+        <div class="card-body">
+            <div class="alert alert-primary">
                 No roles to display
             </div>
             <div class="card-body">
@@ -47,13 +47,13 @@
                 </h5>
                 @if (await userManager.IsInRoleAsync(loggedInUser, "Owner"))
                 {
-                    <a asp-action="Create" class="btn btn-success text-white" style="width: auto">
-                        Create Role
+                    <a asp-action="Create" class="btn btn-primary text-white" style="width: auto">
+                        Create New Role
                     </a>
                 } else
                 {
-                    <a class="btn btn-success text-white disabled" style="width: auto">
-                        Create Role
+                    <a class="btn btn-primary text-white disabled" style="width: auto">
+                        Create New Role
                     </a>
                 }         
             </div>
